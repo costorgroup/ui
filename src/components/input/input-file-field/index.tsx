@@ -8,6 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputFileFieldClasses } from './classes';
 import { mergeFiles } from '../../../helpers/files';
 import { CloseIcon } from '../../../icons';
 import { IconButton } from '../../icon-button';
@@ -40,6 +42,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
       id,
       modalTitle = 'Manage files',
       modalDescription = 'Add files with the dropzone, or remove files from the list.',
+      className,
       ...props
     },
     forwardedRef,
@@ -126,7 +129,12 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
     })();
 
     return (
-      <SInputFileField ref={forwardedRef} {...props}>
+      <SInputFileField ref={forwardedRef} {...props}
+        className={mergeClasses(
+          inputFileFieldClasses.root,
+          disabled && inputFileFieldClasses.disabled,
+          className,
+        )}>
         {name != null
           ? files.map((file, index) => (
               <input
@@ -211,5 +219,6 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
 InputFileField.displayName = 'InputFileField';
 
 export type { TInputFileFieldProps } from './types';
+export { inputFileFieldClasses } from './classes';
 export { InputFileField };
 export default InputFileField;

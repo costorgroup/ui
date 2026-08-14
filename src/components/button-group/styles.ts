@@ -1,13 +1,13 @@
 import styled from '@emotion/styled';
-import { SButton } from '../button/styles';
-import { SIconButton } from '../icon-button/styles';
+import { buttonClasses } from '../button/classes';
+import { iconButtonClasses } from '../icon-button/classes';
 import { TButtonGroupProps } from './types';
 
 type TSButtonGroupProps = Pick<TButtonGroupProps, 'orientation'>;
 
 const customProps = new Set(['orientation']);
 
-const itemSelector = `& > ${SButton}, & > ${SIconButton}`;
+const itemSelector = `& > .${buttonClasses.root}, & > .${iconButtonClasses.root}`;
 
 export const SButtonGroup = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -32,21 +32,21 @@ export const SButtonGroup = styled('div', {
     orientation === 'vertical'
       ? `
         ${itemSelector} {
-          & + ${SButton},
-          & + ${SIconButton} {
+          & + .${buttonClasses.root},
+          & + .${iconButtonClasses.root} {
             margin-top: -1px;
           }
 
-          &:not(:first-child):not(:last-child) {
+          &:not(:first-of-type):not(:last-of-type) {
             border-radius: 0;
           }
 
-          &:first-child:not(:last-child) {
+          &:first-of-type:not(:last-of-type) {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
           }
 
-          &:last-child:not(:first-child) {
+          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
           }
@@ -54,21 +54,21 @@ export const SButtonGroup = styled('div', {
       `
       : `
         ${itemSelector} {
-          & + ${SButton},
-          & + ${SIconButton} {
+          & + .${buttonClasses.root},
+          & + .${iconButtonClasses.root} {
             margin-left: -1px;
           }
 
-          &:not(:first-child):not(:last-child) {
+          &:not(:first-of-type):not(:last-of-type) {
             border-radius: 0;
           }
 
-          &:first-child:not(:last-child) {
+          &:first-of-type:not(:last-of-type) {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
           }
 
-          &:last-child:not(:first-child) {
+          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
           }

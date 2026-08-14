@@ -1,4 +1,6 @@
 import React, { forwardRef, useContext } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { accordionDetailsClasses } from './classes';
 import { AccordionContext } from '../accordion-base/context';
 import {
   SAccordionDetails,
@@ -8,7 +10,7 @@ import {
 import { TAccordionDetailsProps } from './types';
 
 const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, className, ...props }, ref) => {
     const context = useContext(AccordionContext);
 
     if (!context) {
@@ -23,6 +25,10 @@ const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
         expanded={expanded}
         aria-hidden={!expanded}
         {...props}
+        className={mergeClasses(
+          accordionDetailsClasses.root,
+          className,
+        )}
       >
         <SAccordionDetailsClip>
           <SAccordionDetailsInner>{children}</SAccordionDetailsInner>
@@ -35,5 +41,6 @@ const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
 AccordionDetails.displayName = 'AccordionDetails';
 
 export type { TAccordionDetailsProps };
+export { accordionDetailsClasses } from './classes';
 export { AccordionDetails };
 export default AccordionDetails;

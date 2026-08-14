@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { chipClasses } from './classes';
 import { SChip } from './styles';
 import { TChipProps } from './types';
 
@@ -11,6 +13,7 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
       color = 'primary',
       rounded = false,
       type = 'button',
+      className,
       ...props
     },
     ref,
@@ -24,6 +27,10 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
         color={color}
         rounded={rounded}
         {...props}
+        className={mergeClasses(
+          chipClasses.root,
+          className,
+        )}
       >
         {children}
       </SChip>
@@ -33,5 +40,6 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
 
 Chip.displayName = 'Chip';
 
+export { chipClasses } from './classes';
 export { Chip };
 export default Chip;

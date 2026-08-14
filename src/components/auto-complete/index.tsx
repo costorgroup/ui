@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { autoCompleteClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputAutoComplete } from '../input/input-auto-complete';
 import { InputHelperText } from '../input/input-helper-text';
@@ -20,6 +22,7 @@ const AutoComplete = forwardRef<HTMLDivElement, TAutoCompleteProps>(
       variant = 'subtle',
       color = 'primary',
       children,
+      className,
       ...props
     },
     ref,
@@ -56,6 +59,12 @@ const AutoComplete = forwardRef<HTMLDivElement, TAutoCompleteProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          autoCompleteClasses.root,
+          error && autoCompleteClasses.error,
+          required && autoCompleteClasses.required,
+          className,
+        )}
         >
           {children}
         </InputAutoComplete>
@@ -67,5 +76,6 @@ const AutoComplete = forwardRef<HTMLDivElement, TAutoCompleteProps>(
 AutoComplete.displayName = 'AutoComplete';
 
 export type { TAutoCompleteProps };
+export { autoCompleteClasses } from './classes';
 export { AutoComplete };
 export default AutoComplete;

@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { pinFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
@@ -20,6 +22,7 @@ const PinField = forwardRef<HTMLDivElement, TPinFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -61,7 +64,14 @@ const PinField = forwardRef<HTMLDivElement, TPinFieldProps>(
           color={tone}
           {...props}
           aria-invalid={error || undefined}
-        />
+        
+        className={mergeClasses(
+          pinFieldClasses.root,
+          error && pinFieldClasses.error,
+          required && pinFieldClasses.required,
+          className,
+        )}
+      />
       </InputFieldLayout>
     );
   },
@@ -70,5 +80,6 @@ const PinField = forwardRef<HTMLDivElement, TPinFieldProps>(
 PinField.displayName = 'PinField';
 
 export type { TPinFieldProps };
+export { pinFieldClasses } from './classes';
 export { PinField };
 export default PinField;

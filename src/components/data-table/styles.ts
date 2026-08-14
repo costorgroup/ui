@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
-import { SInputWrapper } from '../input/input-wrapper/styles';
-import { STableBase } from '../table/table-base/styles';
+import { inputWrapperClasses } from '../input/input-wrapper/classes';
+import { tableBaseClasses } from '../table/table-base/classes';
+import { dataTableClasses } from './classes';
 import { TSDataTableProps } from './types';
 
 const customProps = new Set(['color', 'variant']);
@@ -85,7 +86,7 @@ export const SDataTable = styled('div', {
           border-color: ${palette.main};
           ${shadow}
 
-          & ${STableBase} {
+          & .${tableBaseClasses.root} {
             --table-fg: ${palette.contrastText};
             --table-head-fg: ${palette.contrastText};
             --table-border: color-mix(in srgb, ${palette.contrastText} 28%, transparent);
@@ -94,7 +95,7 @@ export const SDataTable = styled('div', {
             --table-accent: ${palette.contrastText};
           }
 
-          & ${SDataTableSearch} ${SInputWrapper} {
+          & .${dataTableClasses.search} .${inputWrapperClasses.root} {
             background-color: ${white};
             color: ${theme.colors.default.darker};
             border-color: transparent;

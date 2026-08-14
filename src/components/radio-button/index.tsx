@@ -1,4 +1,6 @@
 import React, { ChangeEvent, forwardRef, useContext, useId } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { radioButtonClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
@@ -25,6 +27,7 @@ const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
       checked,
       disabled,
       onChange,
+      className,
       ...props
     },
     ref,
@@ -90,7 +93,15 @@ const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
           disabled={resolvedDisabled}
           aria-invalid={resolvedError || undefined}
           onChange={handleChange}
-        />
+        
+        className={mergeClasses(
+          radioButtonClasses.root,
+          checked && radioButtonClasses.checked,
+          disabled && radioButtonClasses.disabled,
+          error && radioButtonClasses.error,
+          className,
+        )}
+      />
       </InputFieldLayout>
     );
   },
@@ -99,5 +110,6 @@ const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
 RadioButton.displayName = 'RadioButton';
 
 export type { TRadioButtonProps, TRadioButtonDirection } from './types';
+export { radioButtonClasses } from './classes';
 export { RadioButton };
 export default RadioButton;

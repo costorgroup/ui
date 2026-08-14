@@ -1,4 +1,6 @@
 import React, { forwardRef, useContext } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { accordionSummaryClasses } from './classes';
 import { ArrowBottomIcon } from '../../../icons';
 import { AccordionContext } from '../accordion-base/context';
 import {
@@ -15,6 +17,7 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
       expandIcon,
       expandIconPosition = 'right',
       onClick,
+      className,
       ...props
     },
     ref,
@@ -46,6 +49,11 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
           toggle(event);
         }}
         {...props}
+        className={mergeClasses(
+          accordionSummaryClasses.root,
+          expanded && accordionSummaryClasses.expanded,
+          className,
+        )}
       >
         <SAccordionSummaryContent>{children}</SAccordionSummaryContent>
         <SAccordionExpandIcon expanded={expanded} variant={variant} aria-hidden>
@@ -59,5 +67,6 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
 AccordionSummary.displayName = 'AccordionSummary';
 
 export type { TAccordionSummaryProps, TAccordionExpandIconPosition } from './types';
+export { accordionSummaryClasses } from './classes';
 export { AccordionSummary };
 export default AccordionSummary;

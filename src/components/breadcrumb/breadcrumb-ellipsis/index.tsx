@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { breadcrumbEllipsisClasses } from './classes';
 import { MoreHorizontalIcon } from '../../../icons';
 import { SBreadcrumbEllipsis } from './styles';
 import { TBreadcrumbEllipsisProps } from './types';
 
 const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, TBreadcrumbEllipsisProps>(
-  (props, ref) => {
+  ({ className, ...props }, ref) => {
     return (
       <SBreadcrumbEllipsis
         ref={ref}
@@ -12,6 +14,10 @@ const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, TBreadcrumbEllipsisProps>
         role="presentation"
         aria-hidden="true"
         {...props}
+        className={mergeClasses(
+          breadcrumbEllipsisClasses.root,
+          className,
+        )}
       >
         <MoreHorizontalIcon aria-hidden="true" />
       </SBreadcrumbEllipsis>
@@ -22,5 +28,6 @@ const BreadcrumbEllipsis = forwardRef<HTMLSpanElement, TBreadcrumbEllipsisProps>
 BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis';
 
 export type { TBreadcrumbEllipsisProps };
+export { breadcrumbEllipsisClasses } from './classes';
 export { BreadcrumbEllipsis };
 export default BreadcrumbEllipsis;

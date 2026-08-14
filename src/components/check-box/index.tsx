@@ -1,4 +1,6 @@
 import React, { forwardRef, useId } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { checkBoxClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputCheckBox } from '../input/input-check-box';
 import { InputHelperText } from '../input/input-helper-text';
@@ -20,6 +22,7 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -61,6 +64,11 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          checkBoxClasses.root,
+          error && checkBoxClasses.error,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -70,5 +78,6 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
 CheckBox.displayName = 'CheckBox';
 
 export type { TCheckBoxProps, TCheckBoxDirection } from './types';
+export { checkBoxClasses } from './classes';
 export { CheckBox };
 export default CheckBox;

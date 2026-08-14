@@ -1,4 +1,6 @@
 import React, { Children, forwardRef, isValidElement } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { sliderClasses } from './classes';
 import { SliderAction } from './slider-action';
 import { SliderActions } from './slider-actions';
 import { SliderContent } from './slider-content';
@@ -18,6 +20,7 @@ const Slider = forwardRef<HTMLDivElement, TSliderProps>(
       showPagination = true,
       color = 'primary',
       sliderRef,
+      className,
       ...props
     },
     ref,
@@ -39,7 +42,11 @@ const Slider = forwardRef<HTMLDivElement, TSliderProps>(
     const showControls = showActions || showPagination;
 
     return (
-      <SSlider ref={ref} sliderRef={sliderRef} color={color} {...props}>
+      <SSlider ref={ref} sliderRef={sliderRef} color={color} {...props}
+        className={mergeClasses(
+          sliderClasses.root,
+          className,
+        )}>
         <SliderSlides>{slides}</SliderSlides>
         {content != null ? <SliderContent>{content}</SliderContent> : null}
         {showControls ? (
@@ -61,5 +68,6 @@ const Slider = forwardRef<HTMLDivElement, TSliderProps>(
 Slider.displayName = 'Slider';
 
 export type { TSliderProps, TSliderHandle } from './types';
+export { sliderClasses } from './classes';
 export { Slider };
 export default Slider;

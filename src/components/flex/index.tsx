@@ -1,4 +1,6 @@
 import React, { ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { flexClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SFlex } from './styles';
 import { TFlexOwnProps, TFlexProps } from './types';
@@ -17,7 +19,7 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
     basis,
     gap,
     inline = false,
-    ...props
+    className, ...props
   }: TFlexProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -36,6 +38,10 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
       gap={gap}
       inline={inline}
       {...props}
+        className={mergeClasses(
+          flexClasses.root,
+          className,
+        )}
     >
       {children}
     </SFlex>
@@ -45,5 +51,6 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
 Flex.displayName = 'Flex';
 
 export type { TFlexProps, TFlexOwnProps, TFlexGap } from './types';
+export { flexClasses } from './classes';
 export { Flex };
 export default Flex;

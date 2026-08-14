@@ -1,4 +1,6 @@
 import React, { ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { kbdClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SKbd } from './styles';
 import { TKbdOwnProps, TKbdProps } from './types';
@@ -10,7 +12,7 @@ const Kbd = forwardRef(function Kbd<C extends ElementType = 'kbd'>(
     variant = 'raised',
     size = 'md',
     color = 'default',
-    ...props
+    className, ...props
   }: TKbdProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -22,6 +24,10 @@ const Kbd = forwardRef(function Kbd<C extends ElementType = 'kbd'>(
       size={size}
       color={color}
       {...props}
+        className={mergeClasses(
+          kbdClasses.root,
+          className,
+        )}
     >
       {children}
     </SKbd>
@@ -31,5 +37,6 @@ const Kbd = forwardRef(function Kbd<C extends ElementType = 'kbd'>(
 Kbd.displayName = 'Kbd';
 
 export type { TKbdProps, TKbdOwnProps, TKbdVariant, TKbdSize } from './types';
+export { kbdClasses } from './classes';
 export { Kbd };
 export default Kbd;

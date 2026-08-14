@@ -8,6 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { dropzoneClasses } from './classes';
 import { UploadIcon } from '../../icons';
 import {
   SDropzone,
@@ -37,6 +39,7 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
       onDragOver,
       onDragLeave,
       onDrop,
+      className,
       ...props
     },
     forwardedRef,
@@ -167,6 +170,11 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         {...props}
+        className={mergeClasses(
+          dropzoneClasses.root,
+          disabled && dropzoneClasses.disabled,
+          className,
+        )}
       >
         <SDropzoneInput
           {...inputProps}
@@ -198,5 +206,6 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
 Dropzone.displayName = 'Dropzone';
 
 export type { TDropzoneProps } from './types';
+export { dropzoneClasses } from './classes';
 export { Dropzone };
 export default Dropzone;

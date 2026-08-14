@@ -39,7 +39,7 @@ export const SAvatarGroup = styled('div', {
       `0 0 0 ${sizeRing[size]} ${theme.colors.common.white}`};
   }
 
-  > *:last-child {
+  > *:last-of-type {
     margin-left: 0;
   }
 `;

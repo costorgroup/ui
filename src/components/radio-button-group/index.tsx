@@ -1,4 +1,6 @@
 import React, { ChangeEvent, forwardRef, useId, useState } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { radioButtonGroupClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputBase } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
@@ -26,6 +28,7 @@ const RadioButtonGroup = forwardRef<HTMLDivElement, TRadioButtonGroupProps>(
       variant = 'subtle',
       color = 'primary',
       disabled,
+      className,
       ...props
     },
     ref,
@@ -77,6 +80,12 @@ const RadioButtonGroup = forwardRef<HTMLDivElement, TRadioButtonGroupProps>(
             ) : null
           }
           {...props}
+        className={mergeClasses(
+          radioButtonGroupClasses.root,
+          disabled && radioButtonGroupClasses.disabled,
+          error && radioButtonGroupClasses.error,
+          className,
+        )}
         >
           <InputBase
             direction={direction}
@@ -95,5 +104,6 @@ const RadioButtonGroup = forwardRef<HTMLDivElement, TRadioButtonGroupProps>(
 RadioButtonGroup.displayName = 'RadioButtonGroup';
 
 export type { TRadioButtonGroupProps } from './types';
+export { radioButtonGroupClasses } from './classes';
 export { RadioButtonGroup };
 export default RadioButtonGroup;

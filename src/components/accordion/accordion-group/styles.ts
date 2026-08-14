@@ -15,16 +15,16 @@ export const SAccordionGroup = styled('div', {
     border-radius: 0;
   }
 
-  > *:not(:first-child) {
+  > *:not(:first-of-type) {
     margin-top: -1px;
   }
 
-  > *:first-child {
+  > *:first-of-type {
     border-top-left-radius: var(--accordion-group-radius);
     border-top-right-radius: var(--accordion-group-radius);
   }
 
-  > *:last-child {
+  > *:last-of-type {
     border-bottom-left-radius: var(--accordion-group-radius);
     border-bottom-right-radius: var(--accordion-group-radius);
   }

@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { modalBodyClasses } from './classes';
 import { SModalBody, SModalBodyPlain } from './styles';
 import { TModalBodyProps } from './types';
 
@@ -9,13 +11,18 @@ const ModalBody = forwardRef<HTMLDivElement, TModalBodyProps>(
       scrollable = true,
       mode = 'hover',
       color = 'primary',
+      className,
       ...props
     },
     ref,
   ) => {
     if (!scrollable) {
       return (
-        <SModalBodyPlain ref={ref} {...props}>
+        <SModalBodyPlain ref={ref} {...props}
+        className={mergeClasses(
+          modalBodyClasses.root,
+          className,
+        )}>
           {children}
         </SModalBodyPlain>
       );
@@ -32,5 +39,6 @@ const ModalBody = forwardRef<HTMLDivElement, TModalBodyProps>(
 ModalBody.displayName = 'ModalBody';
 
 export type { TModalBodyProps };
+export { modalBodyClasses } from './classes';
 export { ModalBody };
 export default ModalBody;

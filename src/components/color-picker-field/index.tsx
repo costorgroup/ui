@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { colorPickerFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputColorField } from '../input/input-color-field';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
@@ -20,6 +22,7 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -59,6 +62,12 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          colorPickerFieldClasses.root,
+          error && colorPickerFieldClasses.error,
+          required && colorPickerFieldClasses.required,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -68,5 +77,6 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
 ColorPickerField.displayName = 'ColorPickerField';
 
 export type { TColorPickerFieldProps, TColorFormat } from './types';
+export { colorPickerFieldClasses } from './classes';
 export { ColorPickerField };
 export default ColorPickerField;

@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { richTextFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { InputHelperText } from '../input/input-helper-text';
@@ -20,6 +22,7 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -59,6 +62,12 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          richTextFieldClasses.root,
+          error && richTextFieldClasses.error,
+          required && richTextFieldClasses.required,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -68,5 +77,6 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
 RichTextField.displayName = 'RichTextField';
 
 export type { TRichTextFieldProps } from './types';
+export { richTextFieldClasses } from './classes';
 export { RichTextField };
 export default RichTextField;

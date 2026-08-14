@@ -1,4 +1,6 @@
 import React, { Children, ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { aspectRatioClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SAspectRatio } from './styles';
 import { TAspectRatioOwnProps, TAspectRatioProps } from './types';
@@ -12,7 +14,7 @@ const AspectRatio = forwardRef(function AspectRatio<
     ratio = 4 / 3,
     maxWidth,
     maxHeight,
-    ...props
+    className, ...props
   }: TAspectRatioProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -26,6 +28,10 @@ const AspectRatio = forwardRef(function AspectRatio<
       maxWidth={maxWidth}
       maxHeight={maxHeight}
       {...props}
+        className={mergeClasses(
+          aspectRatioClasses.root,
+          className,
+        )}
     >
       {child}
     </SAspectRatio>
@@ -35,5 +41,6 @@ const AspectRatio = forwardRef(function AspectRatio<
 AspectRatio.displayName = 'AspectRatio';
 
 export type { TAspectRatioProps, TAspectRatioOwnProps } from './types';
+export { aspectRatioClasses } from './classes';
 export { AspectRatio };
 export default AspectRatio;

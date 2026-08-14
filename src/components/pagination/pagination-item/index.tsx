@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { paginationItemClasses } from './classes';
 import { SPaginationItem } from './styles';
 import { TPaginationItemProps } from './types';
 
@@ -28,6 +30,7 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
       size = 'md',
       color = 'primary',
       disabled = false,
+      className,
       ...props
     },
     ref,
@@ -45,6 +48,10 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
         data-type={type}
         data-page={page ?? undefined}
         {...props}
+        className={mergeClasses(
+          paginationItemClasses.root,
+          className,
+        )}
       >
         {children}
       </SPaginationItem>
@@ -55,5 +62,6 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
 PaginationItem.displayName = 'PaginationItem';
 
 export type { TPaginationItemProps };
+export { paginationItemClasses } from './classes';
 export { PaginationItem };
 export default PaginationItem;

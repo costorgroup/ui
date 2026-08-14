@@ -1,4 +1,6 @@
 import React, { ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { centerClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SCenter } from './styles';
 import { TCenterOwnProps, TCenterProps } from './types';
@@ -10,7 +12,7 @@ const Center = forwardRef(function Center<C extends ElementType = 'div'>(
     absolute = false,
     axis = 'both',
     inline = false,
-    ...props
+    className, ...props
   }: TCenterProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -22,6 +24,10 @@ const Center = forwardRef(function Center<C extends ElementType = 'div'>(
       axis={axis}
       inline={inline}
       {...props}
+        className={mergeClasses(
+          centerClasses.root,
+          className,
+        )}
     >
       {children}
     </SCenter>
@@ -31,5 +37,6 @@ const Center = forwardRef(function Center<C extends ElementType = 'div'>(
 Center.displayName = 'Center';
 
 export type { TCenterProps, TCenterOwnProps, TCenterAxis } from './types';
+export { centerClasses } from './classes';
 export { Center };
 export default Center;

@@ -23,4 +23,5 @@ export type TFileFieldProps = {
   id?: string;
   modalTitle?: ReactNode;
   modalDescription?: ReactNode;
+  className?: string;
 };

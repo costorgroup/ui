@@ -6,6 +6,8 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputRichTextFieldClasses } from './classes';
 import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
@@ -179,7 +181,12 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
         onMouseDown={handleMouseDown}
       >
         {name != null ? (
-          <input type="hidden" name={name} value={editor?.getHTML() ?? ''} />
+          <input type="hidden" name={name} value={editor?.getHTML() ?? ''} 
+        className={mergeClasses(
+          inputRichTextFieldClasses.root,
+          className,
+        )}
+      />
         ) : null}
 
         {showToolbar
@@ -205,5 +212,6 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
 InputRichTextField.displayName = 'InputRichTextField';
 
 export type { TInputRichTextFieldProps } from './types';
+export { inputRichTextFieldClasses } from './classes';
 export { InputRichTextField };
 export default InputRichTextField;

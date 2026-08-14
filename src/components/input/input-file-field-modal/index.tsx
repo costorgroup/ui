@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputFileFieldModalClasses } from './classes';
 import {
   formatFileSize,
   mergeFiles,
@@ -35,6 +37,7 @@ const InputFileFieldModal = ({
   description = 'Add files with the dropzone, or remove files from the list.',
   onConfirm,
   onCancel,
+  className,
 }: TInputFileFieldModalProps) => {
   const [draft, setDraft] = useState<File[]>(files);
 
@@ -89,6 +92,11 @@ const InputFileFieldModal = ({
           </Button>
         </>
       }
+      className={mergeClasses(
+        inputFileFieldModalClasses.root,
+        disabled && inputFileFieldModalClasses.disabled,
+        className,
+      )}
     >
       <SInputFileFieldModalContent>
         <Dropzone
@@ -148,5 +156,6 @@ const InputFileFieldModal = ({
 InputFileFieldModal.displayName = 'InputFileFieldModal';
 
 export type { TInputFileFieldModalProps } from './types';
+export { inputFileFieldModalClasses } from './classes';
 export { InputFileFieldModal };
 export default InputFileFieldModal;

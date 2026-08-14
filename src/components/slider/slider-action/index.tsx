@@ -1,4 +1,6 @@
 import React, { forwardRef, useContext } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { sliderActionClasses } from './classes';
 import { ArrowRightIcon } from '../../../icons';
 import { SliderContext } from '../slider-base/context';
 import { SSliderAction } from './styles';
@@ -25,6 +27,7 @@ const SliderAction = forwardRef<HTMLButtonElement, TSliderActionProps>(
       rounded = true,
       onClick,
       disabled,
+      className,
       ...props
     },
     ref,
@@ -73,6 +76,11 @@ const SliderAction = forwardRef<HTMLButtonElement, TSliderActionProps>(
           onClick?.(event);
         }}
         {...props}
+        className={mergeClasses(
+          sliderActionClasses.root,
+          disabled && sliderActionClasses.disabled,
+          className,
+        )}
       >
         {children ??
           (isPrev ? (
@@ -87,5 +95,6 @@ const SliderAction = forwardRef<HTMLButtonElement, TSliderActionProps>(
 
 SliderAction.displayName = 'SliderAction';
 
+export { sliderActionClasses } from './classes';
 export { SliderAction };
 export default SliderAction;

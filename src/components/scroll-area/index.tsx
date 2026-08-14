@@ -6,6 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { scrollAreaClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { trackPointerOutside } from '../../helpers/track-pointer-outside';
 import { SScrollArea } from './styles';
@@ -19,7 +21,7 @@ const ScrollArea = forwardRef(function ScrollArea<
     children,
     mode = 'hover',
     color = 'primary',
-    ...props
+    className, ...props
   }: TScrollAreaProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -75,6 +77,10 @@ const ScrollArea = forwardRef(function ScrollArea<
       hovered={hovered}
       onMouseEnter={handleMouseEnter}
       {...props}
+        className={mergeClasses(
+          scrollAreaClasses.root,
+          className,
+        )}
     >
       {children}
     </SScrollArea>
@@ -88,5 +94,6 @@ export type {
   TScrollAreaOwnProps,
   TScrollAreaMode,
 } from './types';
+export { scrollAreaClasses } from './classes';
 export { ScrollArea };
 export default ScrollArea;

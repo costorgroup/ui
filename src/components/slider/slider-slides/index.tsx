@@ -9,12 +9,14 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { sliderSlidesClasses } from './classes';
 import { SliderContext } from '../slider-base/context';
 import { SSliderSlides } from './styles';
 import { TSliderSlidesProps } from './types';
 
 const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
-  ({ children, onTransitionEnd, onPointerDown, ...props }, ref) => {
+  ({ children, onTransitionEnd, onPointerDown, className, ...props }, ref) => {
     const slider = useContext(SliderContext);
 
     if (!slider) {
@@ -359,6 +361,10 @@ const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
         onPointerDown={handlePointerDown}
         onTransitionEnd={handleTransitionEnd}
         {...props}
+        className={mergeClasses(
+          sliderSlidesClasses.root,
+          className,
+        )}
       >
         {slides}
       </SSliderSlides>
@@ -368,5 +374,6 @@ const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
 
 SliderSlides.displayName = 'SliderSlides';
 
+export { sliderSlidesClasses } from './classes';
 export { SliderSlides };
 export default SliderSlides;

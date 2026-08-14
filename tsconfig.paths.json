@@ -155,6 +155,9 @@
       "@costor/ui/DatePickerField": [
         "./src/components/date-picker-field/index.tsx"
       ],
+      "@costor/ui/Divider": [
+        "./src/components/divider/index.tsx"
+      ],
       "@costor/ui/Drawer": [
         "./src/components/drawer/index.tsx"
       ],
@@ -283,6 +286,9 @@
       ],
       "@costor/ui/Kbd": [
         "./src/components/kbd/index.tsx"
+      ],
+      "@costor/ui/Link": [
+        "./src/components/link/index.tsx"
       ],
       "@costor/ui/List": [
         "./src/components/list/index.tsx"

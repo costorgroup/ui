@@ -8,4 +8,5 @@ export type TInputHelperTextProps = HTMLAttributes<HTMLParagraphElement> & {
   children?: ReactNode;
   color?: TPaletteColor;
   size?: TInputSize;
+  error?: boolean;
 };

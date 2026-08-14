@@ -4,7 +4,7 @@ export const STableBody = styled.tbody`
   tr {
     border-bottom: 1px solid var(--table-border, transparent);
 
-    &:last-child {
+    &:last-of-type {
       border-bottom: none;
     }
   }

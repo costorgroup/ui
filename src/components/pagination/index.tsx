@@ -1,4 +1,6 @@
 import React, { forwardRef, MouseEvent, useState } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { paginationClasses } from './classes';
 import { ArrowRightIcon } from '../../icons';
 import { PaginationBase } from './pagination-base';
 import { PaginationList } from './pagination-list';
@@ -63,6 +65,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       siblingCount = 1,
       boundaryCount = 1,
       getItemAriaLabel = defaultGetItemAriaLabel,
+      className,
       ...props
     },
     ref,
@@ -97,7 +100,11 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       };
 
     return (
-      <PaginationBase ref={ref} {...props}>
+      <PaginationBase ref={ref} {...props}
+        className={mergeClasses(
+          paginationClasses.root,
+          className,
+        )}>
         <PaginationList>
           {items.map((item, index) => {
             const key = `${item.type}-${item.page ?? index}`;
@@ -150,5 +157,6 @@ export type {
   TPaginationItemType,
   TPaginationItemData,
 } from './types';
+export { paginationClasses } from './classes';
 export { Pagination };
 export default Pagination;

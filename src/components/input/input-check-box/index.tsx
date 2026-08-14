@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputCheckBoxClasses } from './classes';
 import { CheckIcon } from '../../../icons';
 import {
   SInputCheckBox,
@@ -8,10 +10,14 @@ import {
 import { TInputCheckBoxProps } from './types';
 
 const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
-  ({ variant = 'subtle', size = 'md', color = 'primary', ...props }, ref) => {
+  ({ variant = 'subtle', size = 'md', color = 'primary', className, ...props }, ref) => {
     return (
       <SInputCheckBox>
-        <SInputCheckBoxInput ref={ref} type="checkbox" {...props} />
+        <SInputCheckBoxInput ref={ref} type="checkbox" {...props}
+        className={mergeClasses(
+          inputCheckBoxClasses.root,
+          className,
+        )} />
         <SInputCheckBoxControl variant={variant} size={size} color={color}>
           <CheckIcon aria-hidden />
         </SInputCheckBoxControl>
@@ -22,5 +28,6 @@ const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
 
 InputCheckBox.displayName = 'InputCheckBox';
 
+export { inputCheckBoxClasses } from './classes';
 export { InputCheckBox };
 export default InputCheckBox;

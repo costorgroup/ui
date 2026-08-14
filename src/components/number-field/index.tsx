@@ -1,10 +1,12 @@
 import React, { forwardRef, useId } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { InputLabel } from '../input/input-label';
 import { InputNumberField } from '../input/input-number-field';
+import { numberFieldClasses } from './classes';
 import { TNumberFieldProps } from './types';
 
 const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
@@ -20,6 +22,9 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
+      disabled,
+      readOnly,
       ...props
     },
     ref,
@@ -32,9 +37,22 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
       <InputFieldLayout
         ref={ref}
         fullWidth={fullWidth}
+        className={mergeClasses(
+          numberFieldClasses.root,
+          disabled && numberFieldClasses.disabled,
+          error && numberFieldClasses.error,
+          required && numberFieldClasses.required,
+          className,
+        )}
         label={
           label != null ? (
-            <InputLabel htmlFor={fieldId} required={required} size={size}>
+            <InputLabel
+              htmlFor={fieldId}
+              required={required}
+              error={error}
+              disabled={disabled}
+              size={size}
+            >
               {label}
             </InputLabel>
           ) : null
@@ -48,7 +66,7 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
         }
         helperText={
           helperText != null ? (
-            <InputHelperText size={size} color={tone}>
+            <InputHelperText size={size} color={tone} error={error}>
               {helperText}
             </InputHelperText>
           ) : null
@@ -60,6 +78,9 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
           variant={variant}
           color={tone}
           aria-invalid={error || undefined}
+          disabled={disabled}
+          readOnly={readOnly}
+          required={required}
           {...props}
         />
       </InputFieldLayout>
@@ -70,5 +91,6 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
 NumberField.displayName = 'NumberField';
 
 export type { TNumberFieldProps } from './types';
+export { numberFieldClasses } from './classes';
 export { NumberField };
 export default NumberField;

@@ -1,10 +1,12 @@
 import React, { forwardRef, useContext } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { sliderPaginationClasses } from './classes';
 import { SliderContext } from '../slider-base/context';
 import { SSliderPagination, SSliderPaginationDot } from './styles';
 import { TSliderPaginationProps } from './types';
 
 const SliderPagination = forwardRef<HTMLDivElement, TSliderPaginationProps>(
-  ({ color: colorProp, ...props }, ref) => {
+  ({ color: colorProp, className, ...props }, ref) => {
     const slider = useContext(SliderContext);
 
     if (!slider) {
@@ -30,6 +32,10 @@ const SliderPagination = forwardRef<HTMLDivElement, TSliderPaginationProps>(
         role="tablist"
         aria-label="Slider pagination"
         {...props}
+        className={mergeClasses(
+          sliderPaginationClasses.root,
+          className,
+        )}
       >
         {Array.from({ length: slideCount }, (_, index) => {
           const active = index === currentSlide;
@@ -54,5 +60,6 @@ const SliderPagination = forwardRef<HTMLDivElement, TSliderPaginationProps>(
 
 SliderPagination.displayName = 'SliderPagination';
 
+export { sliderPaginationClasses } from './classes';
 export { SliderPagination };
 export default SliderPagination;

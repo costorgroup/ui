@@ -10,6 +10,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputPinFieldClasses } from './classes';
 import {
   SInputPinField,
   SInputPinFieldCell,
@@ -96,6 +98,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       size = 'md',
       color = 'primary',
       'aria-invalid': ariaInvalid,
+      className,
       ...props
     },
     ref,
@@ -338,6 +341,10 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         role="group"
         aria-disabled={disabled || undefined}
         {...props}
+        className={mergeClasses(
+          inputPinFieldClasses.root,
+          className,
+        )}
       >
         {name ? (
           <input
@@ -394,5 +401,6 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
 
 InputPinField.displayName = 'InputPinField';
 
+export { inputPinFieldClasses } from './classes';
 export { InputPinField };
 export default InputPinField;

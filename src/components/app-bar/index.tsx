@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { appBarClasses } from './classes';
 import { AppBarBase } from './app-bar-base';
 import { AppBarLogo } from './app-bar-logo';
 import { AppBarItems } from './app-bar-items';
@@ -13,6 +15,7 @@ const AppBar = forwardRef<HTMLElement, TAppBarProps>(
       variant = 'subtle',
       size = 'md',
       position = 'static',
+      className,
       ...props
     },
     ref,
@@ -25,6 +28,10 @@ const AppBar = forwardRef<HTMLElement, TAppBarProps>(
         size={size}
         position={position}
         {...props}
+        className={mergeClasses(
+          appBarClasses.root,
+          className,
+        )}
       >
         {logo != null ? <AppBarLogo>{logo}</AppBarLogo> : null}
         {children != null ? <AppBarItems>{children}</AppBarItems> : null}
@@ -41,5 +48,6 @@ export type {
   TAppBarSize,
   TAppBarPosition,
 } from './types';
+export { appBarClasses } from './classes';
 export { AppBar };
 export default AppBar;

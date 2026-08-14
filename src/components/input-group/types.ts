@@ -12,4 +12,6 @@ export type TInputGroupProps = Omit<
   orientation?: TInputGroupOrientation;
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  disabled?: boolean;
+  error?: boolean;
 };

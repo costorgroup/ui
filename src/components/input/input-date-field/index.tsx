@@ -9,6 +9,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputDateFieldClasses } from './classes';
 import {
   clampDate,
   isDateDisabled,
@@ -84,6 +86,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
       size = 'md',
       color = 'primary',
       id,
+      className,
       ...props
     },
     forwardedRef,
@@ -538,7 +541,13 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
         : '';
 
     return (
-      <SInputDateField ref={setRefs} {...props}>
+      <SInputDateField ref={setRefs} {...props}
+        className={mergeClasses(
+          inputDateFieldClasses.root,
+          disabled && inputDateFieldClasses.disabled,
+          open && inputDateFieldClasses.open,
+          className,
+        )}>
         {name != null ? (
           <input
             type="hidden"
@@ -811,5 +820,6 @@ export type {
   TDatePickerDisplayType,
   TTimePickerDisplayType,
 } from './types';
+export { inputDateFieldClasses } from './classes';
 export { InputDateField };
 export default InputDateField;

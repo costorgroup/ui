@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { listClasses } from './classes';
 import { Heading } from '../heading';
 import { Text } from '../text';
 import type { TTextSize } from '../text/types';
@@ -23,6 +25,7 @@ const List = forwardRef<HTMLDivElement, TListProps>(
       listStyle = 'unordered',
       size = 'md',
       color = 'primary',
+      className,
       ...props
     },
     ref,
@@ -33,7 +36,11 @@ const List = forwardRef<HTMLDivElement, TListProps>(
     const hasHeader = hasTitle || hasDescription;
 
     return (
-      <SList ref={ref} size={size} color={color} {...props}>
+      <SList ref={ref} size={size} color={color} {...props}
+        className={mergeClasses(
+          listClasses.root,
+          className,
+        )}>
         {hasHeader ? (
           <SListHeader>
             {hasTitle ? (
@@ -59,5 +66,6 @@ const List = forwardRef<HTMLDivElement, TListProps>(
 List.displayName = 'List';
 
 export type { TListProps, TListStyle, TListSize } from './types';
+export { listClasses } from './classes';
 export { List };
 export default List;

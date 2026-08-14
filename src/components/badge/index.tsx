@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { badgeClasses } from './classes';
 import { SBadge, SBadgeContent } from './styles';
 import { TBadgeProps } from './types';
 
@@ -26,6 +28,7 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
       invisible: invisibleProp = false,
       overlap = 'rectangular',
       anchorOrigin,
+      className,
       ...props
     },
     ref,
@@ -49,6 +52,10 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
         vertical={vertical}
         horizontal={horizontal}
         {...props}
+        className={mergeClasses(
+          badgeClasses.root,
+          className,
+        )}
       >
         {children}
         <SBadgeContent
@@ -78,5 +85,6 @@ export type {
   TBadgeOverlap,
   TBadgeAnchorOrigin,
 } from './types';
+export { badgeClasses } from './classes';
 export { Badge };
 export default Badge;

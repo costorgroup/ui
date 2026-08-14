@@ -23,4 +23,5 @@ export type TColorPickerFieldProps = {
   disabled?: boolean;
   name?: string;
   id?: string;
+  className?: string;
 };

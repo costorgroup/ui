@@ -1,11 +1,17 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { sliderControlsClasses } from './classes';
 import { SSliderControls } from './styles';
 import { TSliderControlsProps } from './types';
 
 const SliderControls = forwardRef<HTMLDivElement, TSliderControlsProps>(
-  ({ children, ...props }, ref) => {
+  ({ children, className, ...props }, ref) => {
     return (
-      <SSliderControls ref={ref} {...props}>
+      <SSliderControls ref={ref} {...props}
+        className={mergeClasses(
+          sliderControlsClasses.root,
+          className,
+        )}>
         {children}
       </SSliderControls>
     );
@@ -14,5 +20,6 @@ const SliderControls = forwardRef<HTMLDivElement, TSliderControlsProps>(
 
 SliderControls.displayName = 'SliderControls';
 
+export { sliderControlsClasses } from './classes';
 export { SliderControls };
 export default SliderControls;

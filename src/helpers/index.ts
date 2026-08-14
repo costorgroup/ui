@@ -1,4 +1,15 @@
 export { getInitials } from './formatters';
+export {
+  generateUtilityClass,
+  generateUtilityClasses,
+  globalStateClasses,
+  mergeClasses,
+  isAriaInvalid,
+  isGlobalStateSlot,
+  UTILITY_CLASS_PREFIX,
+  GLOBAL_STATE_SLOTS,
+} from './generate-utility-classes';
+export type { TGlobalStateSlot } from './generate-utility-classes';
 export type { TGetInitials, TGetInitialsOptions } from './formatters';
 export type {
   TAsProp,

@@ -1,16 +1,14 @@
 import styled from '@emotion/styled';
-import { SInputIcon } from '../input-icon/styles';
-import { SInputNumberFieldInput } from '../input-number-field/styles';
-import { SInputTextAreaField } from '../input-text-area-field/styles';
-import { SInputTextField } from '../input-text-field/styles';
-import { SIconButton } from '../../icon-button/styles';
+import { iconButtonClasses } from '../../icon-button/classes';
+import { inputIconClasses } from '../input-icon/classes';
+import { inputNumberFieldClasses } from '../input-number-field/classes';
+import { inputTextAreaFieldClasses } from '../input-text-area-field/classes';
+import { inputTextFieldClasses } from '../input-text-field/classes';
 import { TInputWrapperProps, TInputSize } from './types';
 
 type TSInputWrapperProps = Pick<TInputWrapperProps, 'variant' | 'size' | 'color'>;
 
-const customProps = new Set(['variant', 'size', 'color']);
-
-const fieldSelector = `${SInputTextField}, ${SInputNumberFieldInput}, ${SInputTextAreaField}`;
+const customProps = new Set(['variant', 'size', 'color', 'error', 'disabled', 'readOnly']);
 
 const sizeFont: Record<TInputSize, string> = {
   xs: '12px',
@@ -19,6 +17,8 @@ const sizeFont: Record<TInputSize, string> = {
   lg: '16px',
   xl: '18px',
 };
+
+const fieldClass = `& > .${inputTextFieldClasses.root}, & > .${inputNumberFieldClasses.root}, & > .${inputTextAreaFieldClasses.root}`;
 
 export const SInputWrapper = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -46,32 +46,50 @@ export const SInputWrapper = styled('div', {
       gap: calc(${gap} * ${scale});
       font-size: ${sizeFont[size]};
 
-      & ${fieldSelector} {
+      ${fieldClass} {
         padding-top: calc(${padY} * ${scale});
         padding-bottom: calc(${padY} * ${scale});
-      }
-
-      & > ${SInputTextField}:first-child,
-      & > ${SInputNumberFieldInput}:first-child,
-      & > ${SInputTextAreaField}:first-child {
         padding-left: calc(${padX} * ${scale});
-      }
-
-      & > ${SInputTextField}:last-child,
-      & > ${SInputNumberFieldInput}:last-child,
-      & > ${SInputTextAreaField}:last-child {
         padding-right: calc(${padX} * ${scale});
       }
 
-      & > ${SInputIcon}:first-child {
-        padding-left: calc(${padX} * ${scale});
+      & > .${inputIconClasses.root} ~ .${inputTextFieldClasses.root},
+      & > .${inputIconClasses.root} ~ .${inputNumberFieldClasses.root},
+      & > .${inputIconClasses.root} ~ .${inputTextAreaFieldClasses.root},
+      & > .${iconButtonClasses.root} ~ .${inputTextFieldClasses.root},
+      & > .${iconButtonClasses.root} ~ .${inputNumberFieldClasses.root},
+      & > .${iconButtonClasses.root} ~ .${inputTextAreaFieldClasses.root} {
+        padding-left: 0;
       }
 
-      & > ${SInputIcon}:last-child {
+      & > .${inputTextFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}),
+      & > .${inputNumberFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}),
+      & > .${inputTextAreaFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}) {
+        padding-right: 0;
+      }
+
+      & > .${inputIconClasses.root} {
+        padding-left: calc(${padX} * ${scale});
         padding-right: calc(${padX} * ${scale});
       }
 
-      & > ${SIconButton} {
+      & > .${inputTextFieldClasses.root} ~ .${inputIconClasses.root},
+      & > .${inputNumberFieldClasses.root} ~ .${inputIconClasses.root},
+      & > .${inputTextAreaFieldClasses.root} ~ .${inputIconClasses.root},
+      & > .${iconButtonClasses.root} ~ .${inputIconClasses.root},
+      & > .${inputIconClasses.root} ~ .${inputIconClasses.root} {
+        padding-left: 0;
+      }
+
+      & > .${inputIconClasses.root}:has(+ .${inputTextFieldClasses.root}),
+      & > .${inputIconClasses.root}:has(+ .${inputNumberFieldClasses.root}),
+      & > .${inputIconClasses.root}:has(+ .${inputTextAreaFieldClasses.root}),
+      & > .${inputIconClasses.root}:has(+ .${iconButtonClasses.root}),
+      & > .${inputIconClasses.root}:has(+ .${inputIconClasses.root}) {
+        padding-right: 0;
+      }
+
+      & > .${iconButtonClasses.root} {
         align-self: center;
       }
     `;

@@ -1,4 +1,6 @@
 import React, { forwardRef, useId } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { rangeFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
@@ -20,6 +22,7 @@ const RangeField = forwardRef<HTMLDivElement, TRangeFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -59,6 +62,12 @@ const RangeField = forwardRef<HTMLDivElement, TRangeFieldProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          rangeFieldClasses.root,
+          error && rangeFieldClasses.error,
+          required && rangeFieldClasses.required,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -68,5 +77,6 @@ const RangeField = forwardRef<HTMLDivElement, TRangeFieldProps>(
 RangeField.displayName = 'RangeField';
 
 export type { TRangeFieldProps } from './types';
+export { rangeFieldClasses } from './classes';
 export { RangeField };
 export default RangeField;

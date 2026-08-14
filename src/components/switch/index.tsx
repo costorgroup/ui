@@ -1,4 +1,6 @@
 import React, { forwardRef, useId } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { switchClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
@@ -20,6 +22,7 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -61,6 +64,11 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          switchClasses.root,
+          error && switchClasses.error,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -70,5 +78,6 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
 Switch.displayName = 'Switch';
 
 export type { TSwitchProps, TSwitchDirection } from './types';
+export { switchClasses } from './classes';
 export { Switch };
 export default Switch;

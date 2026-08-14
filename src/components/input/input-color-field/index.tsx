@@ -9,6 +9,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputColorFieldClasses } from './classes';
 import {
   formatColor,
   hsvToRgb,
@@ -66,6 +68,7 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       size = 'md',
       color = 'primary',
       id,
+      className,
       ...props
     },
     forwardedRef,
@@ -387,7 +390,13 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
     const hasValue = Boolean(formatted);
 
     return (
-      <SInputColorField ref={setRefs} {...props}>
+      <SInputColorField ref={setRefs} {...props}
+        className={mergeClasses(
+          inputColorFieldClasses.root,
+          disabled && inputColorFieldClasses.disabled,
+          open && inputColorFieldClasses.open,
+          className,
+        )}>
         {name != null ? (
           <input type="hidden" name={name} value={formatted} disabled={disabled} />
         ) : null}
@@ -534,5 +543,6 @@ InputColorField.displayName = 'InputColorField';
 
 export type { TInputColorFieldProps, TColorFormat } from './types';
 export type { TColorRgba, TColorHsv } from '../../../helpers/color';
+export { inputColorFieldClasses } from './classes';
 export { InputColorField };
 export default InputColorField;

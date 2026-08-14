@@ -8,6 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { sliderBaseClasses } from './classes';
 import { SliderContext } from './context';
 import { SSliderBase } from './styles';
 import { TSliderHandle, TSliderBaseProps } from './types';
@@ -54,6 +56,7 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
       sliderRef,
       onMouseEnter,
       onMouseLeave,
+      className,
       ...props
     },
     ref,
@@ -430,6 +433,10 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
             onMouseLeave?.(event);
           }}
           {...props}
+        className={mergeClasses(
+          sliderBaseClasses.root,
+          className,
+        )}
         >
           {children}
         </SSliderBase>
@@ -441,5 +448,6 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
 SliderBase.displayName = 'SliderBase';
 
 export type { TSliderBaseProps, TSliderHandle } from './types';
+export { sliderBaseClasses } from './classes';
 export { SliderBase };
 export default SliderBase;

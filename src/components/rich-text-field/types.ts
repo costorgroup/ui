@@ -27,4 +27,5 @@ export type TRichTextFieldProps = {
   minHeight?: number | string;
   id?: string;
   name?: string;
+  className?: string;
 };

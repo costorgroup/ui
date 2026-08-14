@@ -1,4 +1,6 @@
 import React, { forwardRef, ReactElement } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { headingClasses } from './classes';
 import type { TPolymorphicPropsWithRef } from '../../helpers/polymorphic';
 import { SHeading } from './styles';
 import { THeadingAs, THeadingOwnProps, THeadingProps } from './types';
@@ -10,7 +12,7 @@ type THeadingComponent = (<C extends THeadingAs = 'h1'>(
 };
 
 const Heading = forwardRef(function Heading<C extends THeadingAs = 'h1'>(
-  { as, children, color = 'default', ...props }: THeadingProps<C>,
+  { as, children, color = 'default', className, ...props }: THeadingProps<C>,
   ref: React.Ref<Element>,
 ) {
   const tag = (as ?? 'h1') as THeadingAs;
@@ -22,6 +24,10 @@ const Heading = forwardRef(function Heading<C extends THeadingAs = 'h1'>(
       level={tag}
       color={color}
       {...props}
+        className={mergeClasses(
+          headingClasses.root,
+          className,
+        )}
     >
       {children}
     </SHeading>
@@ -31,5 +37,6 @@ const Heading = forwardRef(function Heading<C extends THeadingAs = 'h1'>(
 Heading.displayName = 'Heading';
 
 export type { THeadingProps, THeadingOwnProps, THeadingAs } from './types';
+export { headingClasses } from './classes';
 export { Heading };
 export default Heading;

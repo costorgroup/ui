@@ -10,4 +10,5 @@ export type TInputFileFieldModalProps = {
   description?: ReactNode;
   onConfirm?: (files: File[]) => void;
   onCancel?: () => void;
+  className?: string;
 };

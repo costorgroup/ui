@@ -1,13 +1,19 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { tabClasses } from './classes';
 import { TabBase } from './tab-base';
 import { TabIcon } from './tab-icon';
 import { TabLabel } from './tab-label';
 import { TTabProps } from './types';
 
 const Tab = forwardRef<HTMLButtonElement, TTabProps>(
-  ({ children, icon, ...props }, ref) => {
+  ({ children, icon, className, ...props }, ref) => {
     return (
-      <TabBase ref={ref} {...props}>
+      <TabBase ref={ref} {...props}
+        className={mergeClasses(
+          tabClasses.root,
+          className,
+        )}>
         {icon != null ? <TabIcon>{icon}</TabIcon> : null}
         {children != null ? <TabLabel>{children}</TabLabel> : null}
       </TabBase>
@@ -18,5 +24,6 @@ const Tab = forwardRef<HTMLButtonElement, TTabProps>(
 Tab.displayName = 'Tab';
 
 export type { TTabProps } from './types';
+export { tabClasses } from './classes';
 export { Tab };
 export default Tab;

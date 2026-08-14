@@ -14,6 +14,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputAutoCompleteClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { getDropdownPosition } from '../../../helpers/get-dropdown-position';
 import type { TDropdownPlacement } from '../../../helpers/get-dropdown-position';
@@ -54,6 +56,7 @@ const InputAutoComplete = forwardRef<HTMLDivElement, TInputAutoCompleteProps>(
       size = 'md',
       color = 'primary',
       disabled = false,
+      className,
       ...props
     },
     forwardedRef,
@@ -406,7 +409,13 @@ const InputAutoComplete = forwardRef<HTMLDivElement, TInputAutoCompleteProps>(
         : undefined;
 
     return (
-      <SInputAutoComplete ref={setRefs} {...props}>
+      <SInputAutoComplete ref={setRefs} {...props}
+        className={mergeClasses(
+          inputAutoCompleteClasses.root,
+          disabled && inputAutoCompleteClasses.disabled,
+          open && inputAutoCompleteClasses.open,
+          className,
+        )}>
         <SInputAutoCompleteTrigger
           ref={triggerRef}
           variant={variant}
@@ -505,5 +514,6 @@ const InputAutoComplete = forwardRef<HTMLDivElement, TInputAutoCompleteProps>(
 
 InputAutoComplete.displayName = 'InputAutoComplete';
 
+export { inputAutoCompleteClasses } from './classes';
 export { InputAutoComplete };
 export default InputAutoComplete;

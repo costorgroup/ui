@@ -17,6 +17,8 @@ import {
   SDataTableSearch,
   SDataTableToolbar,
 } from './styles';
+import { dataTableClasses } from './classes';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
 import {
   TDataTableProps,
   TDataTableRenderCellParams,
@@ -73,6 +75,7 @@ const DataTableInner = <T extends TDataTableRow>(
     defaultPage = 1,
     onPageChange,
     getRowId,
+    className,
     ...props
   }: TDataTableProps<T>,
   ref: React.Ref<HTMLDivElement>,
@@ -139,7 +142,13 @@ const DataTableInner = <T extends TDataTableRow>(
   };
 
   return (
-    <SDataTable ref={ref} color={color} variant={variant} {...props}>
+    <SDataTable
+      ref={ref}
+      color={color}
+      variant={variant}
+      {...props}
+      className={mergeClasses(dataTableClasses.root, className)}
+    >
       <SDataTableToolbar>
         <SDataTableHeader>
           {title != null ? (
@@ -156,7 +165,7 @@ const DataTableInner = <T extends TDataTableRow>(
             </Text>
           ) : null}
         </SDataTableHeader>
-        <SDataTableSearch>
+        <SDataTableSearch className={dataTableClasses.search}>
           <TextField
             fullWidth
             size="sm"
@@ -253,5 +262,6 @@ export type {
   TDataTableVariant,
   TDataTableRenderCellParams,
 } from './types';
+export { dataTableClasses } from './classes';
 export { DataTable };
 export default DataTable;

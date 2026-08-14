@@ -9,4 +9,7 @@ export type TInputWrapperProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> &
   variant?: TInputVariant;
   size?: TInputSize;
   color?: TPaletteColor;
+  error?: boolean;
+  disabled?: boolean;
+  readOnly?: boolean;
 };

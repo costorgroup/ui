@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { tabsBaseClasses } from './classes';
 import { STabsBase } from './styles';
 import { TabsContext, TTabsBaseProps } from './types';
 
@@ -12,6 +14,7 @@ const TabsBase = forwardRef<HTMLDivElement, TTabsBaseProps>(
       justify = 'stretch',
       textAlign = 'center',
       size = 'md',
+      className,
       ...props
     },
     ref,
@@ -29,6 +32,10 @@ const TabsBase = forwardRef<HTMLDivElement, TTabsBaseProps>(
             anchor === 'left' || anchor === 'right' ? 'vertical' : 'horizontal'
           }
           {...props}
+        className={mergeClasses(
+          tabsBaseClasses.root,
+          className,
+        )}
         >
           {children}
         </STabsBase>
@@ -49,5 +56,6 @@ export type {
   TTabsContextValue,
 } from './types';
 export { TabsContext } from './types';
+export { tabsBaseClasses } from './classes';
 export { TabsBase };
 export default TabsBase;

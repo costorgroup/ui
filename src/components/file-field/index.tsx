@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { fileFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { InputFileField } from '../input/input-file-field';
@@ -20,6 +22,7 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -59,6 +62,12 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          fileFieldClasses.root,
+          error && fileFieldClasses.error,
+          required && fileFieldClasses.required,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -68,5 +77,6 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
 FileField.displayName = 'FileField';
 
 export type { TFileFieldProps } from './types';
+export { fileFieldClasses } from './classes';
 export { FileField };
 export default FileField;

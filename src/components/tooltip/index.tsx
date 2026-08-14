@@ -6,6 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { tooltipClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { useTheme } from '@emotion/react';
 import { getTooltipCoords } from './get-coords';
@@ -26,7 +28,7 @@ const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T | null) => {
 };
 
 const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
-  ({ children, render, placement = 'top', offset = 8, ...props }, ref) => {
+  ({ children, render, placement = 'top', offset = 8, className, ...props }, ref) => {
     const theme = useTheme();
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -192,6 +194,10 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
           onFocus={openTooltip}
           onBlur={scheduleClose}
           {...props}
+        className={mergeClasses(
+          tooltipClasses.root,
+          className,
+        )}
         >
           {children}
         </STooltipTrigger>
@@ -203,5 +209,6 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
 
 Tooltip.displayName = 'Tooltip';
 
+export { tooltipClasses } from './classes';
 export { Tooltip };
 export default Tooltip;

@@ -13,6 +13,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputSelectClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { getDropdownPosition } from '../../../helpers/get-dropdown-position';
 import type { TDropdownPlacement } from '../../../helpers/get-dropdown-position';
@@ -48,6 +50,7 @@ const InputSelect = forwardRef<HTMLDivElement, TInputSelectProps>(
       size = 'md',
       color = 'primary',
       disabled = false,
+      className,
       ...props
     },
     forwardedRef,
@@ -336,7 +339,13 @@ const InputSelect = forwardRef<HTMLDivElement, TInputSelectProps>(
         : undefined;
 
     return (
-      <SInputSelect ref={setRefs} {...props}>
+      <SInputSelect ref={setRefs} {...props}
+        className={mergeClasses(
+          inputSelectClasses.root,
+          disabled && inputSelectClasses.disabled,
+          open && inputSelectClasses.open,
+          className,
+        )}>
         <SInputSelectTrigger
           ref={triggerRef}
           type="button"
@@ -401,5 +410,6 @@ const InputSelect = forwardRef<HTMLDivElement, TInputSelectProps>(
 
 InputSelect.displayName = 'InputSelect';
 
+export { inputSelectClasses } from './classes';
 export { InputSelect };
 export default InputSelect;

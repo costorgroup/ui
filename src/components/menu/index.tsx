@@ -9,6 +9,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { menuClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { useTheme } from '@emotion/react';
 import { getMenuPosition } from './get-coords';
@@ -39,7 +41,7 @@ const MenuPanel = ({
   onMouseEnter,
   onMouseLeave,
   panelRef,
-  ...props
+  className, ...props
 }: TMenuPanelProps) => {
   const theme = useTheme();
   const menu = useContext(MenuContext);
@@ -240,6 +242,10 @@ const MenuPanel = ({
           }
         }}
         {...props}
+        className={mergeClasses(
+          menuClasses.root,
+          className,
+        )}
       >
         {children}
       </MenuBase>
@@ -257,6 +263,7 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
       anchorEl = null,
       open = false,
       onClose,
+      className,
       ...props
     },
     ref,
@@ -305,5 +312,6 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
 
 Menu.displayName = 'Menu';
 
+export { menuClasses } from './classes';
 export { Menu };
 export default Menu;

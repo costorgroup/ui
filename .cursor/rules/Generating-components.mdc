@@ -12,6 +12,8 @@ alwaysApply: true
 
 Folder naming is kebab-case; exports are PascalCase.
 
-Each unit keeps `index.tsx`, `styles.ts`, `types.ts`, `*.stories.tsx`, and optional `data.ts(x)`.
+Each unit keeps `index.tsx`, `styles.ts`, `types.ts`, `*.stories.tsx`, optional `classes.ts`, and optional `data.ts(x)`.
+
+Slot classes use `generateUtilityClasses` with a stable `Cui` prefix (`CuiButton-root`) and are exported next to the component (`buttonClasses`). Shared states use global classes (`Cui-disabled`, `Cui-error`, `Cui-focused`, …) so `textFieldClasses.disabled === globalStateClasses.disabled`.
 
 Package entry: named exports on `@costor/ui`; PascalCase subpaths (`@costor/ui/Button`) are generated from kebab-case `index.tsx` folders at build time. Family barrels without a product collision (`Input`, `Table`) stay as named subpaths. Legacy `Blocks` namespace remains empty.

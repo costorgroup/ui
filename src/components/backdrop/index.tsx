@@ -1,4 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { backdropClasses } from './classes';
 import { SBackdrop } from './styles';
 import { TBackdropProps } from './types';
 
@@ -15,6 +17,7 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
       onClose,
       onMouseDown,
       onClick,
+      className,
       ...props
     },
     ref,
@@ -81,6 +84,10 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
           onClose?.();
         }}
         {...props}
+        className={mergeClasses(
+          backdropClasses.root,
+          className,
+        )}
       >
         {children}
       </SBackdrop>
@@ -96,5 +103,6 @@ export type {
   TBackdropJustify,
   TBackdropLayer,
 } from './types';
+export { backdropClasses } from './classes';
 export { Backdrop };
 export default Backdrop;

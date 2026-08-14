@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { skeletonClasses } from './classes';
 import { SSkeleton } from './styles';
 import { TSkeletonProps } from './types';
 
@@ -18,6 +20,7 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
       radius = 'medium',
       animation = 'pulse',
       animationOffset = 0,
+      className,
       ...props
     },
     ref,
@@ -32,6 +35,10 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
         animationOffset={toCssTime(animationOffset)}
         aria-hidden
         {...props}
+        className={mergeClasses(
+          skeletonClasses.root,
+          className,
+        )}
       />
     );
   },
@@ -39,5 +46,6 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
 
 Skeleton.displayName = 'Skeleton';
 
+export { skeletonClasses } from './classes';
 export { Skeleton };
 export default Skeleton;

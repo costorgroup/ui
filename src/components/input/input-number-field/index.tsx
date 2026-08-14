@@ -17,6 +17,11 @@ import { InputIcon } from '../input-icon';
 import { InputWrapper } from '../input-wrapper';
 import { IconButton } from '../../icon-button';
 import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
+import { inputNumberFieldClasses } from './classes';
+import {
   SInputNumberFieldFlipIcon,
   SInputNumberFieldInput,
   SInputNumberFieldSteppers,
@@ -90,11 +95,14 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
       defaultValue,
       disabled,
       readOnly,
+      required,
       name,
       onChange,
       onBlur,
       onKeyDown,
       onWheel,
+      className,
+      'aria-invalid': ariaInvalid,
       ...props
     },
     forwardedRef,
@@ -287,11 +295,23 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
     );
 
     return (
-      <InputWrapper size={size} variant={variant} color={color}>
+      <InputWrapper
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        readOnly={readOnly}
+        error={isAriaInvalid(ariaInvalid)}
+      >
         {spinner ? decrementButton : startIcon != null ? <InputIcon>{startIcon}</InputIcon> : null}
         <SInputNumberFieldInput
           ref={setRefs}
           {...props}
+          className={mergeClasses(
+            inputNumberFieldClasses.root,
+            isAriaInvalid(ariaInvalid) && inputNumberFieldClasses.error,
+            className,
+          )}
           id={id}
           name={name}
           type="number"
@@ -304,6 +324,8 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
           value={displayValue}
           disabled={disabled}
           readOnly={readOnly}
+          required={required}
+          aria-invalid={ariaInvalid}
           $center={spinner}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -329,5 +351,6 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 InputNumberField.displayName = 'InputNumberField';
 
 export type { TInputNumberFieldProps } from './types';
+export { inputNumberFieldClasses } from './classes';
 export { InputNumberField };
 export default InputNumberField;

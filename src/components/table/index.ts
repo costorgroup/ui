@@ -3,6 +3,7 @@ export type {
   TTableBaseProps,
   TTableSize,
 } from './table-base';
+export { tableBaseClasses } from './table-base';
 
 export { TableHead } from './table-head';
 export type { TTableHeadProps } from './table-head';

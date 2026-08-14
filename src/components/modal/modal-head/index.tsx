@@ -1,13 +1,19 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { modalHeadClasses } from './classes';
 import { CloseIcon } from '../../../icons';
 import { IconButton } from '../../icon-button';
 import { SModalHead, SModalHeadClose, SModalHeadContent } from './styles';
 import { TModalHeadProps } from './types';
 
 const ModalHead = forwardRef<HTMLDivElement, TModalHeadProps>(
-  ({ children, onClose, ...props }, ref) => {
+  ({ children, onClose, className, ...props }, ref) => {
     return (
-      <SModalHead ref={ref} {...props}>
+      <SModalHead ref={ref} {...props}
+        className={mergeClasses(
+          modalHeadClasses.root,
+          className,
+        )}>
         {children != null ? (
           <SModalHeadContent>{children}</SModalHeadContent>
         ) : (
@@ -36,5 +42,6 @@ const ModalHead = forwardRef<HTMLDivElement, TModalHeadProps>(
 ModalHead.displayName = 'ModalHead';
 
 export type { TModalHeadProps };
+export { modalHeadClasses } from './classes';
 export { ModalHead };
 export default ModalHead;

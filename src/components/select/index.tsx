@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { selectClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
@@ -20,6 +22,7 @@ const Select = forwardRef<HTMLDivElement, TSelectProps>(
       variant = 'subtle',
       color = 'primary',
       children,
+      className,
       ...props
     },
     ref,
@@ -56,6 +59,12 @@ const Select = forwardRef<HTMLDivElement, TSelectProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          selectClasses.root,
+          error && selectClasses.error,
+          required && selectClasses.required,
+          className,
+        )}
         >
           {children}
         </InputSelect>
@@ -67,5 +76,6 @@ const Select = forwardRef<HTMLDivElement, TSelectProps>(
 Select.displayName = 'Select';
 
 export type { TSelectProps };
+export { selectClasses } from './classes';
 export { Select };
 export default Select;

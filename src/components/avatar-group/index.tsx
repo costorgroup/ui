@@ -5,6 +5,8 @@ import React, {
   ReactElement,
   ReactNode,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { avatarGroupClasses } from './classes';
 import Avatar from '../avatar';
 import { AvatarGroupContext } from '../avatar/context';
 import { SAvatarGroup } from './styles';
@@ -20,6 +22,7 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
       size = 'md',
       radius = 'circle',
       renderSurplus,
+      className,
       ...props
     },
     ref,
@@ -49,7 +52,11 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
 
     return (
       <AvatarGroupContext.Provider value={{ size, radius }}>
-        <SAvatarGroup ref={ref} spacing={spacing} size={size} {...props}>
+        <SAvatarGroup ref={ref} spacing={spacing} size={size} {...props}
+        className={mergeClasses(
+          avatarGroupClasses.root,
+          className,
+        )}>
           {surplusNode}
           {[...visible].reverse()}
         </SAvatarGroup>
@@ -60,5 +67,6 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
 
 AvatarGroup.displayName = 'AvatarGroup';
 
+export { avatarGroupClasses } from './classes';
 export { AvatarGroup };
 export default AvatarGroup;

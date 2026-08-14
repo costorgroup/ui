@@ -8,6 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputRangeFieldClasses } from './classes';
 import {
   SInputRangeField,
   SInputRangeFieldInput,
@@ -183,6 +185,7 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
       onChange,
       onPointerDown,
       onPointerUp,
+      className,
       ...props
     },
     ref,
@@ -539,7 +542,12 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
           }
         }}
       >
-        <SInputRangeFieldRail direction={direction} />
+        <SInputRangeFieldRail direction={direction} 
+        className={mergeClasses(
+          inputRangeFieldClasses.root,
+          className,
+        )}
+      />
         {fillStyles.map((style, index) => (
           <SInputRangeFieldTrack
             key={index}
@@ -597,5 +605,6 @@ export type {
   TRangeValue,
   TRangeValuePosition,
 } from './types';
+export { inputRangeFieldClasses } from './classes';
 export { InputRangeField };
 export default InputRangeField;

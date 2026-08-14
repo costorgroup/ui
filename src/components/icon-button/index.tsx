@@ -1,6 +1,8 @@
-import React, { forwardRef, MouseEvent, useContext } from 'react';
+import React, { forwardRef, MouseEvent, useContext, useState } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { ButtonGroupContext } from '../button-group/context';
 import { InputGroupContext } from '../input-group/context';
+import { iconButtonClasses } from './classes';
 import { SIconButton } from './styles';
 import { TIconButtonProps } from './types';
 
@@ -14,6 +16,10 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
       rounded = false,
       type = 'button',
       onMouseDown,
+      className,
+      disabled,
+      onFocus,
+      onBlur,
       ...props
     },
     ref,
@@ -24,6 +30,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
 
     const variant = variantProp ?? group?.variant ?? 'solid';
     const color = colorProp ?? group?.color ?? 'primary';
+    const [focusVisible, setFocusVisible] = useState(false);
 
     const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
@@ -38,7 +45,21 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
         size={size}
         color={color}
         rounded={rounded}
+        disabled={disabled}
         {...props}
+        className={mergeClasses(
+          iconButtonClasses.root,
+          disabled && iconButtonClasses.disabled,
+          className,
+        )}
+        onFocus={(event) => {
+          setFocusVisible(event.currentTarget.matches(':focus-visible'));
+          onFocus?.(event);
+        }}
+        onBlur={(event) => {
+          setFocusVisible(false);
+          onBlur?.(event);
+        }}
         onMouseDown={handleMouseDown}
       >
         {children}
@@ -49,5 +70,6 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
 
 IconButton.displayName = 'IconButton';
 
+export { iconButtonClasses } from './classes';
 export { IconButton };
 export default IconButton;

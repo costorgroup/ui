@@ -1,4 +1,6 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { imageClasses } from './classes';
 import { ImageIcon } from '../../icons';
 import { SImage, SImageMedia } from './styles';
 import { TImageProps } from './types';
@@ -14,6 +16,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
       alt = '',
       onLoad,
       onError,
+      className,
       ...props
     },
     ref,
@@ -74,6 +77,10 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
         height={height}
         radius={radius}
         showFallback={showFallback && !showImage}
+        className={mergeClasses(
+          imageClasses.root,
+          className,
+        )}
       >
         {showFallback && !showImage ? (
           <SImageMedia
@@ -110,5 +117,6 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
 
 Image.displayName = 'Image';
 
+export { imageClasses } from './classes';
 export { Image };
 export default Image;

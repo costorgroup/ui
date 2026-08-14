@@ -8,6 +8,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { menuItemClasses } from './classes';
 import { ArrowRightIcon } from '../../../icons';
 import { MenuItemContext } from '../context';
 import { SMenuItem, SMenuItemLabel } from './styles';
@@ -27,6 +29,7 @@ const MenuItem = forwardRef<HTMLButtonElement, TMenuItemProps>(
       color = 'default',
       disabled = false,
       onClick,
+      className,
       ...props
     },
     forwardedRef,
@@ -125,6 +128,11 @@ const MenuItem = forwardRef<HTMLButtonElement, TMenuItemProps>(
             }
           }}
           {...props}
+        className={mergeClasses(
+          menuItemClasses.root,
+          disabled && menuItemClasses.disabled,
+          className,
+        )}
         >
           <SMenuItemLabel>{label}</SMenuItemLabel>
           {hasSubmenu ? <ArrowRightIcon /> : null}
@@ -138,5 +146,6 @@ const MenuItem = forwardRef<HTMLButtonElement, TMenuItemProps>(
 MenuItem.displayName = 'MenuItem';
 
 export type { TMenuItemProps };
+export { menuItemClasses } from './classes';
 export { MenuItem };
 export default MenuItem;

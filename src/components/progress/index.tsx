@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { progressClasses } from './classes';
 import { SProgress, SProgressFill, SProgressGap, SProgressRail } from './styles';
 import { TProgressProps } from './types';
 
@@ -21,6 +23,7 @@ const Progress = forwardRef<HTMLDivElement, TProgressProps>(
       animated = false,
       role = 'progressbar',
       'aria-label': ariaLabel = 'Progress',
+      className,
       ...props
     },
     ref,
@@ -47,6 +50,10 @@ const Progress = forwardRef<HTMLDivElement, TProgressProps>(
         aria-valuenow={clamped}
         aria-busy={canAnimate || undefined}
         {...props}
+        className={mergeClasses(
+          progressClasses.root,
+          className,
+        )}
       >
         {canAnimate ? (
           <SProgressRail>
@@ -65,5 +72,6 @@ const Progress = forwardRef<HTMLDivElement, TProgressProps>(
 
 Progress.displayName = 'Progress';
 
+export { progressClasses } from './classes';
 export { Progress };
 export default Progress;

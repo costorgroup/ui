@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { modalClasses } from './classes';
 import { Backdrop } from '../backdrop';
 import { Portal } from '../portal';
 import { ModalBase } from './modal-base';
@@ -16,6 +18,7 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
       size = 'md',
       scrollable = true,
       onClose,
+      className,
       ...props
     },
     ref,
@@ -31,7 +34,11 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
           lockScroll
           onClose={onClose}
         >
-          <ModalBase ref={ref} size={size} scrollable={scrollable} {...props}>
+          <ModalBase ref={ref} size={size} scrollable={scrollable} {...props}
+        className={mergeClasses(
+          modalClasses.root,
+          className,
+        )}>
             {title != null || onClose != null ? (
               <ModalHead onClose={onClose}>{title}</ModalHead>
             ) : null}
@@ -49,5 +56,6 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
 Modal.displayName = 'Modal';
 
 export type { TModalProps, TModalSize } from './types';
+export { modalClasses } from './classes';
 export { Modal };
 export default Modal;

@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { accordionClasses } from './classes';
 import { AccordionBase } from './accordion-base';
 import { AccordionSummary } from './accordion-summary';
 import { AccordionDetails } from './accordion-details';
@@ -19,6 +21,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       color,
       variant,
       size,
+      className,
       ...props
     },
     ref,
@@ -34,6 +37,12 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         variant={variant}
         size={size}
         {...props}
+        className={mergeClasses(
+          accordionClasses.root,
+          disabled && accordionClasses.disabled,
+          expanded && accordionClasses.expanded,
+          className,
+        )}
       >
         <AccordionSummary
           expandIcon={icon ?? <ArrowBottomIcon />}
@@ -52,5 +61,6 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
 Accordion.displayName = 'Accordion';
 
 export type { TAccordionProps };
+export { accordionClasses } from './classes';
 export { Accordion };
 export default Accordion;

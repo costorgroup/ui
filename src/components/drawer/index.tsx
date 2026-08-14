@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { drawerClasses } from './classes';
 import { Backdrop } from '../backdrop';
 import type { TBackdropAlign, TBackdropJustify } from '../backdrop/types';
 import { Portal } from '../portal';
@@ -33,6 +35,7 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
       anchor = 'left',
       scrollable = true,
       onClose,
+      className,
       ...props
     },
     ref,
@@ -53,6 +56,10 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
             scrollable={scrollable}
             anchor={anchor}
             {...props}
+        className={mergeClasses(
+          drawerClasses.root,
+          className,
+        )}
           >
             {title != null ? <DrawerHead>{title}</DrawerHead> : null}
             {children != null ? (
@@ -69,5 +76,6 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
 Drawer.displayName = 'Drawer';
 
 export type { TDrawerProps, TDrawerSize, TDrawerAnchor } from './types';
+export { drawerClasses } from './classes';
 export { Drawer };
 export default Drawer;

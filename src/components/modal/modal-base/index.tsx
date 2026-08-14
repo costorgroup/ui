@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { modalBaseClasses } from './classes';
 import { SModalBase } from './styles';
 import { TModalBaseProps } from './types';
 
@@ -10,6 +12,7 @@ const ModalBase = forwardRef<HTMLDivElement, TModalBaseProps>(
       scrollable = true,
       role = 'dialog',
       onClick,
+      className,
       ...props
     },
     ref,
@@ -26,6 +29,10 @@ const ModalBase = forwardRef<HTMLDivElement, TModalBaseProps>(
           onClick?.(event);
         }}
         {...props}
+        className={mergeClasses(
+          modalBaseClasses.root,
+          className,
+        )}
       >
         {children}
       </SModalBase>
@@ -36,5 +43,6 @@ const ModalBase = forwardRef<HTMLDivElement, TModalBaseProps>(
 ModalBase.displayName = 'ModalBase';
 
 export type { TModalBaseProps, TModalSize } from './types';
+export { modalBaseClasses } from './classes';
 export { ModalBase };
 export default ModalBase;

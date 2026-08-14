@@ -1,4 +1,6 @@
 import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { avatarClasses } from './classes';
 import { getInitials } from '../../helpers';
 import { AvatarGroupContext } from './context';
 import { SAvatar } from './styles';
@@ -14,6 +16,7 @@ const Avatar = forwardRef<HTMLDivElement, TAvatarProps>(
       radius: radiusProp,
       children,
       imgProps,
+      className,
       ...props
     },
     ref,
@@ -49,6 +52,10 @@ const Avatar = forwardRef<HTMLDivElement, TAvatarProps>(
         role={showImage || initials || children ? undefined : 'img'}
         aria-label={label || undefined}
         {...props}
+        className={mergeClasses(
+          avatarClasses.root,
+          className,
+        )}
       >
         {hasSrc && !failed ? (
           <img
@@ -79,5 +86,6 @@ const Avatar = forwardRef<HTMLDivElement, TAvatarProps>(
 
 Avatar.displayName = 'Avatar';
 
+export { avatarClasses } from './classes';
 export { Avatar };
 export default Avatar;

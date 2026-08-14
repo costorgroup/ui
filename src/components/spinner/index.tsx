@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { spinnerClasses } from './classes';
 import { SSpinner } from './styles';
 import { TSpinnerProps } from './types';
 
@@ -36,6 +38,7 @@ const Spinner = forwardRef<SVGSVGElement, TSpinnerProps>(
       thickness = 2,
       role = 'status',
       'aria-label': ariaLabel = 'Loading',
+      className,
       ...props
     },
     ref,
@@ -63,6 +66,10 @@ const Spinner = forwardRef<SVGSVGElement, TSpinnerProps>(
         role={role}
         aria-label={ariaLabel}
         {...props}
+        className={mergeClasses(
+          spinnerClasses.root,
+          className,
+        )}
       >
         <circle cx={VIEWBOX_CENTER} cy={VIEWBOX_CENTER} r={radius} pathLength={100} />
       </SSpinner>
@@ -72,5 +79,6 @@ const Spinner = forwardRef<SVGSVGElement, TSpinnerProps>(
 
 Spinner.displayName = 'Spinner';
 
+export { spinnerClasses } from './classes';
 export { Spinner };
 export default Spinner;

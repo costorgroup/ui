@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { appBarBaseClasses } from './classes';
 import { SAppBarBase } from './styles';
 import { TAppBarBaseProps } from './types';
 
@@ -10,6 +12,7 @@ const AppBarBase = forwardRef<HTMLElement, TAppBarBaseProps>(
       variant = 'subtle',
       size = 'md',
       position = 'static',
+      className,
       ...props
     },
     ref,
@@ -22,6 +25,10 @@ const AppBarBase = forwardRef<HTMLElement, TAppBarBaseProps>(
         size={size}
         position={position}
         {...props}
+        className={mergeClasses(
+          appBarBaseClasses.root,
+          className,
+        )}
       >
         {children}
       </SAppBarBase>
@@ -37,5 +44,6 @@ export type {
   TAppBarSize,
   TAppBarPosition,
 } from './types';
+export { appBarBaseClasses } from './classes';
 export { AppBarBase };
 export default AppBarBase;

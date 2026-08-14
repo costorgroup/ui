@@ -277,6 +277,11 @@
       "import": "./dist/components/date-picker-field/index.js",
       "require": "./dist/components/date-picker-field/index.cjs"
     },
+    "./Divider": {
+      "types": "./dist/components/divider/index.d.ts",
+      "import": "./dist/components/divider/index.js",
+      "require": "./dist/components/divider/index.cjs"
+    },
     "./Drawer": {
       "types": "./dist/components/drawer/index.d.ts",
       "import": "./dist/components/drawer/index.js",
@@ -491,6 +496,11 @@
       "types": "./dist/components/kbd/index.d.ts",
       "import": "./dist/components/kbd/index.js",
       "require": "./dist/components/kbd/index.cjs"
+    },
+    "./Link": {
+      "types": "./dist/components/link/index.d.ts",
+      "import": "./dist/components/link/index.js",
+      "require": "./dist/components/link/index.cjs"
     },
     "./List": {
       "types": "./dist/components/list/index.d.ts",

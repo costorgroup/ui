@@ -232,7 +232,7 @@ export const SInputRichTextContent = styled('div')<{ minHeight: string }>`
     padding: 0;
   }
 
-  .tiptap p.is-editor-empty:first-child::before {
+  .tiptap p.is-editor-empty:first-of-type::before {
     content: attr(data-placeholder);
     float: left;
     height: 0;

@@ -1,4 +1,6 @@
 import React, { forwardRef, useCallback, useMemo, useState } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { accordionBaseClasses } from './classes';
 import { AccordionContext } from './context';
 import { SAccordionBase } from './styles';
 import { TAccordionBaseProps } from './types';
@@ -14,6 +16,7 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
       color = 'primary',
       variant = 'subtle',
       size = 'md',
+      className,
       ...props
     },
     ref,
@@ -64,6 +67,12 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
           variant={variant}
           size={size}
           {...props}
+        className={mergeClasses(
+          accordionBaseClasses.root,
+          disabled && accordionBaseClasses.disabled,
+          expanded && accordionBaseClasses.expanded,
+          className,
+        )}
         >
           {children}
         </SAccordionBase>
@@ -77,5 +86,6 @@ AccordionBase.displayName = 'AccordionBase';
 export type { TAccordionBaseProps };
 export type { TAccordionSize, TAccordionVariant } from './context';
 export { AccordionContext } from './context';
+export { accordionBaseClasses } from './classes';
 export { AccordionBase };
 export default AccordionBase;

@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { datePickerFieldClasses } from './classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputDateField } from '../input/input-date-field';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
@@ -20,6 +22,7 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
       variant = 'subtle',
       color = 'primary',
       id,
+      className,
       ...props
     },
     ref,
@@ -59,6 +62,12 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
           color={tone}
           aria-invalid={error || undefined}
           {...props}
+        className={mergeClasses(
+          datePickerFieldClasses.root,
+          error && datePickerFieldClasses.error,
+          required && datePickerFieldClasses.required,
+          className,
+        )}
         />
       </InputFieldLayout>
     );
@@ -72,5 +81,6 @@ export type {
   TDatePickerDisplayType,
   TTimePickerDisplayType,
 } from './types';
+export { datePickerFieldClasses } from './classes';
 export { DatePickerField };
 export default DatePickerField;

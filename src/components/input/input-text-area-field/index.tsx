@@ -5,6 +5,11 @@ import React, {
   useLayoutEffect,
   useRef,
 } from 'react';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
+import { inputTextAreaFieldClasses } from './classes';
 import { SInputTextAreaField } from './styles';
 import { TInputTextAreaFieldProps } from './types';
 
@@ -16,7 +21,7 @@ const syncHeight = (element: HTMLTextAreaElement) => {
 const InputTextAreaField = forwardRef<
   HTMLTextAreaElement,
   TInputTextAreaFieldProps
->(({ autoGrow = false, rows = 3, onChange, ...props }, forwardedRef) => {
+>(({ autoGrow = false, rows = 3, onChange, className, disabled, readOnly, required, 'aria-invalid': ariaInvalid, ...props }, forwardedRef) => {
   const localRef = useRef<HTMLTextAreaElement>(null);
 
   const setRefs = useCallback(
@@ -54,12 +59,25 @@ const InputTextAreaField = forwardRef<
       rows={rows}
       autoGrow={autoGrow}
       onChange={handleChange}
+      disabled={disabled}
+      readOnly={readOnly}
+      required={required}
+      aria-invalid={ariaInvalid}
       {...props}
+      className={mergeClasses(
+        inputTextAreaFieldClasses.root,
+        disabled && inputTextAreaFieldClasses.disabled,
+        isAriaInvalid(ariaInvalid) && inputTextAreaFieldClasses.error,
+        readOnly && inputTextAreaFieldClasses.readOnly,
+        required && inputTextAreaFieldClasses.required,
+        className,
+      )}
     />
   );
 });
 
 InputTextAreaField.displayName = 'InputTextAreaField';
 
+export { inputTextAreaFieldClasses } from './classes';
 export { InputTextAreaField };
 export default InputTextAreaField;

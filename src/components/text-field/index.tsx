@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { InputFieldLayout } from '../input/input-base';
 import { InputLabel } from '../input/input-label';
 import { InputWrapper } from '../input/input-wrapper';
@@ -7,6 +8,7 @@ import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { InputIcon } from '../input/input-icon';
+import { textFieldClasses } from './classes';
 import { TTextFieldProps } from './types';
 
 const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
@@ -24,6 +26,9 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
       startIcon,
       endIcon,
       id,
+      className,
+      disabled,
+      readOnly,
       ...props
     },
     ref,
@@ -35,31 +40,56 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
       <InputFieldLayout
         ref={ref}
         fullWidth={fullWidth}
+        className={mergeClasses(
+          textFieldClasses.root,
+          disabled && textFieldClasses.disabled,
+          error && textFieldClasses.error,
+          required && textFieldClasses.required,
+          className,
+        )}
         label={
           label != null ? (
-            <InputLabel htmlFor={fieldId} required={required} size={size}>
+            <InputLabel
+              htmlFor={fieldId}
+              required={required}
+              error={error}
+              disabled={disabled}
+              size={size}
+            >
               {label}
             </InputLabel>
           ) : null
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="default">{description}</Text>
+            <Text size={inputDescriptionTextSize[size]} color="default">
+              {description}
+            </Text>
           ) : null
         }
         helperText={
           helperText != null ? (
-            <InputHelperText size={size} color={tone}>
+            <InputHelperText size={size} color={tone} error={error}>
               {helperText}
             </InputHelperText>
           ) : null
         }
       >
-        <InputWrapper size={size} variant={variant} color={tone}>
+        <InputWrapper
+          size={size}
+          variant={variant}
+          color={tone}
+          error={error}
+          disabled={disabled}
+          readOnly={readOnly}
+        >
           {startIcon != null ? <InputIcon>{startIcon}</InputIcon> : null}
           <InputTextField
             id={fieldId}
             aria-invalid={error || undefined}
+            disabled={disabled}
+            readOnly={readOnly}
+            required={required}
             {...props}
           />
           {endIcon != null ? <InputIcon>{endIcon}</InputIcon> : null}
@@ -72,5 +102,6 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
 TextField.displayName = 'TextField';
 
 export type { TTextFieldProps };
+export { textFieldClasses } from './classes';
 export { TextField };
 export default TextField;

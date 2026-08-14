@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { drawerBaseClasses } from './classes';
 import { SDrawerBase } from './styles';
 import { TDrawerBaseProps } from './types';
 
@@ -11,6 +13,7 @@ const DrawerBase = forwardRef<HTMLDivElement, TDrawerBaseProps>(
       scrollable = true,
       role = 'dialog',
       onClick,
+      className,
       ...props
     },
     ref,
@@ -28,6 +31,10 @@ const DrawerBase = forwardRef<HTMLDivElement, TDrawerBaseProps>(
           onClick?.(event);
         }}
         {...props}
+        className={mergeClasses(
+          drawerBaseClasses.root,
+          className,
+        )}
       >
         {children}
       </SDrawerBase>
@@ -42,5 +49,6 @@ export type {
   TDrawerSize,
   TDrawerAnchor,
 } from './types';
+export { drawerBaseClasses } from './classes';
 export { DrawerBase };
 export default DrawerBase;

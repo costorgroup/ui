@@ -1,4 +1,6 @@
 import React, { ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { gridClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SGrid } from './styles';
 import { TGridOwnProps, TGridProps } from './types';
@@ -15,7 +17,7 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
     alignItems,
     justifyItems,
     minChildWidth,
-    ...props
+    className, ...props
   }: TGridProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -32,6 +34,10 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
       justifyItems={justifyItems}
       minChildWidth={minChildWidth}
       {...props}
+        className={mergeClasses(
+          gridClasses.root,
+          className,
+        )}
     >
       {children}
     </SGrid>
@@ -41,5 +47,6 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
 Grid.displayName = 'Grid';
 
 export type { TGridProps, TGridOwnProps, TGridGap, TGridTrack } from './types';
+export { gridClasses } from './classes';
 export { Grid };
 export default Grid;

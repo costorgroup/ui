@@ -1,4 +1,6 @@
 import React, { ReactNode, forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputBaseClasses } from './classes';
 import { useTheme } from '@emotion/react';
 import { SInputBase } from './styles';
 import {
@@ -15,6 +17,7 @@ const InputBase = forwardRef<HTMLDivElement, TInputBaseProps>(
       justify,
       align,
       fullWidth = false,
+      className,
       ...props
     },
     ref,
@@ -27,6 +30,10 @@ const InputBase = forwardRef<HTMLDivElement, TInputBaseProps>(
         align={align}
         fullWidth={fullWidth}
         {...props}
+        className={mergeClasses(
+          inputBaseClasses.root,
+          className,
+        )}
       >
         {children}
       </SInputBase>
@@ -181,4 +188,5 @@ export type {
   TInputControlDirection,
 } from './types';
 export { InputBase, InputFieldLayout };
+export { inputBaseClasses } from './classes';
 export default InputBase;

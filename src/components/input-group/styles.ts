@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
-import { SInputWrapper } from '../input/input-wrapper/styles';
-import { SButton } from '../button/styles';
-import { SIconButton } from '../icon-button/styles';
+import { buttonClasses } from '../button/classes';
+import { iconButtonClasses } from '../icon-button/classes';
+import { inputWrapperClasses } from '../input/input-wrapper/classes';
 import { TInputGroupProps } from './types';
 
 type TSInputGroupProps = Pick<TInputGroupProps, 'orientation'>;
 
 const customProps = new Set(['orientation']);
 
-const itemSelector = `& > ${SInputWrapper}, & > ${SButton}, & > ${SIconButton}`;
+const itemSelector = `& > .${inputWrapperClasses.root}, & > .${buttonClasses.root}, & > .${iconButtonClasses.root}`;
 
 export const SInputGroup = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -27,7 +27,7 @@ export const SInputGroup = styled('div', {
     width: auto;
   }
 
-  & > ${SInputWrapper} {
+  & > .${inputWrapperClasses.root} {
     flex: 1 1 auto;
     min-width: 0;
   }
@@ -42,22 +42,22 @@ export const SInputGroup = styled('div', {
     orientation === 'vertical'
       ? `
         ${itemSelector} {
-          & + ${SInputWrapper},
-          & + ${SButton},
-          & + ${SIconButton} {
+          & + .${inputWrapperClasses.root},
+          & + .${buttonClasses.root},
+          & + .${iconButtonClasses.root} {
             margin-top: -1px;
           }
 
-          &:not(:first-child):not(:last-child) {
+          &:not(:first-of-type):not(:last-of-type) {
             border-radius: 0;
           }
 
-          &:first-child:not(:last-child) {
+          &:first-of-type:not(:last-of-type) {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
           }
 
-          &:last-child:not(:first-child) {
+          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
           }
@@ -65,22 +65,22 @@ export const SInputGroup = styled('div', {
       `
       : `
         ${itemSelector} {
-          & + ${SInputWrapper},
-          & + ${SButton},
-          & + ${SIconButton} {
+          & + .${inputWrapperClasses.root},
+          & + .${buttonClasses.root},
+          & + .${iconButtonClasses.root} {
             margin-left: -1px;
           }
 
-          &:not(:first-child):not(:last-child) {
+          &:not(:first-of-type):not(:last-of-type) {
             border-radius: 0;
           }
 
-          &:first-child:not(:last-child) {
+          &:first-of-type:not(:last-of-type) {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
           }
 
-          &:last-child:not(:first-child) {
+          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
           }

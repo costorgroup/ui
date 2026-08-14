@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { inputSwitchClasses } from './classes';
 import {
   SInputSwitch,
   SInputSwitchControl,
@@ -8,7 +10,7 @@ import {
 import { TInputSwitchProps } from './types';
 
 const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
-  ({ variant = 'subtle', size = 'md', color = 'primary', ...props }, ref) => {
+  ({ variant = 'subtle', size = 'md', color = 'primary', className, ...props }, ref) => {
     return (
       <SInputSwitch>
         <SInputSwitchInput
@@ -16,6 +18,10 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
           type="checkbox"
           role="switch"
           {...props}
+        className={mergeClasses(
+          inputSwitchClasses.root,
+          className,
+        )}
         />
         <SInputSwitchControl variant={variant} size={size} color={color}>
           <SInputSwitchThumb />
@@ -27,5 +33,6 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
 
 InputSwitch.displayName = 'InputSwitch';
 
+export { inputSwitchClasses } from './classes';
 export { InputSwitch };
 export default InputSwitch;

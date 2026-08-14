@@ -12,4 +12,5 @@ export type TButtonGroupProps = Omit<
   orientation?: TButtonGroupOrientation;
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  disabled?: boolean;
 };

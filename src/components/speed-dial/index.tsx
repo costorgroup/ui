@@ -6,6 +6,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { speedDialClasses } from './classes';
 import { CloseIcon, MoreHorizontalIcon } from '../../icons';
 import { IconButton } from '../icon-button';
 import { speedDialLayout } from './data';
@@ -33,6 +35,7 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
       onMouseEnter,
       onMouseLeave,
       'aria-label': ariaLabel = 'Speed dial',
+      className,
       ...props
     },
     ref,
@@ -133,7 +136,14 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
         >
           <SSpeedDialIconWrap>
             <SSpeedDialIcon data-slot="icon" data-open={open}>
-              {icon ?? <MoreHorizontalIcon />}
+              {icon ?? <MoreHorizontalIcon 
+        className={mergeClasses(
+          speedDialClasses.root,
+          disabled && speedDialClasses.disabled,
+          open && speedDialClasses.open,
+          className,
+        )}
+      />}
             </SSpeedDialIcon>
             <SSpeedDialIcon data-slot="close" data-open={open}>
               {closeIcon ?? <CloseIcon />}
@@ -163,5 +173,6 @@ export type {
   TSpeedDialItemsDirection,
   TSpeedDialInset,
 } from './types';
+export { speedDialClasses } from './classes';
 export { SpeedDial };
 export default SpeedDial;

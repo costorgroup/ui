@@ -1,4 +1,6 @@
 import React, { forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { alertClasses } from './classes';
 import { CloseIcon } from '../../icons';
 import { AlertBase, AlertBody } from './alert-base';
 import { AlertIcon } from './alert-icon';
@@ -19,6 +21,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       variant = 'subtle',
       size = 'md',
       onClose,
+      className,
       ...props
     },
     ref,
@@ -33,6 +36,10 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
         size={size}
         closable={closable}
         {...props}
+        className={mergeClasses(
+          alertClasses.root,
+          className,
+        )}
       >
         {icon != null ? <AlertIcon>{icon}</AlertIcon> : null}
         <AlertBody>
@@ -59,5 +66,6 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
 Alert.displayName = 'Alert';
 
 export type { TAlertProps, TAlertVariant, TAlertSize } from './types';
+export { alertClasses } from './classes';
 export { Alert };
 export default Alert;

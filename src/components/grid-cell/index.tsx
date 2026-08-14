@@ -1,4 +1,6 @@
 import React, { ElementType, forwardRef } from 'react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { gridCellClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SGridCell } from './styles';
 import { TGridCellOwnProps, TGridCellProps } from './types';
@@ -11,7 +13,7 @@ const GridCell = forwardRef(function GridCell<C extends ElementType = 'div'>(
     rowSpan = 1,
     alignSelf,
     justifySelf,
-    ...props
+    className, ...props
   }: TGridCellProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -24,6 +26,10 @@ const GridCell = forwardRef(function GridCell<C extends ElementType = 'div'>(
       alignSelf={alignSelf}
       justifySelf={justifySelf}
       {...props}
+        className={mergeClasses(
+          gridCellClasses.root,
+          className,
+        )}
     >
       {children}
     </SGridCell>
@@ -33,5 +39,6 @@ const GridCell = forwardRef(function GridCell<C extends ElementType = 'div'>(
 GridCell.displayName = 'GridCell';
 
 export type { TGridCellProps, TGridCellOwnProps } from './types';
+export { gridCellClasses } from './classes';
 export { GridCell };
 export default GridCell;
