@@ -1,0 +1,460 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@costor/ui": [
+        "./src/index.ts"
+      ],
+      "@costor/ui/Accordion": [
+        "./src/components/accordion/index.tsx"
+      ],
+      "@costor/ui/AccordionBase": [
+        "./src/components/accordion/accordion-base/index.tsx"
+      ],
+      "@costor/ui/AccordionDetails": [
+        "./src/components/accordion/accordion-details/index.tsx"
+      ],
+      "@costor/ui/AccordionGroup": [
+        "./src/components/accordion/accordion-group/index.tsx"
+      ],
+      "@costor/ui/AccordionSummary": [
+        "./src/components/accordion/accordion-summary/index.tsx"
+      ],
+      "@costor/ui/adapters": [
+        "./src/adapters/index.ts"
+      ],
+      "@costor/ui/adapters/AdapterDate": [
+        "./src/adapters/AdapterDate.ts"
+      ],
+      "@costor/ui/adapters/AdapterDateFns": [
+        "./src/adapters/AdapterDateFns.ts"
+      ],
+      "@costor/ui/adapters/AdapterDayjs": [
+        "./src/adapters/AdapterDayjs.ts"
+      ],
+      "@costor/ui/adapters/AdapterLuxon": [
+        "./src/adapters/AdapterLuxon.ts"
+      ],
+      "@costor/ui/adapters/AdapterMoment": [
+        "./src/adapters/AdapterMoment.ts"
+      ],
+      "@costor/ui/Alert": [
+        "./src/components/alert/index.tsx"
+      ],
+      "@costor/ui/AlertActions": [
+        "./src/components/alert/alert-actions/index.tsx"
+      ],
+      "@costor/ui/AlertBase": [
+        "./src/components/alert/alert-base/index.tsx"
+      ],
+      "@costor/ui/AlertContent": [
+        "./src/components/alert/alert-content/index.tsx"
+      ],
+      "@costor/ui/AlertIcon": [
+        "./src/components/alert/alert-icon/index.tsx"
+      ],
+      "@costor/ui/AlertTitle": [
+        "./src/components/alert/alert-title/index.tsx"
+      ],
+      "@costor/ui/AppBar": [
+        "./src/components/app-bar/index.tsx"
+      ],
+      "@costor/ui/AppBarBase": [
+        "./src/components/app-bar/app-bar-base/index.tsx"
+      ],
+      "@costor/ui/AppBarItems": [
+        "./src/components/app-bar/app-bar-items/index.tsx"
+      ],
+      "@costor/ui/AppBarLogo": [
+        "./src/components/app-bar/app-bar-logo/index.tsx"
+      ],
+      "@costor/ui/AspectRatio": [
+        "./src/components/aspect-ratio/index.tsx"
+      ],
+      "@costor/ui/AutoComplete": [
+        "./src/components/auto-complete/index.tsx"
+      ],
+      "@costor/ui/AutoCompleteOption": [
+        "./src/components/auto-complete-option/index.tsx"
+      ],
+      "@costor/ui/Avatar": [
+        "./src/components/avatar/index.tsx"
+      ],
+      "@costor/ui/AvatarGroup": [
+        "./src/components/avatar-group/index.tsx"
+      ],
+      "@costor/ui/Backdrop": [
+        "./src/components/backdrop/index.tsx"
+      ],
+      "@costor/ui/Badge": [
+        "./src/components/badge/index.tsx"
+      ],
+      "@costor/ui/Blockquote": [
+        "./src/components/blockquote/index.tsx"
+      ],
+      "@costor/ui/BlockquoteBase": [
+        "./src/components/blockquote/blockquote-base/index.tsx"
+      ],
+      "@costor/ui/BlockquoteCaption": [
+        "./src/components/blockquote/blockquote-caption/index.tsx"
+      ],
+      "@costor/ui/BlockquoteContent": [
+        "./src/components/blockquote/blockquote-content/index.tsx"
+      ],
+      "@costor/ui/Breadcrumb": [
+        "./src/components/breadcrumb/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbBase": [
+        "./src/components/breadcrumb/breadcrumb-base/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbEllipsis": [
+        "./src/components/breadcrumb/breadcrumb-ellipsis/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbIcon": [
+        "./src/components/breadcrumb/breadcrumb-icon/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbItem": [
+        "./src/components/breadcrumb/breadcrumb-item/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbLink": [
+        "./src/components/breadcrumb/breadcrumb-link/index.tsx"
+      ],
+      "@costor/ui/BreadcrumbSeparator": [
+        "./src/components/breadcrumb/breadcrumb-separator/index.tsx"
+      ],
+      "@costor/ui/Button": [
+        "./src/components/button/index.tsx"
+      ],
+      "@costor/ui/ButtonGroup": [
+        "./src/components/button-group/index.tsx"
+      ],
+      "@costor/ui/Card": [
+        "./src/components/card/index.tsx"
+      ],
+      "@costor/ui/Center": [
+        "./src/components/center/index.tsx"
+      ],
+      "@costor/ui/CheckBox": [
+        "./src/components/check-box/index.tsx"
+      ],
+      "@costor/ui/Chip": [
+        "./src/components/chip/index.tsx"
+      ],
+      "@costor/ui/Code": [
+        "./src/components/code/index.tsx"
+      ],
+      "@costor/ui/ColorPickerField": [
+        "./src/components/color-picker-field/index.tsx"
+      ],
+      "@costor/ui/Container": [
+        "./src/components/container/index.tsx"
+      ],
+      "@costor/ui/DataTable": [
+        "./src/components/data-table/index.tsx"
+      ],
+      "@costor/ui/DatePickerField": [
+        "./src/components/date-picker-field/index.tsx"
+      ],
+      "@costor/ui/Drawer": [
+        "./src/components/drawer/index.tsx"
+      ],
+      "@costor/ui/DrawerActions": [
+        "./src/components/drawer/drawer-actions/index.tsx"
+      ],
+      "@costor/ui/DrawerBase": [
+        "./src/components/drawer/drawer-base/index.tsx"
+      ],
+      "@costor/ui/DrawerBody": [
+        "./src/components/drawer/drawer-body/index.tsx"
+      ],
+      "@costor/ui/DrawerHead": [
+        "./src/components/drawer/drawer-head/index.tsx"
+      ],
+      "@costor/ui/Dropzone": [
+        "./src/components/dropzone/index.tsx"
+      ],
+      "@costor/ui/Em": [
+        "./src/components/em/index.tsx"
+      ],
+      "@costor/ui/FileField": [
+        "./src/components/file-field/index.tsx"
+      ],
+      "@costor/ui/Fixed": [
+        "./src/components/fixed/index.tsx"
+      ],
+      "@costor/ui/Flex": [
+        "./src/components/flex/index.tsx"
+      ],
+      "@costor/ui/FloatingAction": [
+        "./src/components/floating-action/index.tsx"
+      ],
+      "@costor/ui/GlobalStyles": [
+        "./src/components/global-styles/index.tsx"
+      ],
+      "@costor/ui/GradientCard": [
+        "./src/components/gradient-card/index.tsx"
+      ],
+      "@costor/ui/Grid": [
+        "./src/components/grid/index.tsx"
+      ],
+      "@costor/ui/GridCell": [
+        "./src/components/grid-cell/index.tsx"
+      ],
+      "@costor/ui/Heading": [
+        "./src/components/heading/index.tsx"
+      ],
+      "@costor/ui/Highlight": [
+        "./src/components/highlight/index.tsx"
+      ],
+      "@costor/ui/IconButton": [
+        "./src/components/icon-button/index.tsx"
+      ],
+      "@costor/ui/Image": [
+        "./src/components/image/index.tsx"
+      ],
+      "@costor/ui/Input": [
+        "./src/components/input/index.ts"
+      ],
+      "@costor/ui/InputAutoComplete": [
+        "./src/components/input/input-auto-complete/index.tsx"
+      ],
+      "@costor/ui/InputBase": [
+        "./src/components/input/input-base/index.tsx"
+      ],
+      "@costor/ui/InputCheckBox": [
+        "./src/components/input/input-check-box/index.tsx"
+      ],
+      "@costor/ui/InputColorField": [
+        "./src/components/input/input-color-field/index.tsx"
+      ],
+      "@costor/ui/InputDateField": [
+        "./src/components/input/input-date-field/index.tsx"
+      ],
+      "@costor/ui/InputFileField": [
+        "./src/components/input/input-file-field/index.tsx"
+      ],
+      "@costor/ui/InputFileFieldModal": [
+        "./src/components/input/input-file-field-modal/index.tsx"
+      ],
+      "@costor/ui/InputGroup": [
+        "./src/components/input-group/index.tsx"
+      ],
+      "@costor/ui/InputHelperText": [
+        "./src/components/input/input-helper-text/index.tsx"
+      ],
+      "@costor/ui/InputIcon": [
+        "./src/components/input/input-icon/index.tsx"
+      ],
+      "@costor/ui/InputLabel": [
+        "./src/components/input/input-label/index.tsx"
+      ],
+      "@costor/ui/InputNumberField": [
+        "./src/components/input/input-number-field/index.tsx"
+      ],
+      "@costor/ui/InputPinField": [
+        "./src/components/input/input-pin-field/index.tsx"
+      ],
+      "@costor/ui/InputRadioButton": [
+        "./src/components/input/input-radio-button/index.tsx"
+      ],
+      "@costor/ui/InputRangeField": [
+        "./src/components/input/input-range-field/index.tsx"
+      ],
+      "@costor/ui/InputRichTextField": [
+        "./src/components/input/input-rich-text-field/index.tsx"
+      ],
+      "@costor/ui/InputSelect": [
+        "./src/components/input/input-select/index.tsx"
+      ],
+      "@costor/ui/InputSelectOption": [
+        "./src/components/input/input-select-option/index.tsx"
+      ],
+      "@costor/ui/InputSwitch": [
+        "./src/components/input/input-switch/index.tsx"
+      ],
+      "@costor/ui/InputTextAreaField": [
+        "./src/components/input/input-text-area-field/index.tsx"
+      ],
+      "@costor/ui/InputTextField": [
+        "./src/components/input/input-text-field/index.tsx"
+      ],
+      "@costor/ui/InputWrapper": [
+        "./src/components/input/input-wrapper/index.tsx"
+      ],
+      "@costor/ui/Kbd": [
+        "./src/components/kbd/index.tsx"
+      ],
+      "@costor/ui/List": [
+        "./src/components/list/index.tsx"
+      ],
+      "@costor/ui/ListItem": [
+        "./src/components/list-item/index.tsx"
+      ],
+      "@costor/ui/Menu": [
+        "./src/components/menu/index.tsx"
+      ],
+      "@costor/ui/MenuBase": [
+        "./src/components/menu/menu-base/index.tsx"
+      ],
+      "@costor/ui/MenuGroup": [
+        "./src/components/menu/menu-group/index.tsx"
+      ],
+      "@costor/ui/MenuItem": [
+        "./src/components/menu/menu-item/index.tsx"
+      ],
+      "@costor/ui/Modal": [
+        "./src/components/modal/index.tsx"
+      ],
+      "@costor/ui/ModalActions": [
+        "./src/components/modal/modal-actions/index.tsx"
+      ],
+      "@costor/ui/ModalBase": [
+        "./src/components/modal/modal-base/index.tsx"
+      ],
+      "@costor/ui/ModalBody": [
+        "./src/components/modal/modal-body/index.tsx"
+      ],
+      "@costor/ui/ModalHead": [
+        "./src/components/modal/modal-head/index.tsx"
+      ],
+      "@costor/ui/NumberField": [
+        "./src/components/number-field/index.tsx"
+      ],
+      "@costor/ui/Pagination": [
+        "./src/components/pagination/index.tsx"
+      ],
+      "@costor/ui/PaginationBase": [
+        "./src/components/pagination/pagination-base/index.tsx"
+      ],
+      "@costor/ui/PaginationEllipsis": [
+        "./src/components/pagination/pagination-ellipsis/index.tsx"
+      ],
+      "@costor/ui/PaginationItem": [
+        "./src/components/pagination/pagination-item/index.tsx"
+      ],
+      "@costor/ui/PaginationList": [
+        "./src/components/pagination/pagination-list/index.tsx"
+      ],
+      "@costor/ui/PinField": [
+        "./src/components/pin-field/index.tsx"
+      ],
+      "@costor/ui/Portal": [
+        "./src/components/portal/index.tsx"
+      ],
+      "@costor/ui/Progress": [
+        "./src/components/progress/index.tsx"
+      ],
+      "@costor/ui/QrCode": [
+        "./src/components/qr-code/index.tsx"
+      ],
+      "@costor/ui/RadioButton": [
+        "./src/components/radio-button/index.tsx"
+      ],
+      "@costor/ui/RadioButtonGroup": [
+        "./src/components/radio-button-group/index.tsx"
+      ],
+      "@costor/ui/RangeField": [
+        "./src/components/range-field/index.tsx"
+      ],
+      "@costor/ui/RichTextField": [
+        "./src/components/rich-text-field/index.tsx"
+      ],
+      "@costor/ui/ScrollArea": [
+        "./src/components/scroll-area/index.tsx"
+      ],
+      "@costor/ui/Select": [
+        "./src/components/select/index.tsx"
+      ],
+      "@costor/ui/SelectOption": [
+        "./src/components/select-option/index.tsx"
+      ],
+      "@costor/ui/Skeleton": [
+        "./src/components/skeleton/index.tsx"
+      ],
+      "@costor/ui/Slider": [
+        "./src/components/slider/index.tsx"
+      ],
+      "@costor/ui/SliderAction": [
+        "./src/components/slider/slider-action/index.tsx"
+      ],
+      "@costor/ui/SliderActions": [
+        "./src/components/slider/slider-actions/index.tsx"
+      ],
+      "@costor/ui/SliderBase": [
+        "./src/components/slider/slider-base/index.tsx"
+      ],
+      "@costor/ui/SliderContent": [
+        "./src/components/slider/slider-content/index.tsx"
+      ],
+      "@costor/ui/SliderControls": [
+        "./src/components/slider/slider-controls/index.tsx"
+      ],
+      "@costor/ui/SliderPagination": [
+        "./src/components/slider/slider-pagination/index.tsx"
+      ],
+      "@costor/ui/SliderSlide": [
+        "./src/components/slider/slider-slide/index.tsx"
+      ],
+      "@costor/ui/SliderSlides": [
+        "./src/components/slider/slider-slides/index.tsx"
+      ],
+      "@costor/ui/SpeedDial": [
+        "./src/components/speed-dial/index.tsx"
+      ],
+      "@costor/ui/Spinner": [
+        "./src/components/spinner/index.tsx"
+      ],
+      "@costor/ui/Switch": [
+        "./src/components/switch/index.tsx"
+      ],
+      "@costor/ui/Tab": [
+        "./src/components/tab/index.tsx"
+      ],
+      "@costor/ui/TabBase": [
+        "./src/components/tab/tab-base/index.tsx"
+      ],
+      "@costor/ui/TabIcon": [
+        "./src/components/tab/tab-icon/index.tsx"
+      ],
+      "@costor/ui/TabLabel": [
+        "./src/components/tab/tab-label/index.tsx"
+      ],
+      "@costor/ui/Table": [
+        "./src/components/table/index.ts"
+      ],
+      "@costor/ui/TableBase": [
+        "./src/components/table/table-base/index.tsx"
+      ],
+      "@costor/ui/TableBody": [
+        "./src/components/table/table-body/index.tsx"
+      ],
+      "@costor/ui/TableCell": [
+        "./src/components/table/table-cell/index.tsx"
+      ],
+      "@costor/ui/TableHead": [
+        "./src/components/table/table-head/index.tsx"
+      ],
+      "@costor/ui/TableRow": [
+        "./src/components/table/table-row/index.tsx"
+      ],
+      "@costor/ui/Tabs": [
+        "./src/components/tabs/index.tsx"
+      ],
+      "@costor/ui/TabsBase": [
+        "./src/components/tabs/tabs-base/index.tsx"
+      ],
+      "@costor/ui/Text": [
+        "./src/components/text/index.tsx"
+      ],
+      "@costor/ui/TextArea": [
+        "./src/components/text-area/index.tsx"
+      ],
+      "@costor/ui/TextField": [
+        "./src/components/text-field/index.tsx"
+      ],
+      "@costor/ui/Tooltip": [
+        "./src/components/tooltip/index.tsx"
+      ]
+    }
+  }
+}

@@ -1,0 +1,17 @@
+---
+alwaysApply: true
+---
+
+## Architecture
+
+- **`src/blocks`**: legacy barrel only (`export * as Blocks`); prefer colocated DIY parts under product families.
+- **`src/components`**: ready-to-use product UI (Alert, Modal, Drawer, Backdrop, Menu, Input parts, …). Compound families colocate DIY parts under the product folder (e.g. `components/accordion/`, `alert/`, `input/`). Public imports are PascalCase and generated from kebab-case folders: `import Button from '@costor/ui/Button'` and `import { Button, TextField } from '@costor/ui'`. Family barrels without a colliding product (`Input`, `Table`) stay as named subpaths.
+- **`src/adapters`**: date adapters (`AdapterDate`, `AdapterDayjs`, …). Import from `@costor/ui/adapters` or `@costor/ui/adapters/AdapterMoment`.
+- **`src/providers`**: app-level providers (SnackbarProvider).
+- **`src/hooks`**: hooks (useSnackbar).
+
+Folder naming is kebab-case; exports are PascalCase.
+
+Each unit keeps `index.tsx`, `styles.ts`, `types.ts`, `*.stories.tsx`, and optional `data.ts(x)`.
+
+Package entry: named exports on `@costor/ui`; PascalCase subpaths (`@costor/ui/Button`) are generated from kebab-case `index.tsx` folders at build time. Family barrels without a product collision (`Input`, `Table`) stay as named subpaths. Legacy `Blocks` namespace remains empty.

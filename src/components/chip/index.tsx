@@ -1,0 +1,37 @@
+import React, { forwardRef } from 'react';
+import { SChip } from './styles';
+import { TChipProps } from './types';
+
+const Chip = forwardRef<HTMLButtonElement, TChipProps>(
+  (
+    {
+      children,
+      variant = 'solid',
+      size = 'md',
+      color = 'primary',
+      rounded = false,
+      type = 'button',
+      ...props
+    },
+    ref,
+  ) => {
+    return (
+      <SChip
+        ref={ref}
+        type={type}
+        variant={variant}
+        size={size}
+        color={color}
+        rounded={rounded}
+        {...props}
+      >
+        {children}
+      </SChip>
+    );
+  },
+);
+
+Chip.displayName = 'Chip';
+
+export { Chip };
+export default Chip;

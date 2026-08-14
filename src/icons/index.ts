@@ -1,0 +1,58 @@
+import EyeIcon from './eye-icon';
+import EyeClosedIcon from './eye-closed-icon';
+import EyeDropperIcon from './eye-dropper-icon';
+import CloseIcon from './close-icon';
+import CheckIcon from './check-icon';
+import MoreHorizontalIcon from './more-horizontal-icon';
+import ArrowRightIcon from './arrow-right-icon';
+import ArrowTopIcon from './arrow-top-icon';
+import ArrowBottomIcon from './arrow-bottom-icon';
+import UndoIcon from './undo-icon';
+import RedoIcon from './redo-icon';
+import ImageIcon from './image-icon';
+import UploadIcon from './upload-icon';
+import type { TEyeIconProps } from './eye-icon/types';
+import type { TEyeClosedIconProps } from './eye-closed-icon/types';
+import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
+import type { TCloseIconProps } from './close-icon/types';
+import type { TCheckIconProps } from './check-icon/types';
+import type { TMoreHorizontalIconProps } from './more-horizontal-icon/types';
+import type { TArrowRightIconProps } from './arrow-right-icon/types';
+import type { TArrowTopIconProps } from './arrow-top-icon/types';
+import type { TArrowBottomIconProps } from './arrow-bottom-icon/types';
+import type { TUndoIconProps } from './undo-icon/types';
+import type { TRedoIconProps } from './redo-icon/types';
+import type { TImageIconProps } from './image-icon/types';
+import type { TUploadIconProps } from './upload-icon/types';
+
+export type {
+  TEyeIconProps,
+  TEyeClosedIconProps,
+  TEyeDropperIconProps,
+  TCloseIconProps,
+  TCheckIconProps,
+  TMoreHorizontalIconProps,
+  TArrowRightIconProps,
+  TArrowTopIconProps,
+  TArrowBottomIconProps,
+  TUndoIconProps,
+  TRedoIconProps,
+  TImageIconProps,
+  TUploadIconProps,
+};
+
+export {
+  EyeIcon,
+  EyeClosedIcon,
+  EyeDropperIcon,
+  CloseIcon,
+  CheckIcon,
+  MoreHorizontalIcon,
+  ArrowRightIcon,
+  ArrowTopIcon,
+  ArrowBottomIcon,
+  UndoIcon,
+  RedoIcon,
+  ImageIcon,
+  UploadIcon,
+};
