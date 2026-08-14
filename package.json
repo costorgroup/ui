@@ -1,11 +1,25 @@
 {
   "name": "@costor/ui",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Costor UI component library",
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "emotion",
+    "costor"
+  ],
+  "homepage": "https://github.com/costorgroup/ui#readme",
+  "bugs": {
+    "url": "https://github.com/costorgroup/ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/costorgroup/ui.git"
+  },
+  "license": "MIT",
+  "author": "Filip Maksimović",
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -764,10 +778,11 @@
       "require": "./dist/components/tooltip/index.cjs"
     }
   },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "sideEffects": false,
   "scripts": {
     "dev": "storybook dev -p 6006",
     "sync:exports": "node scripts/sync-package-map.mjs",
@@ -777,51 +792,13 @@
     "storybook": "storybook dev -p 6006",
     "prepublishOnly": "npm run build"
   },
-  "peerDependencies": {
-    "@emotion/cache": "^11.0.0",
-    "@emotion/css": "^11.0.0",
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
+  "dependencies": {
     "@tiptap/extension-placeholder": "^3.30.0",
     "@tiptap/extension-underline": "^3.30.0",
     "@tiptap/pm": "^3.30.0",
     "@tiptap/react": "^3.30.0",
     "@tiptap/starter-kit": "^3.30.0",
-    "date-fns": "^3.0.0 || ^4.0.0",
-    "dayjs": "^1.11.0",
-    "luxon": "^3.0.0",
-    "moment": "^2.29.0",
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@tiptap/extension-placeholder": {
-      "optional": true
-    },
-    "@tiptap/extension-underline": {
-      "optional": true
-    },
-    "@tiptap/pm": {
-      "optional": true
-    },
-    "@tiptap/react": {
-      "optional": true
-    },
-    "@tiptap/starter-kit": {
-      "optional": true
-    },
-    "date-fns": {
-      "optional": true
-    },
-    "dayjs": {
-      "optional": true
-    },
-    "luxon": {
-      "optional": true
-    },
-    "moment": {
-      "optional": true
-    }
+    "qrcode": "^1.5.4"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.13.5",
@@ -836,11 +813,6 @@
     "@storybook/react": "^8.6.14",
     "@storybook/react-vite": "^8.6.14",
     "@storybook/test": "^8.6.14",
-    "@tiptap/extension-placeholder": "^3.30.0",
-    "@tiptap/extension-underline": "^3.30.0",
-    "@tiptap/pm": "^3.30.0",
-    "@tiptap/react": "^3.30.0",
-    "@tiptap/starter-kit": "^3.30.0",
     "@types/luxon": "^3.7.4",
     "@types/node": "^26.1.2",
     "@types/qrcode": "^1.5.6",
@@ -858,18 +830,35 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4"
   },
-  "keywords": [
-    "react",
-    "components",
-    "ui",
-    "emotion",
-    "costor"
-  ],
-  "license": "MIT",
+  "peerDependencies": {
+    "@emotion/cache": "^11.0.0",
+    "@emotion/css": "^11.0.0",
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "date-fns": "^3.0.0 || ^4.0.0",
+    "dayjs": "^1.11.0",
+    "luxon": "^3.0.0",
+    "moment": "^2.29.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "date-fns": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "luxon": {
+      "optional": true
+    },
+    "moment": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "qrcode": "^1.5.4"
-  }
+  "module": "./dist/index.js",
+  "sideEffects": false
 }

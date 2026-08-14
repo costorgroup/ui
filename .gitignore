@@ -6,3 +6,4 @@ storybook-static
 *.local
 .turbo
 .vite
+.npmrc
