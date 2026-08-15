@@ -1,8 +1,10 @@
 import React, {
   PointerEvent as ReactPointerEvent,
+  memo,
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
 } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
@@ -43,15 +45,7 @@ type TTimeWheelProps = {
 
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-/** Center + two neighbors; fade by distance, hide beyond. */
-const opacityForDistance = (distance: number) => {
-  if (distance > 2.5) {
-    return 0;
-  }
-  return Math.max(0.2, 1 - distance * 0.35);
-};
-
-export const TimeWheel = ({
+const TimeWheelComponent = ({
   items,
   value,
   onChange,
@@ -62,7 +56,6 @@ export const TimeWheel = ({
   disabled = false,
 }: TTimeWheelProps) => {
   const listRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
   const valueRef = useRef(value);
   const onChangeRef = useRef(onChange);
   const userScrollingRef = useRef(false);
@@ -71,9 +64,11 @@ export const TimeWheel = ({
   const dragStartYRef = useRef(0);
   const dragStartScrollRef = useRef(0);
   const pendingClickIndexRef = useRef<number | null>(null);
+  const selectedIndexRef = useRef<number | null>(null);
   const snapTimerRef = useRef(0);
   const commitTimerRef = useRef(0);
   const rafRef = useRef(0);
+  const pendingScrollRef = useRef<number | null>(null);
 
   valueRef.current = value;
   onChangeRef.current = onChange;
@@ -82,13 +77,17 @@ export const TimeWheel = ({
   const copies = loop ? REPEAT : 1;
   const setHeight = items.length * TIME_WHEEL_ITEM_HEIGHT;
 
-  const rendered = Array.from({ length: copies }, (_, copy) =>
-    items.map((item, index) => ({
-      ...item,
-      key: `${copy}-${item.value}-${index}`,
-      flatIndex: copy * items.length + index,
-    })),
-  ).flat();
+  const rendered = useMemo(
+    () =>
+      Array.from({ length: copies }, (_, copy) =>
+        items.map((item, index) => ({
+          ...item,
+          key: `${copy}-${item.value}-${index}`,
+          flatIndex: copy * items.length + index,
+        })),
+      ).flat(),
+    [copies, items],
+  );
 
   const indexFromValue = (next: string | number) =>
     Math.max(0, items.findIndex((item) => item.value === next));
@@ -110,23 +109,33 @@ export const TimeWheel = ({
     [items.length, loop],
   );
 
-  const updateItemStyles = useCallback(() => {
+  const updateSelectedItem = useCallback(() => {
     const node = listRef.current;
     if (!node) {
       return;
     }
-    const center = node.scrollTop / TIME_WHEEL_ITEM_HEIGHT;
-    const selected = Math.round(center);
 
-    itemRefs.current.forEach((el, flatIndex) => {
-      const distance = Math.abs(flatIndex - center);
-      el.style.opacity = String(opacityForDistance(distance));
-      if (flatIndex === selected) {
-        el.dataset.selected = 'true';
-      } else {
-        delete el.dataset.selected;
+    const selected = Math.round(node.scrollTop / TIME_WHEEL_ITEM_HEIGHT);
+    if (selected === selectedIndexRef.current) {
+      return;
+    }
+
+    if (selectedIndexRef.current != null) {
+      const previous = node.querySelector<HTMLElement>(
+        `[data-flat-index="${selectedIndexRef.current}"]`,
+      );
+      if (previous) {
+        delete previous.dataset.selected;
       }
-    });
+    }
+
+    const current = node.querySelector<HTMLElement>(
+      `[data-flat-index="${selected}"]`,
+    );
+    if (current) {
+      current.dataset.selected = 'true';
+    }
+    selectedIndexRef.current = selected;
   }, []);
 
   const handleLoopScroll = useCallback(() => {
@@ -141,6 +150,32 @@ export const TimeWheel = ({
       node.scrollTop = scrollTop - setHeight;
     }
   }, [loop, setHeight]);
+
+  const applyPendingScroll = useCallback(() => {
+    const node = listRef.current;
+    const nextTop = pendingScrollRef.current;
+    rafRef.current = 0;
+    pendingScrollRef.current = null;
+
+    if (!node || nextTop == null) {
+      return;
+    }
+
+    node.scrollTop = nextTop;
+    handleLoopScroll();
+    updateSelectedItem();
+  }, [handleLoopScroll, updateSelectedItem]);
+
+  const scheduleScrollTop = useCallback(
+    (nextTop: number) => {
+      pendingScrollRef.current = nextTop;
+      if (rafRef.current) {
+        return;
+      }
+      rafRef.current = window.requestAnimationFrame(applyPendingScroll);
+    },
+    [applyPendingScroll],
+  );
 
   const emitFromScroll = useCallback(() => {
     const node = listRef.current;
@@ -167,7 +202,7 @@ export const TimeWheel = ({
       top: snapIndex * TIME_WHEEL_ITEM_HEIGHT,
       behavior: 'smooth',
     });
-    updateItemStyles();
+    updateSelectedItem();
 
     const nextValue = items[finalIndex]?.value;
     if (nextValue === undefined || nextValue === valueRef.current) {
@@ -179,7 +214,7 @@ export const TimeWheel = ({
       valueRef.current = nextValue;
       onChangeRef.current(nextValue);
     }, COMMIT_DELAY_MS);
-  }, [items, loop, setHeight, updateItemStyles]);
+  }, [items, loop, setHeight, updateSelectedItem]);
 
   const scheduleFinalize = useCallback(() => {
     window.clearTimeout(snapTimerRef.current);
@@ -192,9 +227,9 @@ export const TimeWheel = ({
 
   useLayoutEffect(() => {
     scrollToIndex(indexFromValue(valueRef.current), 'auto');
-    updateItemStyles();
+    updateSelectedItem();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [copies, items.length, loop, scrollToIndex, updateItemStyles]);
+  }, [copies, items.length, loop, scrollToIndex, updateSelectedItem]);
 
   useEffect(() => {
     if (userScrollingRef.current || draggingRef.current) {
@@ -206,8 +241,8 @@ export const TimeWheel = ({
     valueRef.current = value;
     window.clearTimeout(commitTimerRef.current);
     scrollToIndex(indexFromValue(value), 'auto');
-    updateItemStyles();
-  }, [value, scrollToIndex, updateItemStyles, items]);
+    updateSelectedItem();
+  }, [value, scrollToIndex, updateSelectedItem, items]);
 
   useEffect(() => {
     const node = listRef.current;
@@ -223,9 +258,9 @@ export const TimeWheel = ({
       userScrollingRef.current = true;
       window.clearTimeout(snapTimerRef.current);
       window.clearTimeout(commitTimerRef.current);
-      node.scrollTop += event.deltaY / SCROLL_RESISTANCE;
-      handleLoopScroll();
-      updateItemStyles();
+      const current =
+        pendingScrollRef.current ?? node.scrollTop;
+      scheduleScrollTop(current + event.deltaY / SCROLL_RESISTANCE);
       scheduleFinalize();
     };
 
@@ -236,25 +271,18 @@ export const TimeWheel = ({
       window.clearTimeout(commitTimerRef.current);
       window.cancelAnimationFrame(rafRef.current);
     };
-  }, [
-    disabled,
-    handleLoopScroll,
-    scheduleFinalize,
-    updateItemStyles,
-  ]);
+  }, [disabled, scheduleFinalize, scheduleScrollTop]);
 
   const handleScroll = () => {
+    if (draggingRef.current || pendingScrollRef.current != null) {
+      return;
+    }
+
     if (loop) {
       handleLoopScroll();
     }
 
-    window.cancelAnimationFrame(rafRef.current);
-    rafRef.current = window.requestAnimationFrame(updateItemStyles);
-
-    if (draggingRef.current) {
-      return;
-    }
-
+    updateSelectedItem();
     userScrollingRef.current = true;
     window.clearTimeout(commitTimerRef.current);
     scheduleFinalize();
@@ -279,9 +307,9 @@ export const TimeWheel = ({
       valueRef.current = nextValue;
       onChangeRef.current(nextValue);
       scrollToIndex(itemIndex, behavior);
-      window.requestAnimationFrame(updateItemStyles);
+      window.requestAnimationFrame(updateSelectedItem);
     },
-    [disabled, items, loop, scrollToIndex, updateItemStyles],
+    [disabled, items, loop, scrollToIndex, updateSelectedItem],
   );
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -310,7 +338,7 @@ export const TimeWheel = ({
   };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current || !listRef.current) {
+    if (!draggingRef.current) {
       return;
     }
 
@@ -320,18 +348,13 @@ export const TimeWheel = ({
       pendingClickIndexRef.current = null;
     }
 
-    const deltaY = pointerDelta / SCROLL_RESISTANCE;
-    let nextTop = dragStartScrollRef.current + deltaY;
+    let nextTop = dragStartScrollRef.current + pointerDelta / SCROLL_RESISTANCE;
     if (!loop) {
       const maxScroll = Math.max(0, (items.length - 1) * TIME_WHEEL_ITEM_HEIGHT);
       nextTop = Math.min(Math.max(nextTop, 0), maxScroll);
     }
 
-    listRef.current.scrollTop = nextTop;
-    if (loop) {
-      handleLoopScroll();
-    }
-    updateItemStyles();
+    scheduleScrollTop(nextTop);
   };
 
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -347,6 +370,11 @@ export const TimeWheel = ({
     const wasDrag = dragMovedRef.current;
     draggingRef.current = false;
     pendingClickIndexRef.current = null;
+
+    if (rafRef.current) {
+      window.cancelAnimationFrame(rafRef.current);
+      applyPendingScroll();
+    }
 
     if (!wasDrag && clickIndex != null && !Number.isNaN(clickIndex)) {
       selectFlatIndex(clickIndex, 'smooth');
@@ -376,13 +404,6 @@ export const TimeWheel = ({
         {rendered.map((item) => (
           <SInputDateFieldTimeWheelItem
             key={item.key}
-            ref={(el) => {
-              if (el) {
-                itemRefs.current.set(item.flatIndex, el);
-              } else {
-                itemRefs.current.delete(item.flatIndex);
-              }
-            }}
             type="button"
             tabIndex={-1}
             disabled={disabled}
@@ -398,3 +419,14 @@ export const TimeWheel = ({
     </SInputDateFieldTimeWheel>
   );
 };
+
+export const TimeWheel = memo(TimeWheelComponent, (prev, next) => (
+  prev.items === next.items &&
+  prev.value === next.value &&
+  prev.color === next.color &&
+  prev.variant === next.variant &&
+  prev.infinite === next.infinite &&
+  prev.disabled === next.disabled &&
+  prev['aria-label'] === next['aria-label']
+));
+TimeWheel.displayName = 'TimeWheel';

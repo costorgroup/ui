@@ -1,6 +1,6 @@
 {
   "name": "@costor/ui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Costor UI component library",
   "keywords": [
     "react",
@@ -372,6 +372,11 @@
       "import": "./dist/components/icon-button/index.js",
       "require": "./dist/components/icon-button/index.cjs"
     },
+    "./Iframe": {
+      "types": "./dist/components/iframe/index.d.ts",
+      "import": "./dist/components/iframe/index.js",
+      "require": "./dist/components/iframe/index.cjs"
+    },
     "./Image": {
       "types": "./dist/components/image/index.d.ts",
       "import": "./dist/components/image/index.js",
@@ -622,6 +627,11 @@
       "import": "./dist/components/range-field/index.js",
       "require": "./dist/components/range-field/index.cjs"
     },
+    "./Rating": {
+      "types": "./dist/components/rating/index.d.ts",
+      "import": "./dist/components/rating/index.js",
+      "require": "./dist/components/rating/index.cjs"
+    },
     "./RichTextField": {
       "types": "./dist/components/rich-text-field/index.d.ts",
       "import": "./dist/components/rich-text-field/index.js",
@@ -782,10 +792,30 @@
       "import": "./dist/components/text-field/index.js",
       "require": "./dist/components/text-field/index.cjs"
     },
+    "./ToggleButton": {
+      "types": "./dist/components/toggle-button/index.d.ts",
+      "import": "./dist/components/toggle-button/index.js",
+      "require": "./dist/components/toggle-button/index.cjs"
+    },
+    "./ToggleButtonGroup": {
+      "types": "./dist/components/toggle-button-group/index.d.ts",
+      "import": "./dist/components/toggle-button-group/index.js",
+      "require": "./dist/components/toggle-button-group/index.cjs"
+    },
+    "./ToggleIconButton": {
+      "types": "./dist/components/toggle-icon-button/index.d.ts",
+      "import": "./dist/components/toggle-icon-button/index.js",
+      "require": "./dist/components/toggle-icon-button/index.cjs"
+    },
     "./Tooltip": {
       "types": "./dist/components/tooltip/index.d.ts",
       "import": "./dist/components/tooltip/index.js",
       "require": "./dist/components/tooltip/index.cjs"
+    },
+    "./Viewport": {
+      "types": "./dist/components/viewport/index.d.ts",
+      "import": "./dist/components/viewport/index.js",
+      "require": "./dist/components/viewport/index.cjs"
     }
   },
   "main": "./dist/index.cjs",

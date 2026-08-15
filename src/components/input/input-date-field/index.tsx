@@ -240,14 +240,23 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
         return;
       }
 
-      const handleReposition = () => updatePosition();
+      const handleReposition = (event?: Event) => {
+        if (
+          event?.type === 'scroll' &&
+          dropdownRef.current?.contains(event.target as Node)
+        ) {
+          return;
+        }
+
+        updatePosition();
+      };
       window.addEventListener('resize', handleReposition);
       window.addEventListener('scroll', handleReposition, true);
       const trigger = triggerRef.current;
       const dropdown = dropdownRef.current;
       const resizeObserver =
         typeof ResizeObserver !== 'undefined'
-          ? new ResizeObserver(handleReposition)
+          ? new ResizeObserver(() => updatePosition())
           : null;
       if (trigger) {
         resizeObserver?.observe(trigger);

@@ -9,6 +9,7 @@ type TSInputGroupProps = Pick<TInputGroupProps, 'orientation'>;
 const customProps = new Set(['orientation']);
 
 const itemSelector = `& > .${inputWrapperClasses.root}, & > .${buttonClasses.root}, & > .${iconButtonClasses.root}`;
+const nextItem = `+ .${inputWrapperClasses.root}, + .${buttonClasses.root}, + .${iconButtonClasses.root}`;
 
 export const SInputGroup = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -41,46 +42,32 @@ export const SInputGroup = styled('div', {
   ${({ orientation = 'horizontal' }) =>
     orientation === 'vertical'
       ? `
+        ${itemSelector}:has(${nextItem}) {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
         ${itemSelector} {
           & + .${inputWrapperClasses.root},
           & + .${buttonClasses.root},
           & + .${iconButtonClasses.root} {
             margin-top: -1px;
-          }
-
-          &:not(:first-of-type):not(:last-of-type) {
-            border-radius: 0;
-          }
-
-          &:first-of-type:not(:last-of-type) {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-
-          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-top-right-radius: 0;
           }
         }
       `
       : `
+        ${itemSelector}:has(${nextItem}) {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
         ${itemSelector} {
           & + .${inputWrapperClasses.root},
           & + .${buttonClasses.root},
           & + .${iconButtonClasses.root} {
             margin-left: -1px;
-          }
-
-          &:not(:first-of-type):not(:last-of-type) {
-            border-radius: 0;
-          }
-
-          &:first-of-type:not(:last-of-type) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-          }
-
-          &:last-of-type:not(:first-of-type) {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
           }

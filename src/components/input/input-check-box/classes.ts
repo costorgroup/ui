@@ -2,4 +2,9 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const inputCheckBoxClasses = generateUtilityClasses('InputCheckBox', [
   'root',
+  'input',
+  'control',
+  'disabled',
+  'checked',
+  'error',
 ]);

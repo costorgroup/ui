@@ -14,12 +14,17 @@ export type TMenuPlacement =
   | 'right'
   | 'right-end';
 
+export type TMenuAnchor = {
+  getBoundingClientRect: () => DOMRect;
+  contains?: (node: Node | null) => boolean;
+};
+
 export type TMenuContextValue = {
   menuId: string;
   open: boolean;
   placement: TMenuPlacement;
   offset: number;
-  getAnchor: () => HTMLElement | null;
+  getAnchor: () => TMenuAnchor | null;
   close: () => void;
 };
 

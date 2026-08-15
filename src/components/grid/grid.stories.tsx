@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Card, Grid, GridCell, Text } from '../../index';
+import { Card, CardContent, Grid, GridCell, Text } from '../../index';
 const meta: Meta<typeof Grid> = {
   title: 'Layout/Grid',
   component: Grid,
@@ -37,7 +37,9 @@ type Story = StoryObj<typeof Grid>;
 
 const Cell = ({ label }: { label: string }) => (
   <Card>
-    <Text>{label}</Text>
+    <CardContent>
+      <Text>{label}</Text>
+    </CardContent>
   </Card>
 );
 

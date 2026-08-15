@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react';
-import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
 import { inputCheckBoxClasses } from './classes';
 import { CheckIcon } from '../../../icons';
 import {
@@ -10,15 +13,46 @@ import {
 import { TInputCheckBoxProps } from './types';
 
 const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
-  ({ variant = 'subtle', size = 'md', color = 'primary', className, ...props }, ref) => {
+  (
+    {
+      variant = 'subtle',
+      size = 'md',
+      color = 'primary',
+      className,
+      disabled,
+      checked,
+      defaultChecked,
+      'aria-invalid': ariaInvalid,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <SInputCheckBox>
-        <SInputCheckBoxInput ref={ref} type="checkbox" {...props}
+      <SInputCheckBox
         className={mergeClasses(
           inputCheckBoxClasses.root,
+          disabled && inputCheckBoxClasses.disabled,
+          (checked ?? defaultChecked) && inputCheckBoxClasses.checked,
+          isAriaInvalid(ariaInvalid) && inputCheckBoxClasses.error,
           className,
-        )} />
-        <SInputCheckBoxControl variant={variant} size={size} color={color}>
+        )}
+      >
+        <SInputCheckBoxInput
+          ref={ref}
+          type="checkbox"
+          disabled={disabled}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          aria-invalid={ariaInvalid}
+          {...props}
+          className={inputCheckBoxClasses.input}
+        />
+        <SInputCheckBoxControl
+          className={inputCheckBoxClasses.control}
+          variant={variant}
+          size={size}
+          color={color}
+        >
           <CheckIcon aria-hidden />
         </SInputCheckBoxControl>
       </SInputCheckBox>

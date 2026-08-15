@@ -2,4 +2,9 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const inputSwitchClasses = generateUtilityClasses('InputSwitch', [
   'root',
+  'input',
+  'control',
+  'thumb',
+  'disabled',
+  'checked',
 ]);

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { TInputSize } from '../input-wrapper/types';
+import { inputCheckBoxClasses } from './classes';
 import { TInputCheckBoxProps } from './types';
 
 type TSInputCheckBoxProps = Pick<TInputCheckBoxProps, 'variant' | 'size' | 'color'>;
@@ -88,7 +89,7 @@ export const SInputCheckBoxControl = styled('span', {
     }
   }}
 
-  ${SInputCheckBoxInput}:hover:not(:disabled) + & {
+  .${inputCheckBoxClasses.input}:hover:not(:disabled) + & {
     ${({ theme, variant = 'subtle', color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -129,7 +130,7 @@ export const SInputCheckBoxControl = styled('span', {
     }}
   }
 
-  ${SInputCheckBoxInput}:checked + & {
+  .${inputCheckBoxClasses.input}:checked + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -141,7 +142,7 @@ export const SInputCheckBoxControl = styled('span', {
     }}
   }
 
-  ${SInputCheckBoxInput}:checked:hover:not(:disabled) + & {
+  .${inputCheckBoxClasses.input}:checked:hover:not(:disabled) + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -153,17 +154,17 @@ export const SInputCheckBoxControl = styled('span', {
     }}
   }
 
-  ${SInputCheckBoxInput}:checked + & svg {
+  .${inputCheckBoxClasses.input}:checked + & svg {
     opacity: 1;
     transform: scale(1);
   }
 
-  ${SInputCheckBoxInput}:focus-visible + & {
+  .${inputCheckBoxClasses.input}:focus-visible + & {
     outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 
-  ${SInputCheckBoxInput}:disabled + & {
+  .${inputCheckBoxClasses.input}:disabled + & {
     opacity: 0.5;
   }
 

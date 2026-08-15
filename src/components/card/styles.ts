@@ -6,7 +6,11 @@ const customProps = new Set(['radius']);
 export const SCard = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSCardProps>`
-  padding: ${({ theme }) => theme.spacing(theme.gap.xl)};
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
   background-color: ${({ theme }) => theme.colors.common.white};
   box-shadow: ${({ theme }) => {

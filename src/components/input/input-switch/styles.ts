@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { TInputSize } from '../input-wrapper/types';
+import { inputSwitchClasses } from './classes';
 import { TInputSwitchProps } from './types';
 
 type TSInputSwitchProps = Pick<TInputSwitchProps, 'variant' | 'size' | 'color'>;
@@ -96,12 +97,12 @@ export const SInputSwitchControl = styled('span', {
     }
   }}
 
-  ${SInputSwitchThumb} {
+  .${inputSwitchClasses.thumb} {
     width: ${({ size = 'md' }) => sizeMap[size].thumb};
     height: ${({ size = 'md' }) => sizeMap[size].thumb};
   }
 
-  ${SInputSwitchInput}:hover:not(:disabled) + & {
+  .${inputSwitchClasses.input}:hover:not(:disabled) + & {
     ${({ theme, variant = 'subtle', color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -142,7 +143,7 @@ export const SInputSwitchControl = styled('span', {
     }}
   }
 
-  ${SInputSwitchInput}:checked + & {
+  .${inputSwitchClasses.input}:checked + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -154,7 +155,7 @@ export const SInputSwitchControl = styled('span', {
     }}
   }
 
-  ${SInputSwitchInput}:checked:hover:not(:disabled) + & {
+  .${inputSwitchClasses.input}:checked:hover:not(:disabled) + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -166,7 +167,7 @@ export const SInputSwitchControl = styled('span', {
     }}
   }
 
-  ${SInputSwitchInput}:checked + & ${SInputSwitchThumb} {
+  .${inputSwitchClasses.input}:checked + & .${inputSwitchClasses.thumb} {
     transform: ${({ size = 'md' }) => {
       const track = parseInt(sizeMap[size].width, 10);
       const thumb = parseInt(sizeMap[size].thumb, 10);
@@ -175,12 +176,12 @@ export const SInputSwitchControl = styled('span', {
     }};
   }
 
-  ${SInputSwitchInput}:focus-visible + & {
+  .${inputSwitchClasses.input}:focus-visible + & {
     outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 
-  ${SInputSwitchInput}:disabled + & {
+  .${inputSwitchClasses.input}:disabled + & {
     opacity: 0.5;
   }
 `;

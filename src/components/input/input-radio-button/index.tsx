@@ -1,5 +1,8 @@
 import React, { forwardRef } from 'react';
-import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
 import { inputRadioButtonClasses } from './classes';
 import {
   SInputRadioButton,
@@ -10,16 +13,50 @@ import {
 import { TInputRadioButtonProps } from './types';
 
 const InputRadioButton = forwardRef<HTMLInputElement, TInputRadioButtonProps>(
-  ({ variant = 'subtle', size = 'md', color = 'primary', className, ...props }, ref) => {
+  (
+    {
+      variant = 'subtle',
+      size = 'md',
+      color = 'primary',
+      className,
+      disabled,
+      checked,
+      defaultChecked,
+      'aria-invalid': ariaInvalid,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <SInputRadioButton>
-        <SInputRadioButtonInput ref={ref} type="radio" {...props}
+      <SInputRadioButton
         className={mergeClasses(
           inputRadioButtonClasses.root,
+          disabled && inputRadioButtonClasses.disabled,
+          (checked ?? defaultChecked) && inputRadioButtonClasses.checked,
+          isAriaInvalid(ariaInvalid) && inputRadioButtonClasses.error,
           className,
-        )} />
-        <SInputRadioButtonControl variant={variant} size={size} color={color}>
-          <SInputRadioButtonDot aria-hidden />
+        )}
+      >
+        <SInputRadioButtonInput
+          ref={ref}
+          type="radio"
+          disabled={disabled}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          aria-invalid={ariaInvalid}
+          {...props}
+          className={inputRadioButtonClasses.input}
+        />
+        <SInputRadioButtonControl
+          className={inputRadioButtonClasses.control}
+          variant={variant}
+          size={size}
+          color={color}
+        >
+          <SInputRadioButtonDot
+            className={inputRadioButtonClasses.dot}
+            aria-hidden
+          />
         </SInputRadioButtonControl>
       </SInputRadioButton>
     );

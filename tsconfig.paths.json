@@ -212,6 +212,9 @@
       "@costor/ui/IconButton": [
         "./src/components/icon-button/index.tsx"
       ],
+      "@costor/ui/Iframe": [
+        "./src/components/iframe/index.tsx"
+      ],
       "@costor/ui/Image": [
         "./src/components/image/index.tsx"
       ],
@@ -362,6 +365,9 @@
       "@costor/ui/RangeField": [
         "./src/components/range-field/index.tsx"
       ],
+      "@costor/ui/Rating": [
+        "./src/components/rating/index.tsx"
+      ],
       "@costor/ui/RichTextField": [
         "./src/components/rich-text-field/index.tsx"
       ],
@@ -458,8 +464,20 @@
       "@costor/ui/TextField": [
         "./src/components/text-field/index.tsx"
       ],
+      "@costor/ui/ToggleButton": [
+        "./src/components/toggle-button/index.tsx"
+      ],
+      "@costor/ui/ToggleButtonGroup": [
+        "./src/components/toggle-button-group/index.tsx"
+      ],
+      "@costor/ui/ToggleIconButton": [
+        "./src/components/toggle-icon-button/index.tsx"
+      ],
       "@costor/ui/Tooltip": [
         "./src/components/tooltip/index.tsx"
+      ],
+      "@costor/ui/Viewport": [
+        "./src/components/viewport/index.tsx"
       ]
     }
   }

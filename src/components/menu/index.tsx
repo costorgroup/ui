@@ -61,6 +61,8 @@ const MenuPanel = ({
   const [coords, setCoords] = useState({ top: 0, left: 0 });
   const [resolvedPlacement, setResolvedPlacement] = useState(preferredPlacement);
   const contentRef = useRef<HTMLDivElement>(null);
+  const shouldMountRef = useRef(shouldMount);
+  shouldMountRef.current = shouldMount;
 
   const setContentNode = useCallback(
     (node: HTMLDivElement | null) => {
@@ -173,15 +175,37 @@ const MenuPanel = ({
     }
 
     const handlePointerDown = (event: MouseEvent) => {
+      if (event.button !== 0) {
+        return;
+      }
+
       const target = event.target as HTMLElement | null;
 
       if (
         target?.closest(`[data-menu-id="${menu.menuId}"]`) ||
-        menu.getAnchor()?.contains(target)
+        menu.getAnchor()?.contains?.(target)
       ) {
         return;
       }
 
+      menu.close();
+    };
+
+    const handleContextMenu = (event: MouseEvent) => {
+      const target = event.target as HTMLElement | null;
+
+      if (target?.closest(`[data-menu-id="${menu.menuId}"]`)) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      if (!menu.open) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
       menu.close();
     };
 
@@ -192,10 +216,12 @@ const MenuPanel = ({
     };
 
     document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('contextmenu', handleContextMenu, true);
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('contextmenu', handleContextMenu, true);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isSubmenu, menu, mounted]);
@@ -237,7 +263,7 @@ const MenuPanel = ({
             return;
           }
 
-          if (!visible) {
+          if (!visible && !shouldMountRef.current) {
             setMounted(false);
           }
         }}
@@ -261,6 +287,7 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
       placement,
       offset = 4,
       anchorEl = null,
+      anchorPosition = null,
       open = false,
       onClose,
       className,
@@ -278,7 +305,27 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
       onClose?.();
     }, [onClose]);
 
-    const getAnchor = useCallback(() => anchorEl, [anchorEl]);
+    const getAnchor = useCallback(() => {
+      if (anchorEl) {
+        return {
+          getBoundingClientRect: () => anchorEl.getBoundingClientRect(),
+          contains: (node: Node | null) =>
+            node != null ? anchorEl.contains(node) : false,
+        };
+      }
+
+      if (!anchorPosition) {
+        return null;
+      }
+
+      const { top, left } = anchorPosition;
+
+      return {
+        getBoundingClientRect: () =>
+          new DOMRect(left, top, 0, 0),
+        contains: () => false,
+      };
+    }, [anchorEl, anchorPosition]);
 
     const value = useMemo(
       () => ({
@@ -312,6 +359,7 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
 
 Menu.displayName = 'Menu';
 
+export type { TMenuRootProps, TMenuAnchorPosition } from './types';
 export { menuClasses } from './classes';
 export { Menu };
 export default Menu;

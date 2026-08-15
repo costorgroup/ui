@@ -10,21 +10,45 @@ import {
 import { TInputSwitchProps } from './types';
 
 const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
-  ({ variant = 'subtle', size = 'md', color = 'primary', className, ...props }, ref) => {
+  (
+    {
+      variant = 'subtle',
+      size = 'md',
+      color = 'primary',
+      className,
+      disabled,
+      checked,
+      defaultChecked,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <SInputSwitch>
+      <SInputSwitch
+        className={mergeClasses(
+          inputSwitchClasses.root,
+          disabled && inputSwitchClasses.disabled,
+          (checked ?? defaultChecked) && inputSwitchClasses.checked,
+          className,
+        )}
+      >
         <SInputSwitchInput
           ref={ref}
           type="checkbox"
           role="switch"
+          disabled={disabled}
+          checked={checked}
+          defaultChecked={defaultChecked}
           {...props}
-        className={mergeClasses(
-          inputSwitchClasses.root,
-          className,
-        )}
+          className={inputSwitchClasses.input}
         />
-        <SInputSwitchControl variant={variant} size={size} color={color}>
-          <SInputSwitchThumb />
+        <SInputSwitchControl
+          className={inputSwitchClasses.control}
+          variant={variant}
+          size={size}
+          color={color}
+        >
+          <SInputSwitchThumb className={inputSwitchClasses.thumb} />
         </SInputSwitchControl>
       </SInputSwitch>
     );

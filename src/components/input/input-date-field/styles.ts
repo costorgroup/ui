@@ -414,6 +414,24 @@ export const SInputDateFieldTimeWheelList = styled.div`
   scrollbar-width: none;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.28) 18%,
+    #000 38%,
+    #000 62%,
+    rgba(0, 0, 0, 0.28) 82%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.28) 18%,
+    #000 38%,
+    #000 62%,
+    rgba(0, 0, 0, 0.28) 82%,
+    transparent 100%
+  );
 
   &::-webkit-scrollbar {
     display: none;
@@ -447,7 +465,7 @@ export const SInputDateFieldTimeWheelItem = styled('button', {
       ? theme.colors[color].main
       : theme.colors[color].darker};
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
   pointer-events: auto;
 
   &[data-selected='true'] {

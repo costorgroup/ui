@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { TInputSize } from '../input-wrapper/types';
+import { inputRadioButtonClasses } from './classes';
 import { TInputRadioButtonProps } from './types';
 
 type TSInputRadioButtonProps = Pick<
@@ -61,7 +62,7 @@ export const SInputRadioButtonControl = styled('span', {
   border-radius: ${({ theme }) => theme.radius.circle};
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
-  ${SInputRadioButtonDot} {
+  .${inputRadioButtonClasses.dot} {
     width: ${({ size = 'md' }) => sizeMap[size].dot};
     height: ${({ size = 'md' }) => sizeMap[size].dot};
   }
@@ -104,7 +105,7 @@ export const SInputRadioButtonControl = styled('span', {
     }
   }}
 
-  ${SInputRadioButtonInput}:hover:not(:disabled) + & {
+  .${inputRadioButtonClasses.input}:hover:not(:disabled) + & {
     ${({ theme, variant = 'subtle', color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -145,7 +146,7 @@ export const SInputRadioButtonControl = styled('span', {
     }}
   }
 
-  ${SInputRadioButtonInput}:checked + & {
+  .${inputRadioButtonClasses.input}:checked + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -157,7 +158,7 @@ export const SInputRadioButtonControl = styled('span', {
     }}
   }
 
-  ${SInputRadioButtonInput}:checked:hover:not(:disabled) + & {
+  .${inputRadioButtonClasses.input}:checked:hover:not(:disabled) + & {
     ${({ theme, color = 'primary' }) => {
       const palette = theme.colors[color];
 
@@ -169,17 +170,17 @@ export const SInputRadioButtonControl = styled('span', {
     }}
   }
 
-  ${SInputRadioButtonInput}:checked + & ${SInputRadioButtonDot} {
+  .${inputRadioButtonClasses.input}:checked + & .${inputRadioButtonClasses.dot} {
     opacity: 1;
     transform: scale(1);
   }
 
-  ${SInputRadioButtonInput}:focus-visible + & {
+  .${inputRadioButtonClasses.input}:focus-visible + & {
     outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 
-  ${SInputRadioButtonInput}:disabled + & {
+  .${inputRadioButtonClasses.input}:disabled + & {
     opacity: 0.5;
   }
 `;

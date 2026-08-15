@@ -14,6 +14,16 @@ import {
   RedoIcon,
   UndoIcon,
   UploadIcon,
+  StarIcon,
+  StarBorderIcon,
+  PlayIcon,
+  PauseIcon,
+  VolumeIcon,
+  VolumeOffIcon,
+  FullscreenIcon,
+  FullscreenExitIcon,
+  FolderIcon,
+  FileIcon,
 } from './index';
 
 const icons = [
@@ -30,6 +40,16 @@ const icons = [
   { name: 'RedoIcon', Icon: RedoIcon },
   { name: 'ImageIcon', Icon: ImageIcon },
   { name: 'UploadIcon', Icon: UploadIcon },
+  { name: 'StarIcon', Icon: StarIcon },
+  { name: 'StarBorderIcon', Icon: StarBorderIcon },
+  { name: 'PlayIcon', Icon: PlayIcon },
+  { name: 'PauseIcon', Icon: PauseIcon },
+  { name: 'VolumeIcon', Icon: VolumeIcon },
+  { name: 'VolumeOffIcon', Icon: VolumeOffIcon },
+  { name: 'FullscreenIcon', Icon: FullscreenIcon },
+  { name: 'FullscreenExitIcon', Icon: FullscreenExitIcon },
+  { name: 'FolderIcon', Icon: FolderIcon },
+  { name: 'FileIcon', Icon: FileIcon },
 ] as const;
 
 const meta: Meta = {
