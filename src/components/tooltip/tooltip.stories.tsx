@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Button, Chip, Flex, Tooltip } from '../../index';
 import type { TTooltipPlacement } from './types';

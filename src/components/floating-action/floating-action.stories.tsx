@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { CSSProperties } from 'react';
 import { useFloatingActions } from '../../hooks/use-floating-actions';
 import {

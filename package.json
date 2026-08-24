@@ -692,6 +692,26 @@
       "import": "./dist/components/scroll-area/index.js",
       "require": "./dist/components/scroll-area/index.cjs"
     },
+    "./Section": {
+      "types": "./dist/components/section/index.d.ts",
+      "import": "./dist/components/section/index.js",
+      "require": "./dist/components/section/index.cjs"
+    },
+    "./SectionContent": {
+      "types": "./dist/components/section/section-content/index.d.ts",
+      "import": "./dist/components/section/section-content/index.js",
+      "require": "./dist/components/section/section-content/index.cjs"
+    },
+    "./SectionGroup": {
+      "types": "./dist/components/section/section-group/index.d.ts",
+      "import": "./dist/components/section/section-group/index.js",
+      "require": "./dist/components/section/section-group/index.cjs"
+    },
+    "./SectionTitle": {
+      "types": "./dist/components/section/section-title/index.d.ts",
+      "import": "./dist/components/section/section-title/index.js",
+      "require": "./dist/components/section/section-title/index.cjs"
+    },
     "./Select": {
       "types": "./dist/components/select/index.d.ts",
       "import": "./dist/components/select/index.js",
@@ -761,6 +781,51 @@
       "types": "./dist/components/spinner/index.d.ts",
       "import": "./dist/components/spinner/index.js",
       "require": "./dist/components/spinner/index.cjs"
+    },
+    "./Step": {
+      "types": "./dist/components/stepper/step/index.d.ts",
+      "import": "./dist/components/stepper/step/index.js",
+      "require": "./dist/components/stepper/step/index.cjs"
+    },
+    "./StepContent": {
+      "types": "./dist/components/stepper/step-content/index.d.ts",
+      "import": "./dist/components/stepper/step-content/index.js",
+      "require": "./dist/components/stepper/step-content/index.cjs"
+    },
+    "./StepDescription": {
+      "types": "./dist/components/stepper/step-description/index.d.ts",
+      "import": "./dist/components/stepper/step-description/index.js",
+      "require": "./dist/components/stepper/step-description/index.cjs"
+    },
+    "./StepIndicator": {
+      "types": "./dist/components/stepper/step-indicator/index.d.ts",
+      "import": "./dist/components/stepper/step-indicator/index.js",
+      "require": "./dist/components/stepper/step-indicator/index.cjs"
+    },
+    "./StepNumber": {
+      "types": "./dist/components/stepper/step-number/index.d.ts",
+      "import": "./dist/components/stepper/step-number/index.js",
+      "require": "./dist/components/stepper/step-number/index.cjs"
+    },
+    "./Stepper": {
+      "types": "./dist/components/stepper/index.d.ts",
+      "import": "./dist/components/stepper/index.js",
+      "require": "./dist/components/stepper/index.cjs"
+    },
+    "./StepSeparator": {
+      "types": "./dist/components/stepper/step-separator/index.d.ts",
+      "import": "./dist/components/stepper/step-separator/index.js",
+      "require": "./dist/components/stepper/step-separator/index.cjs"
+    },
+    "./StepStatus": {
+      "types": "./dist/components/stepper/step-status/index.d.ts",
+      "import": "./dist/components/stepper/step-status/index.js",
+      "require": "./dist/components/stepper/step-status/index.cjs"
+    },
+    "./StepTitle": {
+      "types": "./dist/components/stepper/step-title/index.d.ts",
+      "import": "./dist/components/stepper/step-title/index.js",
+      "require": "./dist/components/stepper/step-title/index.cjs"
     },
     "./Switch": {
       "types": "./dist/components/switch/index.d.ts",
@@ -926,13 +991,8 @@
     "@emotion/css": "^11.13.5",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-interactions": "^8.6.14",
-    "@storybook/addon-links": "^8.6.14",
-    "@storybook/blocks": "^8.6.14",
-    "@storybook/react": "^8.6.14",
-    "@storybook/react-vite": "^8.6.14",
-    "@storybook/test": "^8.6.14",
+    "@storybook/addon-links": "10.5.10",
+    "@storybook/react-vite": "10.5.10",
     "@types/luxon": "^3.7.4",
     "@types/node": "^26.1.2",
     "@types/qrcode": "^1.5.6",
@@ -945,10 +1005,12 @@
     "moment": "^2.30.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "storybook": "^8.6.14",
+    "storybook": "10.5.10",
     "typescript": "^5.8.3",
     "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.4"
+    "vite-plugin-dts": "^4.5.4",
+    "@storybook/addon-docs": "10.5.10",
+    "@storybook/addon-mcp": "^0.7.0"
   },
   "peerDependencies": {
     "@emotion/cache": "^11.0.0",

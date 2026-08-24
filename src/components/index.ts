@@ -488,6 +488,24 @@ export type {
   TScrollAreaMode,
 } from './scroll-area/types';
 
+export { Section } from './section';
+export type { TSectionProps } from './section/types';
+export { SectionGroup } from './section/section-group';
+export type {
+  TSectionGroupProps,
+  TSectionAlign,
+  TSectionVariant,
+  TSectionGap,
+} from './section/section-group';
+export { SectionTitle } from './section/section-title';
+export type {
+  TSectionTitleProps,
+  TSectionTitleOwnProps,
+  TSectionTitleAs,
+} from './section/section-title';
+export { SectionContent } from './section/section-content';
+export type { TSectionContentProps } from './section/section-content';
+
 export { Skeleton } from './skeleton';
 export type {
   TSkeletonProps,
@@ -527,6 +545,40 @@ export type {
   TSpeedDialItemsDirection,
   TSpeedDialInset,
 } from './speed-dial/types';
+
+export { Stepper } from './stepper';
+export type {
+  TStepperProps,
+  TStepperOrientation,
+  TStepperSize,
+  TStepperVariant,
+  TStepStatus,
+} from './stepper';
+export { Step } from './stepper/step';
+export type { TStepProps } from './stepper/step';
+export {
+  StepMain,
+  StepLabels,
+  StepRail,
+  StepBody,
+} from './stepper/step';
+export { StepIndicator } from './stepper/step-indicator';
+export type { TStepIndicatorProps } from './stepper/step-indicator';
+export { StepStatus } from './stepper/step-status';
+export type {
+  TStepStatusProps,
+  TStepStatusRender,
+} from './stepper/step-status';
+export { StepNumber } from './stepper/step-number';
+export type { TStepNumberProps } from './stepper/step-number';
+export { StepTitle } from './stepper/step-title';
+export type { TStepTitleProps } from './stepper/step-title';
+export { StepDescription } from './stepper/step-description';
+export type { TStepDescriptionProps } from './stepper/step-description';
+export { StepContent } from './stepper/step-content';
+export type { TStepContentProps } from './stepper/step-content';
+export { StepSeparator } from './stepper/step-separator';
+export type { TStepSeparatorProps } from './stepper/step-separator';
 
 export { Switch } from './switch';
 export type { TSwitchProps } from './switch/types';
@@ -718,6 +770,10 @@ export { ratingClasses } from './rating';
 export { rangeFieldClasses } from './range-field';
 export { richTextFieldClasses } from './rich-text-field';
 export { scrollAreaClasses } from './scroll-area';
+export { sectionClasses } from './section';
+export { sectionContentClasses } from './section/section-content';
+export { sectionGroupClasses } from './section/section-group';
+export { sectionTitleClasses } from './section/section-title';
 export { selectClasses } from './select';
 export { skeletonClasses } from './skeleton';
 export { sliderClasses } from './slider';
@@ -731,6 +787,15 @@ export { sliderSlideClasses } from './slider/slider-slide';
 export { sliderSlidesClasses } from './slider/slider-slides';
 export { speedDialClasses } from './speed-dial';
 export { spinnerClasses } from './spinner';
+export { stepClasses } from './stepper/step';
+export { stepContentClasses } from './stepper/step-content';
+export { stepDescriptionClasses } from './stepper/step-description';
+export { stepIndicatorClasses } from './stepper/step-indicator';
+export { stepNumberClasses } from './stepper/step-number';
+export { stepSeparatorClasses } from './stepper/step-separator';
+export { stepStatusClasses } from './stepper/step-status';
+export { stepTitleClasses } from './stepper/step-title';
+export { stepperClasses } from './stepper';
 export { switchClasses } from './switch';
 export { tabClasses } from './tab';
 export { tabBaseClasses } from './tab/tab-base';

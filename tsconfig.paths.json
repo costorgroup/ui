@@ -404,6 +404,18 @@
       "@costor/ui/ScrollArea": [
         "./src/components/scroll-area/index.tsx"
       ],
+      "@costor/ui/Section": [
+        "./src/components/section/index.tsx"
+      ],
+      "@costor/ui/SectionContent": [
+        "./src/components/section/section-content/index.tsx"
+      ],
+      "@costor/ui/SectionGroup": [
+        "./src/components/section/section-group/index.tsx"
+      ],
+      "@costor/ui/SectionTitle": [
+        "./src/components/section/section-title/index.tsx"
+      ],
       "@costor/ui/Select": [
         "./src/components/select/index.tsx"
       ],
@@ -445,6 +457,33 @@
       ],
       "@costor/ui/Spinner": [
         "./src/components/spinner/index.tsx"
+      ],
+      "@costor/ui/Step": [
+        "./src/components/stepper/step/index.tsx"
+      ],
+      "@costor/ui/StepContent": [
+        "./src/components/stepper/step-content/index.tsx"
+      ],
+      "@costor/ui/StepDescription": [
+        "./src/components/stepper/step-description/index.tsx"
+      ],
+      "@costor/ui/StepIndicator": [
+        "./src/components/stepper/step-indicator/index.tsx"
+      ],
+      "@costor/ui/StepNumber": [
+        "./src/components/stepper/step-number/index.tsx"
+      ],
+      "@costor/ui/Stepper": [
+        "./src/components/stepper/index.tsx"
+      ],
+      "@costor/ui/StepSeparator": [
+        "./src/components/stepper/step-separator/index.tsx"
+      ],
+      "@costor/ui/StepStatus": [
+        "./src/components/stepper/step-status/index.tsx"
+      ],
+      "@costor/ui/StepTitle": [
+        "./src/components/stepper/step-title/index.tsx"
       ],
       "@costor/ui/Switch": [
         "./src/components/switch/index.tsx"

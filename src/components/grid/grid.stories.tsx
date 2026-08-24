@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Card, CardContent, Grid, GridCell, Text } from '../../index';
 const meta: Meta<typeof Grid> = {

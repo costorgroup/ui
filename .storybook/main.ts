@@ -8,18 +8,13 @@ const config: StorybookConfig = {
       ignore: ['**/*-parts.stories.@(ts|tsx)'],
     },
   ],
-  addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-links',
-    '@storybook/addon-interactions',
-  ],
+
+  addons: ['@storybook/addon-links', '@storybook/addon-docs', '@storybook/addon-mcp'],
+
   framework: {
     name: '@storybook/react-vite',
     options: {},
-  },
-  docs: {
-    autodocs: 'tag',
-  },
+  }
 };
 
 export default config;

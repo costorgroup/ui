@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { Flex, Text, ToggleIconButton } from '../../index';
 import { CheckIcon, EyeIcon } from '../../icons';
