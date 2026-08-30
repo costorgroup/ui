@@ -215,6 +215,15 @@
       "@costor/ui/Flex": [
         "./src/components/flex/index.tsx"
       ],
+      "@costor/ui/Flipbook": [
+        "./src/components/flipbook/index.tsx"
+      ],
+      "@costor/ui/FlipbookBase": [
+        "./src/components/flipbook/flipbook-base/index.tsx"
+      ],
+      "@costor/ui/FlipbookPage": [
+        "./src/components/flipbook/flipbook-page/index.tsx"
+      ],
       "@costor/ui/FloatingAction": [
         "./src/components/floating-action/index.tsx"
       ],

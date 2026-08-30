@@ -71,6 +71,8 @@ export default defineConfig({
         id === 'moment' ||
         id === 'date-fns' ||
         id.startsWith('date-fns/') ||
+        id === 'pdfjs-dist' ||
+        id.startsWith('pdfjs-dist/') ||
         id.startsWith('@emotion/') ||
         id.startsWith('@tiptap/'),
       output: {

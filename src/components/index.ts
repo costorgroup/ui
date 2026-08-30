@@ -251,6 +251,11 @@ export type { TFlexProps, TFlexOwnProps, TFlexGap } from './flex/types';
 export { Fixed } from './fixed';
 export type { TFixedProps, TFixedOwnProps, TFixedInset } from './fixed/types';
 
+export { Flipbook, FlipbookBase, FlipbookPage, loadPdfPages } from './flipbook';
+export type { TFlipbookProps, TFlipbookHandle } from './flipbook';
+export type { TFlipbookBaseProps } from './flipbook/flipbook-base';
+export type { TFlipbookPageProps } from './flipbook/flipbook-page';
+
 export { Center } from './center';
 export type { TCenterProps, TCenterOwnProps, TCenterAxis } from './center/types';
 
@@ -720,6 +725,9 @@ export { emClasses } from './em';
 export { fileFieldClasses } from './file-field';
 export { fixedClasses } from './fixed';
 export { flexClasses } from './flex';
+export { flipbookClasses } from './flipbook';
+export { flipbookBaseClasses } from './flipbook/flipbook-base';
+export { flipbookPageClasses } from './flipbook/flipbook-page';
 export { gradientCardClasses } from './gradient-card';
 export { gridClasses } from './grid';
 export { gridCellClasses } from './grid-cell';
