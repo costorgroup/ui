@@ -15,16 +15,6 @@ export const STitle = styled('h1', {
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: ${({ theme, color }) => {
-    if (color == null) {
-      return 'inherit';
-    }
-
-    if (color === 'base') {
-      return theme.colors.base.contrastText;
-    }
-
-    return theme.colors[color].main;
-  }};
+  color: ${({ theme, color = 'default' }) => theme.colors[color].main};
   font-size: ${({ theme, level }) => theme.typography.heading[level]};
 `;

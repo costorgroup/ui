@@ -20,7 +20,7 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

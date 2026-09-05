@@ -121,7 +121,7 @@ export const SInputAutoCompleteDropdown = styled('div', {
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
   border-radius: ${({ theme }) => theme.radius.medium};
-  ${({ theme, color = 'primary', variant = 'subtle' }) => `
+  ${({ theme, color = 'default', variant = 'subtle' }) => `
     ${inputDropdownOptionCssVars(theme, color)}
     ${inputDropdownPanelStyles(theme)}
   `}

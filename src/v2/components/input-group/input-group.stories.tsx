@@ -59,7 +59,7 @@ type Story = StoryObj<typeof InputGroup>;
 export const Default: Story = {
   args: {
     orientation: 'horizontal',
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
   },
   render: (args) => (
@@ -80,7 +80,7 @@ export const Default: Story = {
 export const Orientations: Story = {
   render: () => (
     <Flex direction="column" gap="lg" style={{ width: 480 }}>
-      <InputGroup orientation="horizontal" variant="outline" color="primary">
+      <InputGroup orientation="horizontal" variant="outline" color="default">
         <Button type="button">https://</Button>
         <InputWrapper>
           <InputTextField placeholder="example" />
@@ -104,7 +104,7 @@ export const Orientations: Story = {
 
 export const WithIconButton: Story = {
   render: () => (
-    <InputGroup variant="outline" color="primary">
+    <InputGroup variant="outline" color="default">
       <InputWrapper>
         <InputTextField type="password" placeholder="••••••••" />
       </InputWrapper>

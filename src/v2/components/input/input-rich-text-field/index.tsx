@@ -52,7 +52,7 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
       minHeight,
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       id,
       name,
       'aria-invalid': ariaInvalid,

@@ -1,4 +1,17 @@
 export { DDefaultTheme, DDarkTheme, DLightTheme } from "./data";
+export {
+  themePresets,
+  themePresetMap,
+  DRedTheme,
+  DYellowTheme,
+  DGreenTheme,
+  DBlueTheme,
+  DMagentaTheme,
+  DOrangeTheme,
+  DCyanTheme,
+  DPurpleTheme,
+} from "./presets";
+export type { TThemePreset, TThemePresetId } from "./presets";
 export { createTheme } from "./create-theme";
 export type { TThemeOptions, TCreateTheme } from "./create-theme";
 export { ThemeProvider } from "./provider";

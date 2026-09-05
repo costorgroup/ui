@@ -20,7 +20,7 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
       direction = 'ltr',
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

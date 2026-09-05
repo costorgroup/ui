@@ -20,7 +20,7 @@ const Select = forwardRef<HTMLDivElement, TSelectProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       children,
       className,
       ...props

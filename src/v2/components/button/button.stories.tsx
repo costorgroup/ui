@@ -56,7 +56,7 @@ export const Default: Story = {
     children: 'Button',
     variant: 'solid',
     size: 'md',
-    color: 'primary',
+    color: 'default',
     disabled: false,
   },
 };
@@ -73,7 +73,7 @@ export const Variants: Story = {
                 {color}
               </Button>
             ))}
-            <Button variant={variant} color="primary" disabled>
+            <Button variant={variant} color="default" disabled>
               disabled
             </Button>
           </Flex>

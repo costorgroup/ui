@@ -26,7 +26,7 @@ const RadioButtonGroup = forwardRef<HTMLDivElement, TRadioButtonGroupProps>(
       direction = 'vertical',
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       disabled,
       className,
       ...props

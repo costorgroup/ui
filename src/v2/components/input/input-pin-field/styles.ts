@@ -75,7 +75,7 @@ export const SInputPinFieldCell = styled('div', {
     `;
   }}
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) =>
+  ${({ theme, variant = 'subtle', color = 'default' }) =>
     inputVariantStyles(variant, theme.colors[color], theme)}
 
   &:focus-within {

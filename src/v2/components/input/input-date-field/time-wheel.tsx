@@ -49,7 +49,7 @@ const TimeWheelComponent = ({
   items,
   value,
   onChange,
-  color = 'primary',
+  color = 'default',
   variant = 'subtle',
   infinite = true,
   'aria-label': ariaLabel,

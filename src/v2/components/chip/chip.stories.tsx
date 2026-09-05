@@ -61,7 +61,7 @@ export const Default: Story = {
     children: 'Chip',
     variant: 'solid',
     size: 'md',
-    color: 'primary',
+    color: 'default',
     rounded: false,
   },
 };

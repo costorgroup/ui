@@ -28,19 +28,19 @@ export const SLink = styled('a', {
     theme.typography.text[typographySizeMap[size]]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme, color = 'info' }) => theme.colors[color].main};
+  color: ${({ theme, color = 'default' }) => theme.colors[color].main};
   text-decoration: ${({ variant = 'plain' }) =>
     variant === 'underline' ? 'underline' : 'none'};
   text-underline-offset: 0.2em;
 
   &:hover {
-    color: ${({ theme, color = 'info' }) => theme.colors[color].dark};
+    color: ${({ theme, color = 'default' }) => theme.colors[color].dark};
     text-decoration: ${({ variant = 'plain' }) =>
       variant === 'plain' ? 'none' : 'underline'};
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color = 'info' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
     outline-offset: 2px;
     border-radius: ${({ theme }) => theme.radius.small};
   }

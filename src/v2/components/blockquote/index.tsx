@@ -7,7 +7,7 @@ import { BlockquoteCaption } from './blockquote-caption';
 import { TBlockquoteProps } from './types';
 
 const Blockquote = forwardRef<HTMLQuoteElement, TBlockquoteProps>(
-  ({ children, caption, color = 'primary', className, ...props }, ref) => {
+  ({ children, caption, color = 'default', className, ...props }, ref) => {
     return (
       <BlockquoteBase
         ref={ref}

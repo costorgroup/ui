@@ -32,7 +32,7 @@ const InputFileFieldModal = ({
   files = [],
   accept,
   disabled = false,
-  color = 'primary',
+  color = 'default',
   title = 'Manage files',
   description = 'Add files with the dropzone, or remove files from the list.',
   onConfirm,

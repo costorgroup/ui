@@ -20,7 +20,7 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

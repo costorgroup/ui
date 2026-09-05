@@ -36,7 +36,7 @@ type Story = StoryObj<typeof Title>;
 
 export const Default: Story = {
   args: {
-    children: 'Surface contrast title',
+    children: 'Default title',
     as: 'h3',
   },
 };

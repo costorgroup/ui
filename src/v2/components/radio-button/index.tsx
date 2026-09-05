@@ -38,7 +38,7 @@ const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
 
     const resolvedSize = size ?? group?.size ?? 'md';
     const resolvedVariant = variant ?? group?.variant ?? 'subtle';
-    const resolvedColor = color ?? group?.color ?? 'primary';
+    const resolvedColor = color ?? group?.color ?? 'default';
     const resolvedError = error ?? group?.error ?? false;
     const resolvedDisabled = disabled ?? group?.disabled;
     const tone = resolvedError ? 'error' : resolvedColor;

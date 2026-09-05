@@ -85,7 +85,7 @@ export const Default: Story = {
     itemsDirection: "top",
     itemsGap: "sm",
     gap: "md",
-    color: "primary",
+    color: "default",
     variant: "solid",
     size: "lg",
     "aria-label": "Create",

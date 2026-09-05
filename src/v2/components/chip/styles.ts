@@ -42,7 +42,7 @@ export const SChip = styled('button', {
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = 'solid', color = 'primary' }) =>
+  ${({ theme, variant = 'solid', color = 'default' }) =>
     variantStyles(variant, theme.colors[color], theme)}
 
   ${({ theme, size = 'md' }) => {
@@ -61,7 +61,7 @@ export const SChip = styled('button', {
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 `;

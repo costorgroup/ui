@@ -72,7 +72,7 @@ export const Default: Story = {
   args: {
     summary: 'Summary',
     children: 'Details content goes here.',
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
     defaultExpanded: false,
@@ -94,7 +94,7 @@ export const Expanded: Story = {
         Manage your profile, security preferences, and notification settings.
       </Text>
     ),
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
     defaultExpanded: true,
@@ -116,7 +116,7 @@ export const Variants: Story = {
           key={variant}
           summary={variant}
           variant={variant}
-          color="primary"
+          color="default"
           defaultExpanded
         >
           {variant} variant details use idle chrome fill.
@@ -173,7 +173,7 @@ export const IconPosition: Story = {
 export const Grouped: Story = {
   render: () => (
     <AccordionGroup
-      color="primary"
+      color="default"
       variant="surface"
       size="md"
       radius="medium"

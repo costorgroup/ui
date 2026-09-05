@@ -22,7 +22,6 @@ export const SText = styled("p", {
     theme.typography.text[typographySizeMap[size]]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme, color }) =>
-    color != null ? theme.colors[color].main : "inherit"};
+  color: ${({ theme, color = "default" }) => theme.colors[color].main};
 `;
 

@@ -1,8 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
 import React from 'react';
 import { GlobalStyles, ThemeProvider } from '../src';
-import { DDarkTheme, DLightTheme } from '../src/theme/data';
-import type { TColorScheme } from '../src/theme/theming/color';
+import { DDarkTheme, DLightTheme } from '../src/theme';
 
 const schemeThemes = {
   dark: DDarkTheme,
@@ -13,14 +12,14 @@ const preview: Preview = {
   globalTypes: {
     theme: {
       name: 'Theme',
-      description: 'Default / neutral color scheme for components',
+      description: 'Color scheme for components',
       defaultValue: 'dark',
       toolbar: {
         title: 'Theme',
         icon: 'circlehollow',
         items: [
-          { value: 'dark', title: 'Dark', icon: 'moon' },
-          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark' },
+          { value: 'light', title: 'Light' },
         ],
         dynamicTitle: true,
       },
@@ -54,7 +53,7 @@ const preview: Preview = {
   },
   decorators: [
     (Story, { globals }) => {
-      const scheme = (globals.theme ?? 'dark') as TColorScheme;
+      const scheme = (globals.theme ?? 'dark') as keyof typeof schemeThemes;
       const theme = schemeThemes[scheme] ?? DDarkTheme;
 
       return (

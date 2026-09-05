@@ -132,6 +132,6 @@ export const SInputWrapper = styled('div', {
     `;
   }}
 
-  ${({ theme, variant = 'subtle', color = 'primary', error }) =>
+  ${({ theme, variant = 'subtle', color = 'default', error }) =>
     inputVariantStyles(variant, theme.colors[color], theme, { error })}
 `;

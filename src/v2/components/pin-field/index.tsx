@@ -20,7 +20,7 @@ const PinField = forwardRef<HTMLDivElement, TPinFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

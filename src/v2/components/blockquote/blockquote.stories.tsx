@@ -54,7 +54,7 @@ export const Colors: Story = {
       <Blockquote color="info" caption="Uzumaki Naruto">
         {quote}
       </Blockquote>
-      <Blockquote color="primary" caption="Uzumaki Naruto">
+      <Blockquote color="default" caption="Uzumaki Naruto">
         {quote}
       </Blockquote>
     </div>

@@ -23,7 +23,7 @@ type Story = StoryObj<typeof Alert>;
 
 export const Default: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     title: 'Heads up',
     icon: <CheckIcon />,
@@ -77,7 +77,7 @@ export const Variants: Story = {
         <Alert
           key={variant}
           variant={variant}
-          color="primary"
+          color="default"
           title={variant}
           icon={<CheckIcon />}
           style={{ marginBottom: 12 }}

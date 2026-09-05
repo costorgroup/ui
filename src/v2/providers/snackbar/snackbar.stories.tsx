@@ -136,7 +136,7 @@ const VariantsDemo = () => {
             enqueue({
               title: variant,
               description: `Snackbar with variant="${variant}".`,
-              color: 'primary',
+              color: 'default',
               variant,
             })
           }
@@ -193,7 +193,7 @@ const StretchDemo = () => {
           enqueue({
             title: 'Short',
             description: 'Brief.',
-            color: 'primary',
+            color: 'default',
           })
         }
       >
@@ -262,7 +262,7 @@ export const Default: Story = {
     duration: 4000,
     title: 'Snackbar',
     description: 'Something happened.',
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
   },
   render: ({ title, description, color, variant, ...providerArgs }) => (

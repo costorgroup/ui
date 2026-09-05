@@ -22,7 +22,7 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       startIcon,
       endIcon,
       id,

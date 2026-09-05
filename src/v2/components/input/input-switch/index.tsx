@@ -14,7 +14,7 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
     {
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       className,
       disabled,
       checked,

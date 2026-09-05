@@ -67,7 +67,7 @@ export const Default: Story = {
     direction: 'ltr',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     error: false,
   },

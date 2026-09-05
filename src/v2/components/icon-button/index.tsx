@@ -21,7 +21,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
   ) => {
     const group = useButtonGroupContext();
     const variant = variantProp ?? group?.variant ?? 'solid';
-    const color = colorProp ?? group?.color ?? 'primary';
+    const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
 
     return (

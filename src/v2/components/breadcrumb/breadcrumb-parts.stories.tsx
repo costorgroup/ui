@@ -21,7 +21,7 @@ type Story = StoryObj<typeof BreadcrumbBase>;
 export const Default: Story = {
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
   render: (args) => (
     <BreadcrumbBase {...args}>

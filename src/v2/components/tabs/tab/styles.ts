@@ -38,7 +38,7 @@ export const STab = styled('button', {
         : theme.colors.base.main;
     }
 
-    return theme.colors.base.contrastText;
+    return theme.colors.default.fg;
   }};
   cursor: ${({ selected, draggable, dragging }) => {
     if (!draggable || !selected) {

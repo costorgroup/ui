@@ -127,7 +127,7 @@ export const Default: Story = {
   args: {
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
   render: function DefaultStory(args) {
     const collection = useMemo(() => createDemoCollection(), []);
@@ -166,7 +166,7 @@ export const Variants: Story = {
             <TreeView.Root
               collection={collection}
               variant={variant}
-              color="primary"
+              color="default"
               defaultSelectedValue={['button.tsx']}
               defaultExpandedValue={['src', 'components']}
               style={{ width: '100%' }}

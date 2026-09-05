@@ -83,7 +83,7 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
     {
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       startIcon,
       endIcon,
       spinner = false,

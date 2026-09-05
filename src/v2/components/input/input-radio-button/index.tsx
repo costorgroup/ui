@@ -17,7 +17,7 @@ const InputRadioButton = forwardRef<HTMLInputElement, TInputRadioButtonProps>(
     {
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       className,
       disabled,
       checked,

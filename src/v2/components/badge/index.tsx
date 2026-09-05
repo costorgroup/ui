@@ -20,7 +20,7 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
     {
       children,
       badgeContent,
-      color = 'primary',
+      color = 'default',
       variant = 'solid',
       size = 'md',
       max = 99,

@@ -20,7 +20,7 @@ type Story = StoryObj<typeof AlertBase>;
 
 export const Default: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
   },

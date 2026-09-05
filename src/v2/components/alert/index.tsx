@@ -17,7 +17,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       title,
       actions,
       icon,
-      color = 'primary',
+      color = 'default',
       variant = 'subtle',
       size = 'md',
       onClose,

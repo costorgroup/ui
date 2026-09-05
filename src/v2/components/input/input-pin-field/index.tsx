@@ -96,7 +96,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       attached = false,
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       'aria-invalid': ariaInvalid,
       className,
       ...props

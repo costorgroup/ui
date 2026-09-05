@@ -64,7 +64,7 @@ export const SInputSwitchControl = styled('span', {
   border-radius: ${({ theme }) => theme.radius.pill};
   transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) =>
+  ${({ theme, variant = 'subtle', color = 'default' }) =>
     inputFieldIdleStyles(variant, theme.colors[color], theme)}
 
   .${inputSwitchClasses.thumb} {
@@ -73,18 +73,18 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:hover:not(:disabled):not(:checked):not(:focus-visible) + & {
-    ${({ theme, variant = 'subtle', color = 'primary' }) =>
+    ${({ theme, variant = 'subtle', color = 'default' }) =>
       inputFieldHoverStyles(variant, theme.colors[color], theme)}
   }
 
   .${inputSwitchClasses.input}:focus-visible:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = 'subtle', color = 'primary' }) =>
+    ${({ theme, variant = 'subtle', color = 'default' }) =>
       inputFieldFocusStyles(variant, theme.colors[color], theme)}
     outline: none;
   }
 
   .${inputSwitchClasses.input}:checked + & {
-    ${({ theme, color = 'primary' }) => {
+    ${({ theme, color = 'default' }) => {
       const palette = theme.colors[color];
 
       return `
@@ -97,7 +97,7 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = 'primary' }) => {
+    ${({ theme, color = 'default' }) => {
       const palette = theme.colors[color];
 
       return `
@@ -118,7 +118,7 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:focus-visible:checked + & {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 

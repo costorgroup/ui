@@ -12,7 +12,7 @@ type TTitleComponent = (<C extends TTitleAs = 'h1'>(
 };
 
 const Title = forwardRef(function Title<C extends TTitleAs = 'h1'>(
-  { as, children, color, className, ...props }: TTitleProps<C>,
+  { as, children, color = 'default', className, ...props }: TTitleProps<C>,
   ref: React.Ref<Element>,
 ) {
   const tag = (as ?? 'h1') as TTitleAs;

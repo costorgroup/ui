@@ -65,7 +65,7 @@ export const Default: Story = {
     error: false,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     showToolbar: true,
     defaultValue: '<p>Hello <strong>world</strong></p>',
@@ -100,7 +100,7 @@ export const Error: Story = {
     error: true,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
   },
 };
@@ -113,6 +113,6 @@ export const WithoutToolbar: Story = {
     rows: 3,
     size: 'md',
     variant: 'outline',
-    color: 'primary',
+    color: 'default',
   },
 };

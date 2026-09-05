@@ -65,7 +65,7 @@ export const Default: Story = {
     error: false,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     autoGrow: false,
   },
@@ -80,7 +80,7 @@ export const AutoGrow: Story = {
     autoGrow: true,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
   },
 };
@@ -95,7 +95,7 @@ export const Error: Story = {
     error: true,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
   },
 };

@@ -84,7 +84,7 @@ export const Default: Story = {
     placeholder: '○',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     error: false,
   },
@@ -104,7 +104,7 @@ export const Alphanumeric: Story = {
     placeholder: '○',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
 };
 
@@ -123,7 +123,7 @@ export const Masked: Story = {
     placeholder: '○',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
 };
 
@@ -142,7 +142,7 @@ export const Attached: Story = {
     placeholder: '○',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
 };
 
@@ -161,6 +161,6 @@ export const Error: Story = {
     placeholder: '○',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
 };

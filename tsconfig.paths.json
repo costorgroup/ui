@@ -674,6 +674,9 @@
       "@costor/ui/v2/Code": [
         "./src/v2/components/code/index.tsx"
       ],
+      "@costor/ui/v2/Color": [
+        "./src/v2/components/color/index.tsx"
+      ],
       "@costor/ui/v2/ColorPickerField": [
         "./src/v2/components/color-picker-field/index.tsx"
       ],

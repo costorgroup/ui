@@ -79,14 +79,14 @@ export const SInputRangeField = styled('span', {
   touch-action: none;
   user-select: none;
   cursor: pointer;
-  color: ${({ theme, color = 'primary' }) => theme.colors[color].main};
+  color: ${({ theme, color = 'default' }) => theme.colors[color].main};
   border-radius: ${({ theme }) => theme.radius.pill};
 
   ${({
     theme,
     size = 'md',
     variant = 'subtle',
-    color = 'primary',
+    color = 'default',
     direction = 'horizontal',
   }) => {
     const palette = theme.colors[color];

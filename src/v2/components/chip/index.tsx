@@ -10,7 +10,7 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
       children,
       variant = 'solid',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       rounded = false,
       type = 'button',
       className,

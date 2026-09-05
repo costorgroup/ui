@@ -67,7 +67,7 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       disabled = false,
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

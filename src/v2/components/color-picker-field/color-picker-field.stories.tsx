@@ -103,7 +103,7 @@ export const Default: Story = {
     defaultValue: '#3b82f6ff',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
   },
 };

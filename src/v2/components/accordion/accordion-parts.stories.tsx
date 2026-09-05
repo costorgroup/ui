@@ -47,7 +47,7 @@ type Story = StoryObj<typeof AccordionBase>;
 
 export const Default: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
   },
@@ -91,7 +91,7 @@ export const Variants: Story = {
         <AccordionBase
           key={variant}
           variant={variant}
-          color="primary"
+          color="default"
           defaultExpanded
         >
           <AccordionSummary>{variant}</AccordionSummary>
@@ -168,7 +168,7 @@ export const ExpandIconPosition: Story = {
 export const Grouped: Story = {
   render: () => (
     <AccordionGroup
-      color="primary"
+      color="default"
       variant="surface"
       size="md"
       radius="medium"

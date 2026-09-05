@@ -5,7 +5,7 @@ import { SBlockquoteBase } from './styles';
 import { TBlockquoteBaseProps } from './types';
 
 const BlockquoteBase = forwardRef<HTMLQuoteElement, TBlockquoteBaseProps>(
-  ({ children, color = 'primary', className, ...props }, ref) => {
+  ({ children, color = 'default', className, ...props }, ref) => {
     return (
       <SBlockquoteBase
         ref={ref}

@@ -8,7 +8,7 @@ const AlertBase = forwardRef<HTMLDivElement, TAlertBaseProps>(
   (
     {
       children,
-      color = 'primary',
+      color = 'default',
       variant = 'subtle',
       size = 'md',
       closable = false,

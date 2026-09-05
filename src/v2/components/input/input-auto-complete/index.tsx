@@ -55,7 +55,7 @@ const InputAutoComplete = forwardRef<HTMLDivElement, TInputAutoCompleteProps>(
       noOptionsText = 'No results',
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       disabled = false,
       className,
       ...props

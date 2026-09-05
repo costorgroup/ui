@@ -64,6 +64,6 @@ export const STooltipPanel = styled('span', {
   padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
   white-space: normal;
 
-  ${({ theme, variant = 'surface', color = 'primary' }) =>
+  ${({ theme, variant = 'surface', color = 'default' }) =>
     staticChromeVariantStyles(variant, theme.colors[color], theme)}
 `;

@@ -1142,6 +1142,11 @@
       "import": "./dist/v2/components/code/index.js",
       "require": "./dist/v2/components/code/index.cjs"
     },
+    "./v2/Color": {
+      "types": "./dist/v2/components/color/index.d.ts",
+      "import": "./dist/v2/components/color/index.js",
+      "require": "./dist/v2/components/color/index.cjs"
+    },
     "./v2/ColorPickerField": {
       "types": "./dist/v2/components/color-picker-field/index.d.ts",
       "import": "./dist/v2/components/color-picker-field/index.js",

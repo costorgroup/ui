@@ -20,7 +20,7 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       disabled,

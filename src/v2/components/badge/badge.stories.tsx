@@ -67,7 +67,7 @@ type Story = StoryObj<typeof Badge>;
 export const Default: Story = {
   args: {
     badgeContent: 4,
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
     size: 'md',
   },
@@ -98,7 +98,7 @@ export const Variants: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap" align="center">
       {VARIANTS.map((variant) => (
-        <Badge key={variant} badgeContent={3} variant={variant} color="primary">
+        <Badge key={variant} badgeContent={3} variant={variant} color="default">
           <Button size="sm" variant="outline">
             {variant}
           </Button>

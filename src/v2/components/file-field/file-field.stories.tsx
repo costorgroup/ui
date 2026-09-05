@@ -90,7 +90,7 @@ export const Default: Story = {
     multiple: false,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
   },
 };

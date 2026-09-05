@@ -85,7 +85,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
       disabled = false,
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

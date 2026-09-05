@@ -61,13 +61,13 @@ export const Default: Story = {
   ),
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <Breadcrumb color="primary">
+    <Breadcrumb color="default">
       <BreadcrumbItem>
         <BreadcrumbIcon>
           <CheckIcon />
@@ -90,7 +90,7 @@ export const WithIcon: Story = {
 
 export const WithEllipsis: Story = {
   render: () => (
-    <Breadcrumb color="primary">
+    <Breadcrumb color="default">
       <BreadcrumbItem>
         <BreadcrumbLink href="#">Home</BreadcrumbLink>
       </BreadcrumbItem>

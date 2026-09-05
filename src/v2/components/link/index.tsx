@@ -9,7 +9,7 @@ const Link = forwardRef(function Link<C extends ElementType = 'a'>(
   {
     as,
     children,
-    color = 'info',
+    color = 'default',
     variant = 'plain',
     size = 'md',
     className,

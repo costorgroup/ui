@@ -44,7 +44,7 @@ export const Default: Story = {
     </Text>
   ),
   args: {
-    color: 'primary',
+    color: 'default',
   },
 };
 

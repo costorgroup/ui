@@ -54,7 +54,7 @@ export const Default: Story = {
     href: '#',
     variant: 'plain',
     size: 'md',
-    color: 'info',
+    color: 'default',
   },
 };
 

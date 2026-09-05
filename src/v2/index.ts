@@ -264,6 +264,13 @@ export {
   type TChipSize,
 } from './components/chip';
 export {
+  Color,
+  colorClasses,
+  type TColorProps,
+  type TColorSize,
+  type TColorValue,
+} from './components/color';
+export {
   Tooltip,
   tooltipClasses,
   type TTooltipProps,

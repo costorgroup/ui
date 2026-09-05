@@ -47,7 +47,7 @@ const meta: Meta<typeof List> = {
   component: List,
   tags: ['autodocs'],
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
     radius: 'medium',
@@ -137,7 +137,7 @@ export const Variants: Story = {
   render: () => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       {VARIANTS.map((variant) => (
-        <List key={variant} variant={variant} color="primary" size="sm">
+        <List key={variant} variant={variant} color="default" size="sm">
           <ListItem>{variant}</ListItem>
           <ListItem>Second row</ListItem>
           <ListItem>Third row</ListItem>
@@ -151,7 +151,7 @@ export const Sizes: Story = {
   render: () => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       {SIZES.map((size) => (
-        <List key={size} size={size} variant="surface" color="primary">
+        <List key={size} size={size} variant="surface" color="default">
           <ListItem>{size} size list</ListItem>
           <ListItem>Second row</ListItem>
         </List>

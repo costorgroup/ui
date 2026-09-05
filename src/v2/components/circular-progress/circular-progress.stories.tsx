@@ -56,7 +56,7 @@ export const Default: Story = {
   args: {
     width: 24,
     height: 24,
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
     thickness: 2,
   },

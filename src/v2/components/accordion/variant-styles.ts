@@ -188,7 +188,7 @@ export const accordionDetailsBackground = (
 export const accordionDetailsColor = (
   variant: TAccordionVariant,
   palette: TThemeColorScale,
-) => (variant === 'solid' ? palette.contrastText : 'inherit');
+) => (variant === 'solid' ? palette.contrastText : palette.main);
 
 export const accordionSummaryDivider = (
   variant: TAccordionVariant,

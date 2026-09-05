@@ -20,7 +20,7 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
       direction = "ltr",
       size = "md",
       variant = "subtle",
-      color = "primary",
+      color = "default",
       id,
       className,
       ...props

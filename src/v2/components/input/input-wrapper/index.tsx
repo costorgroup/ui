@@ -72,7 +72,7 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
         ? group.variant
         : undefined) ??
       'subtle';
-    const color = colorProp ?? group?.color ?? 'primary';
+    const color = colorProp ?? group?.color ?? 'default';
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);

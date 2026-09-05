@@ -9,7 +9,7 @@ const Text = forwardRef(function Text<C extends ElementType = "p">(
   {
     as,
     children,
-    color,
+    color = "default",
     size = "md",
     className,
     ...props

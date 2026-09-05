@@ -46,7 +46,7 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
       open: openProp,
       defaultOpen = false,
       onOpenChange,
-      color = 'primary',
+      color = 'default',
       size = 'lg',
       variant = 'solid',
       disabled,

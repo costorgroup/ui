@@ -53,7 +53,7 @@ type Story = StoryObj<typeof ButtonGroup>;
 export const Default: Story = {
   args: {
     orientation: 'horizontal',
-    color: 'primary',
+    color: 'default',
     variant: 'outline',
     size: 'md',
   },
@@ -69,7 +69,7 @@ export const Default: Story = {
 export const Orientations: Story = {
   render: () => (
     <Flex gap="lg" align="flex-start">
-      <ButtonGroup orientation="horizontal" variant="outline" color="primary">
+      <ButtonGroup orientation="horizontal" variant="outline" color="default">
         <Button>One</Button>
         <Button>Two</Button>
         <Button>Three</Button>
@@ -85,7 +85,7 @@ export const Orientations: Story = {
 
 export const WithIconButtons: Story = {
   render: () => (
-    <ButtonGroup variant="outline" color="primary">
+    <ButtonGroup variant="outline" color="default">
       <IconButton aria-label="Check">
         <CheckIcon />
       </IconButton>
@@ -115,7 +115,7 @@ export const Mixed: Story = {
 
 export const OverrideChild: Story = {
   render: () => (
-    <ButtonGroup variant="outline" color="primary">
+    <ButtonGroup variant="outline" color="default">
       <Button>Default</Button>
       <Button color="error" variant="solid">
         Override

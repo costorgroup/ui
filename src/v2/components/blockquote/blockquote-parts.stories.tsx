@@ -27,6 +27,6 @@ export const Default: Story = {
     </BlockquoteBase>
   ),
   args: {
-    color: 'primary',
+    color: 'default',
   },
 };

@@ -59,6 +59,7 @@ export const Basic: Story = {
 export const Colors: Story = {
   render: () => (
     <Flex direction="column" gap="md" align="center">
+      <Pagination count={10} color="default" defaultPage={3} />
       <Pagination count={10} color="primary" defaultPage={3} />
       <Pagination count={10} color="secondary" defaultPage={3} />
       <Pagination count={10} color="success" defaultPage={3} />
@@ -139,7 +140,7 @@ export const OnDarkSurface: Story = {
           'linear-gradient(135deg, rgba(0, 18, 61, 0.72) 0%, rgba(0, 14, 46, 0.85) 100%)',
       }}
     >
-      <Pagination count={20} defaultPage={8} color="primary" variant="solid" />
+      <Pagination count={20} defaultPage={8} color="default" variant="solid" />
     </div>
   ),
 };

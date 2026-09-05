@@ -62,7 +62,7 @@ export const Default: Story = {
   args: {
     width: '100%',
     height: 8,
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
     value: 45,
     max: 100,
@@ -120,7 +120,7 @@ export const Animated: Story = {
   args: {
     width: '100%',
     height: 8,
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
     value: 45,
     max: 100,

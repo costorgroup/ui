@@ -56,7 +56,7 @@ export const Default: Story = {
     'aria-label': 'Check',
     variant: 'solid',
     size: 'md',
-    color: 'primary',
+    color: 'default',
     rounded: false,
     disabled: false,
   },
@@ -81,7 +81,7 @@ export const Variants: Story = {
             ))}
             <IconButton
               variant={variant}
-              color="primary"
+              color="default"
               disabled
               aria-label="disabled"
             >

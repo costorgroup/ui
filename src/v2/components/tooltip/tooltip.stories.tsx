@@ -87,7 +87,7 @@ export const Default: Story = {
     placement: 'top',
     offset: 8,
     variant: 'surface',
-    color: 'primary',
+    color: 'default',
   },
 };
 

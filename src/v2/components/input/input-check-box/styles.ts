@@ -62,16 +62,16 @@ export const SInputCheckBoxControl = styled("span", {
     box-shadow 0.15s ease,
     color 0.15s ease;
 
-  ${({ theme, variant = "subtle", color = "primary" }) =>
+  ${({ theme, variant = "subtle", color = "default" }) =>
     inputControlIdleStyles(variant, theme.colors[color], theme)}
 
   .${inputCheckBoxClasses.input}:hover:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = "subtle", color = "primary" }) =>
+    ${({ theme, variant = "subtle", color = "default" }) =>
       inputControlIdleHoverStyles(variant, theme.colors[color], theme)}
   }
 
   .${inputCheckBoxClasses.input}:checked + & {
-    ${({ theme, color = "primary" }) => {
+    ${({ theme, color = "default" }) => {
       const palette = theme.colors[color];
 
       return `
@@ -83,7 +83,7 @@ export const SInputCheckBoxControl = styled("span", {
   }
 
   .${inputCheckBoxClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = "primary" }) => {
+    ${({ theme, color = "default" }) => {
       const palette = theme.colors[color];
 
       return `
@@ -101,7 +101,7 @@ export const SInputCheckBoxControl = styled("span", {
 
   .${inputCheckBoxClasses.input}:focus-visible + & {
     outline: 2px solid
-      ${({ theme, color = "primary" }) => theme.colors[color].main};
+      ${({ theme, color = "default" }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 

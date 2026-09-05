@@ -71,16 +71,16 @@ export const SInputRadioButtonControl = styled('span', {
     height: ${({ size = 'md' }) => sizeMap[size].dot};
   }
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) =>
+  ${({ theme, variant = 'subtle', color = 'default' }) =>
     inputControlIdleStyles(variant, theme.colors[color], theme)}
 
   .${inputRadioButtonClasses.input}:hover:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = 'subtle', color = 'primary' }) =>
+    ${({ theme, variant = 'subtle', color = 'default' }) =>
       inputControlIdleHoverStyles(variant, theme.colors[color], theme)}
   }
 
   .${inputRadioButtonClasses.input}:checked + & {
-    ${({ theme, color = 'primary' }) => {
+    ${({ theme, color = 'default' }) => {
       const palette = theme.colors[color];
 
       return `
@@ -92,7 +92,7 @@ export const SInputRadioButtonControl = styled('span', {
   }
 
   .${inputRadioButtonClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = 'primary' }) => {
+    ${({ theme, color = 'default' }) => {
       const palette = theme.colors[color];
 
       return `
@@ -109,7 +109,7 @@ export const SInputRadioButtonControl = styled('span', {
   }
 
   .${inputRadioButtonClasses.input}:focus-visible + & {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 

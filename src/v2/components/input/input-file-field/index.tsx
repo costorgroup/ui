@@ -39,7 +39,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
       name,
       variant = 'subtle',
       size = 'md',
-      color = 'primary',
+      color = 'default',
       id,
       modalTitle = 'Manage files',
       modalDescription = 'Add files with the dropzone, or remove files from the list.',

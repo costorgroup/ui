@@ -131,7 +131,7 @@ export const ButtonOnly: Story = {
   render: () => (
     <>
       <FloatingAction>
-        <Button color="primary">Create</Button>
+        <Button color="default">Create</Button>
       </FloatingAction>
     </>
   ),

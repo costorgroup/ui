@@ -38,7 +38,7 @@ export const SButton = styled("button", {
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = "solid", color = "primary" }) => {
+  ${({ theme, variant = "solid", color = "default" }) => {
     const palette = theme.colors[color];
     return variantStyles(variant, palette, theme);
   }}
@@ -59,7 +59,7 @@ export const SButton = styled("button", {
 
   &:focus-visible {
     outline: 2px solid
-      ${({ theme, color = "primary" }) => theme.colors[color].main};
+      ${({ theme, color = "default" }) => theme.colors[color].main};
     outline-offset: 2px;
   }
 `;

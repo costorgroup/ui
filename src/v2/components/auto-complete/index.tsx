@@ -20,7 +20,7 @@ const AutoComplete = forwardRef<HTMLDivElement, TAutoCompleteProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       children,
       className,
       ...props

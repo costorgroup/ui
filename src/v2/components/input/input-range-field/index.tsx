@@ -168,7 +168,7 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
     {
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       multi = false,
       direction = 'horizontal',
       valuePosition: valuePositionProp,

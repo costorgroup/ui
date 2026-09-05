@@ -76,7 +76,7 @@ export const Default: Story = {
     error: false,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     min: 0,
     max: 100,
@@ -146,7 +146,7 @@ export const CustomValue: Story = {
     step: 1,
     defaultValue: 3,
     renderValue: ({ formatted }) => (
-      <Chip color="primary" size="sm">
+      <Chip color="default" size="sm">
         {formatted}★
       </Chip>
     ),
@@ -206,7 +206,7 @@ export const Error: Story = {
     error: true,
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
     fullWidth: true,
     min: 0,
     max: 100,

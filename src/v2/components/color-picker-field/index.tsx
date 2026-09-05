@@ -20,7 +20,7 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
       fullWidth = true,
       size = 'md',
       variant = 'subtle',
-      color = 'primary',
+      color = 'default',
       id,
       className,
       ...props

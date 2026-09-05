@@ -36,7 +36,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
       placement = 'top',
       offset = 8,
       variant = 'surface',
-      color = 'primary',
+      color = 'default',
       className,
       ...props
     },

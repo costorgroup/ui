@@ -96,7 +96,7 @@ export const Default: Story = {
     datePickerDisplayType: 'wheel',
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
 };
 

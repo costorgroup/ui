@@ -20,7 +20,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
   ) => {
     const group = useButtonGroupContext();
     const variant = variantProp ?? group?.variant ?? 'solid';
-    const color = colorProp ?? group?.color ?? 'primary';
+    const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
 
     return (

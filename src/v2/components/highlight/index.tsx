@@ -8,7 +8,7 @@ import { THighlightOwnProps, THighlightProps } from './types';
 const Highlight = forwardRef(function Highlight<
   C extends ElementType = 'span',
 >(
-  { as, children, color = 'primary', className, ...props }: THighlightProps<C>,
+  { as, children, color = 'default', className, ...props }: THighlightProps<C>,
   ref: React.Ref<Element>,
 ) {
   return (
