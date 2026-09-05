@@ -1,0 +1,63 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import {
+  Text
+} from '../../index';
+
+const meta: Meta<typeof Text> = {
+  title: 'V2/Typography/Text',
+  component: Text,
+  tags: ['autodocs'],
+  argTypes: {
+    color: {
+      control: 'select',
+      options: [
+        'base',
+        'primary',
+        'secondary',
+        'success',
+        'error',
+        'warning',
+        'info',
+        'dark',
+        'light',
+        'default',
+      ],
+    },
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+    },
+  },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Text>;
+
+export const Default: Story = {
+  args: {
+    children: 'Readable body text using the default gray color.',
+    size: 'md',
+  },
+};
+
+export const Small: Story = {
+  args: {
+    children: 'Small text at 14px.',
+    size: 'sm',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    children: 'Large text at 18px.',
+    size: 'lg',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: 'Text with primary color.',
+    color: 'primary',
+  },
+};

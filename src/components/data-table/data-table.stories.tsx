@@ -16,7 +16,7 @@ type TDessert = TDataTableRow & {
 };
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -25,6 +25,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const VARIANTS: TDataTableVariant[] = [

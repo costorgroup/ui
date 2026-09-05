@@ -816,6 +816,9 @@ export {
   hsvToRgb,
   parseColor,
   formatColor,
+  createColorScale,
+  derivePaletteSemantics,
+  CUI_CANVAS_VAR,
 } from "./helpers";
 export type {
   TGetInitials,
@@ -836,6 +839,8 @@ export type {
   TGetDropdownPositionOptions,
   TDropdownAlign,
   TTrackPointerOutsideOptions,
+  TCreateColorScaleSteps,
+  TCreateColorScaleOptions,
 } from "./helpers";
 export {
   DDefaultTheme,
@@ -882,3 +887,4 @@ export type {
   TThemeProviderProps,
 } from "./theme";
 
+export * as V2 from "./v2";

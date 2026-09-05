@@ -8,7 +8,7 @@ import type { TPaletteColor } from '../../theme/types';
 import type { TAppBarVariant } from './app-bar-base/types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -17,6 +17,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const VARIANTS: TAppBarVariant[] = [

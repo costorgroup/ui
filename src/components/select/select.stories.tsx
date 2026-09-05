@@ -47,7 +47,7 @@ const meta: Meta<typeof Select> = {
     color: {
       control: "select",
       options: [
-        "default",
+        "base",
         "primary",
         "secondary",
         "success",
@@ -154,7 +154,7 @@ export const MultiSelect: Story = {
                   key={person.name}
                   size="sm"
                   variant="subtle"
-                  color="default"
+                  color="base"
                   rounded
                   onMouseDown={(event) => event.stopPropagation()}
                   onClick={(event) => event.stopPropagation()}
@@ -164,7 +164,7 @@ export const MultiSelect: Story = {
                   <IconButton
                     size="xs"
                     variant="ghost"
-                    color="default"
+                    color="base"
                     aria-label={`Remove ${person.name}`}
                     onMouseDown={(event) => event.stopPropagation()}
                     onClick={(event) => removePerson(event, person)}

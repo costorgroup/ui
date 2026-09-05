@@ -967,6 +967,506 @@
       "import": "./dist/components/tree-view/tree-view-label/index.js",
       "require": "./dist/components/tree-view/tree-view-label/index.cjs"
     },
+    "./v2": {
+      "types": "./dist/v2/index.d.ts",
+      "import": "./dist/v2/index.js",
+      "require": "./dist/v2/index.cjs"
+    },
+    "./v2/Accordion": {
+      "types": "./dist/v2/components/accordion/index.d.ts",
+      "import": "./dist/v2/components/accordion/index.js",
+      "require": "./dist/v2/components/accordion/index.cjs"
+    },
+    "./v2/AccordionBase": {
+      "types": "./dist/v2/components/accordion/accordion-base/index.d.ts",
+      "import": "./dist/v2/components/accordion/accordion-base/index.js",
+      "require": "./dist/v2/components/accordion/accordion-base/index.cjs"
+    },
+    "./v2/AccordionDetails": {
+      "types": "./dist/v2/components/accordion/accordion-details/index.d.ts",
+      "import": "./dist/v2/components/accordion/accordion-details/index.js",
+      "require": "./dist/v2/components/accordion/accordion-details/index.cjs"
+    },
+    "./v2/AccordionGroup": {
+      "types": "./dist/v2/components/accordion/accordion-group/index.d.ts",
+      "import": "./dist/v2/components/accordion/accordion-group/index.js",
+      "require": "./dist/v2/components/accordion/accordion-group/index.cjs"
+    },
+    "./v2/AccordionSummary": {
+      "types": "./dist/v2/components/accordion/accordion-summary/index.d.ts",
+      "import": "./dist/v2/components/accordion/accordion-summary/index.js",
+      "require": "./dist/v2/components/accordion/accordion-summary/index.cjs"
+    },
+    "./v2/Alert": {
+      "types": "./dist/v2/components/alert/index.d.ts",
+      "import": "./dist/v2/components/alert/index.js",
+      "require": "./dist/v2/components/alert/index.cjs"
+    },
+    "./v2/AlertActions": {
+      "types": "./dist/v2/components/alert/alert-actions/index.d.ts",
+      "import": "./dist/v2/components/alert/alert-actions/index.js",
+      "require": "./dist/v2/components/alert/alert-actions/index.cjs"
+    },
+    "./v2/AlertBase": {
+      "types": "./dist/v2/components/alert/alert-base/index.d.ts",
+      "import": "./dist/v2/components/alert/alert-base/index.js",
+      "require": "./dist/v2/components/alert/alert-base/index.cjs"
+    },
+    "./v2/AlertContent": {
+      "types": "./dist/v2/components/alert/alert-content/index.d.ts",
+      "import": "./dist/v2/components/alert/alert-content/index.js",
+      "require": "./dist/v2/components/alert/alert-content/index.cjs"
+    },
+    "./v2/AlertIcon": {
+      "types": "./dist/v2/components/alert/alert-icon/index.d.ts",
+      "import": "./dist/v2/components/alert/alert-icon/index.js",
+      "require": "./dist/v2/components/alert/alert-icon/index.cjs"
+    },
+    "./v2/AlertTitle": {
+      "types": "./dist/v2/components/alert/alert-title/index.d.ts",
+      "import": "./dist/v2/components/alert/alert-title/index.js",
+      "require": "./dist/v2/components/alert/alert-title/index.cjs"
+    },
+    "./v2/AutoComplete": {
+      "types": "./dist/v2/components/auto-complete/index.d.ts",
+      "import": "./dist/v2/components/auto-complete/index.js",
+      "require": "./dist/v2/components/auto-complete/index.cjs"
+    },
+    "./v2/AutoCompleteOption": {
+      "types": "./dist/v2/components/auto-complete-option/index.d.ts",
+      "import": "./dist/v2/components/auto-complete-option/index.js",
+      "require": "./dist/v2/components/auto-complete-option/index.cjs"
+    },
+    "./v2/Avatar": {
+      "types": "./dist/v2/components/avatar/index.d.ts",
+      "import": "./dist/v2/components/avatar/index.js",
+      "require": "./dist/v2/components/avatar/index.cjs"
+    },
+    "./v2/AvatarGroup": {
+      "types": "./dist/v2/components/avatar-group/index.d.ts",
+      "import": "./dist/v2/components/avatar-group/index.js",
+      "require": "./dist/v2/components/avatar-group/index.cjs"
+    },
+    "./v2/Badge": {
+      "types": "./dist/v2/components/badge/index.d.ts",
+      "import": "./dist/v2/components/badge/index.js",
+      "require": "./dist/v2/components/badge/index.cjs"
+    },
+    "./v2/Blockquote": {
+      "types": "./dist/v2/components/blockquote/index.d.ts",
+      "import": "./dist/v2/components/blockquote/index.js",
+      "require": "./dist/v2/components/blockquote/index.cjs"
+    },
+    "./v2/BlockquoteBase": {
+      "types": "./dist/v2/components/blockquote/blockquote-base/index.d.ts",
+      "import": "./dist/v2/components/blockquote/blockquote-base/index.js",
+      "require": "./dist/v2/components/blockquote/blockquote-base/index.cjs"
+    },
+    "./v2/BlockquoteCaption": {
+      "types": "./dist/v2/components/blockquote/blockquote-caption/index.d.ts",
+      "import": "./dist/v2/components/blockquote/blockquote-caption/index.js",
+      "require": "./dist/v2/components/blockquote/blockquote-caption/index.cjs"
+    },
+    "./v2/BlockquoteContent": {
+      "types": "./dist/v2/components/blockquote/blockquote-content/index.d.ts",
+      "import": "./dist/v2/components/blockquote/blockquote-content/index.js",
+      "require": "./dist/v2/components/blockquote/blockquote-content/index.cjs"
+    },
+    "./v2/Breadcrumb": {
+      "types": "./dist/v2/components/breadcrumb/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/index.js",
+      "require": "./dist/v2/components/breadcrumb/index.cjs"
+    },
+    "./v2/BreadcrumbBase": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-base/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-base/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-base/index.cjs"
+    },
+    "./v2/BreadcrumbEllipsis": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-ellipsis/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-ellipsis/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-ellipsis/index.cjs"
+    },
+    "./v2/BreadcrumbIcon": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-icon/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-icon/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-icon/index.cjs"
+    },
+    "./v2/BreadcrumbItem": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-item/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-item/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-item/index.cjs"
+    },
+    "./v2/BreadcrumbLink": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-link/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-link/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-link/index.cjs"
+    },
+    "./v2/BreadcrumbSeparator": {
+      "types": "./dist/v2/components/breadcrumb/breadcrumb-separator/index.d.ts",
+      "import": "./dist/v2/components/breadcrumb/breadcrumb-separator/index.js",
+      "require": "./dist/v2/components/breadcrumb/breadcrumb-separator/index.cjs"
+    },
+    "./v2/Button": {
+      "types": "./dist/v2/components/button/index.d.ts",
+      "import": "./dist/v2/components/button/index.js",
+      "require": "./dist/v2/components/button/index.cjs"
+    },
+    "./v2/ButtonGroup": {
+      "types": "./dist/v2/components/button-group/index.d.ts",
+      "import": "./dist/v2/components/button-group/index.js",
+      "require": "./dist/v2/components/button-group/index.cjs"
+    },
+    "./v2/CheckBox": {
+      "types": "./dist/v2/components/check-box/index.d.ts",
+      "import": "./dist/v2/components/check-box/index.js",
+      "require": "./dist/v2/components/check-box/index.cjs"
+    },
+    "./v2/Chip": {
+      "types": "./dist/v2/components/chip/index.d.ts",
+      "import": "./dist/v2/components/chip/index.js",
+      "require": "./dist/v2/components/chip/index.cjs"
+    },
+    "./v2/ChromaConicSpin": {
+      "types": "./dist/v2/animated/chroma-conic-spin/index.d.ts",
+      "import": "./dist/v2/animated/chroma-conic-spin/index.js",
+      "require": "./dist/v2/animated/chroma-conic-spin/index.cjs"
+    },
+    "./v2/CircularProgress": {
+      "types": "./dist/v2/components/circular-progress/index.d.ts",
+      "import": "./dist/v2/components/circular-progress/index.js",
+      "require": "./dist/v2/components/circular-progress/index.cjs"
+    },
+    "./v2/Code": {
+      "types": "./dist/v2/components/code/index.d.ts",
+      "import": "./dist/v2/components/code/index.js",
+      "require": "./dist/v2/components/code/index.cjs"
+    },
+    "./v2/ColorPickerField": {
+      "types": "./dist/v2/components/color-picker-field/index.d.ts",
+      "import": "./dist/v2/components/color-picker-field/index.js",
+      "require": "./dist/v2/components/color-picker-field/index.cjs"
+    },
+    "./v2/DatePickerField": {
+      "types": "./dist/v2/components/date-picker-field/index.d.ts",
+      "import": "./dist/v2/components/date-picker-field/index.js",
+      "require": "./dist/v2/components/date-picker-field/index.cjs"
+    },
+    "./v2/Em": {
+      "types": "./dist/v2/components/em/index.d.ts",
+      "import": "./dist/v2/components/em/index.js",
+      "require": "./dist/v2/components/em/index.cjs"
+    },
+    "./v2/FileField": {
+      "types": "./dist/v2/components/file-field/index.d.ts",
+      "import": "./dist/v2/components/file-field/index.js",
+      "require": "./dist/v2/components/file-field/index.cjs"
+    },
+    "./v2/FloatingAction": {
+      "types": "./dist/v2/components/floating-action/index.d.ts",
+      "import": "./dist/v2/components/floating-action/index.js",
+      "require": "./dist/v2/components/floating-action/index.cjs"
+    },
+    "./v2/Highlight": {
+      "types": "./dist/v2/components/highlight/index.d.ts",
+      "import": "./dist/v2/components/highlight/index.js",
+      "require": "./dist/v2/components/highlight/index.cjs"
+    },
+    "./v2/IconButton": {
+      "types": "./dist/v2/components/icon-button/index.d.ts",
+      "import": "./dist/v2/components/icon-button/index.js",
+      "require": "./dist/v2/components/icon-button/index.cjs"
+    },
+    "./v2/Input": {
+      "types": "./dist/v2/components/input/index.d.ts",
+      "import": "./dist/v2/components/input/index.js",
+      "require": "./dist/v2/components/input/index.cjs"
+    },
+    "./v2/InputAutoComplete": {
+      "types": "./dist/v2/components/input/input-auto-complete/index.d.ts",
+      "import": "./dist/v2/components/input/input-auto-complete/index.js",
+      "require": "./dist/v2/components/input/input-auto-complete/index.cjs"
+    },
+    "./v2/InputBase": {
+      "types": "./dist/v2/components/input/input-base/index.d.ts",
+      "import": "./dist/v2/components/input/input-base/index.js",
+      "require": "./dist/v2/components/input/input-base/index.cjs"
+    },
+    "./v2/InputCheckBox": {
+      "types": "./dist/v2/components/input/input-check-box/index.d.ts",
+      "import": "./dist/v2/components/input/input-check-box/index.js",
+      "require": "./dist/v2/components/input/input-check-box/index.cjs"
+    },
+    "./v2/InputColorField": {
+      "types": "./dist/v2/components/input/input-color-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-color-field/index.js",
+      "require": "./dist/v2/components/input/input-color-field/index.cjs"
+    },
+    "./v2/InputDateField": {
+      "types": "./dist/v2/components/input/input-date-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-date-field/index.js",
+      "require": "./dist/v2/components/input/input-date-field/index.cjs"
+    },
+    "./v2/InputFileField": {
+      "types": "./dist/v2/components/input/input-file-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-file-field/index.js",
+      "require": "./dist/v2/components/input/input-file-field/index.cjs"
+    },
+    "./v2/InputFileFieldModal": {
+      "types": "./dist/v2/components/input/input-file-field-modal/index.d.ts",
+      "import": "./dist/v2/components/input/input-file-field-modal/index.js",
+      "require": "./dist/v2/components/input/input-file-field-modal/index.cjs"
+    },
+    "./v2/InputGroup": {
+      "types": "./dist/v2/components/input-group/index.d.ts",
+      "import": "./dist/v2/components/input-group/index.js",
+      "require": "./dist/v2/components/input-group/index.cjs"
+    },
+    "./v2/InputHelperText": {
+      "types": "./dist/v2/components/input/input-helper-text/index.d.ts",
+      "import": "./dist/v2/components/input/input-helper-text/index.js",
+      "require": "./dist/v2/components/input/input-helper-text/index.cjs"
+    },
+    "./v2/InputIcon": {
+      "types": "./dist/v2/components/input/input-icon/index.d.ts",
+      "import": "./dist/v2/components/input/input-icon/index.js",
+      "require": "./dist/v2/components/input/input-icon/index.cjs"
+    },
+    "./v2/InputLabel": {
+      "types": "./dist/v2/components/input/input-label/index.d.ts",
+      "import": "./dist/v2/components/input/input-label/index.js",
+      "require": "./dist/v2/components/input/input-label/index.cjs"
+    },
+    "./v2/InputNumberField": {
+      "types": "./dist/v2/components/input/input-number-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-number-field/index.js",
+      "require": "./dist/v2/components/input/input-number-field/index.cjs"
+    },
+    "./v2/InputPinField": {
+      "types": "./dist/v2/components/input/input-pin-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-pin-field/index.js",
+      "require": "./dist/v2/components/input/input-pin-field/index.cjs"
+    },
+    "./v2/InputRadioButton": {
+      "types": "./dist/v2/components/input/input-radio-button/index.d.ts",
+      "import": "./dist/v2/components/input/input-radio-button/index.js",
+      "require": "./dist/v2/components/input/input-radio-button/index.cjs"
+    },
+    "./v2/InputRangeField": {
+      "types": "./dist/v2/components/input/input-range-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-range-field/index.js",
+      "require": "./dist/v2/components/input/input-range-field/index.cjs"
+    },
+    "./v2/InputRichTextField": {
+      "types": "./dist/v2/components/input/input-rich-text-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-rich-text-field/index.js",
+      "require": "./dist/v2/components/input/input-rich-text-field/index.cjs"
+    },
+    "./v2/InputSelect": {
+      "types": "./dist/v2/components/input/input-select/index.d.ts",
+      "import": "./dist/v2/components/input/input-select/index.js",
+      "require": "./dist/v2/components/input/input-select/index.cjs"
+    },
+    "./v2/InputSelectOption": {
+      "types": "./dist/v2/components/input/input-select-option/index.d.ts",
+      "import": "./dist/v2/components/input/input-select-option/index.js",
+      "require": "./dist/v2/components/input/input-select-option/index.cjs"
+    },
+    "./v2/InputSwitch": {
+      "types": "./dist/v2/components/input/input-switch/index.d.ts",
+      "import": "./dist/v2/components/input/input-switch/index.js",
+      "require": "./dist/v2/components/input/input-switch/index.cjs"
+    },
+    "./v2/InputTextAreaField": {
+      "types": "./dist/v2/components/input/input-text-area-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-text-area-field/index.js",
+      "require": "./dist/v2/components/input/input-text-area-field/index.cjs"
+    },
+    "./v2/InputTextField": {
+      "types": "./dist/v2/components/input/input-text-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-text-field/index.js",
+      "require": "./dist/v2/components/input/input-text-field/index.cjs"
+    },
+    "./v2/InputWrapper": {
+      "types": "./dist/v2/components/input/input-wrapper/index.d.ts",
+      "import": "./dist/v2/components/input/input-wrapper/index.js",
+      "require": "./dist/v2/components/input/input-wrapper/index.cjs"
+    },
+    "./v2/Kbd": {
+      "types": "./dist/v2/components/kbd/index.d.ts",
+      "import": "./dist/v2/components/kbd/index.js",
+      "require": "./dist/v2/components/kbd/index.cjs"
+    },
+    "./v2/LinearProgress": {
+      "types": "./dist/v2/components/linear-progress/index.d.ts",
+      "import": "./dist/v2/components/linear-progress/index.js",
+      "require": "./dist/v2/components/linear-progress/index.cjs"
+    },
+    "./v2/Link": {
+      "types": "./dist/v2/components/link/index.d.ts",
+      "import": "./dist/v2/components/link/index.js",
+      "require": "./dist/v2/components/link/index.cjs"
+    },
+    "./v2/List": {
+      "types": "./dist/v2/components/list/index.d.ts",
+      "import": "./dist/v2/components/list/index.js",
+      "require": "./dist/v2/components/list/index.cjs"
+    },
+    "./v2/ListItem": {
+      "types": "./dist/v2/components/list-item/index.d.ts",
+      "import": "./dist/v2/components/list-item/index.js",
+      "require": "./dist/v2/components/list-item/index.cjs"
+    },
+    "./v2/NeonPulse": {
+      "types": "./dist/v2/animated/neon-pulse/index.d.ts",
+      "import": "./dist/v2/animated/neon-pulse/index.js",
+      "require": "./dist/v2/animated/neon-pulse/index.cjs"
+    },
+    "./v2/NumberField": {
+      "types": "./dist/v2/components/number-field/index.d.ts",
+      "import": "./dist/v2/components/number-field/index.js",
+      "require": "./dist/v2/components/number-field/index.cjs"
+    },
+    "./v2/Pagination": {
+      "types": "./dist/v2/components/pagination/index.d.ts",
+      "import": "./dist/v2/components/pagination/index.js",
+      "require": "./dist/v2/components/pagination/index.cjs"
+    },
+    "./v2/PaginationBase": {
+      "types": "./dist/v2/components/pagination/pagination-base/index.d.ts",
+      "import": "./dist/v2/components/pagination/pagination-base/index.js",
+      "require": "./dist/v2/components/pagination/pagination-base/index.cjs"
+    },
+    "./v2/PaginationEllipsis": {
+      "types": "./dist/v2/components/pagination/pagination-ellipsis/index.d.ts",
+      "import": "./dist/v2/components/pagination/pagination-ellipsis/index.js",
+      "require": "./dist/v2/components/pagination/pagination-ellipsis/index.cjs"
+    },
+    "./v2/PaginationItem": {
+      "types": "./dist/v2/components/pagination/pagination-item/index.d.ts",
+      "import": "./dist/v2/components/pagination/pagination-item/index.js",
+      "require": "./dist/v2/components/pagination/pagination-item/index.cjs"
+    },
+    "./v2/PaginationList": {
+      "types": "./dist/v2/components/pagination/pagination-list/index.d.ts",
+      "import": "./dist/v2/components/pagination/pagination-list/index.js",
+      "require": "./dist/v2/components/pagination/pagination-list/index.cjs"
+    },
+    "./v2/PinField": {
+      "types": "./dist/v2/components/pin-field/index.d.ts",
+      "import": "./dist/v2/components/pin-field/index.js",
+      "require": "./dist/v2/components/pin-field/index.cjs"
+    },
+    "./v2/RadioButton": {
+      "types": "./dist/v2/components/radio-button/index.d.ts",
+      "import": "./dist/v2/components/radio-button/index.js",
+      "require": "./dist/v2/components/radio-button/index.cjs"
+    },
+    "./v2/RadioButtonGroup": {
+      "types": "./dist/v2/components/radio-button-group/index.d.ts",
+      "import": "./dist/v2/components/radio-button-group/index.js",
+      "require": "./dist/v2/components/radio-button-group/index.cjs"
+    },
+    "./v2/RangeField": {
+      "types": "./dist/v2/components/range-field/index.d.ts",
+      "import": "./dist/v2/components/range-field/index.js",
+      "require": "./dist/v2/components/range-field/index.cjs"
+    },
+    "./v2/RichTextField": {
+      "types": "./dist/v2/components/rich-text-field/index.d.ts",
+      "import": "./dist/v2/components/rich-text-field/index.js",
+      "require": "./dist/v2/components/rich-text-field/index.cjs"
+    },
+    "./v2/Select": {
+      "types": "./dist/v2/components/select/index.d.ts",
+      "import": "./dist/v2/components/select/index.js",
+      "require": "./dist/v2/components/select/index.cjs"
+    },
+    "./v2/SelectOption": {
+      "types": "./dist/v2/components/select-option/index.d.ts",
+      "import": "./dist/v2/components/select-option/index.js",
+      "require": "./dist/v2/components/select-option/index.cjs"
+    },
+    "./v2/Skeleton": {
+      "types": "./dist/v2/components/skeleton/index.d.ts",
+      "import": "./dist/v2/components/skeleton/index.js",
+      "require": "./dist/v2/components/skeleton/index.cjs"
+    },
+    "./v2/SpeedDial": {
+      "types": "./dist/v2/components/speed-dial/index.d.ts",
+      "import": "./dist/v2/components/speed-dial/index.js",
+      "require": "./dist/v2/components/speed-dial/index.cjs"
+    },
+    "./v2/Switch": {
+      "types": "./dist/v2/components/switch/index.d.ts",
+      "import": "./dist/v2/components/switch/index.js",
+      "require": "./dist/v2/components/switch/index.cjs"
+    },
+    "./v2/Tab": {
+      "types": "./dist/v2/components/tabs/tab/index.d.ts",
+      "import": "./dist/v2/components/tabs/tab/index.js",
+      "require": "./dist/v2/components/tabs/tab/index.cjs"
+    },
+    "./v2/Tabs": {
+      "types": "./dist/v2/components/tabs/index.d.ts",
+      "import": "./dist/v2/components/tabs/index.js",
+      "require": "./dist/v2/components/tabs/index.cjs"
+    },
+    "./v2/Text": {
+      "types": "./dist/v2/components/text/index.d.ts",
+      "import": "./dist/v2/components/text/index.js",
+      "require": "./dist/v2/components/text/index.cjs"
+    },
+    "./v2/TextArea": {
+      "types": "./dist/v2/components/text-area/index.d.ts",
+      "import": "./dist/v2/components/text-area/index.js",
+      "require": "./dist/v2/components/text-area/index.cjs"
+    },
+    "./v2/TextField": {
+      "types": "./dist/v2/components/text-field/index.d.ts",
+      "import": "./dist/v2/components/text-field/index.js",
+      "require": "./dist/v2/components/text-field/index.cjs"
+    },
+    "./v2/Title": {
+      "types": "./dist/v2/components/title/index.d.ts",
+      "import": "./dist/v2/components/title/index.js",
+      "require": "./dist/v2/components/title/index.cjs"
+    },
+    "./v2/Tooltip": {
+      "types": "./dist/v2/components/tooltip/index.d.ts",
+      "import": "./dist/v2/components/tooltip/index.js",
+      "require": "./dist/v2/components/tooltip/index.cjs"
+    },
+    "./v2/TreeView": {
+      "types": "./dist/v2/components/tree-view/index.d.ts",
+      "import": "./dist/v2/components/tree-view/index.js",
+      "require": "./dist/v2/components/tree-view/index.cjs"
+    },
+    "./v2/WavePing": {
+      "types": "./dist/v2/animated/wave-ping/index.d.ts",
+      "import": "./dist/v2/animated/wave-ping/index.js",
+      "require": "./dist/v2/animated/wave-ping/index.cjs"
+    },
+    "./v2/Window": {
+      "types": "./dist/v2/components/window/index.d.ts",
+      "import": "./dist/v2/components/window/index.js",
+      "require": "./dist/v2/components/window/index.cjs"
+    },
+    "./v2/WindowActions": {
+      "types": "./dist/v2/components/window/window-actions/index.d.ts",
+      "import": "./dist/v2/components/window/window-actions/index.js",
+      "require": "./dist/v2/components/window/window-actions/index.cjs"
+    },
+    "./v2/WindowContent": {
+      "types": "./dist/v2/components/window/window-content/index.d.ts",
+      "import": "./dist/v2/components/window/window-content/index.js",
+      "require": "./dist/v2/components/window/window-content/index.cjs"
+    },
+    "./v2/WindowHead": {
+      "types": "./dist/v2/components/window/window-head/index.d.ts",
+      "import": "./dist/v2/components/window/window-head/index.js",
+      "require": "./dist/v2/components/window/window-head/index.cjs"
+    },
     "./Video": {
       "types": "./dist/components/video/index.d.ts",
       "import": "./dist/components/video/index.js",

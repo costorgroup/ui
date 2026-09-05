@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { CheckIcon, Tab, Tabs } from '../../index';
+import type { TPaletteColor } from '../../theme/types';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Data Display/Tabs',
@@ -30,7 +31,7 @@ const meta: Meta<typeof Tabs> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',
@@ -39,7 +40,8 @@ const meta: Meta<typeof Tabs> = {
         'info',
         'dark',
         'light',
-      ],
+        'default',
+      ] satisfies TPaletteColor[],
     },
   },
 };
@@ -60,16 +62,7 @@ const TabsDemo = ({
   anchor?: 'top' | 'bottom' | 'left' | 'right';
   justify?: 'start' | 'center' | 'end' | 'stretch';
   textAlign?: 'start' | 'center' | 'end';
-  color?:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'error'
-    | 'warning'
-    | 'info'
-    | 'default'
-    | 'dark'
-    | 'light';
+  color?: TPaletteColor;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }) => {
   const [active, setActive] = useState('one');

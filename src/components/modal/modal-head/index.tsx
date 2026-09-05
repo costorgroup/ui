@@ -24,7 +24,7 @@ const ModalHead = forwardRef<HTMLDivElement, TModalHeadProps>(
             <IconButton
               type="button"
               variant="ghost"
-              color="default"
+              color="base"
               size="lg"
               rounded
               aria-label="Close"

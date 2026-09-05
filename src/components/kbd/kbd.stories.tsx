@@ -4,7 +4,7 @@ import { Flex, Kbd, Text } from '../../index';
 import type { TPaletteColor } from '../../theme/types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -13,6 +13,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const meta: Meta<typeof Kbd> = {
@@ -22,7 +23,13 @@ const meta: Meta<typeof Kbd> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['raised', 'outline', 'subtle', 'plain'],
+      options: [
+        'raised',
+        'subtle',
+        'surface',
+        'outline',
+        'plain',
+      ],
     },
     size: {
       control: 'select',
@@ -44,7 +51,7 @@ export const Default: Story = {
     children: 'Shift + Tab',
     variant: 'raised',
     size: 'md',
-    color: 'default',
+    color: 'base',
   },
 };
 
@@ -74,7 +81,15 @@ export const FunctionKeys: Story = {
 export const Variants: Story = {
   render: () => (
     <Flex gap="sm" wrap="wrap" align="center">
-      {(['raised', 'outline', 'subtle', 'plain'] as const).map((variant) => (
+      {(
+        [
+          'raised',
+          'subtle',
+          'surface',
+          'outline',
+          'plain',
+        ] as const
+      ).map((variant) => (
         <Kbd key={variant} variant={variant}>
           Shift + Tab
         </Kbd>
@@ -116,6 +131,9 @@ export const Colors: Story = {
           </Kbd>
           <Kbd color={color} variant="subtle">
             subtle
+          </Kbd>
+          <Kbd color={color} variant="surface">
+            surface
           </Kbd>
           <Kbd color={color} variant="outline">
             outline

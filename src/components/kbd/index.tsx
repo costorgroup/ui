@@ -11,7 +11,7 @@ const Kbd = forwardRef(function Kbd<C extends ElementType = 'kbd'>(
     children,
     variant = 'raised',
     size = 'md',
-    color = 'default',
+    color = 'base',
     className, ...props
   }: TKbdProps<C>,
   ref: React.Ref<Element>,

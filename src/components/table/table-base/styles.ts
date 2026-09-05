@@ -23,7 +23,7 @@ export const STableBase = styled('table', {
   font-size: ${({ size }) => sizeFont[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: var(--table-fg, ${({ theme }) => theme.colors.default.darker});
+  color: var(--table-fg, ${({ theme }) => theme.colors.base.darker});
   text-align: left;
 
   ${({ theme, size, color }) => {

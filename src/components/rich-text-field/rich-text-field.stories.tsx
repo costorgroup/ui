@@ -25,7 +25,7 @@ const meta: Meta<typeof RichTextField> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

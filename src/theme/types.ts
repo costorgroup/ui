@@ -8,6 +8,7 @@ import type {
   TThemeSpacing,
   TThemeTypography,
   TThemeZIndex,
+  TThemeConfig,
 } from './theming';
 
 export type {
@@ -32,6 +33,9 @@ export type {
   TThemeTypographyHeading,
   TThemeTypographyText,
   TThemeZIndex,
+  TThemeConfig,
+  TCreateColorScaleSteps,
+  TCreateColorScaleOptions,
 } from './theming';
 
 export type TThemeGlobalStyles = SerializedStyles | ((theme: TTheme) => SerializedStyles);
@@ -46,5 +50,6 @@ export type TTheme = {
   spacing: TThemeSpacing;
   typography: TThemeTypography;
   zIndex: TThemeZIndex;
+  config: TThemeConfig;
   globalStyles?: TThemeGlobalStyles;
 };

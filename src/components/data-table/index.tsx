@@ -152,14 +152,14 @@ const DataTableInner = <T extends TDataTableRow>(
       <SDataTableToolbar>
         <SDataTableHeader>
           {title != null ? (
-            <Heading as="h3" color={variant === 'solid' ? 'light' : 'default'}>
+            <Heading as="h3" color={variant === 'solid' ? 'light' : 'base'}>
               {title}
             </Heading>
           ) : null}
           {description != null ? (
             <Text
               size="sm"
-              color={variant === 'solid' ? 'light' : 'default'}
+              color={variant === 'solid' ? 'light' : 'base'}
             >
               {description}
             </Text>
@@ -232,7 +232,7 @@ const DataTableInner = <T extends TDataTableRow>(
 
       <SDataTableFooter>
         <SDataTableEntries>
-          <Text size="sm" color={variant === 'solid' ? 'light' : 'default'}>
+          <Text size="sm" color={variant === 'solid' ? 'light' : 'base'}>
             {filteredData.length === 0
               ? '0 entries'
               : `Showing ${from} to ${to} of ${filteredData.length} entries`}

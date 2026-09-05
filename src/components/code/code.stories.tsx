@@ -4,7 +4,7 @@ import { Code, Flex, Text } from '../../index';
 import type { TPaletteColor } from '../../theme/types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -13,6 +13,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const meta: Meta<typeof Code> = {
@@ -22,7 +23,13 @@ const meta: Meta<typeof Code> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'subtle', 'surface', 'outline', 'plain'],
+      options: [
+        'solid',
+        'subtle',
+        'surface',
+        'outline',
+        'plain',
+      ],
     },
     size: {
       control: 'select',
@@ -44,7 +51,7 @@ export const Default: Story = {
     children: 'console.log("Hello, world!")',
     variant: 'subtle',
     size: 'sm',
-    color: 'default',
+    color: 'base',
   },
 };
 
@@ -71,13 +78,19 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: () => (
     <Flex gap="sm" wrap="wrap" align="center">
-      {(['solid', 'subtle', 'surface', 'outline', 'plain'] as const).map(
-        (variant) => (
-          <Code key={variant} variant={variant}>
-            console.log()
-          </Code>
-        ),
-      )}
+      {(
+        [
+          'solid',
+          'subtle',
+          'surface',
+          'outline',
+          'plain',
+        ] as const
+      ).map((variant) => (
+        <Code key={variant} variant={variant}>
+          console.log()
+        </Code>
+      ))}
     </Flex>
   ),
 };

@@ -20,10 +20,10 @@ type Story = StoryObj<typeof BlockquoteBase>;
 export const Default: Story = {
   render: (args) => (
     <BlockquoteBase {...args}>
-      <BlockquoteContent color="default" size="md">
+      <BlockquoteContent color="base" size="md">
         {quote}
       </BlockquoteContent>
-      <BlockquoteCaption color="default" size="sm">
+      <BlockquoteCaption color="base" size="sm">
         Uzumaki Naruto
       </BlockquoteCaption>
     </BlockquoteBase>

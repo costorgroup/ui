@@ -22,7 +22,7 @@ const meta: Meta<typeof List> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

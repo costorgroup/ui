@@ -31,7 +31,7 @@ const meta: Meta<typeof CheckBox> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

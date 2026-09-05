@@ -22,7 +22,7 @@ const meta: Meta<typeof ToggleButtonGroup> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

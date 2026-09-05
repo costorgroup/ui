@@ -12,7 +12,7 @@ import type { TPaletteColor } from '../../theme/types';
 import type { TTableSize } from './table-base/context';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -21,6 +21,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const meta: Meta<typeof TableBase> = {
@@ -59,7 +60,7 @@ const rows = [
 export const Default: Story = {
   args: {
     size: 'md',
-    color: 'default',
+    color: 'base',
   },
   render: (args) => (
     <TableBase {...args}>

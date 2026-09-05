@@ -12,7 +12,7 @@ const meta: Meta<typeof Heading> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

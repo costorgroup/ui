@@ -33,7 +33,7 @@ const meta: Meta<typeof Stepper> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',
@@ -164,7 +164,7 @@ export const Interactive: Story = {
         <Flex gap={8}>
           <Button
             variant="outline"
-            color="default"
+            color="base"
             disabled={activeStep === 0}
             onClick={goToPrevious}
           >

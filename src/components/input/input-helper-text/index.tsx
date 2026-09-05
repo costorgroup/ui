@@ -8,7 +8,7 @@ const InputHelperText = forwardRef<HTMLParagraphElement, TInputHelperTextProps>(
   (
     {
       children,
-      color = 'default',
+      color = 'base',
       size = 'sm',
       error = false,
       className,

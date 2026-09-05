@@ -15,6 +15,7 @@ export const SHeading = styled('h1', {
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: ${({ theme, color = 'default' }) => theme.colors[color].main};
+  color: ${({ theme, color }) =>
+    color != null ? theme.colors[color].main : 'inherit'};
   font-size: ${({ theme, level }) => theme.typography.heading[level]};
 `;

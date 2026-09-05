@@ -24,7 +24,7 @@ const meta: Meta<typeof TreeView> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

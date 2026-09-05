@@ -53,6 +53,10 @@ export const createTheme: TCreateTheme = (options: TThemeOptions = {}): TTheme =
     ...DDefaultTheme.zIndex,
     ...options.zIndex,
   },
+  config: {
+    ...DDefaultTheme.config,
+    ...options.config,
+  },
 });
 
 export type { TCreateTheme, TThemeOptions } from './types';

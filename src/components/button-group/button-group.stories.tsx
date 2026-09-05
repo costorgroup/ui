@@ -15,7 +15,7 @@ const meta: Meta<typeof ButtonGroup> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

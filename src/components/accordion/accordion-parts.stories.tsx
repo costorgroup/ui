@@ -10,7 +10,7 @@ import { AccordionGroup } from './accordion-group';
 import type { TAccordionVariant } from './accordion-base/context';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -19,6 +19,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const VARIANTS: TAccordionVariant[] = [

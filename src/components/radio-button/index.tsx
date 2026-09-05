@@ -66,7 +66,7 @@ const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[resolvedSize]} color="default">{description}</Text>
+            <Text size={inputDescriptionTextSize[resolvedSize]} color="base">{description}</Text>
           ) : null
         }
         helperText={

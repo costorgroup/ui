@@ -8,7 +8,7 @@ const Viewport = forwardRef<HTMLDivElement, TViewportProps>(
   ({
     children,
     radius = 'medium',
-    color = 'default',
+    color = 'base',
     variant = 'surface',
     className,
     ...props

@@ -31,7 +31,7 @@ const meta: Meta<typeof RadioButton> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

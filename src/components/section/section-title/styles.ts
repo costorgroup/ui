@@ -21,7 +21,7 @@ export const SSectionTitle = styled('h3', {
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
   font-size: ${({ theme }) => theme.typography.heading.h3};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.colors.base.main};
   box-sizing: border-box;
 
   ${({ align, variant }) => {

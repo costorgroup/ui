@@ -26,7 +26,7 @@ export const STreeView = styled('ul', {
   font-size: ${({ size }) => fontSize[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.colors.base.main};
   user-select: none;
   -webkit-user-select: none;
 `;

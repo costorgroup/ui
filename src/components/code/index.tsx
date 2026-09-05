@@ -11,7 +11,7 @@ const Code = forwardRef(function Code<C extends ElementType = 'code'>(
     children,
     variant = 'subtle',
     size = 'sm',
-    color = 'default',
+    color = 'base',
     className, ...props
   }: TCodeProps<C>,
   ref: React.Ref<Element>,

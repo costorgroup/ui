@@ -97,13 +97,13 @@ export const SDataTable = styled('div', {
 
           & .${dataTableClasses.search} .${inputWrapperClasses.root} {
             background-color: ${white};
-            color: ${theme.colors.default.darker};
+            color: ${theme.colors.base.darker};
             border-color: transparent;
 
             &:hover,
             &:focus-within {
               background-color: ${white};
-              color: ${theme.colors.default.darker};
+              color: ${theme.colors.base.darker};
               border-color: transparent;
             }
           }

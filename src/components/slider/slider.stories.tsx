@@ -49,7 +49,7 @@ const meta: Meta<typeof Slider> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

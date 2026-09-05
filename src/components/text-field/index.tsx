@@ -62,7 +62,7 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="default">
+            <Text size={inputDescriptionTextSize[size]} color="base">
               {description}
             </Text>
           ) : null

@@ -305,3 +305,10 @@ export type {
   TColorRgba,
   TColorHsv,
 } from './types';
+export {
+  createColorScale,
+  derivePaletteSemantics,
+  CUI_CANVAS_VAR,
+  type TCreateColorScaleSteps,
+  type TCreateColorScaleOptions,
+} from './create-color-scale';

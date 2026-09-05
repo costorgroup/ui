@@ -7,5 +7,5 @@ export const SStepDescription = styled.p`
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   color: ${({ theme }) =>
-    `color-mix(in srgb, ${theme.colors.default.main} 68%, transparent)`};
+    `color-mix(in srgb, ${theme.colors.base.main} 68%, transparent)`};
 `;

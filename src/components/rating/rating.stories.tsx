@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { CheckIcon, Flex, Rating, Text } from '../../index';
 
 const COLORS = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',

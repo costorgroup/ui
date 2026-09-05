@@ -15,12 +15,12 @@ const Blockquote = forwardRef<HTMLQuoteElement, TBlockquoteProps>(
           className,
         )}>
         {children != null ? (
-          <BlockquoteContent color="default" size="md">
+          <BlockquoteContent color="base" size="md">
             {children}
           </BlockquoteContent>
         ) : null}
         {caption != null ? (
-          <BlockquoteCaption color="default" size="sm">
+          <BlockquoteCaption color="base" size="sm">
             {caption}
           </BlockquoteCaption>
         ) : null}

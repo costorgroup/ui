@@ -6,7 +6,7 @@ import { STableBase } from './styles';
 import { TTableBaseProps } from './types';
 
 const TableBase = forwardRef<HTMLTableElement, TTableBaseProps>(
-  ({ children, size = 'md', color = 'default', className, ...props }, ref) => {
+  ({ children, size = 'md', color = 'base', className, ...props }, ref) => {
     return (
       <TableContext.Provider value={{ size, color }}>
         <STableBase

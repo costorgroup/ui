@@ -25,7 +25,7 @@ const meta: Meta<typeof RangeField> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

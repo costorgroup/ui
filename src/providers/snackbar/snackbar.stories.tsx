@@ -10,7 +10,7 @@ import SnackbarProvider from './index';
 import { useSnackbar } from '../../hooks/use-snackbar';
 
 const SNACKBAR_COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -19,6 +19,7 @@ const SNACKBAR_COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const SNACKBAR_VARIANTS: TAlertVariant[] = [

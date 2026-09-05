@@ -5,7 +5,7 @@ import type { TPaletteColor } from '../../theme/types';
 import type { TDividerSize, TDividerVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -14,6 +14,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const VARIANTS: TDividerVariant[] = ['solid', 'dashed', 'dotted'];
@@ -52,7 +53,7 @@ export const Default: Story = {
     orientation: 'horizontal',
     variant: 'solid',
     size: 'md',
-    color: 'default',
+    color: 'base',
   },
 };
 

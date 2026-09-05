@@ -59,39 +59,43 @@ export const SInputSwitchControl = styled('span', {
   border-radius: ${({ theme }) => theme.radius.pill};
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) => {
-    const palette = theme.colors[color];
+  ${({ theme, variant = 'subtle' }) => {
+    const muted = theme.colors.default;
 
     switch (variant) {
       case 'surface':
         return `
           background-color: color-mix(
             in srgb,
-            ${palette.main} 8%,
+            ${muted.main} 35%,
             transparent
           );
-          color: ${palette.darker};
+          color: ${muted.contrastText};
           border-color: color-mix(
             in srgb,
-            ${palette.main} 24%,
+            ${muted.darker} 24%,
             transparent
           );
         `;
       case 'outline':
         return `
           background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
+          color: ${muted.dark};
+          border-color: color-mix(
+            in srgb,
+            ${muted.darker} 55%,
+            transparent
+          );
         `;
       case 'subtle':
       default:
         return `
           background-color: color-mix(
             in srgb,
-            ${palette.main} 8%,
+            ${muted.dark} 70%,
             transparent
           );
-          color: ${palette.darker};
+          color: ${muted.contrastText};
           border-color: transparent;
         `;
     }
@@ -102,21 +106,21 @@ export const SInputSwitchControl = styled('span', {
     height: ${({ size = 'md' }) => sizeMap[size].thumb};
   }
 
-  .${inputSwitchClasses.input}:hover:not(:disabled) + & {
-    ${({ theme, variant = 'subtle', color = 'primary' }) => {
-      const palette = theme.colors[color];
+  .${inputSwitchClasses.input}:hover:not(:disabled):not(:checked) + & {
+    ${({ theme, variant = 'subtle' }) => {
+      const muted = theme.colors.default;
 
       switch (variant) {
         case 'surface':
           return `
             background-color: color-mix(
               in srgb,
-              ${palette.main} 14%,
+              ${muted.main} 45%,
               transparent
             );
             border-color: color-mix(
               in srgb,
-              ${palette.main} 36%,
+              ${muted.darker} 36%,
               transparent
             );
           `;
@@ -124,18 +128,22 @@ export const SInputSwitchControl = styled('span', {
           return `
             background-color: color-mix(
               in srgb,
-              ${palette.main} 8%,
+              ${muted.main} 18%,
               transparent
             );
-            border-color: ${palette.dark};
-            color: ${palette.dark};
+            border-color: color-mix(
+              in srgb,
+              ${muted.darker} 70%,
+              transparent
+            );
+            color: ${muted.darker};
           `;
         case 'subtle':
         default:
           return `
             background-color: color-mix(
               in srgb,
-              ${palette.main} 14%,
+              ${muted.main} 55%,
               transparent
             );
           `;

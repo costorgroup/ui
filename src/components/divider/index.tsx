@@ -11,7 +11,7 @@ const Divider = forwardRef<HTMLDivElement, TDividerProps>(
       orientation = 'horizontal',
       variant = 'solid',
       size = 'md',
-      color = 'default',
+      color = 'base',
       role = 'separator',
       className,
       ...props

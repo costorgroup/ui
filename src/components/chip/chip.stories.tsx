@@ -4,7 +4,7 @@ import { Chip, Flex, Text } from '../../index';
 import type { TPaletteColor } from '../../theme/types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -13,6 +13,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const meta: Meta<typeof Chip> = {

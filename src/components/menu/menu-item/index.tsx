@@ -26,7 +26,7 @@ const MenuItem = forwardRef<HTMLButtonElement, TMenuItemProps>(
   (
     {
       children,
-      color = 'default',
+      color = 'base',
       disabled = false,
       onClick,
       className,

@@ -1,5 +1,6 @@
 import {
   breakpoints,
+  colorSchemes,
   colors,
   gap,
   radius,
@@ -7,12 +8,14 @@ import {
   spacing,
   typography,
   zIndex,
+  config,
 } from './theming';
+import { createTheme } from './create-theme';
 import { defaultGlobalStyles } from './global-styles';
 import { TTheme } from './types';
 
 export const DDefaultTheme: TTheme = {
-  fontFamily: '"Poppins", "Segoe UI", system-ui, -apple-system, sans-serif',
+  fontFamily: '"Inter", system-ui, -apple-system, "Segoe UI", sans-serif',
   colors,
   breakpoints,
   gap,
@@ -21,5 +24,12 @@ export const DDefaultTheme: TTheme = {
   spacing,
   typography,
   zIndex,
+  config,
   globalStyles: defaultGlobalStyles,
 };
+
+export const DDarkTheme = DDefaultTheme;
+
+export const DLightTheme = createTheme({
+  colors: colorSchemes.light,
+});

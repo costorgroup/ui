@@ -11,7 +11,7 @@ const meta: Meta<typeof QrCode> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

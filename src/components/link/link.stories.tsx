@@ -5,7 +5,7 @@ import type { TPaletteColor } from '../../theme/types';
 import type { TLinkSize, TLinkVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
@@ -14,6 +14,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
+  'default',
 ];
 
 const VARIANTS: TLinkVariant[] = ['underline', 'hover', 'plain'];

@@ -54,7 +54,7 @@ const meta: Meta<typeof ColorPickerField> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

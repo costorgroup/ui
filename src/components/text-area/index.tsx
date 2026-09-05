@@ -58,7 +58,7 @@ const TextArea = forwardRef<HTMLDivElement, TTextAreaProps>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="default">
+            <Text size={inputDescriptionTextSize[size]} color="base">
               {description}
             </Text>
           ) : null

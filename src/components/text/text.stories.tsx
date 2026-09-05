@@ -8,7 +8,7 @@ const meta: Meta<typeof Text> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

@@ -44,7 +44,7 @@ const meta: Meta<typeof FileField> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

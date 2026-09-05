@@ -49,7 +49,7 @@ const List = forwardRef<HTMLDivElement, TListProps>(
               </Heading>
             ) : null}
             {hasDescription ? (
-              <Text as="p" size={descriptionSize[size]} color="default">
+              <Text as="p" size={descriptionSize[size]} color="base">
                 {description}
               </Text>
             ) : null}

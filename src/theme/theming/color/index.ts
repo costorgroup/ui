@@ -1,106 +1,89 @@
-import { TThemeColors } from './types';
+import { createColorScale } from "../../../helpers/color/create-color-scale";
+import { TThemeColors, TThemePaletteColors } from "./types";
 
-export const colors: TThemeColors = {
-  default: {
-    lighter: '#f3f4f6',
-    light: '#9ca3af',
-    main: '#4b5563',
-    dark: '#374151',
-    darker: '#1f2937',
-    contrastText: '#ffffff',
-  },
-  primary: {
-    lighter: '#e6e9ef',
-    light: '#445170',
-    main: '#0b1a3b',
-    dark: '#08132d',
-    darker: '#050c1e',
-    contrastText: '#ffffff',
-  },
-  secondary: {
-    lighter: '#eef1f6',
-    light: '#71809d',
-    main: '#334566',
-    dark: '#243555',
-    darker: '#172541',
-    contrastText: '#ffffff',
-  },
-  success: {
-    lighter: '#e6f6ed',
-    light: '#5ecf8e',
-    main: '#1f9d55',
-    dark: '#147a40',
-    darker: '#0d522c',
-    contrastText: '#ffffff',
-  },
-  error: {
-    lighter: '#fdecec',
-    light: '#f28b82',
-    main: '#d93025',
-    dark: '#b3261e',
-    darker: '#8b1a14',
-    contrastText: '#ffffff',
-  },
-  warning: {
-    lighter: '#fff6e5',
-    light: '#ffc14d',
-    main: '#f9a825',
-    dark: '#c67e00',
-    darker: '#8a5700',
-    contrastText: '#1a1a1a',
-  },
-  info: {
-    lighter: '#e8f1fb',
-    light: '#6ba4e8',
-    main: '#1a73e8',
-    dark: '#1557b0',
-    darker: '#0d3c7a',
-    contrastText: '#ffffff',
-  },
-  dark: {
-    lighter: '#4a4a4a',
-    light: '#333333',
-    main: '#1a1a1a',
-    dark: '#111111',
-    darker: '#000000',
-    contrastText: '#ffffff',
-  },
-  light: {
-    lighter: '#ffffff',
-    light: '#fafafa',
-    main: '#f5f5f5',
-    dark: '#e8e8e8',
-    darker: '#d4d4d4',
-    contrastText: '#1a1a1a',
-  },
-  common: {
-    white: '#ffffff',
-    black: '#000000',
-    grey: [
-      '#fdfdfd',
-      '#fafafa',
-      '#f8f8f8',
-      '#f5f5f5',
-      '#f2f2f2',
-      '#eeeeee',
-      '#e7e7e7',
-      '#e0e0e0',
-      '#cfcfcf',
-      '#bdbdbd',
-      '#aeaeae',
-      '#9e9e9e',
-      '#8a8a8a',
-      '#757575',
-      '#6b6b6b',
-      '#616161',
-      '#525252',
-      '#424242',
-      '#323232',
-      '#212121',
-    ],
-  },
+export { CUI_CANVAS_VAR } from "../../../helpers/color/create-color-scale";
+
+const canvas = {
+  dark: "#111111",
+  light: "#f3f3f3",
+} as const;
+
+export type TColorScheme = keyof typeof canvas;
+
+const createPalette = (scheme: TColorScheme) => {
+  const canvasHex = canvas[scheme];
+
+  return {
+    primary: createColorScale("#00123d", "#ffffff", { canvas: canvasHex }),
+    secondary: createColorScale("#334566", "#ffffff", { canvas: canvasHex }),
+    success: createColorScale("#34c759", "#ffffff", { canvas: canvasHex }),
+    error: createColorScale("#ff3b30", "#ffffff", { canvas: canvasHex }),
+    warning: createColorScale("#ff9500", "#ffffff", { canvas: canvasHex }),
+    info: createColorScale("#007aff", "#ffffff", { canvas: canvasHex }),
+    dark: createColorScale("#1a1a1a", "#ffffff", { canvas: canvasHex }),
+    light: createColorScale("#f5f5f5", "#1a1a1a", { canvas: canvasHex }),
+  } satisfies Omit<TThemePaletteColors, "base" | "default">;
 };
 
+/** Scheme canvas (`base`) + default fill for Cancel-style controls (`default`). */
+export const colorSchemes = {
+  dark: {
+    base: createColorScale("#111111", "#ffffff", {
+      canvas: canvas.dark,
+      tint: "contrastText",
+    }),
+    default: createColorScale("#f3f3f3", "#000000", { canvas: canvas.dark }),
+  },
+  light: {
+    base: createColorScale("#f3f3f3", "#000000", {
+      canvas: canvas.light,
+      tint: "contrastText",
+    }),
+    default: createColorScale("#111111", "#ffffff", { canvas: canvas.light }),
+  },
+} as const;
+
+const commonColors: TThemeColors["common"] = {
+  white: "#ffffff",
+  black: "#000000",
+  grey: [
+    "#fdfdfd",
+    "#fafafa",
+    "#f8f8f8",
+    "#f5f5f5",
+    "#f2f2f2",
+    "#eeeeee",
+    "#e7e7e7",
+    "#e0e0e0",
+    "#cfcfcf",
+    "#bdbdbd",
+    "#aeaeae",
+    "#9e9e9e",
+    "#8a8a8a",
+    "#757575",
+    "#6b6b6b",
+    "#616161",
+    "#525252",
+    "#424242",
+    "#323232",
+    "#212121",
+  ],
+};
+
+export const createColors = (scheme: TColorScheme = "dark"): TThemeColors => ({
+  ...createPalette(scheme),
+  ...colorSchemes[scheme],
+  common: commonColors,
+});
+
+/** Default palette (dark scheme). */
+export const colors = createColors("dark");
+
+export { createColorScale } from "../../../helpers/color/create-color-scale";
+export type {
+  TCreateColorScaleSteps,
+  TCreateColorScaleOptions,
+} from "../../../helpers/color/create-color-scale";
 export type {
   TThemeColorScale,
   TThemePaletteColors,
@@ -109,4 +92,4 @@ export type {
   TThemeColors,
   TPaletteColor,
   TThemeColorsOptions,
-} from './types';
+} from "./types";

@@ -24,7 +24,7 @@ export const SInputLabel = styled('label', {
     theme.typography.text[typographySizeMap[size]]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.colors.base.main};
   user-select: none;
 `;
 

@@ -18,7 +18,7 @@ const meta: Meta<typeof Viewport> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',
@@ -39,7 +39,7 @@ type Story = StoryObj<typeof Viewport>;
 export const Default: Story = {
   args: {
     radius: 'medium',
-    color: 'default',
+    color: 'base',
     variant: 'surface',
     style: { width: 600, height: 400 },
   },

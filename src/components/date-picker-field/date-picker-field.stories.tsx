@@ -62,7 +62,7 @@ const meta: Meta<typeof DatePickerField> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

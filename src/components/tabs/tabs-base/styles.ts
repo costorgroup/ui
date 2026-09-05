@@ -48,7 +48,7 @@ export const STabsBase = styled('div', {
 
   ${({ theme, color, variant, anchor }) => {
     const palette = theme.colors[color];
-    const track = theme.colors.default.lighter;
+    const track = theme.colors.base.lighter;
     const lineWidth = '2px';
 
     const vars = `
@@ -56,7 +56,7 @@ export const STabsBase = styled('div', {
       --tabs-dark: ${palette.dark};
       --tabs-darker: ${palette.darker};
       --tabs-contrast: ${palette.contrastText};
-      --tabs-muted: ${theme.colors.default.light};
+      --tabs-muted: ${theme.colors.base.light};
       --tabs-track: ${track};
       --tabs-subtle-bg: color-mix(in srgb, ${palette.main} 8%, transparent);
       --tabs-subtle-bg-hover: color-mix(in srgb, ${palette.main} 14%, transparent);
@@ -89,7 +89,7 @@ export const STabsBase = styled('div', {
       return `
         ${vars}
         padding: ${theme.spacing(theme.gap.xs)};
-        background-color: ${theme.colors.default.lighter};
+        background-color: ${theme.colors.base.lighter};
         border-radius: ${theme.radius.large};
       `;
     }

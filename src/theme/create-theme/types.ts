@@ -7,6 +7,7 @@ import type {
   TThemeSpacing,
   TThemeTypography,
   TThemeZIndex,
+  TThemeConfigOptions,
 } from '../theming';
 import type { TTheme, TThemeGlobalStyles } from '../types';
 
@@ -25,6 +26,7 @@ export type TThemeOptions = {
     lineHeight?: Partial<TThemeTypography['lineHeight']>;
   };
   zIndex?: Partial<TThemeZIndex>;
+  config?: TThemeConfigOptions;
   globalStyles?: TThemeGlobalStyles;
 };
 

@@ -18,7 +18,7 @@ export const SViewport = styled('div', {
   border: 1px solid transparent;
   border-radius: ${({ theme, radius = 'medium' }) => theme.radius[radius]};
 
-  ${({ theme, variant = 'surface', color = 'default' }) => {
+  ${({ theme, variant = 'surface', color = 'base' }) => {
     const palette = theme.colors[color];
 
     switch (variant) {

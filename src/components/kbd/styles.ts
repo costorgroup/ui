@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { staticChromeVariantStyles } from '../../v2/idle-variant-styles';
 import { TKbdOwnProps, TKbdSize } from './types';
 
 type TSKbdProps = Pick<TKbdOwnProps, 'variant' | 'size' | 'color'>;
@@ -51,55 +52,33 @@ export const SKbd = styled('kbd', {
     min-width: calc(${sizeFont[size]} + ${sizePadX[size]} * 2);
   `}
 
-  ${({ theme, variant = 'raised', color = 'default' }) => {
+  ${({ theme, variant = 'raised', color = 'base' }) => {
     const palette = theme.colors[color];
 
-    switch (variant) {
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-          box-shadow: none;
-        `;
-      case 'subtle':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-          box-shadow: none;
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-          box-shadow: none;
-        `;
-      case 'raised':
-      default:
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-          box-shadow: inset 0 -2px 0 0 color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-        `;
+    if (variant === 'raised') {
+      return `
+        background-color: color-mix(
+          in srgb,
+          ${palette.main} 8%,
+          transparent
+        );
+        color: ${palette.darker};
+        border-color: color-mix(
+          in srgb,
+          ${palette.main} 24%,
+          transparent
+        );
+        box-shadow: inset 0 -2px 0 0 color-mix(
+          in srgb,
+          ${palette.main} 24%,
+          transparent
+        );
+      `;
     }
+
+    return `
+      ${staticChromeVariantStyles(variant, palette, theme)}
+      box-shadow: none;
+    `;
   }}
 `;

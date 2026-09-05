@@ -17,7 +17,7 @@ const meta: Meta<typeof Pagination> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

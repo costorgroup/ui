@@ -1,14 +1,16 @@
-import { css } from '@emotion/react';
-import { TTheme } from '../../theme/types';
+import { css } from "@emotion/react";
+import { CUI_CANVAS_VAR } from "../../helpers/color/create-color-scale";
+import { TTheme } from "../../theme/types";
 
 export const createBaselineStyles = (theme: TTheme) => css`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
   html {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
   }
 
   *,
@@ -20,8 +22,9 @@ export const createBaselineStyles = (theme: TTheme) => css`
   body {
     margin: 0;
     font-family: ${theme.fontFamily};
-    color: ${theme.colors.default.main};
-    background-color: ${theme.colors.light.main};
+    color: ${theme.colors.base.contrastText};
+    background-color: ${theme.colors.base.main};
     font-size: ${theme.typography.text.medium};
   }
 `;
+

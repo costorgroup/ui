@@ -7,7 +7,7 @@ import { TBlockquoteCaptionProps } from './types';
 const BlockquoteCaption = forwardRef<
   HTMLParagraphElement,
   TBlockquoteCaptionProps
->(({ children, color = 'default', size = 'sm', className, ...props }, ref) => {
+>(({ children, color = 'base', size = 'sm', className, ...props }, ref) => {
   return (
     <SBlockquoteCaption ref={ref} color={color} size={size} {...props}
         className={mergeClasses(

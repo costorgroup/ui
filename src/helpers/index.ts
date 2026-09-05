@@ -44,8 +44,17 @@ export {
   hsvToRgb,
   parseColor,
   formatColor,
+  createColorScale,
+  derivePaletteSemantics,
+  CUI_CANVAS_VAR,
 } from './color';
-export type { TColorFormat, TColorRgba, TColorHsv } from './color';
+export type {
+  TColorFormat,
+  TColorRgba,
+  TColorHsv,
+  TCreateColorScaleSteps,
+  TCreateColorScaleOptions,
+} from './color';
 export {
   AdapterDate,
   createAdapterDate,

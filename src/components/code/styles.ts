@@ -1,4 +1,8 @@
 import styled from '@emotion/styled';
+import {
+  idleVariantAppearance,
+  staticChromeVariantStyles,
+} from '../../v2/idle-variant-styles';
 import { TCodeOwnProps, TCodeSize } from './types';
 
 type TSCodeProps = Pick<TCodeOwnProps, 'variant' | 'size' | 'color'>;
@@ -48,53 +52,6 @@ export const SCode = styled('code', {
     font-size: ${sizeFont[size]};
   `}
 
-  ${({ theme, variant = 'subtle', color = 'default' }) => {
-    const palette = theme.colors[color];
-
-    switch (variant) {
-      case 'solid':
-        return `
-          background-color: ${palette.main};
-          color: ${palette.contrastText};
-          border-color: ${palette.main};
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-    }
-  }}
+  ${({ theme, variant = 'subtle', color = 'base' }) =>
+    staticChromeVariantStyles(variant, theme.colors[color], theme)}
 `;

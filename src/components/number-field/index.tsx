@@ -59,7 +59,7 @@ const NumberField = forwardRef<HTMLDivElement, TNumberFieldProps>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="default">
+            <Text size={inputDescriptionTextSize[size]} color="base">
               {description}
             </Text>
           ) : null

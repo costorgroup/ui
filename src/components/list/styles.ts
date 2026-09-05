@@ -41,7 +41,7 @@ export const SListItems = styled('ul', {
   font-size: ${({ size = 'md' }) => itemFontSize[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.colors.base.main};
 
   & > li::marker {
     color: ${({ theme, color = 'primary' }) => theme.colors[color].main};

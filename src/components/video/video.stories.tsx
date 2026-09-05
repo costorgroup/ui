@@ -17,7 +17,7 @@ const meta: Meta<typeof Video> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

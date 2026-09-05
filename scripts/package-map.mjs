@@ -33,9 +33,10 @@ const walkIndexFiles = (dir) => {
   return out;
 };
 
-export const collectPackageMap = (rootDir) => {
-  const componentsDir = join(rootDir, 'src', 'components');
-  const bySubpath = new Map();
+const collectComponentsFromDir = (rootDir, componentsDir, bySubpath, subpathPrefix = '') => {
+  if (!existsSync(componentsDir)) {
+    return;
+  }
 
   for (const file of walkIndexFiles(componentsDir)) {
     const relFromComponents = toPosix(relative(componentsDir, dirname(file)));
@@ -44,7 +45,8 @@ export const collectPackageMap = (rootDir) => {
     }
 
     const folderName = basename(relFromComponents);
-    const subpath = kebabToPascal(folderName);
+    const name = kebabToPascal(folderName);
+    const subpath = subpathPrefix ? `${subpathPrefix}/${name}` : name;
     const source = toPosix(relative(rootDir, file));
     const existing = bySubpath.get(subpath);
 
@@ -55,6 +57,38 @@ export const collectPackageMap = (rootDir) => {
     }
 
     bySubpath.set(subpath, { subpath, source });
+  }
+};
+
+export const collectPackageMap = (rootDir) => {
+  const bySubpath = new Map();
+
+  collectComponentsFromDir(
+    rootDir,
+    join(rootDir, 'src', 'components'),
+    bySubpath,
+  );
+
+  collectComponentsFromDir(
+    rootDir,
+    join(rootDir, 'src', 'v2', 'components'),
+    bySubpath,
+    'v2',
+  );
+
+  collectComponentsFromDir(
+    rootDir,
+    join(rootDir, 'src', 'v2', 'animated'),
+    bySubpath,
+    'v2',
+  );
+
+  const v2Index = join(rootDir, 'src', 'v2', 'index.ts');
+  if (existsSync(v2Index)) {
+    bySubpath.set('v2', {
+      subpath: 'v2',
+      source: 'src/v2/index.ts',
+    });
   }
 
   const adaptersDir = join(rootDir, 'src', 'adapters');

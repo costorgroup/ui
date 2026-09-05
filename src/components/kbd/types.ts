@@ -2,7 +2,12 @@ import { ElementType, ReactNode } from 'react';
 import type { TPolymorphicProps } from '../../helpers/polymorphic';
 import { TPaletteColor } from '../../theme/types';
 
-export type TKbdVariant = 'raised' | 'outline' | 'subtle' | 'plain';
+export type TKbdVariant =
+  | 'raised'
+  | 'subtle'
+  | 'surface'
+  | 'outline'
+  | 'plain';
 
 export type TKbdSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

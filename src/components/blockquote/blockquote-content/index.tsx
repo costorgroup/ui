@@ -7,7 +7,7 @@ import { TBlockquoteContentProps } from './types';
 const BlockquoteContent = forwardRef<
   HTMLParagraphElement,
   TBlockquoteContentProps
->(({ children, color = 'default', size = 'md', className, ...props }, ref) => {
+>(({ children, color = 'base', size = 'md', className, ...props }, ref) => {
   return (
     <SBlockquoteContent ref={ref} color={color} size={size} {...props}
         className={mergeClasses(

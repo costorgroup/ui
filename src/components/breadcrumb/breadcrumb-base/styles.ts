@@ -23,7 +23,7 @@ export const SBreadcrumbBase = styled('nav', {
 
   --breadcrumb-accent: ${({ theme, color }) => theme.colors[color].main};
   --breadcrumb-accent-dark: ${({ theme, color }) => theme.colors[color].dark};
-  --breadcrumb-muted: ${({ theme }) => theme.colors.default.light};
+  --breadcrumb-muted: ${({ theme }) => theme.colors.base.light};
 `;
 
 export const SBreadcrumbList = styled.ol`

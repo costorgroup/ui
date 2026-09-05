@@ -26,7 +26,7 @@ const meta: Meta<typeof SectionGroup> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

@@ -41,7 +41,7 @@ const AutoComplete = forwardRef<HTMLDivElement, TAutoCompleteProps>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="default">{description}</Text>
+            <Text size={inputDescriptionTextSize[size]} color="base">{description}</Text>
           ) : null
         }
         helperText={

@@ -1,4 +1,10 @@
-export { colors } from './color';
+export {
+  colors,
+  colorSchemes,
+  createColors,
+  createColorScale,
+  CUI_CANVAS_VAR,
+} from './color';
 export type {
   TThemeColorScale,
   TThemePaletteColors,
@@ -7,6 +13,9 @@ export type {
   TThemeColors,
   TPaletteColor,
   TThemeColorsOptions,
+  TColorScheme,
+  TCreateColorScaleSteps,
+  TCreateColorScaleOptions,
 } from './color';
 export { gap } from './gap';
 export type { TThemeGap, TGap } from './gap';
@@ -36,3 +45,5 @@ export type {
 } from './typography';
 export { zIndex } from './z-index';
 export type { TThemeZIndex } from './z-index';
+export { config } from './config';
+export type { TThemeConfig, TThemeConfigOptions } from './config';

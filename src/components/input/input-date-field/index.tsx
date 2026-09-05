@@ -623,7 +623,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         type="button"
                         variant="ghost"
                         size="sm"
-                        color="default"
+                        color="base"
                         aria-label="Previous month"
                         disabled={!canGoPrev}
                         onClick={() =>
@@ -644,7 +644,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         type="button"
                         variant="ghost"
                         size="sm"
-                        color="default"
+                        color="base"
                         aria-label="Next month"
                         disabled={!canGoNext}
                         onClick={() =>

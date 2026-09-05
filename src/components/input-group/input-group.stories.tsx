@@ -32,7 +32,7 @@ const meta: Meta<typeof InputGroup> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',

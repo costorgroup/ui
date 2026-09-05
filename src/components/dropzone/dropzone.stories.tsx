@@ -29,7 +29,7 @@ const meta: Meta<typeof Dropzone> = {
     color: {
       control: 'select',
       options: [
-        'default',
+        'base',
         'primary',
         'secondary',
         'success',
