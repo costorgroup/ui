@@ -1,12 +1,22 @@
 import type { TStaticVariant } from './variant-types';
 import type { TTheme } from '../theme/types';
 import type { TThemeColorScale } from '../theme/theming/color/types';
-import { chromeTransparentFill } from './surface';
+import { paletteTint } from './surface';
 
+/** Soft track / shell fill. */
+export const CHROME_FILL = 10;
+/** Opaque chrome: mix `base.contrastText` onto `base.main`. */
 export const CHROME_IDLE = 5;
-export const SURFACE_BORDER_IDLE = 5;
-/** Shell border when the track is transparent but children carry the chrome fill. */
-export const SURFACE_SHELL_BORDER_IDLE = 10;
+/** Hover / expanded chrome mix. */
+export const CHROME_HOVER = 10;
+/** Focus / pressed chrome mix. */
+export const CHROME_FOCUS = 15;
+/** Picked-color fill mix for subtle / surface. */
+export const PALETTE_TINT = 15;
+/** Chrome border mix on idle. */
+export const SURFACE_BORDER_IDLE = 30;
+/** Chrome border mix on hover. */
+export const SURFACE_BORDER_HOVER = 50;
 
 export type TIdleChromeVariant = 'solid' | 'subtle' | 'surface';
 
@@ -32,15 +42,15 @@ export const idleVariantAppearance = (
       };
     case 'subtle':
       return {
-        backgroundColor: palette.subtle,
+        backgroundColor: paletteTint(theme, palette.main, PALETTE_TINT),
         borderColor: 'transparent',
-        color: palette.fg,
+        color: palette.main,
       };
     case 'surface':
       return {
-        backgroundColor: palette.subtle,
-        borderColor: chromeTransparentFill(theme, SURFACE_BORDER_IDLE),
-        color: palette.fg,
+        backgroundColor: paletteTint(theme, palette.main, PALETTE_TINT),
+        borderColor: palette.main,
+        color: palette.main,
       };
   }
 };

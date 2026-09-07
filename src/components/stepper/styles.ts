@@ -45,7 +45,7 @@ export const SStepper = styled('ol', {
   --stepper-darker: ${({ theme, color }) => theme.colors[color].darker};
   --stepper-contrast: ${({ theme, color }) => theme.colors[color].contrastText};
   --stepper-track: ${({ theme, color }) =>
-    `color-mix(in srgb, ${theme.colors[color].main} 22%, transparent)`};
+    `color-mix(in lab, ${theme.colors[color].main} 22%, transparent)`};
   --stepper-error: ${({ theme }) => theme.colors.error.main};
 
   ${({ orientation, alternativeLabel }) =>

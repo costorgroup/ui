@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { TButtonProps, TButtonSize } from "./types";
 import { V2_BUTTON_RADIUS, variantStyles } from "./variant-styles";
 
-type TSButtonProps = Pick<TButtonProps, "variant" | "size" | "color">;
+type TSButtonProps = Pick<TButtonProps, "variant" | "appearance" | "size" | "color">;
 
-const customProps = new Set(["variant", "size", "color"]);
+const customProps = new Set(["variant", "appearance", "size", "color"]);
 
 const sizeStyles: Record<
   TButtonSize,
@@ -38,9 +38,9 @@ export const SButton = styled("button", {
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = "solid", color = "default" }) => {
+  ${({ theme, variant = "solid", appearance = "opaque", color = "default" }) => {
     const palette = theme.colors[color];
-    return variantStyles(variant, palette, theme);
+    return variantStyles(variant, palette, theme, appearance);
   }}
 
   ${({ size = "md" }) => {

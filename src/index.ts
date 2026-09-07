@@ -766,7 +766,30 @@ export {
   FullscreenExitIcon,
   FolderIcon,
   FileIcon,
+  SearchIcon,
+  EmojiAddIcon,
 } from "./icons";
+export {
+  AmericanExpressLogo,
+  DinersClubLogo,
+  DiscoverLogo,
+  JcbLogo,
+  MaestroLogo,
+  MastercardLogo,
+  UnionPayLogo,
+  VisaLogo,
+} from "./logos";
+export type {
+  TAmericanExpressLogoProps,
+  TDinersClubLogoProps,
+  TDiscoverLogoProps,
+  TJcbLogoProps,
+  TLogoVariant,
+  TMaestroLogoProps,
+  TMastercardLogoProps,
+  TUnionPayLogoProps,
+  TVisaLogoProps,
+} from "./logos";
 export type {
   TEyeIconProps,
   TEyeClosedIconProps,
@@ -791,6 +814,8 @@ export type {
   TFullscreenExitIconProps,
   TFolderIconProps,
   TFileIconProps,
+  TSearchIconProps,
+  TEmojiAddIconProps,
 } from "./icons";
 export {
   getInitials,
@@ -817,7 +842,6 @@ export {
   parseColor,
   formatColor,
   createColorScale,
-  derivePaletteSemantics,
   CUI_CANVAS_VAR,
 } from "./helpers";
 export type {

@@ -38,14 +38,6 @@ const BLACK = parseHex('#000000');
 
 export const CUI_CANVAS_VAR = '--cui-canvas';
 
-export const PALETTE_SUBTLE_ALPHA = 12;
-export const PALETTE_MUTED_ALPHA = 20;
-export const CANVAS_SUBTLE_ALPHA = 5;
-export const CANVAS_MUTED_ALPHA = 10;
-
-const colorMixOnto = (color: string, alpha: number, base: string) =>
-  `color-mix(in srgb, ${color} ${alpha}%, ${base})`;
-
 export type TCreateColorScaleSteps = {
   lighter?: number;
   light?: number;
@@ -53,18 +45,13 @@ export type TCreateColorScaleSteps = {
   darker?: number;
 };
 
-export type TCreateColorScaleOptions = TCreateColorScaleSteps & {
-  canvas?: string;
-  tint?: 'main' | 'contrastText';
-  subtleAlpha?: number;
-  mutedAlpha?: number;
-};
+export type TCreateColorScaleOptions = TCreateColorScaleSteps;
 
 const DEFAULT_STEPS: Required<TCreateColorScaleSteps> = {
-  lighter: 0.1,
-  light: 0.05,
-  dark: 0.05,
-  darker: 0.1,
+  lighter: 0.2,
+  light: 0.1,
+  dark: 0.1,
+  darker: 0.2,
 };
 
 export const createColorScale = (
@@ -74,44 +61,13 @@ export const createColorScale = (
 ): TThemeColorScale => {
   const mix = { ...DEFAULT_STEPS, ...options };
   const base = parseHex(main);
-  const darker = toHex(mixRgb(base, BLACK, mix.darker));
-  const canvas = options.canvas ?? '#111111';
-  const tint = options.tint ?? 'main';
-  const tintColor = tint === 'contrastText' ? contrastText : main;
-  const subtleAlpha =
-    options.subtleAlpha ??
-    (tint === 'contrastText' ? CANVAS_SUBTLE_ALPHA : PALETTE_SUBTLE_ALPHA);
-  const mutedAlpha =
-    options.mutedAlpha ??
-    (tint === 'contrastText' ? CANVAS_MUTED_ALPHA : PALETTE_MUTED_ALPHA);
-  const canvasRef = `var(${CUI_CANVAS_VAR}, ${canvas})`;
 
   return {
     lighter: toHex(mixRgb(base, WHITE, mix.lighter)),
     light: toHex(mixRgb(base, WHITE, mix.light)),
     main,
     dark: toHex(mixRgb(base, BLACK, mix.dark)),
-    darker,
+    darker: toHex(mixRgb(base, BLACK, mix.darker)),
     contrastText,
-    subtle: colorMixOnto(tintColor, subtleAlpha, canvasRef),
-    muted: colorMixOnto(tintColor, mutedAlpha, canvasRef),
-    fg: tint === 'contrastText' ? contrastText : darker,
-  };
-};
-
-export const derivePaletteSemantics = (
-  scale: Pick<TThemeColorScale, 'main' | 'contrastText' | 'darker'> &
-    Partial<Pick<TThemeColorScale, 'subtle' | 'muted' | 'fg'>>,
-  canvas: string,
-  tint: 'main' | 'contrastText' = 'main',
-): Pick<TThemeColorScale, 'subtle' | 'muted' | 'fg'> => {
-  const built = createColorScale(scale.main, scale.contrastText, { canvas, tint });
-
-  return {
-    subtle: scale.subtle ?? built.subtle,
-    muted: scale.muted ?? built.muted,
-    fg:
-      scale.fg ??
-      (tint === 'contrastText' ? scale.contrastText : scale.darker),
   };
 };

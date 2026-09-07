@@ -92,6 +92,19 @@ export type {
 export { InputColorField } from './input-color-field';
 export type { TInputColorFieldProps } from './input-color-field/types';
 
+export {
+  InputEmojiField,
+  EMOJI_CATEGORIES,
+  EMOJIS,
+  filterEmojis,
+} from './input-emoji-field';
+export type {
+  TInputEmojiFieldProps,
+  TEmojiCategory,
+  TEmojiCategoryId,
+  TEmojiItem,
+} from './input-emoji-field/types';
+
 export { InputDateField } from './input-date-field';
 export type {
   TInputDateFieldProps,

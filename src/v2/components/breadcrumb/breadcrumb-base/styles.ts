@@ -19,11 +19,11 @@ export const SBreadcrumbBase = styled('nav', {
   font-size: ${({ theme, size }) =>
     `calc(${theme.typography.text[typographySizeMap[size]]} * ${theme.sizeScale[size]})`};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.base.contrastText};
+  color: ${({ theme }) => theme.colors.default.main};
 
   --breadcrumb-accent: ${({ theme, color }) => theme.colors[color].main};
   --breadcrumb-accent-dark: ${({ theme, color }) => theme.colors[color].dark};
-  --breadcrumb-muted: ${({ theme }) => theme.colors.base.contrastText};
+  --breadcrumb-muted: ${({ theme }) => theme.colors.default.main};
 `;
 
 export const SBreadcrumbList = styled.ol`

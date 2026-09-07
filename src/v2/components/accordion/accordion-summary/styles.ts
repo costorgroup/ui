@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
-import {
-  accordionSummaryDivider,
-  accordionSummaryVariantStyles,
-} from '../variant-styles';
+import { accordionSummaryIconColors } from '../variant-styles';
 import { TAccordionSize } from '../accordion-base/context';
+import { accordionSummaryClasses } from './classes';
 import {
   TSAccordionExpandIconProps,
   TSAccordionSummaryProps,
@@ -41,7 +39,12 @@ export const SAccordionSummary = styled('button', {
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
   border: none;
+  background: transparent;
   font: inherit;
+  color: ${({ theme, variant, paletteColor }) =>
+    variant === 'solid'
+      ? theme.colors[paletteColor].contrastText
+      : theme.colors.default.main};
   text-align: left;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition:
@@ -54,16 +57,27 @@ export const SAccordionSummary = styled('button', {
 
   ${({ theme, paletteColor, variant, expanded, hasDetails }) => {
     const palette = theme.colors[paletteColor];
-    return accordionSummaryVariantStyles(variant, palette, theme, {
-      expanded,
-      hasDetails,
-    });
-  }}
+    const icon = accordionSummaryIconColors(
+      variant,
+      palette,
+      expanded && hasDetails,
+    );
 
-  border-bottom: ${({ theme, paletteColor, variant, expanded, hasDetails }) =>
-    hasDetails && expanded
-      ? accordionSummaryDivider(variant, theme.colors[paletteColor], theme)
-      : '1px solid transparent'};
+    return `
+      & .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.idle};
+      }
+
+      &:hover:not(:disabled) .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.hover};
+      }
+
+      &:active:not(:disabled) .${accordionSummaryClasses.expandIcon},
+      &:focus-visible .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.focus};
+      }
+    `;
+  }}
 
   &:focus-visible {
     outline: 2px solid
@@ -83,7 +97,6 @@ export const SAccordionExpandIcon = styled.span<TSAccordionExpandIconProps>`
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  opacity: 0.7;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.12s ease;
   transform: ${({ expanded }) => (expanded ? 'rotate(180deg)' : 'rotate(0deg)')};
 `;

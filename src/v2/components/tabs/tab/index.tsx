@@ -20,6 +20,7 @@ const Tab = forwardRef<HTMLButtonElement, TTabProps>(
     const {
       orientation,
       appearance,
+      variant,
       fullWidth,
       draggable,
       dragging,
@@ -44,7 +45,7 @@ const Tab = forwardRef<HTMLButtonElement, TTabProps>(
       if (tabRef.current != null) {
         registerTab(value, tabRef.current);
       }
-    }, [registerTab, value, appearance, orientation, fullWidth]);
+    }, [registerTab, value, appearance, variant, orientation, fullWidth]);
 
     return (
       <STab
@@ -66,6 +67,7 @@ const Tab = forwardRef<HTMLButtonElement, TTabProps>(
         {...props}
         active={active}
         appearance={appearance}
+        variant={variant}
         orientation={orientation}
         fullWidth={fullWidth}
         disabled={disabled}

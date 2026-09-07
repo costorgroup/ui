@@ -26,7 +26,7 @@ export const SSliderPaginationDot = styled('button', {
     const palette = theme.colors[color];
     return active
       ? palette.main
-      : `color-mix(in srgb, ${palette.main} 35%, transparent)`;
+      : `color-mix(in lab, ${palette.main} 35%, transparent)`;
   }};
   transition:
     width 0.2s ease,

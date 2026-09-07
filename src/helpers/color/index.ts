@@ -307,7 +307,6 @@ export type {
 } from './types';
 export {
   createColorScale,
-  derivePaletteSemantics,
   CUI_CANVAS_VAR,
   type TCreateColorScaleSteps,
   type TCreateColorScaleOptions,

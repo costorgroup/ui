@@ -69,7 +69,7 @@ export const SSpeedDialTriggerWrap = styled.span`
   z-index: 1;
   display: inline-flex;
   filter: drop-shadow(
-    0 8px 18px color-mix(in srgb, ${({ theme }) => theme.colors.common.black} 22%, transparent)
+    0 8px 18px color-mix(in lab, ${({ theme }) => theme.colors.common.black} 22%, transparent)
   );
 `;
 

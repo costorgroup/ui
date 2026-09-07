@@ -12,6 +12,7 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
       orientation = 'horizontal',
       color,
       variant,
+      appearance,
       size,
       disabled = false,
       className,
@@ -20,8 +21,8 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
     ref,
   ) => {
     const contextValue = useMemo(
-      () => ({ orientation, color, variant, size }),
-      [color, orientation, size, variant],
+      () => ({ orientation, color, variant, appearance, size }),
+      [appearance, color, orientation, size, variant],
     );
 
     return (

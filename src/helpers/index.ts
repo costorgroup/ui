@@ -45,7 +45,6 @@ export {
   parseColor,
   formatColor,
   createColorScale,
-  derivePaletteSemantics,
   CUI_CANVAS_VAR,
 } from './color';
 export type {

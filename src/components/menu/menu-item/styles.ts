@@ -31,7 +31,7 @@ export const SMenuItem = styled('button', {
   &:hover:not(:disabled),
   &:focus-visible {
     background-color: ${({ theme, color }) =>
-      `color-mix(in srgb, ${theme.colors[color].main} 10%, transparent)`};
+      `color-mix(in lab, ${theme.colors[color].main} 10%, transparent)`};
     color: ${({ theme, color }) => theme.colors[color].dark};
     outline: none;
   }

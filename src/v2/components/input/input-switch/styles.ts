@@ -47,7 +47,7 @@ export const SInputSwitchThumb = styled.span`
   display: block;
   border-radius: ${({ theme }) => theme.radius.pill};
   background-color: ${({ theme }) => theme.colors.common.white};
-  box-shadow: inset 0 0 2px color-mix(in srgb, ${({ theme }) => theme.colors.common.black} 18%, transparent);
+  box-shadow: inset 0 0 2px color-mix(in lab, ${({ theme }) => theme.colors.common.black} 18%, transparent);
   transition: transform 0.15s ease;
 `;
 

@@ -1,22 +1,22 @@
 import type { TTheme } from '../theme/types';
 import type { TThemeColorScale } from '../theme/theming/color/types';
-import { SURFACE_BORDER_IDLE } from './idle-variant-styles';
-import { chromeTransparentFill } from './surface';
+import { SURFACE_BORDER_IDLE, CHROME_IDLE, CHROME_HOVER } from './idle-variant-styles';
+import { chromeOpaqueFill, chromeTransparentFill, colorMix } from './surface';
 
 export type TTrackVariant = 'solid' | 'subtle' | 'surface';
 
 export const resolveTrackColor = (
   variant: TTrackVariant,
   palette: TThemeColorScale,
-  _theme: TTheme,
+  theme: TTheme,
 ) => {
   switch (variant) {
     case 'subtle':
     case 'surface':
-      return palette.subtle;
+      return chromeOpaqueFill(theme, CHROME_IDLE);
     case 'solid':
     default:
-      return palette.muted;
+      return colorMix(palette.main, CHROME_HOVER);
   }
 };
 

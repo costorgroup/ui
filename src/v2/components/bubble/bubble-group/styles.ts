@@ -1,0 +1,34 @@
+import styled from '@emotion/styled';
+import { bubbleContentClasses } from '../bubble-content/classes';
+
+export const SBubbleGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+
+  & > [data-bubble]:not(:last-child) {
+    margin-bottom: 0;
+  }
+
+  & > [data-bubble][data-align='start']:not(:last-child)
+    .${bubbleContentClasses.root} {
+    border-bottom-left-radius: ${({ theme }) => theme.radius.small};
+  }
+
+  & > [data-bubble][data-align='start']:not(:first-child)
+    .${bubbleContentClasses.root} {
+    border-top-left-radius: ${({ theme }) => theme.radius.small};
+  }
+
+  & > [data-bubble][data-align='end']:not(:last-child)
+    .${bubbleContentClasses.root} {
+    border-bottom-right-radius: ${({ theme }) => theme.radius.small};
+  }
+
+  & > [data-bubble][data-align='end']:not(:first-child)
+    .${bubbleContentClasses.root} {
+    border-top-right-radius: ${({ theme }) => theme.radius.small};
+  }
+`;

@@ -129,15 +129,15 @@ export const SBadgeContent = styled('span', {
     switch (variant) {
       case 'subtle':
         return `
-          background-color: color-mix(in srgb, ${palette.main} 12%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 12%, transparent);
           color: ${palette.darker};
           border-color: transparent;
         `;
       case 'surface':
         return `
-          background-color: color-mix(in srgb, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in srgb, ${palette.main} 24%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         `;
@@ -149,7 +149,7 @@ export const SBadgeContent = styled('span', {
         `;
       case 'ghost':
         return `
-          background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
           color: ${palette.main};
           border-color: transparent;
         `;

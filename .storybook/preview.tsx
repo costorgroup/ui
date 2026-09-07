@@ -8,6 +8,36 @@ const schemeThemes = {
   light: DLightTheme,
 } as const;
 
+const StoryCanvas = ({
+  children,
+  background,
+  color,
+  fill = false,
+}: {
+  children: React.ReactNode;
+  background: string;
+  color: string;
+  fill?: boolean;
+}) => (
+  <div
+    style={{
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: fill ? 'stretch' : 'center',
+      justifyContent: fill ? 'stretch' : 'center',
+      width: '100%',
+      height: fill ? '100vh' : undefined,
+      minHeight: fill ? '100vh' : 200,
+      padding: fill ? 0 : 32,
+      backgroundColor: background,
+      color,
+    }}
+  >
+    {children}
+  </div>
+);
+
 const preview: Preview = {
   globalTypes: {
     theme: {
@@ -32,7 +62,8 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    layout: 'centered',
+    layout: 'fullscreen',
+    backgrounds: { disable: true },
     options: {
       storySort: {
         order: [
@@ -52,14 +83,20 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story, { globals }) => {
+    (Story, { globals, parameters }) => {
       const scheme = (globals.theme ?? 'dark') as keyof typeof schemeThemes;
       const theme = schemeThemes[scheme] ?? DDarkTheme;
 
       return (
         <ThemeProvider theme={theme}>
           <GlobalStyles />
-          <Story />
+          <StoryCanvas
+            fill={parameters.fill === true}
+            background={theme.colors.base.main}
+            color={theme.colors.default.main}
+          >
+            <Story />
+          </StoryCanvas>
         </ThemeProvider>
       );
     },

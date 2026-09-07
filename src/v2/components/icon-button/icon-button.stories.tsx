@@ -39,6 +39,7 @@ const meta: Meta<typeof IconButton> = {
   tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: VARIANTS },
+    appearance: { control: 'select', options: ['opaque', 'transparent'] },
     size: { control: 'select', options: SIZES },
     color: { control: 'select', options: COLORS },
     rounded: { control: 'boolean' },
@@ -55,6 +56,7 @@ export const Default: Story = {
     children: <CheckIcon />,
     'aria-label': 'Check',
     variant: 'solid',
+    appearance: 'opaque',
     size: 'md',
     color: 'default',
     rounded: false,

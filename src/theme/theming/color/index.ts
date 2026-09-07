@@ -10,36 +10,31 @@ const canvas = {
 
 export type TColorScheme = keyof typeof canvas;
 
-const createPalette = (scheme: TColorScheme) => {
-  const canvasHex = canvas[scheme];
-
+const createPalette = () => {
   return {
-    primary: createColorScale("#00123d", "#ffffff", { canvas: canvasHex }),
-    secondary: createColorScale("#334566", "#ffffff", { canvas: canvasHex }),
-    success: createColorScale("#34c759", "#ffffff", { canvas: canvasHex }),
-    error: createColorScale("#ff3b30", "#ffffff", { canvas: canvasHex }),
-    warning: createColorScale("#ff9500", "#ffffff", { canvas: canvasHex }),
-    info: createColorScale("#007aff", "#ffffff", { canvas: canvasHex }),
-    dark: createColorScale("#1a1a1a", "#ffffff", { canvas: canvasHex }),
-    light: createColorScale("#f5f5f5", "#1a1a1a", { canvas: canvasHex }),
+    primary: createColorScale("#00123d", "#ffffff"),
+    secondary: createColorScale("#334566", "#ffffff"),
+    success: createColorScale("#34c759", "#ffffff"),
+    error: createColorScale("#ff3b30", "#ffffff"),
+    warning: createColorScale("#ff9500", "#ffffff"),
+    info: createColorScale("#007aff", "#ffffff"),
+    dark: createColorScale("#1a1a1a", "#ffffff"),
+    light: createColorScale("#f5f5f5", "#1a1a1a"),
   } satisfies Omit<TThemePaletteColors, "base" | "default">;
 };
 
-/** Scheme canvas (`base`) + default fill for Cancel-style controls (`default`). */
+/**
+ * `base` — theme canvas scale. `base.contrastText` darkens or lightens chrome.
+ * `default` — user contrast scale. `default.main` is theme text and default fills.
+ */
 export const colorSchemes = {
   dark: {
-    base: createColorScale("#111111", "#ffffff", {
-      canvas: canvas.dark,
-      tint: "contrastText",
-    }),
-    default: createColorScale("#f3f3f3", "#000000", { canvas: canvas.dark }),
+    base: createColorScale("#000000", "#ffffff"),
+    default: createColorScale("#ffffff", "#000000"),
   },
   light: {
-    base: createColorScale("#f3f3f3", "#000000", {
-      canvas: canvas.light,
-      tint: "contrastText",
-    }),
-    default: createColorScale("#111111", "#ffffff", { canvas: canvas.light }),
+    base: createColorScale("#ffffff", "#000000"),
+    default: createColorScale("#000000", "#ffffff"),
   },
 } as const;
 
@@ -71,7 +66,7 @@ const commonColors: TThemeColors["common"] = {
 };
 
 export const createColors = (scheme: TColorScheme = "dark"): TThemeColors => ({
-  ...createPalette(scheme),
+  ...createPalette(),
   ...colorSchemes[scheme],
   common: commonColors,
 });

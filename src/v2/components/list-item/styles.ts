@@ -17,7 +17,7 @@ export const SListItem = styled('div', {
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
   background-color: ${({ theme, variant, color }) =>
-    listItemBackground(variant, theme.colors[color], theme)};
+    listItemBackground(variant, theme.colors[color])};
   color: ${({ theme, variant, color }) =>
     listItemColor(variant, theme.colors[color], theme)};
 

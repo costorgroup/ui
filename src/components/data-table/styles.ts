@@ -89,9 +89,9 @@ export const SDataTable = styled('div', {
           & .${tableBaseClasses.root} {
             --table-fg: ${palette.contrastText};
             --table-head-fg: ${palette.contrastText};
-            --table-border: color-mix(in srgb, ${palette.contrastText} 28%, transparent);
-            --table-head-bg: color-mix(in srgb, ${palette.contrastText} 12%, transparent);
-            --table-row-hover: color-mix(in srgb, ${palette.contrastText} 10%, transparent);
+            --table-border: color-mix(in lab, ${palette.contrastText} 28%, transparent);
+            --table-head-bg: color-mix(in lab, ${palette.contrastText} 12%, transparent);
+            --table-row-hover: color-mix(in lab, ${palette.contrastText} 10%, transparent);
             --table-accent: ${palette.contrastText};
           }
 
@@ -110,9 +110,9 @@ export const SDataTable = styled('div', {
         `;
       case 'surface':
         return `
-          background-color: color-mix(in srgb, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in srgb, ${palette.main} 24%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           ${shadow}
@@ -140,7 +140,7 @@ export const SDataTable = styled('div', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in srgb, ${palette.main} 6%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 6%, transparent);
           color: ${palette.darker};
           border-color: transparent;
           ${shadow}

@@ -48,16 +48,16 @@ export const SViewport = styled('div', {
         `;
       case 'subtle':
         return `
-          background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
           border-color: transparent;
         `;
       case 'surface':
       default:
         return `
-          background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in srgb, ${palette.main} 24%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
         `;
     }
   }}

@@ -41,6 +41,7 @@ const meta: Meta<typeof Button> = {
   tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: VARIANTS },
+    appearance: { control: 'select', options: ['opaque', 'transparent'] },
     size: { control: 'select', options: SIZES },
     color: { control: 'select', options: COLORS },
     disabled: { control: 'boolean' },
@@ -55,6 +56,7 @@ export const Default: Story = {
   args: {
     children: 'Button',
     variant: 'solid',
+    appearance: 'opaque',
     size: 'md',
     color: 'default',
     disabled: false,

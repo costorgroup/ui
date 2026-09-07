@@ -159,7 +159,7 @@ export const STabBase = styled('button', {
         `
             : `
           &:hover:not(:disabled) {
-            background-color: color-mix(in srgb, var(--tabs-main) 8%, transparent);
+            background-color: color-mix(in lab, var(--tabs-main) 8%, transparent);
             color: var(--tabs-dark);
           }
         `

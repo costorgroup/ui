@@ -10,6 +10,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
     {
       children,
       variant: variantProp,
+      appearance: appearanceProp,
       size: sizeProp,
       color: colorProp,
       className,
@@ -20,6 +21,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
   ) => {
     const group = useButtonGroupContext();
     const variant = variantProp ?? group?.variant ?? 'solid';
+    const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
     const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
 
@@ -27,6 +29,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
       <SButton
         ref={ref}
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
         disabled={disabled}
@@ -45,7 +48,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
 
 Button.displayName = 'Button';
 
-export type { TButtonProps, TButtonVariant, TButtonSize } from './types';
+export type { TButtonProps, TButtonVariant, TButtonAppearance, TButtonSize } from './types';
 export { buttonClasses } from './classes';
 export { Button };
 export default Button;

@@ -37,7 +37,7 @@ export const SAvatar = styled('div', {
   height: ${({ size }) => sizeMap[size]};
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
   background-color: ${({ theme }) => chromeOpaqueFill(theme, AVATAR_FILL)};
-  color: ${({ theme }) => theme.colors.base.contrastText};
+  color: ${({ theme }) => theme.colors.default.main};
   font-family: inherit;
   font-size: ${({ size }) => fontMap[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};

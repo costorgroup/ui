@@ -91,7 +91,7 @@ export const SInputRangeField = styled('span', {
   }) => {
     const palette = theme.colors[color];
     const { track: trackSize, thumb, pad } = rangeSizeMap[size];
-    const rail = `color-mix(in srgb, ${palette.main} 38%, transparent)`;
+    const rail = `color-mix(in lab, ${palette.main} 38%, transparent)`;
     const fill = palette.main;
     const thumbBg =
       variant === 'outline' ? theme.colors.common.white : palette.main;
@@ -103,7 +103,7 @@ export const SInputRangeField = styled('span', {
       --range-fill: ${fill};
       --range-thumb: ${thumbBg};
       --range-thumb-border: ${thumbBorder};
-      --range-halo: color-mix(in srgb, ${palette.main} 16%, transparent);
+      --range-halo: color-mix(in lab, ${palette.main} 16%, transparent);
       --range-value-bg: ${palette.main};
       --range-value-fg: ${palette.contrastText};
 

@@ -60,51 +60,51 @@ export const SInputColorFieldTrigger = styled('button', {
     switch (variant) {
       case 'surface':
         return `
-          background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in srgb, ${palette.main} 14%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in srgb, ${palette.main} 10%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 20%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 20%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in srgb, ${palette.main} 10%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 28%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
           }
         `;
       case 'outline':
         return `
           background-color: transparent;
           color: ${palette.main};
-          border-color: color-mix(in srgb, ${palette.main} 36%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 52%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 52%, transparent);
             color: ${palette.dark};
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 68%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
             color: ${palette.darker};
           }
         `;
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
           color: ${palette.darker};
           border-color: transparent;
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in srgb, ${palette.main} 10%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
           }
         `;
     }

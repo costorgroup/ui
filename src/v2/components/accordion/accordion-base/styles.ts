@@ -32,19 +32,18 @@ export const SAccordionBase = styled('div', {
   overflow: hidden;
   ${({ theme, radius, grouped }) =>
     grouped ? '' : `border-radius: ${theme.radius[radius]};`}
-  ${({ theme, color, variant }) => {
+  ${({ theme, color, variant, expanded, grouped }) => {
     const palette = theme.colors[color];
-    return accordionShellVariantStyles(variant, palette, theme);
+    return accordionShellVariantStyles(variant, palette, theme, {
+      expanded,
+      grouped,
+    });
   }}
   font-family: inherit;
   font-size: ${({ size }) => sizeFont[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
+  transition: background-color 0.12s ease, border-color 0.12s ease;
   opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-
-  [data-accordion-grouped] + & {
-    margin-top: -1px;
-    border-top: none;
-  }
 `;

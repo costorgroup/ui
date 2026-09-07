@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../../surface';
 import { STabProps } from './types';
 
 const customProps = new Set([
   'active',
   'appearance',
+  'variant',
   'orientation',
   'fullWidth',
   'draggable',
@@ -20,7 +22,7 @@ export const STab = styled('button', {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 0;
+  flex-shrink: 0;
   margin: 0;
   padding: 4px 14px;
   border: 0;
@@ -31,14 +33,18 @@ export const STab = styled('button', {
   line-height: 1.2;
   letter-spacing: -0.01em;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  color: ${({ active, color, theme }) => {
+  color: ${({ active, color, theme, variant }) => {
     if (active) {
       return color != null
         ? theme.colors[color].contrastText
-        : theme.colors.base.main;
+        : theme.colors.default.contrastText;
     }
 
-    return theme.colors.default.fg;
+    if (variant === 'plain') {
+      return colorMix(theme.colors.default.main, 55);
+    }
+
+    return theme.colors.default.main;
   }};
   cursor: ${({ selected, draggable, dragging }) => {
     if (!draggable || !selected) {
@@ -49,8 +55,7 @@ export const STab = styled('button', {
   }};
   user-select: none;
   transition: color 0.15s ease;
-  flex: ${({ fullWidth, orientation }) =>
-    fullWidth ? '1 1 0' : '0 0 auto'};
+  flex: ${({ fullWidth }) => (fullWidth ? '1 0 auto' : '0 0 auto')};
   ${({ orientation, fullWidth }) =>
     orientation === 'vertical' && fullWidth ? 'width: 100%;' : ''}
 
@@ -65,7 +70,7 @@ export const STab = styled('button', {
         color != null
           ? theme.colors[color].main
           : appearance === 'transparent'
-            ? theme.colors.base.contrastText
+            ? theme.colors.default.main
             : theme.colors.base.main};
     outline-offset: 1px;
   }

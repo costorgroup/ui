@@ -17,7 +17,7 @@ export const SAlertClose = styled(IconButton)`
     && {
       color: inherit;
       border-color: transparent;
-      background-color: color-mix(in srgb, currentColor 12%, transparent);
+      background-color: color-mix(in lab, currentColor 12%, transparent);
     }
   }
 `;

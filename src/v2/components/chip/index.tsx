@@ -9,6 +9,7 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
     {
       children,
       variant = 'solid',
+      appearance = 'opaque',
       size = 'md',
       color = 'default',
       rounded = false,
@@ -23,6 +24,7 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
         ref={ref}
         type={type}
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
         rounded={rounded}
@@ -37,7 +39,7 @@ const Chip = forwardRef<HTMLButtonElement, TChipProps>(
 
 Chip.displayName = 'Chip';
 
-export type { TChipProps, TChipVariant, TChipSize } from './types';
+export type { TChipProps, TChipVariant, TChipAppearance, TChipSize } from './types';
 export { chipClasses } from './classes';
 export { Chip };
 export default Chip;

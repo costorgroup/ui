@@ -35,6 +35,10 @@ const meta: Meta<typeof Chip> = {
       control: 'select',
       options: VARIANTS,
     },
+    appearance: {
+      control: 'select',
+      options: ['opaque', 'transparent'],
+    },
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],
@@ -60,6 +64,7 @@ export const Default: Story = {
   args: {
     children: 'Chip',
     variant: 'solid',
+    appearance: 'opaque',
     size: 'md',
     color: 'default',
     rounded: false,

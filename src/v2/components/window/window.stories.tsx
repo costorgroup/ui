@@ -34,7 +34,7 @@ const meta: Meta<typeof Window> = {
   tags: ["autodocs"],
   args: {
     radius: "large",
-    appearance: "transparent",
+    appearance: "opaque",
   },
   argTypes: {
     radius: {
@@ -43,7 +43,7 @@ const meta: Meta<typeof Window> = {
     },
     appearance: {
       control: "select",
-      options: ["transparent", "solid"],
+      options: ["transparent", "opaque"],
     },
   },
   decorators: [
@@ -53,7 +53,7 @@ const meta: Meta<typeof Window> = {
       }
 
       const Backdrop =
-        context.args.appearance === "solid" ? SolidBackdrop : BlurBackdrop;
+        context.args.appearance === "opaque" ? SolidBackdrop : BlurBackdrop;
 
       return (
         <Backdrop>
@@ -156,7 +156,7 @@ export const WithHead: Story = {
 
 export const Solid: Story = {
   args: {
-    appearance: "solid",
+    appearance: "opaque",
   },
   render: (args) => (
     <Window {...args} style={{ width: 340 }}>

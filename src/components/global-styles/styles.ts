@@ -22,7 +22,7 @@ export const createBaselineStyles = (theme: TTheme) => css`
   body {
     margin: 0;
     font-family: ${theme.fontFamily};
-    color: ${theme.colors.base.contrastText};
+    color: ${theme.colors.default.main};
     background-color: ${theme.colors.base.main};
     font-size: ${theme.typography.text.medium};
   }

@@ -2,7 +2,14 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const tabsClasses = generateUtilityClasses('V2Tabs', [
   'root',
+  'list',
   'indicator',
   'dragging',
   'indicatorDragging',
+  'fade',
+  'fadeStart',
+  'fadeEnd',
+  'subtle',
+  'surface',
+  'plain',
 ]);

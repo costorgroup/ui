@@ -19,14 +19,13 @@ export const listShellVariantStyles = (
 export const listItemBackground = (
   variant: TListVariant,
   palette: TThemeColorScale,
-  _theme?: TTheme,
 ) => accordionDetailsBackground(variant, palette);
 
 export const listItemColor = (
   variant: TListVariant,
   palette: TThemeColorScale,
-  _theme?: TTheme,
-) => accordionSummaryIdleColor(variant, palette);
+  theme: TTheme,
+) => accordionSummaryIdleColor(variant, palette, theme);
 
 export const listItemDivider = (
   variant: TListVariant,

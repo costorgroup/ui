@@ -58,8 +58,8 @@ export const STabsBase = styled('div', {
       --tabs-contrast: ${palette.contrastText};
       --tabs-muted: ${theme.colors.base.light};
       --tabs-track: ${track};
-      --tabs-subtle-bg: color-mix(in srgb, ${palette.main} 8%, transparent);
-      --tabs-subtle-bg-hover: color-mix(in srgb, ${palette.main} 14%, transparent);
+      --tabs-subtle-bg: color-mix(in lab, ${palette.main} 8%, transparent);
+      --tabs-subtle-bg-hover: color-mix(in lab, ${palette.main} 14%, transparent);
       --tabs-radius: ${theme.radius.medium};
     `;
 

@@ -10,6 +10,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
     {
       children,
       variant: variantProp,
+      appearance: appearanceProp,
       size: sizeProp,
       color: colorProp,
       rounded = false,
@@ -21,6 +22,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
   ) => {
     const group = useButtonGroupContext();
     const variant = variantProp ?? group?.variant ?? 'solid';
+    const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
     const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
 
@@ -29,6 +31,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
         ref={ref}
         type="button"
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
         rounded={rounded}
@@ -51,6 +54,7 @@ IconButton.displayName = 'IconButton';
 export type {
   TIconButtonProps,
   TIconButtonVariant,
+  TIconButtonAppearance,
   TIconButtonSize,
 } from './types';
 export { iconButtonClasses } from './classes';

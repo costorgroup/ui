@@ -1,9 +1,5 @@
 import styled from '@emotion/styled';
 import {
-  accordionDetailsBackground,
-  accordionDetailsColor,
-} from '../variant-styles';
-import {
   TSAccordionDetailsInnerProps,
   TSAccordionDetailsProps,
 } from './types';
@@ -36,8 +32,6 @@ export const SAccordionDetailsInner = styled('div', {
     const scale = theme.sizeScale[size];
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
-  background-color: ${({ theme, variant, color }) =>
-    accordionDetailsBackground(variant, theme.colors[color], theme)};
-  color: ${({ theme, variant, color }) =>
-    accordionDetailsColor(variant, theme.colors[color])};
+  background-color: transparent;
+  color: inherit;
 `;

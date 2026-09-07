@@ -2,7 +2,7 @@ import { generateUtilityClasses } from "../../../helpers/generate-utility-classe
 
 export const windowClasses = generateUtilityClasses("Window", [
   "root",
-  "solid",
+  "opaque",
   "transparent",
 ]);
 

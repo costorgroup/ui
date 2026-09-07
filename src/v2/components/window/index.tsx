@@ -10,7 +10,7 @@ const Window = forwardRef(function Window<C extends ElementType = 'div'>(
     as,
     children,
     radius = 'large',
-    appearance = 'transparent',
+    appearance = 'opaque',
     className,
     ...props
   }: TWindowProps<C>,
@@ -25,8 +25,8 @@ const Window = forwardRef(function Window<C extends ElementType = 'div'>(
       {...props}
       className={mergeClasses(
         windowClasses.root,
-        appearance === 'solid'
-          ? windowClasses.solid
+        appearance === 'opaque'
+          ? windowClasses.opaque
           : windowClasses.transparent,
         className,
       )}

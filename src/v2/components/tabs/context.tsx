@@ -1,13 +1,17 @@
 import { createContext, useContext } from 'react';
 import { TPaletteColor } from '../../../theme/types';
+import type { TAppearance } from '../../variant-types';
 
 export type TTabsOrientation = 'horizontal' | 'vertical';
 
-export type TTabsAppearance = 'solid' | 'transparent';
+export type TTabsAppearance = TAppearance;
+
+export type TTabsVariant = 'subtle' | 'surface' | 'plain';
 
 export type TTabsContextValue = {
   orientation: TTabsOrientation;
   appearance: TTabsAppearance;
+  variant: TTabsVariant;
   fullWidth: boolean;
   draggable: boolean;
   dragging: boolean;

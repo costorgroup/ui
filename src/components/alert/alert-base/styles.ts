@@ -64,9 +64,9 @@ export const SAlertBase = styled('div', {
         `;
       case 'surface':
         return `
-          background-color: color-mix(in srgb, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in srgb, ${palette.main} 24%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         `;
@@ -91,7 +91,7 @@ export const SAlertBase = styled('div', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in srgb, ${palette.lighter} 92%, transparent);
+          background-color: color-mix(in lab, ${palette.lighter} 92%, transparent);
           color: ${palette.darker};
           border-color: transparent;
           backdrop-filter: blur(10px);

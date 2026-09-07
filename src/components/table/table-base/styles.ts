@@ -35,9 +35,9 @@ export const STableBase = styled('table', {
     return `
       --table-pad-y: ${padY};
       --table-pad-x: ${padX};
-      --table-border: color-mix(in srgb, ${palette.main} 18%, transparent);
-      --table-head-bg: color-mix(in srgb, ${palette.main} 8%, transparent);
-      --table-row-hover: color-mix(in srgb, ${palette.main} 8%, transparent);
+      --table-border: color-mix(in lab, ${palette.main} 18%, transparent);
+      --table-head-bg: color-mix(in lab, ${palette.main} 8%, transparent);
+      --table-row-hover: color-mix(in lab, ${palette.main} 8%, transparent);
       --table-accent: ${palette.main};
     `;
   }}

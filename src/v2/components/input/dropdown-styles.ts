@@ -1,14 +1,16 @@
 import type { TTheme } from '../../../theme/types';
-import type { TThemeColorScale } from '../../../theme/theming/color/types';
 import { CUI_CANVAS_VAR } from '../../../helpers/color/create-color-scale';
 import type { TPaletteColor } from '../../../theme/types';
 import {
+  chromeOpaqueFill,
   colorMix,
-  surfacePanelBackground,
-  surfacePanelBackdrop,
   surfacePanelBorder,
   surfacePanelShadow,
 } from '../../surface';
+import {
+  CHROME_IDLE,
+  CHROME_HOVER,
+} from '../../idle-variant-styles';
 import type { TInputVariant } from './input-wrapper/types';
 
 export type TInputDropdownChrome = {
@@ -16,31 +18,28 @@ export type TInputDropdownChrome = {
   variant: TInputVariant;
 };
 
-/** Dropdown panel — matches Window transparent surface. */
+/** Dropdown panel — opaque canvas fill. */
 export const inputDropdownPanelStyles = (theme: TTheme) => `
-  ${CUI_CANVAS_VAR}: transparent;
-  background-color: ${surfacePanelBackground(theme)};
-  color: ${theme.colors.base.contrastText};
+  ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
+  background-color: ${theme.colors.base.main};
+  color: ${theme.colors.default.main};
   border: ${surfacePanelBorder(theme)};
   box-shadow: ${surfacePanelShadow(theme)};
-  ${surfacePanelBackdrop()}
 `;
 
 export const inputDropdownOptionCssVars = (
   theme: TTheme,
-  color: TPaletteColor,
+  _color: TPaletteColor,
 ) => {
-  const palette = theme.colors[color];
-
   return `
-    --input-dropdown-option-hover: ${inputDropdownOptionHover(palette)};
-    --input-dropdown-option-selected: ${inputDropdownOptionSelected(palette)};
+    --input-dropdown-option-hover: ${inputDropdownOptionHover(theme)};
+    --input-dropdown-option-selected: ${inputDropdownOptionSelected(theme)};
   `;
 };
 
 /** Empty / muted dropdown copy. */
 export const inputDropdownMutedText = (theme: TTheme, alpha = 50) =>
-  colorMix(theme.colors.base.contrastText, alpha);
+  colorMix(theme.colors.default.main, alpha);
 
 /** Compact dropdown option typography + padding. */
 export const INPUT_DROPDOWN_OPTION_FONT_SIZE = '12px';
@@ -49,9 +48,9 @@ export const inputDropdownOptionPadding = (theme: TTheme) =>
   `${theme.spacing(theme.gap.xs)} ${theme.spacing(theme.gap.sm)}`;
 
 /** Keyboard / pointer hover on unselected options. */
-export const inputDropdownOptionHover = (palette: TThemeColorScale) =>
-  palette.subtle;
+export const inputDropdownOptionHover = (theme: TTheme) =>
+  chromeOpaqueFill(theme, CHROME_IDLE);
 
 /** Current value — stronger than hover; not replaced on hover. */
-export const inputDropdownOptionSelected = (palette: TThemeColorScale) =>
-  palette.muted;
+export const inputDropdownOptionSelected = (theme: TTheme) =>
+  chromeOpaqueFill(theme, CHROME_HOVER);

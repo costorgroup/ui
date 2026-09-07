@@ -19,7 +19,7 @@ export const STreeViewRoot = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
-  color: ${({ theme }) => theme.colors.base.contrastText};
+  color: ${({ theme }) => theme.colors.default.main};
   font-family: inherit;
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
 `;

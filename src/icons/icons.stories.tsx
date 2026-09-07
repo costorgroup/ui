@@ -24,6 +24,8 @@ import {
   FullscreenExitIcon,
   FolderIcon,
   FileIcon,
+  SearchIcon,
+  EmojiAddIcon,
 } from './index';
 
 const icons = [
@@ -50,6 +52,8 @@ const icons = [
   { name: 'FullscreenExitIcon', Icon: FullscreenExitIcon },
   { name: 'FolderIcon', Icon: FolderIcon },
   { name: 'FileIcon', Icon: FileIcon },
+  { name: 'SearchIcon', Icon: SearchIcon },
+  { name: 'EmojiAddIcon', Icon: EmojiAddIcon },
 ] as const;
 
 const meta: Meta = {

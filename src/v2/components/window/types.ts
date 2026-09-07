@@ -1,15 +1,16 @@
 import { ElementType, ReactNode } from "react";
 import type { TPolymorphicProps } from "../../../helpers/polymorphic";
 import { TThemeRadius } from "../../../theme/types";
+import type { TAppearance } from "../../variant-types";
 
 export type TWindowRadius = keyof TThemeRadius;
 
-export type TWindowAppearance = "solid" | "transparent";
+export type TWindowAppearance = TAppearance;
 
 export type TWindowOwnProps = {
   children?: ReactNode;
   radius?: TWindowRadius;
-  /** `transparent` for frosted shell; `solid` for flat surface fill. */
+  /** `opaque` for canvas fill; `transparent` for see-through shell. */
   appearance?: TWindowAppearance;
 };
 

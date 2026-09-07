@@ -25,6 +25,6 @@ export const SText = styled("p", {
   color: ${({ theme, color }) =>
     color != null
       ? theme.colors[color].main
-      : theme.colors.base.contrastText}A0;
+      : theme.colors.default.main}A0;
 `;
 

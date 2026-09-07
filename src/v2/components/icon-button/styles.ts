@@ -4,10 +4,10 @@ import { TIconButtonProps, TIconButtonSize } from './types';
 
 type TSIconButtonProps = Pick<
   TIconButtonProps,
-  'variant' | 'size' | 'color' | 'rounded'
+  'variant' | 'appearance' | 'size' | 'color' | 'rounded'
 >;
 
-const customProps = new Set(['variant', 'size', 'color', 'rounded']);
+const customProps = new Set(['variant', 'appearance', 'size', 'color', 'rounded']);
 
 const sizeStyles: Record<
   TIconButtonSize,
@@ -42,9 +42,9 @@ export const SIconButton = styled('button', {
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = 'solid', color = 'default' }) => {
+  ${({ theme, variant = 'solid', appearance = 'opaque', color = 'default' }) => {
     const palette = theme.colors[color];
-    return variantStyles(variant, palette, theme);
+    return variantStyles(variant, palette, theme, appearance);
   }}
 
   ${({ size = 'md' }) => {

@@ -1,6 +1,10 @@
 import type { TTheme } from '../../../theme/types';
 import type { TThemeColorScale } from '../../../theme/theming/color/types';
-import { colorMix } from '../../surface';
+import { chromeOpaqueFill, colorMix } from '../../surface';
+import {
+  CHROME_IDLE,
+  CHROME_HOVER,
+} from '../../idle-variant-styles';
 import { V2_BUTTON_RADIUS } from '../button/variant-styles';
 import type { TTreeViewSize, TTreeViewVariant } from './types';
 
@@ -58,6 +62,7 @@ export const treeSizeStyles = (size: TTreeViewSize) => {
 const selectedRowStyles = (
   variant: TTreeViewVariant,
   palette: TThemeColorScale,
+  theme: TTheme,
 ) => {
   if (variant === 'solid') {
     return `
@@ -67,8 +72,8 @@ const selectedRowStyles = (
   }
 
   return `
-    background-color: ${palette.subtle};
-    color: ${palette.fg};
+    background-color: ${chromeOpaqueFill(theme, CHROME_IDLE)};
+    color: ${theme.colors.default.main};
   `;
 };
 
@@ -91,7 +96,7 @@ export const interactiveRowStyles = (
   padding-inline-start: calc(
     var(--tree-padding-inline) + var(--tree-indentation) * (var(--depth, 1) - 1)
   );
-  color: ${theme.colors.base.contrastText};
+  color: ${theme.colors.default.main};
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -101,7 +106,7 @@ export const interactiveRowStyles = (
 
   &:hover:not([data-disabled]),
   &:focus-visible:not([data-disabled]) {
-    background-color: ${theme.colors.base.muted};
+    background-color: ${chromeOpaqueFill(theme, CHROME_HOVER)};
   }
 
   &[data-disabled] {
@@ -110,11 +115,11 @@ export const interactiveRowStyles = (
   }
 
   &[data-selected]:not([data-disabled]) {
-    ${selectedRowStyles(variant, palette)}
+    ${selectedRowStyles(variant, palette, theme)}
   }
 
   &:focus-visible {
-    outline: 2px solid ${colorMix(theme.colors.base.contrastText, 24)};
+    outline: 2px solid ${colorMix(theme.colors.default.main, 24)};
     outline-offset: -2px;
   }
 `;

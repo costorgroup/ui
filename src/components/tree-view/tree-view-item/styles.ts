@@ -33,7 +33,7 @@ export const STreeViewItemContent = styled('div', {
     }
 
     if (selected) {
-      return `color-mix(in srgb, ${theme.colors[color].main} 12%, transparent)`;
+      return `color-mix(in lab, ${theme.colors[color].main} 12%, transparent)`;
     }
 
     return 'transparent';
@@ -63,10 +63,10 @@ export const STreeViewItemContent = styled('div', {
       }
 
       if (selected) {
-        return `color-mix(in srgb, ${theme.colors[color].main} 16%, transparent)`;
+        return `color-mix(in lab, ${theme.colors[color].main} 16%, transparent)`;
       }
 
-      return `color-mix(in srgb, ${theme.colors.common.black} 6%, transparent)`;
+      return `color-mix(in lab, ${theme.colors.common.black} 6%, transparent)`;
     }};
   }
 

@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { TTabsAppearance, TTabsOrientation } from './context';
+import { TTabsAppearance, TTabsOrientation, TTabsVariant } from './context';
 
 export type TTabIndicatorRect = {
   width: number;
@@ -23,9 +23,13 @@ const emptyRect: TTabIndicatorRect = {
 };
 
 const DRAG_THRESHOLD = 4;
+const SCROLL_EDGE = 36;
+const SCROLL_MIN = 6;
+const SCROLL_MAX = 20;
 
 type TUseTabIndicatorLayout = {
   appearance: TTabsAppearance;
+  variant: TTabsVariant;
   orientation: TTabsOrientation;
   fullWidth: boolean;
 };
@@ -44,7 +48,7 @@ export const useTabIndicator = (
   layout: TUseTabIndicatorLayout,
   options: TUseTabIndicatorOptions = {},
 ) => {
-  const { appearance, orientation, fullWidth } = layout;
+  const { appearance, variant, orientation, fullWidth } = layout;
   const { draggable = true, onSelect } = options;
   const [indicator, setIndicator] = useState<TTabIndicatorRect>(emptyRect);
   const [dragRect, setDragRect] = useState<TTabIndicatorRect | null>(null);
@@ -55,8 +59,10 @@ export const useTabIndicator = (
   const draggingRef = useRef(false);
   const dragStartRectRef = useRef<TTabIndicatorRect>(emptyRect);
   const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+  const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
   const tabNodesRef = useRef(new Map<string, HTMLButtonElement>());
   const clearDragListenersRef = useRef<(() => void) | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(
     () => () => {
@@ -90,6 +96,8 @@ export const useTabIndicator = (
 
   const findNearestTab = useCallback(
     (clientX: number, clientY: number) => {
+      const container = containerRef.current;
+      const containerRect = container?.getBoundingClientRect();
       let nearest: { value: string; distance: number } | null = null;
 
       for (const [value, node] of tabNodesRef.current) {
@@ -97,13 +105,20 @@ export const useTabIndicator = (
           continue;
         }
 
-        const rect = node.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
         const distance =
           orientation === 'horizontal'
-            ? Math.abs(clientX - centerX)
-            : Math.abs(clientY - centerY);
+            ? Math.abs(
+                (container != null && containerRect != null
+                  ? container.scrollLeft + clientX - containerRect.left
+                  : clientX) -
+                  (node.offsetLeft + node.offsetWidth / 2),
+              )
+            : Math.abs(
+                (container != null && containerRect != null
+                  ? container.scrollTop + clientY - containerRect.top
+                  : clientY) -
+                  (node.offsetTop + node.offsetHeight / 2),
+              );
 
         if (nearest == null || distance < nearest.distance) {
           nearest = { value, distance };
@@ -112,7 +127,7 @@ export const useTabIndicator = (
 
       return nearest?.value ?? null;
     },
-    [orientation],
+    [containerRef, orientation],
   );
 
   const getDragCenterBounds = useCallback(
@@ -147,12 +162,76 @@ export const useTabIndicator = (
     [getTabRect, orientation],
   );
 
+  const scrollToFollowPointer = useCallback(
+    (clientX: number, clientY: number) => {
+      const container = containerRef.current;
+
+      if (container == null) {
+        return;
+      }
+
+      const rect = container.getBoundingClientRect();
+      const speed = (overflow: number) =>
+        Math.min(
+          SCROLL_MAX,
+          SCROLL_MIN + (overflow / SCROLL_EDGE) * (SCROLL_MAX - SCROLL_MIN),
+        );
+
+      if (orientation === 'horizontal') {
+        const maxScroll = container.scrollWidth - container.clientWidth;
+
+        if (maxScroll <= 0) {
+          return;
+        }
+
+        const overflowEnd = clientX - (rect.right - SCROLL_EDGE);
+        const overflowStart = rect.left + SCROLL_EDGE - clientX;
+
+        if (overflowEnd > 0) {
+          container.scrollLeft = Math.min(
+            maxScroll,
+            container.scrollLeft + speed(overflowEnd),
+          );
+        } else if (overflowStart > 0) {
+          container.scrollLeft = Math.max(
+            0,
+            container.scrollLeft - speed(overflowStart),
+          );
+        }
+
+        return;
+      }
+
+      const maxScroll = container.scrollHeight - container.clientHeight;
+
+      if (maxScroll <= 0) {
+        return;
+      }
+
+      const overflowEnd = clientY - (rect.bottom - SCROLL_EDGE);
+      const overflowStart = rect.top + SCROLL_EDGE - clientY;
+
+      if (overflowEnd > 0) {
+        container.scrollTop = Math.min(
+          maxScroll,
+          container.scrollTop + speed(overflowEnd),
+        );
+      } else if (overflowStart > 0) {
+        container.scrollTop = Math.max(
+          0,
+          container.scrollTop - speed(overflowStart),
+        );
+      }
+    },
+    [containerRef, orientation],
+  );
+
   const updateDragPosition = useCallback(
     (clientX: number, clientY: number) => {
-      const start = pointerStartRef.current;
       const startRect = dragStartRectRef.current;
+      const container = containerRef.current;
 
-      if (start == null || startRect.width === 0) {
+      if (startRect.width === 0 || container == null) {
         return;
       }
 
@@ -162,18 +241,22 @@ export const useTabIndicator = (
         return;
       }
 
-      const deltaX = clientX - start.x;
-      const deltaY = clientY - start.y;
-      const startCenterX = startRect.x + startRect.width / 2;
-      const startCenterY = startRect.y + startRect.height / 2;
-
-      let centerX = startCenterX;
-      let centerY = startCenterY;
+      const rect = container.getBoundingClientRect();
+      let centerX = startRect.x + startRect.width / 2;
+      let centerY = startRect.y + startRect.height / 2;
 
       if (orientation === 'horizontal') {
-        centerX = clamp(startCenterX + deltaX, bounds.min, bounds.max);
+        centerX = clamp(
+          container.scrollLeft + clientX - rect.left,
+          bounds.min,
+          bounds.max,
+        );
       } else {
-        centerY = clamp(startCenterY + deltaY, bounds.min, bounds.max);
+        centerY = clamp(
+          container.scrollTop + clientY - rect.top,
+          bounds.min,
+          bounds.max,
+        );
       }
 
       setDragRect({
@@ -185,7 +268,7 @@ export const useTabIndicator = (
 
       setDragHoverValue(findNearestTab(clientX, clientY));
     },
-    [findNearestTab, getDragCenterBounds, orientation],
+    [containerRef, findNearestTab, getDragCenterBounds, orientation],
   );
 
   const updateIndicator = useCallback(() => {
@@ -333,7 +416,7 @@ export const useTabIndicator = (
     const frame = requestAnimationFrame(updateIndicator);
 
     return () => cancelAnimationFrame(frame);
-  }, [updateIndicator, appearance, orientation, fullWidth]);
+  }, [updateIndicator, appearance, variant, orientation, fullWidth]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -353,7 +436,7 @@ export const useTabIndicator = (
     }
 
     return () => observer.disconnect();
-  }, [activeValue, containerRef, updateIndicator, appearance, orientation, fullWidth]);
+  }, [activeValue, containerRef, updateIndicator, appearance, variant, orientation, fullWidth]);
 
   return {
     indicator: dragRect ?? indicator,

@@ -1,21 +1,36 @@
 import styled from '@emotion/styled';
-import { CHROME_IDLE, SURFACE_BORDER_IDLE } from '../../idle-variant-styles';
-import {
-  chromeOpaqueFill,
-  chromeTransparentFill,
-  surfaceBorder,
-} from '../../surface';
-import { STTabIndicatorProps, STTabsProps } from './types';
+import { CHROME_FILL, CHROME_IDLE } from '../../idle-variant-styles';
+import { colorMix, colorMixBase } from '../../surface';
+import { STTabIndicatorProps, STTabsFadeProps, STTabsProps } from './types';
+
+const fadeColor = ({
+  appearance,
+  theme,
+  variant,
+}: Pick<STTabsFadeProps, 'appearance' | 'variant'> & {
+  theme: { colors: { base: { main: string; contrastText: string } } };
+}) => {
+  if (variant === 'plain') {
+    return theme.colors.base.main;
+  }
+
+  return colorMixBase(
+    theme.colors.base.contrastText,
+    CHROME_FILL,
+    appearance === 'transparent' ? 'transparent' : theme.colors.base.main,
+  );
+};
 
 const tabsCustomProps = new Set([
   'orientation',
   'appearance',
+  'variant',
   'fullWidth',
   'dragging',
-  'color',
 ]);
 const indicatorCustomProps = new Set([
   'appearance',
+  'variant',
   'color',
   'width',
   'height',
@@ -29,22 +44,64 @@ export const STabs = styled('div', {
   shouldForwardProp: (prop) => !tabsCustomProps.has(prop),
 })<STTabsProps>`
   position: relative;
-  display: inline-flex;
+  display: flex;
   box-sizing: border-box;
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   max-width: 100%;
-  padding: 3px;
-  border-radius: ${({ theme }) => theme.radius.medium};
-  border: ${({ theme }) => surfaceBorder(theme, SURFACE_BORDER_IDLE)};
-  background-color: ${({ theme, appearance }) =>
-    appearance === 'transparent'
-      ? chromeTransparentFill(theme, CHROME_IDLE)
-      : chromeOpaqueFill(theme, CHROME_IDLE)};
+  min-width: 0;
+  overflow: hidden;
+  padding: ${({ variant }) => (variant === 'plain' ? 0 : '3px')};
+  border-radius: ${({ theme, variant }) =>
+    variant === 'plain' ? 0 : theme.radius.medium};
+  border: 1px solid
+    ${({ theme, variant }) =>
+      variant === 'surface'
+        ? colorMix(theme.colors.base.contrastText, CHROME_IDLE)
+        : 'transparent'};
+  background-color: ${({ theme, appearance, variant }) => {
+    if (variant === 'plain') {
+      return 'transparent';
+    }
+
+    return colorMixBase(
+      theme.colors.base.contrastText,
+      CHROME_FILL,
+      appearance === 'transparent' ? 'transparent' : theme.colors.base.main,
+    );
+  }};
   flex-direction: ${({ orientation }) =>
     orientation === 'vertical' ? 'column' : 'row'};
   align-items: stretch;
   user-select: ${({ dragging }) => (dragging ? 'none' : 'auto')};
   touch-action: ${({ dragging }) => (dragging ? 'none' : 'auto')};
+`;
+
+export const STabsList = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'orientation' && prop !== 'panning',
+})<{ orientation: STTabsProps['orientation']; panning: boolean }>`
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: ${({ orientation }) =>
+    orientation === 'vertical' ? 'column' : 'row'};
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  overflow-x: ${({ orientation }) =>
+    orientation === 'horizontal' ? 'auto' : 'hidden'};
+  overflow-y: ${({ orientation }) =>
+    orientation === 'vertical' ? 'auto' : 'hidden'};
+  cursor: ${({ panning }) => (panning ? 'grabbing' : 'inherit')};
+  touch-action: ${({ orientation }) =>
+    orientation === 'horizontal' ? 'pan-y' : 'pan-x'};
+  user-select: ${({ panning }) => (panning ? 'none' : 'auto')};
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const STabIndicator = styled('span', {
@@ -55,6 +112,7 @@ export const STabIndicator = styled('span', {
   top: ${({ y, height }) => `${y + height / 2}px`};
   left: ${({ x, width }) => `${x + width / 2}px`};
   z-index: 0;
+  display: block;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   border-radius: ${({ theme }) => theme.radius.small};
@@ -64,22 +122,22 @@ export const STabIndicator = styled('span', {
     }
 
     return appearance === 'transparent'
-      ? `color-mix(in srgb, ${theme.colors.base.contrastText} 80%, transparent)`
-      : theme.colors.base.contrastText;
+      ? `color-mix(in lab, ${theme.colors.default.main} 80%, transparent)`
+      : theme.colors.default.main;
   }};
   box-shadow: ${({ theme, appearance, color }) => {
     if (color != null) {
-      return `0 0 0 0.5px color-mix(in srgb, ${theme.colors[color].main} 24%, transparent),
-         0 1px 3px color-mix(in srgb, ${theme.colors.common.black} 14%, transparent)`;
+      return `0 0 0 0.5px color-mix(in lab, ${theme.colors[color].main} 24%, transparent),
+         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 14%, transparent)`;
     }
 
     return appearance === 'transparent'
-      ? `0 0 0 0.5px color-mix(in srgb, ${theme.colors.base.contrastText} 24%, transparent),
-         0 1px 3px color-mix(in srgb, ${theme.colors.common.black} 14%, transparent)`
-      : `0 0 0 0.5px color-mix(in srgb, ${theme.colors.common.black} 8%, transparent),
-         0 0.5px 1px color-mix(in srgb, ${theme.colors.common.black} 6%, transparent),
-         0 1px 3px color-mix(in srgb, ${theme.colors.common.black} 10%, transparent),
-         0 2px 6px color-mix(in srgb, ${theme.colors.common.black} 6%, transparent)`;
+      ? `0 0 0 0.5px color-mix(in lab, ${theme.colors.default.main} 24%, transparent),
+         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 14%, transparent)`
+      : `0 0 0 0.5px color-mix(in lab, ${theme.colors.common.black} 8%, transparent),
+         0 0.5px 1px color-mix(in lab, ${theme.colors.common.black} 6%, transparent),
+         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 10%, transparent),
+         0 2px 6px color-mix(in lab, ${theme.colors.common.black} 6%, transparent)`;
   }};
   transform: translate(-50%, -50%);
   transition: ${({ ready, dragging }) =>
@@ -90,4 +148,49 @@ export const STabIndicator = styled('span', {
          height 0.28s cubic-bezier(0.4, 0, 0.2, 1)`
       : 'none'};
   will-change: ${({ dragging }) => (dragging ? 'top, left, width, height' : 'auto')};
+`;
+
+const fadeCustomProps = new Set([
+  'side',
+  'orientation',
+  'appearance',
+  'variant',
+  'visible',
+]);
+
+export const STabFade = styled('span', {
+  shouldForwardProp: (prop) => !fadeCustomProps.has(prop),
+})<STTabsFadeProps>`
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  transition: opacity 0.2s ease;
+  ${({ orientation, side }) =>
+    orientation === 'vertical'
+      ? `
+        left: 0;
+        right: 0;
+        height: 28px;
+        ${side === 'start' ? 'top: 0;' : 'bottom: 0;'}
+      `
+      : `
+        top: 0;
+        bottom: 0;
+        width: 28px;
+        ${side === 'start' ? 'left: 0;' : 'right: 0;'}
+      `}
+  background: linear-gradient(
+    ${({ orientation, side }) =>
+      orientation === 'vertical'
+        ? side === 'start'
+          ? 'to bottom'
+          : 'to top'
+        : side === 'start'
+          ? 'to right'
+          : 'to left'},
+    ${({ appearance, theme, variant }) => fadeColor({ appearance, theme, variant })} 0%,
+    ${({ appearance, theme, variant }) => fadeColor({ appearance, theme, variant })} 18%,
+    transparent 100%
+  );
 `;

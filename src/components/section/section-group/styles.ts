@@ -35,7 +35,7 @@ export const SSectionGroup = styled('div', {
   --section-rail-gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   --section-path-color: ${({ theme, color }) => theme.colors[color].main};
   --section-path-line: ${({ theme, color }) =>
-    `color-mix(in srgb, ${theme.colors[color].main} 40%, transparent)`};
+    `color-mix(in lab, ${theme.colors[color].main} 40%, transparent)`};
   --section-path-gap: ${({ theme, gap }) => resolveGap(theme, gap)};
   gap: ${({ theme, gap }) => resolveGap(theme, gap)};
 

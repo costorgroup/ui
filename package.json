@@ -997,6 +997,11 @@
       "import": "./dist/v2/components/accordion/accordion-summary/index.js",
       "require": "./dist/v2/components/accordion/accordion-summary/index.cjs"
     },
+    "./v2/ActionField": {
+      "types": "./dist/v2/components/action-field/index.d.ts",
+      "import": "./dist/v2/components/action-field/index.js",
+      "require": "./dist/v2/components/action-field/index.cjs"
+    },
     "./v2/Alert": {
       "types": "./dist/v2/components/alert/index.d.ts",
       "import": "./dist/v2/components/alert/index.js",
@@ -1046,6 +1051,11 @@
       "types": "./dist/v2/components/avatar-group/index.d.ts",
       "import": "./dist/v2/components/avatar-group/index.js",
       "require": "./dist/v2/components/avatar-group/index.cjs"
+    },
+    "./v2/Backdrop": {
+      "types": "./dist/v2/components/backdrop/index.d.ts",
+      "import": "./dist/v2/components/backdrop/index.js",
+      "require": "./dist/v2/components/backdrop/index.cjs"
     },
     "./v2/Badge": {
       "types": "./dist/v2/components/badge/index.d.ts",
@@ -1107,6 +1117,31 @@
       "import": "./dist/v2/components/breadcrumb/breadcrumb-separator/index.js",
       "require": "./dist/v2/components/breadcrumb/breadcrumb-separator/index.cjs"
     },
+    "./v2/Bubble": {
+      "types": "./dist/v2/components/bubble/index.d.ts",
+      "import": "./dist/v2/components/bubble/index.js",
+      "require": "./dist/v2/components/bubble/index.cjs"
+    },
+    "./v2/BubbleAction": {
+      "types": "./dist/v2/components/bubble/bubble-action/index.d.ts",
+      "import": "./dist/v2/components/bubble/bubble-action/index.js",
+      "require": "./dist/v2/components/bubble/bubble-action/index.cjs"
+    },
+    "./v2/BubbleContent": {
+      "types": "./dist/v2/components/bubble/bubble-content/index.d.ts",
+      "import": "./dist/v2/components/bubble/bubble-content/index.js",
+      "require": "./dist/v2/components/bubble/bubble-content/index.cjs"
+    },
+    "./v2/BubbleGroup": {
+      "types": "./dist/v2/components/bubble/bubble-group/index.d.ts",
+      "import": "./dist/v2/components/bubble/bubble-group/index.js",
+      "require": "./dist/v2/components/bubble/bubble-group/index.cjs"
+    },
+    "./v2/BubbleReactions": {
+      "types": "./dist/v2/components/bubble/bubble-reactions/index.d.ts",
+      "import": "./dist/v2/components/bubble/bubble-reactions/index.js",
+      "require": "./dist/v2/components/bubble/bubble-reactions/index.cjs"
+    },
     "./v2/Button": {
       "types": "./dist/v2/components/button/index.d.ts",
       "import": "./dist/v2/components/button/index.js",
@@ -1152,6 +1187,11 @@
       "import": "./dist/v2/components/color-picker-field/index.js",
       "require": "./dist/v2/components/color-picker-field/index.cjs"
     },
+    "./v2/CreditCard": {
+      "types": "./dist/v2/components/credit-card/index.d.ts",
+      "import": "./dist/v2/components/credit-card/index.js",
+      "require": "./dist/v2/components/credit-card/index.cjs"
+    },
     "./v2/DatePickerField": {
       "types": "./dist/v2/components/date-picker-field/index.d.ts",
       "import": "./dist/v2/components/date-picker-field/index.js",
@@ -1162,6 +1202,11 @@
       "import": "./dist/v2/components/em/index.js",
       "require": "./dist/v2/components/em/index.cjs"
     },
+    "./v2/EmojiPickerField": {
+      "types": "./dist/v2/components/emoji-picker-field/index.d.ts",
+      "import": "./dist/v2/components/emoji-picker-field/index.js",
+      "require": "./dist/v2/components/emoji-picker-field/index.cjs"
+    },
     "./v2/FileField": {
       "types": "./dist/v2/components/file-field/index.d.ts",
       "import": "./dist/v2/components/file-field/index.js",
@@ -1171,6 +1216,16 @@
       "types": "./dist/v2/components/floating-action/index.d.ts",
       "import": "./dist/v2/components/floating-action/index.js",
       "require": "./dist/v2/components/floating-action/index.cjs"
+    },
+    "./v2/Grid": {
+      "types": "./dist/v2/components/grid/index.d.ts",
+      "import": "./dist/v2/components/grid/index.js",
+      "require": "./dist/v2/components/grid/index.cjs"
+    },
+    "./v2/GridCell": {
+      "types": "./dist/v2/components/grid/grid-cell/index.d.ts",
+      "import": "./dist/v2/components/grid/grid-cell/index.js",
+      "require": "./dist/v2/components/grid/grid-cell/index.cjs"
     },
     "./v2/Highlight": {
       "types": "./dist/v2/components/highlight/index.d.ts",
@@ -1211,6 +1266,11 @@
       "types": "./dist/v2/components/input/input-date-field/index.d.ts",
       "import": "./dist/v2/components/input/input-date-field/index.js",
       "require": "./dist/v2/components/input/input-date-field/index.cjs"
+    },
+    "./v2/InputEmojiField": {
+      "types": "./dist/v2/components/input/input-emoji-field/index.d.ts",
+      "import": "./dist/v2/components/input/input-emoji-field/index.js",
+      "require": "./dist/v2/components/input/input-emoji-field/index.cjs"
     },
     "./v2/InputFileField": {
       "types": "./dist/v2/components/input/input-file-field/index.d.ts",
@@ -1302,6 +1362,16 @@
       "import": "./dist/v2/components/kbd/index.js",
       "require": "./dist/v2/components/kbd/index.cjs"
     },
+    "./v2/Layout": {
+      "types": "./dist/v2/components/layout/index.d.ts",
+      "import": "./dist/v2/components/layout/index.js",
+      "require": "./dist/v2/components/layout/index.cjs"
+    },
+    "./v2/LayoutContent": {
+      "types": "./dist/v2/components/layout/layout-content/index.d.ts",
+      "import": "./dist/v2/components/layout/layout-content/index.js",
+      "require": "./dist/v2/components/layout/layout-content/index.cjs"
+    },
     "./v2/LinearProgress": {
       "types": "./dist/v2/components/linear-progress/index.d.ts",
       "import": "./dist/v2/components/linear-progress/index.js",
@@ -1321,6 +1391,11 @@
       "types": "./dist/v2/components/list-item/index.d.ts",
       "import": "./dist/v2/components/list-item/index.js",
       "require": "./dist/v2/components/list-item/index.cjs"
+    },
+    "./v2/MediaViewer": {
+      "types": "./dist/v2/components/media-viewer/index.d.ts",
+      "import": "./dist/v2/components/media-viewer/index.js",
+      "require": "./dist/v2/components/media-viewer/index.cjs"
     },
     "./v2/NeonPulse": {
       "types": "./dist/v2/animated/neon-pulse/index.d.ts",

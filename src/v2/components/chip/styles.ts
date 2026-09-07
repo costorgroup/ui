@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import { variantStyles } from '../button/variant-styles';
 import { TChipProps, TChipSize } from './types';
 
-type TSChipProps = Pick<TChipProps, 'variant' | 'size' | 'color' | 'rounded'>;
+type TSChipProps = Pick<TChipProps, 'variant' | 'appearance' | 'size' | 'color' | 'rounded'>;
 
-const customProps = new Set(['variant', 'size', 'color', 'rounded']);
+const customProps = new Set(['variant', 'appearance', 'size', 'color', 'rounded']);
 
 const sizeScale: Record<TChipSize, number> = {
   xs: 0.65,
@@ -42,8 +42,8 @@ export const SChip = styled('button', {
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = 'solid', color = 'default' }) =>
-    variantStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = 'solid', appearance = 'opaque', color = 'default' }) =>
+    variantStyles(variant, theme.colors[color], theme, appearance)}
 
   ${({ theme, size = 'md' }) => {
     const scale = sizeScale[size];

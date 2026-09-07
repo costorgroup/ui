@@ -28,7 +28,7 @@ export const SProgress = styled('div', {
   border-radius: ${({ theme }) => theme.radius.pill};
   color: ${({ theme, color }) => theme.colors[color].main};
   background-color: ${({ theme, color }) =>
-    `color-mix(in srgb, ${theme.colors[color].main} 18%, transparent)`};
+    `color-mix(in lab, ${theme.colors[color].main} 18%, transparent)`};
 `;
 
 export const SProgressRail = styled.div`

@@ -112,7 +112,7 @@ export const SInputDateFieldDropdown = styled('div', {
   flex-direction: column;
   border-radius: ${({ theme }) => theme.radius.medium};
   background-color: ${({ theme }) => theme.colors.base.main};
-  color: ${({ theme }) => theme.colors.base.contrastText};
+  color: ${({ theme }) => theme.colors.default.main};
   box-shadow: ${({ theme }) => {
     const black = theme.colors.common.black;
 
@@ -213,20 +213,20 @@ export const SInputDateFieldDay = styled('button', {
         case 'surface':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in srgb, ${palette.main} 16%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 28%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 16%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
           `;
         case 'outline':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 68%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
           `;
         case 'subtle':
         default:
           return `
             color: ${palette.darker};
-            background-color: color-mix(in srgb, ${palette.main} 12%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 12%, transparent);
             border-color: transparent;
           `;
       }
@@ -237,20 +237,20 @@ export const SInputDateFieldDay = styled('button', {
         case 'surface':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
-            border-color: color-mix(in srgb, ${palette.main} 14%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 14%, transparent);
           `;
         case 'outline':
           return `
             color: ${palette.main};
             background-color: transparent;
-            border-color: color-mix(in srgb, ${palette.main} 36%, transparent);
+            border-color: color-mix(in lab, ${palette.main} 36%, transparent);
           `;
         case 'subtle':
         default:
           return `
             color: ${palette.darker};
-            background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
+            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
             border-color: transparent;
           `;
       }
@@ -269,15 +269,15 @@ export const SInputDateFieldDay = styled('button', {
       if (selected) {
         switch (variant) {
           case 'surface':
-            return `background-color: color-mix(in srgb, ${palette.main} 20%, transparent);`;
+            return `background-color: color-mix(in lab, ${palette.main} 20%, transparent);`;
           case 'outline':
-            return `background-color: color-mix(in srgb, ${palette.main} 8%, transparent);`;
+            return `background-color: color-mix(in lab, ${palette.main} 8%, transparent);`;
           case 'subtle':
           default:
-            return `background-color: color-mix(in srgb, ${palette.main} 16%, transparent);`;
+            return `background-color: color-mix(in lab, ${palette.main} 16%, transparent);`;
         }
       }
-      return `background-color: color-mix(in srgb, ${palette.main} 10%, transparent);`;
+      return `background-color: color-mix(in lab, ${palette.main} 10%, transparent);`;
     }}
   }
 `;
@@ -331,18 +331,18 @@ export const SInputDateFieldTimeWheelHighlight = styled('div', {
     switch (variant) {
       case 'surface':
         return `
-          background-color: color-mix(in srgb, ${palette.main} 8%, transparent);
-          border-color: color-mix(in srgb, ${palette.main} 14%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
         `;
       case 'outline':
         return `
           background-color: transparent;
-          border-color: color-mix(in srgb, ${palette.main} 36%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
         `;
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in srgb, ${palette.main} 4%, transparent);
+          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
           border-color: transparent;
         `;
     }

@@ -5,9 +5,6 @@ export type TThemeColorScale = {
   dark: string;
   darker: string;
   contrastText: string;
-  subtle: string;
-  muted: string;
-  fg: string;
 };
 
 export type TThemePaletteColors = {

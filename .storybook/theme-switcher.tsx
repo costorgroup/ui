@@ -4,17 +4,7 @@ import { Text } from '../src/components/text';
 import { Color } from '../src/v2/components/color';
 import { themePresets } from '../src/theme/presets';
 import type { TThemePresetId } from '../src/theme/presets';
-import type { TThemeColorScale } from '../src/theme/types';
 import type { TColorSize } from '../src/v2/components/color/types';
-
-const SCALE_STEPS: (keyof TThemeColorScale)[] = [
-  'lighter',
-  'light',
-  'main',
-  'dark',
-  'darker',
-  'contrastText',
-];
 
 type TThemeSwitcherProps = {
   active: TThemePresetId;
@@ -45,8 +35,9 @@ export const ThemeSwitcher = ({
             size={size}
             selected={active === preset.id}
             colors={[
-              ...SCALE_STEPS.map((step) => preset.theme.colors.base[step]),
-              ...SCALE_STEPS.map((step) => preset.theme.colors.default[step]),
+              preset.theme.colors.base.lighter,
+              preset.theme.colors.base.main,
+              preset.theme.colors.base.darker,
             ]}
             aria-label={preset.title}
             title={preset.title}

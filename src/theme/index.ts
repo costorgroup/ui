@@ -3,13 +3,9 @@ export {
   themePresets,
   themePresetMap,
   DRedTheme,
-  DYellowTheme,
-  DGreenTheme,
   DBlueTheme,
-  DMagentaTheme,
-  DOrangeTheme,
-  DCyanTheme,
-  DPurpleTheme,
+  DGreenTheme,
+  DNavyTheme,
 } from "./presets";
 export type { TThemePreset, TThemePresetId } from "./presets";
 export { createTheme } from "./create-theme";

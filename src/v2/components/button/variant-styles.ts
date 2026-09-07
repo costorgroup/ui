@@ -1,56 +1,60 @@
 import type { TTheme } from '../../../theme/types';
 import type { TThemeColorScale } from '../../../theme/theming/color/types';
-import {
-  idleVariantAppearance,
-  SURFACE_BORDER_IDLE,
-  type TIdleChromeVariant,
-} from '../../idle-variant-styles';
-import { chromeTransparentFill, colorMix } from '../../surface';
+import { type TIdleChromeVariant } from '../../idle-variant-styles';
+import { colorMix, colorMixBase } from '../../surface';
+import type { TAppearance } from '../../variant-types';
 import { TButtonVariant } from './types';
 
 export const V2_BUTTON_RADIUS = '5px';
 
-const COLOR_HOVER = 10;
-const COLOR_ACTIVE = 15;
+const BUTTON_TINT = 20;
 
-const subtleStyles = (palette: TThemeColorScale) => `
-  background-color: ${palette.subtle};
-  color: ${palette.fg};
-  border-color: transparent;
-
-  &:hover:not(:disabled) {
-    background-color: ${palette.muted};
-  }
-
-  &:active:not(:disabled) {
-    background-color: ${palette.muted};
-  }
-`;
-
-const surfaceStyles = (palette: TThemeColorScale, theme: TTheme) => `
-  background-color: ${palette.subtle};
-  color: ${palette.fg};
-  border-color: ${chromeTransparentFill(theme, SURFACE_BORDER_IDLE)};
-
-  &:hover:not(:disabled) {
-    background-color: ${palette.muted};
-  }
-
-  &:active:not(:disabled) {
-    background-color: ${palette.muted};
-  }
-`;
+const tint = (color: string, theme: TTheme, appearance: TAppearance) =>
+  appearance === 'transparent'
+    ? colorMix(color, BUTTON_TINT)
+    : colorMixBase(color, BUTTON_TINT, theme.colors.base.main);
 
 export const variantStyles = (
   variant: TButtonVariant,
   palette: TThemeColorScale,
   theme: TTheme,
+  appearance: TAppearance = 'opaque',
 ) => {
   switch (variant) {
     case 'subtle':
-      return subtleStyles(palette);
+      return `
+        background-color: ${tint(palette.main, theme, appearance)};
+        color: ${palette.main};
+        border-color: transparent;
+
+        &:hover:not(:disabled) {
+          background-color: ${tint(palette.dark, theme, appearance)};
+          color: ${palette.dark};
+        }
+
+        &:active:not(:disabled) {
+          background-color: ${tint(palette.darker, theme, appearance)};
+          color: ${palette.darker};
+        }
+      `;
     case 'surface':
-      return surfaceStyles(palette, theme);
+      return `
+        background-color: ${tint(palette.main, theme, appearance)};
+        color: ${palette.main};
+        border-color: ${palette.main};
+
+        &:hover:not(:disabled) {
+          background-color: ${tint(palette.dark, theme, appearance)};
+          color: ${palette.dark};
+          border-color: ${palette.dark};
+        }
+
+        &:active:not(:disabled) {
+          background-color: ${tint(palette.darker, theme, appearance)};
+          color: ${palette.darker};
+          border-color: ${palette.darker};
+        }
+      `;
     case 'outline':
       return `
         background-color: transparent;
@@ -58,13 +62,15 @@ export const variantStyles = (
         border-color: ${palette.main};
 
         &:hover:not(:disabled) {
-          background-color: ${colorMix(palette.main, COLOR_HOVER)};
-          border-color: ${palette.main};
+          background-color: ${tint(palette.dark, theme, appearance)};
+          color: ${palette.dark};
+          border-color: ${palette.dark};
         }
 
         &:active:not(:disabled) {
-          background-color: ${colorMix(palette.main, COLOR_ACTIVE)};
-          border-color: ${palette.main};
+          background-color: ${tint(palette.darker, theme, appearance)};
+          color: ${palette.darker};
+          border-color: ${palette.darker};
         }
       `;
     case 'ghost':
@@ -74,11 +80,13 @@ export const variantStyles = (
         border-color: transparent;
 
         &:hover:not(:disabled) {
-          background-color: ${colorMix(palette.main, COLOR_HOVER)};
+          background-color: ${tint(palette.dark, theme, appearance)};
+          color: ${palette.dark};
         }
 
         &:active:not(:disabled) {
-          background-color: ${colorMix(palette.main, COLOR_ACTIVE)};
+          background-color: ${tint(palette.darker, theme, appearance)};
+          color: ${palette.darker};
         }
       `;
     case 'plain':
@@ -96,25 +104,20 @@ export const variantStyles = (
         }
       `;
     case 'solid':
-    default: {
-      const idle = idleVariantAppearance('solid', palette, theme);
-
+    default:
       return `
-        background-color: ${idle.backgroundColor};
-        color: ${idle.color};
-        border-color: ${idle.borderColor};
+        background-color: ${palette.main};
+        color: ${palette.contrastText};
+        border-color: transparent;
 
         &:hover:not(:disabled) {
           background-color: ${palette.dark};
-          border-color: ${palette.dark};
         }
 
         &:active:not(:disabled) {
           background-color: ${palette.darker};
-          border-color: ${palette.darker};
         }
       `;
-    }
   }
 };
 

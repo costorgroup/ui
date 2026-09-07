@@ -166,12 +166,18 @@ export const ExpandIconPosition: Story = {
 };
 
 export const Grouped: Story = {
-  render: () => (
+  args: {
+    color: 'default',
+    variant: 'surface',
+    size: 'md',
+    radius: 'medium',
+  },
+  render: (args) => (
     <AccordionGroup
-      color="default"
-      variant="surface"
-      size="md"
-      radius="medium"
+      color={args.color}
+      variant={args.variant}
+      size={args.size}
+      radius={args.radius}
       style={{ width: 420 }}
     >
       <AccordionBase>

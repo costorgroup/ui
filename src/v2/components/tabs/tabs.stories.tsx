@@ -39,7 +39,7 @@ const meta: Meta<typeof Tabs> = {
   component: Tabs,
   tags: ['autodocs'],
   args: {
-    appearance: 'solid',
+    appearance: 'opaque',
     orientation: 'horizontal',
     fullWidth: true,
   },
@@ -50,7 +50,11 @@ const meta: Meta<typeof Tabs> = {
     },
     appearance: {
       control: 'select',
-      options: ['solid', 'transparent'],
+      options: ['opaque', 'transparent'],
+    },
+    variant: {
+      control: 'select',
+      options: ['subtle', 'surface', 'plain'],
     },
     fullWidth: { control: 'boolean' },
     color: { control: 'select', options: COLORS },
@@ -70,14 +74,19 @@ type Story = StoryObj<typeof Tabs>;
 
 export const Horizontal: Story = {
   render: function HorizontalStory(args) {
-    const [value, setValue] = useState('one');
+    const [value, setValue] = useState('overview');
 
     return (
       <Flex direction="column" gap="md" style={{ width: 360 }}>
         <Tabs {...args} value={value} onChange={setValue}>
-          <Tab value="one">Tab</Tab>
-          <Tab value="two">Tab</Tab>
-          <Tab value="three">Tab</Tab>
+          <Tab value="overview">Overview</Tab>
+          <Tab value="details">Details</Tab>
+          <Tab value="billing">Billing</Tab>
+          <Tab value="members">Members</Tab>
+          <Tab value="integrations">Integrations</Tab>
+          <Tab value="notifications">Notifications</Tab>
+          <Tab value="security">Security</Tab>
+          <Tab value="audit">Audit log</Tab>
         </Tabs>
         <Text size="sm">Selected: {value}</Text>
       </Flex>
@@ -157,6 +166,50 @@ export const Colored: Story = {
         <Tab value="two">Details</Tab>
         <Tab value="three">Billing</Tab>
       </Tabs>
+    );
+  },
+};
+
+export const Surface: Story = {
+  args: {
+    variant: 'surface',
+  },
+  render: function SurfaceStory(args) {
+    const [value, setValue] = useState('overview');
+
+    return (
+      <Tabs {...args} value={value} onChange={setValue} style={{ width: 360 }}>
+        <Tab value="overview">Overview</Tab>
+        <Tab value="details">Details</Tab>
+        <Tab value="billing">Billing</Tab>
+      </Tabs>
+    );
+  },
+};
+
+export const Plain: Story = {
+  args: {
+    variant: 'plain',
+    fullWidth: false,
+    draggable: false,
+  },
+  render: function PlainStory(args) {
+    const [value, setValue] = useState('smileys');
+
+    return (
+      <div style={{ width: 220 }}>
+        <Tabs {...args} value={value} onChange={setValue}>
+          <Tab value="smileys">😀</Tab>
+          <Tab value="people">👋</Tab>
+          <Tab value="animals">🐻</Tab>
+          <Tab value="food">🍔</Tab>
+          <Tab value="travel">✈️</Tab>
+          <Tab value="activities">⚽</Tab>
+          <Tab value="objects">💡</Tab>
+          <Tab value="symbols">💜</Tab>
+          <Tab value="flags">🏳️</Tab>
+        </Tabs>
+      </div>
     );
   },
 };

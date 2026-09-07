@@ -16,7 +16,7 @@ export const SEditable = styled.div`
 
   &:hover:not([data-editable='true']):not([data-disabled='true']) {
     background-color: ${({ theme }) =>
-      `color-mix(in srgb, ${theme.colors.common.black} 6%, transparent)`};
+      `color-mix(in lab, ${theme.colors.common.black} 6%, transparent)`};
   }
 
   &[data-editable='true'] {

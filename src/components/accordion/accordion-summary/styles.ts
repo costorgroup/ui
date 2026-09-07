@@ -31,7 +31,7 @@ export const SAccordionSummary = styled('button', {
     background-color: ${({ variant }) =>
       variant === 'solid' || variant === 'plain'
         ? 'transparent'
-        : 'color-mix(in srgb, currentColor 6%, transparent)'};
+        : 'color-mix(in lab, currentColor 6%, transparent)'};
   }
 
   &:focus-visible {

@@ -1,3 +1,6 @@
+/** Mix base for tinted chrome: `base.main` vs air. */
+export type TAppearance = 'opaque' | 'transparent';
+
 /** Shared chrome fills — border, background, and text from the palette / theme canvas. */
 export type TChromeVariant = 'solid' | 'subtle' | 'surface' | 'outline';
 

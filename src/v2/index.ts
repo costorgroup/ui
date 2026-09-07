@@ -22,6 +22,68 @@ export {
   type TWindowHeadProps,
 } from './components/window/window-head';
 export {
+  Backdrop,
+  backdropClasses,
+  type TBackdropProps,
+  type TBackdropAlign,
+  type TBackdropJustify,
+  type TBackdropLayer,
+} from './components/backdrop';
+export {
+  MediaViewer,
+  mediaViewerClasses,
+  type TMediaViewerProps,
+  type TMediaViewerItem,
+  type TMediaViewerType,
+} from './components/media-viewer';
+export {
+  Bubble,
+  bubbleClasses,
+  BubbleContent,
+  bubbleContentClasses,
+  BubbleGroup,
+  bubbleGroupClasses,
+  BubbleReactions,
+  bubbleReactionsClasses,
+  BubbleAction,
+  bubbleActionClasses,
+  BubbleContext,
+  useBubbleContext,
+  type TBubbleProps,
+  type TBubbleVariant,
+  type TBubbleAlign,
+  type TBubbleReactionSide,
+  type TBubbleContentProps,
+  type TBubbleGroupProps,
+  type TBubbleReactionsProps,
+  type TBubbleActionProps,
+} from './components/bubble';
+export {
+  Layout,
+  layoutClasses,
+  LayoutContent,
+  layoutContentClasses,
+  LayoutContext,
+  useLayoutContext,
+  type TLayoutProps,
+  type TLayoutDirection,
+  type TLayoutContentProps,
+} from './components/layout';
+export {
+  Grid,
+  gridClasses,
+  GridCell,
+  gridCellClasses,
+  type TGridProps,
+  type TGridOwnProps,
+  type TGridGap,
+  type TGridTrack,
+  type TGridTemplate,
+  type TGridTemplateTrack,
+  type TGridCellProps,
+  type TGridCellOwnProps,
+} from './components/grid';
+export {
   List,
   listClasses,
   type TListProps,
@@ -38,6 +100,7 @@ export {
   buttonClasses,
   type TButtonProps,
   type TButtonVariant,
+  type TButtonAppearance,
   type TButtonSize,
 } from './components/button';
 export {
@@ -64,6 +127,7 @@ export {
   iconButtonClasses,
   type TIconButtonProps,
   type TIconButtonVariant,
+  type TIconButtonAppearance,
   type TIconButtonSize,
 } from './components/icon-button';
 export {
@@ -74,6 +138,7 @@ export {
   type TTabsProps,
   type TTabsAppearance,
   type TTabsOrientation,
+  type TTabsVariant,
   type TTabProps,
 } from './components/tabs';
 export {
@@ -182,6 +247,10 @@ export {
   InputPinField,
   InputRangeField,
   InputColorField,
+  InputEmojiField,
+  EMOJI_CATEGORIES,
+  EMOJIS,
+  filterEmojis,
   InputDateField,
   InputFileField,
   InputFileFieldModal,
@@ -222,6 +291,10 @@ export {
   type TRangeValue,
   type TRangeValuePosition,
   type TInputColorFieldProps,
+  type TInputEmojiFieldProps,
+  type TEmojiCategory,
+  type TEmojiCategoryId,
+  type TEmojiItem,
   type TInputDateFieldProps,
   type TDatePickerMode,
   type TDatePickerDisplayType,
@@ -235,6 +308,11 @@ export {
   textFieldClasses,
   type TTextFieldProps,
 } from './components/text-field';
+export {
+  ActionField,
+  actionFieldClasses,
+  type TActionFieldProps,
+} from './components/action-field';
 export {
   TextArea,
   textAreaClasses,
@@ -261,8 +339,22 @@ export {
   chipClasses,
   type TChipProps,
   type TChipVariant,
+  type TChipAppearance,
   type TChipSize,
 } from './components/chip';
+export {
+  CreditCard,
+  creditCardClasses,
+  detectCreditCardBrand,
+  formatCardNumber,
+  formatCvv,
+  formatExpiry,
+  CARD_NUMBER_GROUPS,
+  CARD_CVV_LENGTH,
+  digitsOnly,
+  type TCreditCardProps,
+  type TCreditCardBrand,
+} from './components/credit-card';
 export {
   Color,
   colorClasses,
@@ -385,6 +477,11 @@ export {
   colorPickerFieldClasses,
   type TColorPickerFieldProps,
 } from './components/color-picker-field';
+export {
+  EmojiPickerField,
+  emojiPickerFieldClasses,
+  type TEmojiPickerFieldProps,
+} from './components/emoji-picker-field';
 export {
   FileField,
   fileFieldClasses,
@@ -528,6 +625,12 @@ export {
   type TSnackbarContextValue,
   type TSnackbarItemProps,
 } from './providers/snackbar';
+export {
+  MediaViewerProvider,
+  type TMediaViewerProviderProps,
+  type TMediaViewerContextValue,
+} from './providers/media-viewer';
+export { useMediaViewer } from './hooks/use-media-viewer';
 export { useSnackbar } from './hooks/use-snackbar';
 export { FloatingActionsProvider } from './providers/floating-actions';
 export type {
@@ -540,6 +643,7 @@ export type {
 } from './providers/floating-actions';
 export { useFloatingActions } from './hooks/use-floating-actions';
 export type {
+  TAppearance,
   TChromeVariant,
   TInteractiveMinimalVariant,
   TInteractiveVariant,

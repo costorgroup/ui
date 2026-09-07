@@ -170,7 +170,7 @@ export const SInputRichTextToolbar = styled('div')`
   padding: var(--rtf-pad-y) var(--rtf-pad-x);
   border-bottom: 1px solid
     ${({ theme }) =>
-      `color-mix(in srgb, ${theme.colors.base.main} 12%, transparent)`};
+      `color-mix(in lab, ${theme.colors.base.main} 12%, transparent)`};
 `;
 
 export const SInputRichTextToolbarGroup = styled('div')`

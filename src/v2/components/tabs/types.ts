@@ -1,6 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
-import { TTabsAppearance, TTabsOrientation } from './context';
+import { TTabsAppearance, TTabsOrientation, TTabsVariant } from './context';
+
+export type { TTabsVariant };
 
 export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'color'> & {
   children?: ReactNode;
@@ -8,8 +10,10 @@ export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'colo
   defaultValue?: string;
   onChange?: (value: string) => void;
   orientation?: TTabsOrientation;
-  /** `solid` for light surfaces; `transparent` for frosted windows. */
+  /** `opaque` mixes onto `base.main`; `transparent` mixes onto air. */
   appearance?: TTabsAppearance;
+  /** `subtle` is fill only; `surface` adds a border; `plain` has no track. Active tab is solid in all. */
+  variant?: TTabsVariant;
   fullWidth?: boolean;
   /** Drag the active indicator to switch tabs. */
   draggable?: boolean;
@@ -19,6 +23,7 @@ export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'colo
 
 export type STTabIndicatorProps = {
   appearance: TTabsAppearance;
+  variant: TTabsVariant;
   color?: TPaletteColor;
   width: number;
   height: number;
@@ -31,7 +36,15 @@ export type STTabIndicatorProps = {
 export type STTabsProps = {
   orientation: TTabsOrientation;
   appearance: TTabsAppearance;
+  variant: TTabsVariant;
   fullWidth: boolean;
   dragging: boolean;
-  color?: TPaletteColor;
+};
+
+export type STTabsFadeProps = {
+  side: 'start' | 'end';
+  orientation: TTabsOrientation;
+  appearance: TTabsAppearance;
+  variant: TTabsVariant;
+  visible: boolean;
 };

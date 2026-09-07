@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionGroup,
   Button,
+  CreditCard,
   List,
   ListItem,
   Select,
@@ -69,8 +70,7 @@ export const SettingsPreview = (props: TWindowProps) => {
         >
           <Title as="h3">Settings</Title>
           <Tabs
-            appearance="transparent"
-            color="info"
+            color="default"
             value={value}
             onChange={setValue}
           >
@@ -102,6 +102,15 @@ export const SettingsPreview = (props: TWindowProps) => {
       <WindowContent>
         {value === 'general' && (
           <List variant="surface" color="default" size="sm">
+            <ListItem>
+              <CreditCard
+                name="Costor"
+                expiry="08/28"
+                cvv="123"
+                color="primary"
+                style={{ maxWidth: '100%' }}
+              />
+            </ListItem>
             <ListItem>
               <TextField
                 label="Display name"
@@ -253,19 +262,13 @@ export const SettingsPreview = (props: TWindowProps) => {
         )}
       </WindowContent>
       <WindowActions>
-        <Button size="sm" color="default">
+        <Button size="sm" color="default" variant='plain'>
           Cancel
         </Button>
-        <Button size="sm" color="info">
+        <Button size="sm" color="default">
           Save
         </Button>
       </WindowActions>
     </Window>
   );
 };
-
-export const ThemedSettingsCanvas = () => (
-  <BlurBackdrop>
-    <SettingsPreview />
-  </BlurBackdrop>
-);

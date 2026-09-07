@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { CUI_CANVAS_VAR } from "../../../helpers/color/create-color-scale";
 import {
   surfacePanelBackground,
-  surfacePanelBackdrop,
   surfacePanelBorder,
   surfacePanelShadow,
 } from "../../surface";
@@ -24,7 +23,7 @@ export const SWindow = styled("div", {
   box-shadow: ${({ theme }) => surfacePanelShadow(theme)};
 
   ${({ theme, appearance }) =>
-    appearance === "solid"
+    appearance === "opaque"
       ? `
           ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
           background-color: ${theme.colors.base.main};
@@ -34,6 +33,5 @@ export const SWindow = styled("div", {
           ${CUI_CANVAS_VAR}: transparent;
           background-color: ${surfacePanelBackground(theme)};
           background-image: none;
-          ${surfacePanelBackdrop()}
         `}
 `;

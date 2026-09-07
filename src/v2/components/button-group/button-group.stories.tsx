@@ -39,6 +39,10 @@ const meta: Meta<typeof ButtonGroup> = {
         'plain',
       ],
     },
+    appearance: {
+      control: 'select',
+      options: ['opaque', 'transparent'],
+    },
     size: {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl'],

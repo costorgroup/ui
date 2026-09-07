@@ -34,12 +34,12 @@ export const SDropzone = styled('div', {
 
   ${({ theme, color, active, disabled }) => {
     const palette = theme.colors[color];
-    const idleBg = `color-mix(in srgb, ${palette.main} 4%, transparent)`;
-    const activeBg = `color-mix(in srgb, ${palette.main} 8%, transparent)`;
+    const idleBg = `color-mix(in lab, ${palette.main} 4%, transparent)`;
+    const activeBg = `color-mix(in lab, ${palette.main} 8%, transparent)`;
 
     return `
       color: ${palette.darker};
-      border-color: color-mix(in srgb, ${palette.main} 40%, transparent);
+      border-color: color-mix(in lab, ${palette.main} 40%, transparent);
       background-color: ${active && !disabled ? activeBg : idleBg};
 
       ${
@@ -48,7 +48,7 @@ export const SDropzone = styled('div', {
           : `
         &:hover {
           background-color: ${activeBg};
-          border-color: color-mix(in srgb, ${palette.main} 56%, transparent);
+          border-color: color-mix(in lab, ${palette.main} 56%, transparent);
         }
 
         &:focus-visible {

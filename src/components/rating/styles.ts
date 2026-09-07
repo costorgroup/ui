@@ -80,7 +80,7 @@ export const SRating = styled('span', {
         case 'plain':
           return palette.main;
         default:
-          return `color-mix(in srgb, ${palette.main} 28%, transparent)`;
+          return `color-mix(in lab, ${palette.main} 28%, transparent)`;
       }
     }};
   }

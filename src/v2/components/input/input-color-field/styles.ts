@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { inputInnerResetStyles } from '../variant-styles';
+import { inputDropdownPanelStyles } from '../dropdown-styles';
 import { TInputSize } from '../input-wrapper/types';
 import {
   TSInputColorFieldDropdownProps,
@@ -126,16 +127,7 @@ export const SInputColorFieldDropdown = styled('div', {
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme }) => theme.radius.medium};
-  background-color: ${({ theme }) => theme.colors.common.white};
-  box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
-
-    return `
-      0 4px 10px ${black}0a,
-      0 1px 4px ${black}08,
-      0 1px 2px ${black}05
-    `;
-  }};
+  ${({ theme }) => inputDropdownPanelStyles(theme)}
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transform: ${({ visible }) => (visible ? 'scale(1)' : 'scale(0.96)')};
   transform-origin: ${({ placement }) =>

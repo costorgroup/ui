@@ -9,7 +9,17 @@ import {
 } from '../../../theme/presets';
 import { ThemeSwitcher } from '../../../../.storybook/theme-switcher';
 import { Color } from '../../index';
-import { ThemedSettingsCanvas } from '../window/settings-preview';
+import { SettingsPreview, BlurBackdrop } from '../window/settings-preview';
+import {
+  chromeOpaqueFill,
+  paletteTint,
+} from '../../surface';
+import {
+  CHROME_IDLE,
+  CHROME_HOVER,
+  CHROME_FOCUS,
+  PALETTE_TINT,
+} from '../../idle-variant-styles';
 import type { TColorSize } from './types';
 
 const PALETTE_COLORS: TPaletteColor[] = [
@@ -25,7 +35,85 @@ const PALETTE_COLORS: TPaletteColor[] = [
   'default',
 ];
 
+const TokenSwatch = ({
+  label,
+  colors,
+}: {
+  label: string;
+  colors: string | string[];
+}) => (
+  <Flex direction="column" gap="xs" align="center">
+    <Color colors={colors} aria-label={label} title={label} />
+    <Text size="sm">{label}</Text>
+  </Flex>
+);
+
+const ThemeTokenGuide = () => {
+  const theme = useTheme();
+  const { base, default: contrast } = theme.colors;
+
+  return (
+    <Flex direction="column" gap="md" style={{ maxWidth: 640 }}>
+      <Text size="sm">
+        base — theme canvas (main / light / lighter / dark / darker).
+        base.contrastText — chrome mixer (darken or lighten tabs, accordion,
+        idle fills). default — user contrast scale. default.main — theme text
+        and default button fill. Other palettes (primary, info, …) are chosen
+        per component.
+      </Text>
+      <Text size="sm">
+        Chrome washes mix base.contrastText onto base.main (or transparent).
+        Text and contrast fills use default.main, not base.contrastText.
+      </Text>
+      <Flex gap="sm" wrap="wrap" justify="center">
+        <TokenSwatch label="base.main" colors={base.main} />
+        <TokenSwatch label="base.contrastText" colors={base.contrastText} />
+        <TokenSwatch label="default.main" colors={contrast.main} />
+        <TokenSwatch
+          label="palette tint 15%"
+          colors={paletteTint(theme, contrast.main, PALETTE_TINT)}
+        />
+        <TokenSwatch
+          label="idle 5%"
+          colors={chromeOpaqueFill(theme, CHROME_IDLE)}
+        />
+        <TokenSwatch
+          label="hover 10%"
+          colors={chromeOpaqueFill(theme, CHROME_HOVER)}
+        />
+        <TokenSwatch
+          label="focus 15%"
+          colors={chromeOpaqueFill(theme, CHROME_FOCUS)}
+        />
+      </Flex>
+    </Flex>
+  );
+};
+
 const SIZES: TColorSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+const ThemedStoryCanvas = ({ children }: { children: React.ReactNode }) => {
+  const theme = useTheme();
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 24,
+        boxSizing: 'border-box',
+        width: '100%',
+        minHeight: '100vh',
+        padding: 32,
+        backgroundColor: theme.colors.base.main,
+        color: theme.colors.default.main,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const meta: Meta<typeof Color> = {
   title: 'V2/Data Display/Color',
@@ -144,22 +232,28 @@ export const Palette: Story = {
 };
 
 export const Themes: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
   render: function ThemesStory() {
     const [presetId, setPresetId] = useState<TThemePresetId>('dark');
     const preset = themePresetMap[presetId];
 
     return (
-      <Flex direction="column" gap="lg" align="center">
-        <ThemeSwitcher
-          size="md"
-          justify="center"
-          active={presetId}
-          onSelect={setPresetId}
-        />
-        <ThemeProvider theme={preset}>
-          <ThemedSettingsCanvas />
-        </ThemeProvider>
-      </Flex>
+      <ThemeProvider theme={preset}>
+        <ThemedStoryCanvas>
+          <ThemeSwitcher
+            size="md"
+            justify="center"
+            active={presetId}
+            onSelect={setPresetId}
+          />
+          <ThemeTokenGuide />
+          <BlurBackdrop>
+            <SettingsPreview />
+          </BlurBackdrop>
+        </ThemedStoryCanvas>
+      </ThemeProvider>
     );
   },
 };
