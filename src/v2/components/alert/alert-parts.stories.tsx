@@ -9,7 +9,7 @@ import { AlertContent } from './alert-content';
 import { AlertActions } from './alert-actions';
 
 const meta: Meta<typeof AlertBase> = {
-  title: 'V2/Components/Alert/Parts',
+  title: 'V3/Feedback/Alert/Parts',
   component: AlertBase,
   tags: ['autodocs'],
 };
@@ -20,9 +20,10 @@ type Story = StoryObj<typeof AlertBase>;
 
 export const Default: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
+    radius: 'md',
   },
   render: (args) => (
     <AlertBase {...args}>

@@ -26,6 +26,7 @@ import {
   FileIcon,
   SearchIcon,
   EmojiAddIcon,
+  QuoteIcon,
 } from './index';
 
 const icons = [
@@ -54,6 +55,7 @@ const icons = [
   { name: 'FileIcon', Icon: FileIcon },
   { name: 'SearchIcon', Icon: SearchIcon },
   { name: 'EmojiAddIcon', Icon: EmojiAddIcon },
+  { name: 'QuoteIcon', Icon: QuoteIcon },
 ] as const;
 
 const meta: Meta = {

@@ -2,26 +2,35 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
 import { Avatar, AvatarGroup, Text } from '../../index';
+import type { TAvatarRadius, TAvatarSize } from './types';
+
+const SIZES: TAvatarSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TAvatarRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
 
 const meta: Meta<typeof Avatar> = {
-  title: 'V2/Data Display/Avatar',
+  title: 'V3/Data Display/Avatar',
   component: Avatar,
   tags: ['autodocs'],
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    radius: {
-      control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
-    },
-    name: {
-      control: 'text',
-    },
-    src: {
-      control: 'text',
-    },
+    size: { control: 'select', options: SIZES },
+    radius: { control: 'select', options: RADIUS },
+    name: { control: 'text' },
+    src: { control: 'text' },
+  },
+  args: {
+    name: 'Remy Sharp',
+    src: 'https://i.pravatar.cc/150?img=1',
+    size: 'md',
+    radius: 'full',
   },
 };
 
@@ -29,13 +38,8 @@ export default meta;
 
 type Story = StoryObj<typeof Avatar>;
 
-export const Default: Story = {
-  args: {
-    name: 'Remy Sharp',
-    src: 'https://i.pravatar.cc/150?img=1',
-    size: 'md',
-    radius: 'circle',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
 export const Initials: Story = {
@@ -43,8 +47,28 @@ export const Initials: Story = {
     <Flex gap="md" align="center">
       <Avatar name="Remy Sharp" />
       <Avatar name="Travis Howard" size="sm" />
-      <Avatar name="Cindy Baker" size="lg" radius="large" />
+      <Avatar name="Cindy Baker" size="lg" radius="lg" />
       <Avatar name="A" />
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap="md" align="center">
+      {SIZES.map((size) => (
+        <Avatar key={size} name="Ada Lovelace" size={size} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Radius: Story = {
+  render: () => (
+    <Flex gap="md" align="center">
+      {RADIUS.map((radius) => (
+        <Avatar key={radius} name="Ada Lovelace" radius={radius} />
+      ))}
     </Flex>
   ),
 };
@@ -83,8 +107,8 @@ export const Group: Story = {
         </AvatarGroup>
       </Flex>
       <Flex direction="column" gap="xs">
-        <Text size="sm">max={3}</Text>
-        <AvatarGroup max={3} size="sm" spacing="small">
+        <Text size="sm">max=3</Text>
+        <AvatarGroup max={3} size="sm" spacing="sm">
           <Avatar name="Remy Sharp" src="https://i.pravatar.cc/150?img=1" />
           <Avatar name="Travis Howard" src="https://i.pravatar.cc/150?img=2" />
           <Avatar name="Cindy Baker" src="https://i.pravatar.cc/150?img=3" />

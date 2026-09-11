@@ -38,7 +38,7 @@ export const SCircularProgress = styled('svg', {
   display: inline-block;
   flex-shrink: 0;
   overflow: hidden;
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
   animation: ${spin} 1.4s linear infinite;
 
   ${({ theme, variant }) => {
@@ -54,7 +54,7 @@ export const SCircularProgress = styled('svg', {
 
   path[data-part='track'] {
     fill: ${({ theme, color, variant }) =>
-      resolveTrackColor(variant, theme.colors[color], theme)};
+      resolveTrackColor(variant, theme.palette[color], theme)};
   }
 
   circle {

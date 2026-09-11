@@ -18,9 +18,9 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
       children,
       max = 5,
       total,
-      spacing = 'medium',
+      spacing = 'md',
       size = 'md',
-      radius = 'circle',
+      radius = 'full',
       renderSurplus,
       className,
       ...props

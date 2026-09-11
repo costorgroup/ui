@@ -7,7 +7,6 @@ import {
   inputDropdownOptionPadding,
   inputDropdownPanelStyles,
 } from '../dropdown-styles';
-import { TInputSize } from '../input-wrapper/types';
 import {
   TSInputSelectDropdownProps,
   TSInputSelectTriggerProps,
@@ -23,14 +22,6 @@ const dropdownProps = new Set([
   'color',
   'variant',
 ]);
-
-const sizeFont: Record<TInputSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
 
 export const SInputSelect = styled.div`
   position: relative;
@@ -58,12 +49,11 @@ export const SInputSelectTrigger = styled('button', {
   color: inherit;
 
   ${({ theme, size }) => {
-    const scale = theme.sizeScale[size];
+    const step = theme.sizes[size];
 
     return `
-      padding: calc(${theme.spacing(theme.gap.sm)} * ${scale})
-        calc(${theme.spacing(theme.gap.md)} * ${scale});
-      font-size: ${sizeFont[size]};
+      padding: ${step.padY} ${step.padX};
+      font-size: ${step.fontSize};
     `;
   }}
 `;
@@ -107,8 +97,8 @@ export const SInputSelectDropdown = styled('div', {
   display: flex;
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
-  border-radius: ${({ theme }) => theme.radius.medium};
-  ${({ theme, color = 'default', variant = 'subtle' }) => `
+  border-radius: ${({ theme }) => theme.radius.md};
+  ${({ theme, color = 'primary', variant = 'surface' }) => `
     ${inputDropdownOptionCssVars(theme, color)}
     ${inputDropdownPanelStyles(theme)}
   `}
@@ -149,7 +139,7 @@ export const SInputSelectOption = styled.button`
   margin: 0;
   padding: ${({ theme }) => inputDropdownOptionPadding(theme)};
   border: 0;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.xs};
   background: transparent;
   color: inherit;
   font-family: inherit;
@@ -163,7 +153,6 @@ export const SInputSelectOption = styled.button`
     background-color: var(--input-dropdown-option-selected);
   }
 
-  &:hover:not([aria-selected='true']),
   &[data-highlighted='true']:not([aria-selected='true']) {
     background-color: var(--input-dropdown-option-hover);
   }

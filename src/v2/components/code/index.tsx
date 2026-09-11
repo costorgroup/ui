@@ -11,7 +11,7 @@ const Code = forwardRef(function Code<C extends ElementType = 'code'>(
     children,
     variant = 'subtle',
     size = 'sm',
-    color = 'base',
+    color = 'default',
     className,
     ...props
   }: TCodeProps<C>,

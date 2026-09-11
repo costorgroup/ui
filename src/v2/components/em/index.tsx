@@ -6,13 +6,14 @@ import { SEm } from './styles';
 import { TEmOwnProps, TEmProps } from './types';
 
 const Em = forwardRef(function Em<C extends ElementType = 'em'>(
-  { as, children, className, ...props }: TEmProps<C>,
+  { as, children, color, className, ...props }: TEmProps<C>,
   ref: React.Ref<Element>,
 ) {
   return (
     <SEm
       as={as}
       ref={ref as React.Ref<HTMLElement>}
+      color={color}
       {...props}
       className={mergeClasses(emClasses.root, className)}
     >

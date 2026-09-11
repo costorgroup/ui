@@ -22,14 +22,6 @@ const dropdownProps = new Set([
   'variant',
 ]);
 
-const sizeFont: Record<TInputSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
-
 export const SInputAutoComplete = styled.div`
   position: relative;
   display: inline-flex;
@@ -56,12 +48,11 @@ export const SInputAutoCompleteTrigger = styled('div', {
   color: inherit;
 
   ${({ theme, size }) => {
-    const scale = theme.sizeScale[size];
+    const step = theme.sizes[size];
 
     return `
-      padding: calc(${theme.spacing(theme.gap.sm)} * ${scale})
-        calc(${theme.spacing(theme.gap.md)} * ${scale});
-      font-size: ${sizeFont[size]};
+      padding: ${step.padY} ${step.padX};
+      font-size: ${step.fontSize};
     `;
   }}
 `;
@@ -102,6 +93,10 @@ export const SInputAutoCompleteChevron = styled('span', {
   shouldForwardProp: (prop) => prop !== 'open',
 })<{ open: boolean }>`
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.7;
   transform: ${({ open }) => (open ? 'rotate(180deg)' : 'rotate(0deg)')};
   transition: transform 0.2s ease;
 `;
@@ -121,7 +116,7 @@ export const SInputAutoCompleteDropdown = styled('div', {
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
   border-radius: ${({ theme }) => theme.radius.medium};
-  ${({ theme, color = 'default', variant = 'subtle' }) => `
+  ${({ theme, color = 'primary', variant = 'surface' }) => `
     ${inputDropdownOptionCssVars(theme, color)}
     ${inputDropdownPanelStyles(theme)}
   `}

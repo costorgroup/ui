@@ -7,13 +7,12 @@ import {
   List,
   ListItem,
   Select,
-  SelectOption,
   Switch,
   Tab,
   Tabs,
   TextArea,
   TextField,
-  Title,
+  Heading,
   Window,
   WindowActions,
   WindowContent,
@@ -68,7 +67,7 @@ export const SettingsPreview = (props: TWindowProps) => {
             width: '100%',
           }}
         >
-          <Title as="h3">Settings</Title>
+          <Heading as="h3">Settings</Heading>
           <Tabs
             color="default"
             value={value}
@@ -135,34 +134,18 @@ export const SettingsPreview = (props: TWindowProps) => {
             <ListItem>
               <Select
                 label="Language"
-                renderValue={() =>
-                  (({ en: 'English', de: 'German', sr: 'Serbian' }) as const)[
-                    language as 'en' | 'de' | 'sr'
+                options={['en', 'de', 'sr']}
+                value={language}
+                onChange={(_, next) => setLanguage(next as string)}
+                getOptionLabel={(code) =>
+                  ({ en: 'English', de: 'German', sr: 'Serbian' })[
+                    code as 'en' | 'de' | 'sr'
                   ]
                 }
                 color="info"
                 variant="surface"
                 size="sm"
-              >
-                <SelectOption
-                  aria-selected={language === 'en'}
-                  onClick={() => setLanguage('en')}
-                >
-                  English
-                </SelectOption>
-                <SelectOption
-                  aria-selected={language === 'de'}
-                  onClick={() => setLanguage('de')}
-                >
-                  German
-                </SelectOption>
-                <SelectOption
-                  aria-selected={language === 'sr'}
-                  onClick={() => setLanguage('sr')}
-                >
-                  Serbian
-                </SelectOption>
-              </Select>
+              />
             </ListItem>
             <ListItem>
               <Switch
@@ -203,16 +186,12 @@ export const SettingsPreview = (props: TWindowProps) => {
             <ListItem>
               <Select
                 label="Profile visibility"
-                defaultOpen={false}
-                renderValue={() => 'Friends only'}
+                options={['Public', 'Friends only', 'Private']}
+                defaultValue="Friends only"
                 color="info"
                 variant="subtle"
                 size="sm"
-              >
-                <SelectOption>Public</SelectOption>
-                <SelectOption aria-selected>Friends only</SelectOption>
-                <SelectOption>Private</SelectOption>
-              </Select>
+              />
             </ListItem>
             <ListItem>
               <Switch

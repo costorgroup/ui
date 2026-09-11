@@ -32,7 +32,7 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
     const fieldId = id ?? generatedId;
     const tone = error ? "error" : color;
     const theme = useTheme();
-    const captionColor = theme.colors.default.main;
+    const captionColor = theme.palette.default.main;
 
     return (
       <InputFieldLayout

@@ -41,8 +41,8 @@ export const SInputSwitchInput = styled.input`
 export const SInputSwitchThumb = styled.span`
   display: block;
   border-radius: ${({ theme }) => theme.radius.pill};
-  background-color: ${({ theme }) => theme.colors.common.white};
-  box-shadow: inset 0 0 2px color-mix(in lab, ${({ theme }) => theme.colors.common.black} 18%, transparent);
+  background-color: ${({ theme }) => theme.palette.common.white};
+  box-shadow: inset 0 0 2px color-mix(in oklab, ${({ theme }) => theme.palette.common.black} 18%, transparent);
   transition: transform 0.15s ease;
 `;
 
@@ -60,7 +60,7 @@ export const SInputSwitchControl = styled('span', {
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
   ${({ theme, variant = 'subtle' }) => {
-    const muted = theme.colors.default;
+    const muted = theme.palette.default;
 
     switch (variant) {
       case 'surface':
@@ -108,7 +108,7 @@ export const SInputSwitchControl = styled('span', {
 
   .${inputSwitchClasses.input}:hover:not(:disabled):not(:checked) + & {
     ${({ theme, variant = 'subtle' }) => {
-      const muted = theme.colors.default;
+      const muted = theme.palette.default;
 
       switch (variant) {
         case 'surface':
@@ -153,7 +153,7 @@ export const SInputSwitchControl = styled('span', {
 
   .${inputSwitchClasses.input}:checked + & {
     ${({ theme, color = 'primary' }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.main};
@@ -165,7 +165,7 @@ export const SInputSwitchControl = styled('span', {
 
   .${inputSwitchClasses.input}:checked:hover:not(:disabled) + & {
     ${({ theme, color = 'primary' }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.dark};
@@ -185,7 +185,7 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:focus-visible + & {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'primary' }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 

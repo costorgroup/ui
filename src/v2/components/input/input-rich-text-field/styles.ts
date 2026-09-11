@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { SURFACE_BORDER_IDLE } from '../../../idle-variant-styles';
+import { chromeOpaqueFill } from '../../../surface';
 import type { TInputSize } from '../input-wrapper/types';
 
 const sizeFont: Record<TInputSize, string> = {
@@ -41,8 +43,7 @@ export const SInputRichTextToolbar = styled('div')`
   gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
   padding: var(--rtf-pad-y) var(--rtf-pad-x);
   border-bottom: 1px solid
-    ${({ theme }) =>
-      `color-mix(in lab, ${theme.colors.base.main} 12%, transparent)`};
+    ${({ theme }) => chromeOpaqueFill(theme, SURFACE_BORDER_IDLE)};
 `;
 
 export const SInputRichTextToolbarGroup = styled('div')`

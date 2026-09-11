@@ -26,17 +26,6 @@ export const SInputNumberFieldInput = styled(SInputTextField, {
   }
 `;
 
-export const SInputNumberFieldSteppers = styled.div`
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  padding: 0;
-`;
-
 export const SInputNumberFieldFlipIcon = styled.span`
   display: inline-flex;
   transform: scaleX(-1);

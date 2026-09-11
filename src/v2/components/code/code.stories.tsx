@@ -2,10 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
-import {
-  Code,
-  Text
-} from '../../index';
+import { Code, Text } from '../../index';
+import type { TCodeSize, TCodeVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -18,31 +16,42 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
+const VARIANTS: TCodeVariant[] = [
+  'solid',
+  'subtle',
+  'surface',
+  'outline',
+  'plain',
+];
+
+const SIZES: TCodeSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 const meta: Meta<typeof Code> = {
-  title: 'V2/Typography/Code',
+  title: 'V3/Typography/Code',
   component: Code,
   tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'solid',
-        'subtle',
-        'surface',
-        'outline',
-        'plain',
-      ],
+      options: VARIANTS,
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: SIZES,
     },
     color: {
       control: 'select',
       options: COLORS,
     },
+  },
+  args: {
+    children: 'console.log("Hello, world!")',
+    variant: 'subtle',
+    size: 'sm',
+    color: 'default',
   },
 };
 
@@ -50,30 +59,18 @@ export default meta;
 
 type Story = StoryObj<typeof Code>;
 
-export const Default: Story = {
-  args: {
-    children: 'console.log("Hello, world!")',
-    variant: 'subtle',
-    size: 'sm',
-    color: 'base',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
-export const Inline: Story = {
+export const Colors: Story = {
   render: () => (
-    <Text size="md">
-      Run <Code>npm install @costor/ui</Code> to add the library to your project.
-    </Text>
-  ),
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <Flex gap="sm" wrap="wrap" align="center">
-      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-        <Code key={size} size={size}>
-          console.log()
-        </Code>
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <Text key={color} size="sm">
+          This code will be in '{color}' color:{' '}
+          <Code color={color}>console.log()</Code>
+        </Text>
       ))}
     </Flex>
   ),
@@ -82,42 +79,31 @@ export const Sizes: Story = {
 export const Variants: Story = {
   render: () => (
     <Flex gap="sm" wrap="wrap" align="center">
-      {(
-        [
-          'solid',
-          'subtle',
-          'surface',
-          'outline',
-          'plain',
-        ] as const
-      ).map((variant) => (
+      {VARIANTS.map((variant) => (
         <Code key={variant} variant={variant}>
-          console.log()
+          {variant}
         </Code>
       ))}
     </Flex>
   ),
 };
 
-export const Colors: Story = {
+export const Sizes: Story = {
   render: () => (
-    <Flex direction="column" gap="md">
-      {COLORS.map((color) => (
-        <Flex key={color} gap="sm" wrap="wrap" align="center">
-          <Text size="sm" style={{ minWidth: 72 }}>
-            {color}
-          </Text>
-          <Code color={color} variant="subtle">
-            console.log()
-          </Code>
-          <Code color={color} variant="surface">
-            console.log()
-          </Code>
-          <Code color={color} variant="solid">
-            console.log()
-          </Code>
-        </Flex>
+    <Flex gap="sm" wrap="wrap" align="center">
+      {SIZES.map((size) => (
+        <Code key={size} size={size}>
+          {size}
+        </Code>
       ))}
     </Flex>
+  ),
+};
+
+export const Inline: Story = {
+  render: () => (
+    <Text size="md">
+      Run <Code>npm install @costor/ui</Code> to add the library to your project.
+    </Text>
   ),
 };

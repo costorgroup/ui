@@ -1082,6 +1082,21 @@
       "import": "./dist/v2/components/blockquote/blockquote-content/index.js",
       "require": "./dist/v2/components/blockquote/blockquote-content/index.cjs"
     },
+    "./v2/BlockquoteIcon": {
+      "types": "./dist/v2/components/blockquote/blockquote-icon/index.d.ts",
+      "import": "./dist/v2/components/blockquote/blockquote-icon/index.js",
+      "require": "./dist/v2/components/blockquote/blockquote-icon/index.cjs"
+    },
+    "./v2/BlockquoteRail": {
+      "types": "./dist/v2/components/blockquote/blockquote-rail/index.d.ts",
+      "import": "./dist/v2/components/blockquote/blockquote-rail/index.js",
+      "require": "./dist/v2/components/blockquote/blockquote-rail/index.cjs"
+    },
+    "./v2/Box": {
+      "types": "./dist/v2/components/box/index.d.ts",
+      "import": "./dist/v2/components/box/index.js",
+      "require": "./dist/v2/components/box/index.cjs"
+    },
     "./v2/Breadcrumb": {
       "types": "./dist/v2/components/breadcrumb/index.d.ts",
       "import": "./dist/v2/components/breadcrumb/index.js",
@@ -1197,6 +1212,66 @@
       "import": "./dist/v2/components/date-picker-field/index.js",
       "require": "./dist/v2/components/date-picker-field/index.cjs"
     },
+    "./v2/Dock": {
+      "types": "./dist/v2/components/dock/index.d.ts",
+      "import": "./dist/v2/components/dock/index.js",
+      "require": "./dist/v2/components/dock/index.cjs"
+    },
+    "./v2/DockItem": {
+      "types": "./dist/v2/components/dock/dock-item/index.d.ts",
+      "import": "./dist/v2/components/dock/dock-item/index.js",
+      "require": "./dist/v2/components/dock/dock-item/index.cjs"
+    },
+    "./v2/DockSeparator": {
+      "types": "./dist/v2/components/dock/dock-separator/index.d.ts",
+      "import": "./dist/v2/components/dock/dock-separator/index.js",
+      "require": "./dist/v2/components/dock/dock-separator/index.cjs"
+    },
+    "./v2/Drawer": {
+      "types": "./dist/v2/components/drawer/index.d.ts",
+      "import": "./dist/v2/components/drawer/index.js",
+      "require": "./dist/v2/components/drawer/index.cjs"
+    },
+    "./v2/DrawerActions": {
+      "types": "./dist/v2/components/drawer/drawer-actions/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-actions/index.js",
+      "require": "./dist/v2/components/drawer/drawer-actions/index.cjs"
+    },
+    "./v2/DrawerBase": {
+      "types": "./dist/v2/components/drawer/drawer-base/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-base/index.js",
+      "require": "./dist/v2/components/drawer/drawer-base/index.cjs"
+    },
+    "./v2/DrawerBody": {
+      "types": "./dist/v2/components/drawer/drawer-body/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-body/index.js",
+      "require": "./dist/v2/components/drawer/drawer-body/index.cjs"
+    },
+    "./v2/DrawerDescription": {
+      "types": "./dist/v2/components/drawer/drawer-description/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-description/index.js",
+      "require": "./dist/v2/components/drawer/drawer-description/index.cjs"
+    },
+    "./v2/DrawerHead": {
+      "types": "./dist/v2/components/drawer/drawer-head/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-head/index.js",
+      "require": "./dist/v2/components/drawer/drawer-head/index.cjs"
+    },
+    "./v2/DrawerHeadActions": {
+      "types": "./dist/v2/components/drawer/drawer-head-actions/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-head-actions/index.js",
+      "require": "./dist/v2/components/drawer/drawer-head-actions/index.cjs"
+    },
+    "./v2/DrawerTitle": {
+      "types": "./dist/v2/components/drawer/drawer-title/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-title/index.js",
+      "require": "./dist/v2/components/drawer/drawer-title/index.cjs"
+    },
+    "./v2/Dropzone": {
+      "types": "./dist/v2/components/dropzone/index.d.ts",
+      "import": "./dist/v2/components/dropzone/index.js",
+      "require": "./dist/v2/components/dropzone/index.cjs"
+    },
     "./v2/Em": {
       "types": "./dist/v2/components/em/index.d.ts",
       "import": "./dist/v2/components/em/index.js",
@@ -1207,15 +1282,50 @@
       "import": "./dist/v2/components/emoji-picker-field/index.js",
       "require": "./dist/v2/components/emoji-picker-field/index.cjs"
     },
+    "./v2/Empty": {
+      "types": "./dist/v2/components/empty/index.d.ts",
+      "import": "./dist/v2/components/empty/index.js",
+      "require": "./dist/v2/components/empty/index.cjs"
+    },
+    "./v2/EmptyContent": {
+      "types": "./dist/v2/components/empty/empty-content/index.d.ts",
+      "import": "./dist/v2/components/empty/empty-content/index.js",
+      "require": "./dist/v2/components/empty/empty-content/index.cjs"
+    },
+    "./v2/EmptyDescription": {
+      "types": "./dist/v2/components/empty/empty-description/index.d.ts",
+      "import": "./dist/v2/components/empty/empty-description/index.js",
+      "require": "./dist/v2/components/empty/empty-description/index.cjs"
+    },
+    "./v2/EmptyHeader": {
+      "types": "./dist/v2/components/empty/empty-header/index.d.ts",
+      "import": "./dist/v2/components/empty/empty-header/index.js",
+      "require": "./dist/v2/components/empty/empty-header/index.cjs"
+    },
+    "./v2/EmptyMedia": {
+      "types": "./dist/v2/components/empty/empty-media/index.d.ts",
+      "import": "./dist/v2/components/empty/empty-media/index.js",
+      "require": "./dist/v2/components/empty/empty-media/index.cjs"
+    },
+    "./v2/EmptyTitle": {
+      "types": "./dist/v2/components/empty/empty-title/index.d.ts",
+      "import": "./dist/v2/components/empty/empty-title/index.js",
+      "require": "./dist/v2/components/empty/empty-title/index.cjs"
+    },
     "./v2/FileField": {
       "types": "./dist/v2/components/file-field/index.d.ts",
       "import": "./dist/v2/components/file-field/index.js",
       "require": "./dist/v2/components/file-field/index.cjs"
     },
-    "./v2/FloatingAction": {
-      "types": "./dist/v2/components/floating-action/index.d.ts",
-      "import": "./dist/v2/components/floating-action/index.js",
-      "require": "./dist/v2/components/floating-action/index.cjs"
+    "./v2/Floating": {
+      "types": "./dist/v2/components/floating/index.d.ts",
+      "import": "./dist/v2/components/floating/index.js",
+      "require": "./dist/v2/components/floating/index.cjs"
+    },
+    "./v2/FormControl": {
+      "types": "./dist/v2/components/form-control/index.d.ts",
+      "import": "./dist/v2/components/form-control/index.js",
+      "require": "./dist/v2/components/form-control/index.cjs"
     },
     "./v2/Grid": {
       "types": "./dist/v2/components/grid/index.d.ts",
@@ -1226,6 +1336,11 @@
       "types": "./dist/v2/components/grid/grid-cell/index.d.ts",
       "import": "./dist/v2/components/grid/grid-cell/index.js",
       "require": "./dist/v2/components/grid/grid-cell/index.cjs"
+    },
+    "./v2/Heading": {
+      "types": "./dist/v2/components/heading/index.d.ts",
+      "import": "./dist/v2/components/heading/index.js",
+      "require": "./dist/v2/components/heading/index.cjs"
     },
     "./v2/Highlight": {
       "types": "./dist/v2/components/highlight/index.d.ts",
@@ -1242,6 +1357,11 @@
       "import": "./dist/v2/components/input/index.js",
       "require": "./dist/v2/components/input/index.cjs"
     },
+    "./v2/InputActions": {
+      "types": "./dist/v2/components/input/input-actions/index.d.ts",
+      "import": "./dist/v2/components/input/input-actions/index.js",
+      "require": "./dist/v2/components/input/input-actions/index.cjs"
+    },
     "./v2/InputAutoComplete": {
       "types": "./dist/v2/components/input/input-auto-complete/index.d.ts",
       "import": "./dist/v2/components/input/input-auto-complete/index.js",
@@ -1251,6 +1371,11 @@
       "types": "./dist/v2/components/input/input-base/index.d.ts",
       "import": "./dist/v2/components/input/input-base/index.js",
       "require": "./dist/v2/components/input/input-base/index.cjs"
+    },
+    "./v2/InputButton": {
+      "types": "./dist/v2/components/input/input-button/index.d.ts",
+      "import": "./dist/v2/components/input/input-button/index.js",
+      "require": "./dist/v2/components/input/input-button/index.cjs"
     },
     "./v2/InputCheckBox": {
       "types": "./dist/v2/components/input/input-check-box/index.d.ts",
@@ -1357,10 +1482,50 @@
       "import": "./dist/v2/components/input/input-wrapper/index.js",
       "require": "./dist/v2/components/input/input-wrapper/index.cjs"
     },
+    "./v2/Item": {
+      "types": "./dist/v2/components/item/index.d.ts",
+      "import": "./dist/v2/components/item/index.js",
+      "require": "./dist/v2/components/item/index.cjs"
+    },
+    "./v2/ItemActions": {
+      "types": "./dist/v2/components/item/item-actions/index.d.ts",
+      "import": "./dist/v2/components/item/item-actions/index.js",
+      "require": "./dist/v2/components/item/item-actions/index.cjs"
+    },
+    "./v2/ItemContent": {
+      "types": "./dist/v2/components/item/item-content/index.d.ts",
+      "import": "./dist/v2/components/item/item-content/index.js",
+      "require": "./dist/v2/components/item/item-content/index.cjs"
+    },
+    "./v2/ItemDescription": {
+      "types": "./dist/v2/components/item/item-description/index.d.ts",
+      "import": "./dist/v2/components/item/item-description/index.js",
+      "require": "./dist/v2/components/item/item-description/index.cjs"
+    },
+    "./v2/ItemIcon": {
+      "types": "./dist/v2/components/item/item-icon/index.d.ts",
+      "import": "./dist/v2/components/item/item-icon/index.js",
+      "require": "./dist/v2/components/item/item-icon/index.cjs"
+    },
+    "./v2/ItemTitle": {
+      "types": "./dist/v2/components/item/item-title/index.d.ts",
+      "import": "./dist/v2/components/item/item-title/index.js",
+      "require": "./dist/v2/components/item/item-title/index.cjs"
+    },
     "./v2/Kbd": {
       "types": "./dist/v2/components/kbd/index.d.ts",
       "import": "./dist/v2/components/kbd/index.js",
       "require": "./dist/v2/components/kbd/index.cjs"
+    },
+    "./v2/Layer": {
+      "types": "./dist/v2/components/layers/layer/index.d.ts",
+      "import": "./dist/v2/components/layers/layer/index.js",
+      "require": "./dist/v2/components/layers/layer/index.cjs"
+    },
+    "./v2/Layers": {
+      "types": "./dist/v2/components/layers/index.d.ts",
+      "import": "./dist/v2/components/layers/index.js",
+      "require": "./dist/v2/components/layers/index.cjs"
     },
     "./v2/Layout": {
       "types": "./dist/v2/components/layout/index.d.ts",
@@ -1392,10 +1557,100 @@
       "import": "./dist/v2/components/list-item/index.js",
       "require": "./dist/v2/components/list-item/index.cjs"
     },
+    "./v2/Marker": {
+      "types": "./dist/v2/components/marker/index.d.ts",
+      "import": "./dist/v2/components/marker/index.js",
+      "require": "./dist/v2/components/marker/index.cjs"
+    },
+    "./v2/MarkerContent": {
+      "types": "./dist/v2/components/marker/marker-content/index.d.ts",
+      "import": "./dist/v2/components/marker/marker-content/index.js",
+      "require": "./dist/v2/components/marker/marker-content/index.cjs"
+    },
+    "./v2/MarkerIcon": {
+      "types": "./dist/v2/components/marker/marker-icon/index.d.ts",
+      "import": "./dist/v2/components/marker/marker-icon/index.js",
+      "require": "./dist/v2/components/marker/marker-icon/index.cjs"
+    },
+    "./v2/Marquee": {
+      "types": "./dist/v2/components/marquee/index.d.ts",
+      "import": "./dist/v2/components/marquee/index.js",
+      "require": "./dist/v2/components/marquee/index.cjs"
+    },
+    "./v2/MarqueeItem": {
+      "types": "./dist/v2/components/marquee/marquee-item/index.d.ts",
+      "import": "./dist/v2/components/marquee/marquee-item/index.js",
+      "require": "./dist/v2/components/marquee/marquee-item/index.cjs"
+    },
     "./v2/MediaViewer": {
       "types": "./dist/v2/components/media-viewer/index.d.ts",
       "import": "./dist/v2/components/media-viewer/index.js",
       "require": "./dist/v2/components/media-viewer/index.cjs"
+    },
+    "./v2/Menu": {
+      "types": "./dist/v2/components/menu/index.d.ts",
+      "import": "./dist/v2/components/menu/index.js",
+      "require": "./dist/v2/components/menu/index.cjs"
+    },
+    "./v2/MenuBase": {
+      "types": "./dist/v2/components/menu/menu-base/index.d.ts",
+      "import": "./dist/v2/components/menu/menu-base/index.js",
+      "require": "./dist/v2/components/menu/menu-base/index.cjs"
+    },
+    "./v2/MenuGroup": {
+      "types": "./dist/v2/components/menu/menu-group/index.d.ts",
+      "import": "./dist/v2/components/menu/menu-group/index.js",
+      "require": "./dist/v2/components/menu/menu-group/index.cjs"
+    },
+    "./v2/MenuItem": {
+      "types": "./dist/v2/components/menu/menu-item/index.d.ts",
+      "import": "./dist/v2/components/menu/menu-item/index.js",
+      "require": "./dist/v2/components/menu/menu-item/index.cjs"
+    },
+    "./v2/Modal": {
+      "types": "./dist/v2/components/modal/index.d.ts",
+      "import": "./dist/v2/components/modal/index.js",
+      "require": "./dist/v2/components/modal/index.cjs"
+    },
+    "./v2/ModalActions": {
+      "types": "./dist/v2/components/modal/modal-actions/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-actions/index.js",
+      "require": "./dist/v2/components/modal/modal-actions/index.cjs"
+    },
+    "./v2/ModalBase": {
+      "types": "./dist/v2/components/modal/modal-base/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-base/index.js",
+      "require": "./dist/v2/components/modal/modal-base/index.cjs"
+    },
+    "./v2/ModalBody": {
+      "types": "./dist/v2/components/modal/modal-body/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-body/index.js",
+      "require": "./dist/v2/components/modal/modal-body/index.cjs"
+    },
+    "./v2/ModalDescription": {
+      "types": "./dist/v2/components/modal/modal-description/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-description/index.js",
+      "require": "./dist/v2/components/modal/modal-description/index.cjs"
+    },
+    "./v2/ModalHead": {
+      "types": "./dist/v2/components/modal/modal-head/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-head/index.js",
+      "require": "./dist/v2/components/modal/modal-head/index.cjs"
+    },
+    "./v2/ModalHeadActions": {
+      "types": "./dist/v2/components/modal/modal-head-actions/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-head-actions/index.js",
+      "require": "./dist/v2/components/modal/modal-head-actions/index.cjs"
+    },
+    "./v2/ModalTitle": {
+      "types": "./dist/v2/components/modal/modal-title/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-title/index.js",
+      "require": "./dist/v2/components/modal/modal-title/index.cjs"
+    },
+    "./v2/NativeSelect": {
+      "types": "./dist/v2/components/native-select/index.d.ts",
+      "import": "./dist/v2/components/native-select/index.js",
+      "require": "./dist/v2/components/native-select/index.cjs"
     },
     "./v2/NeonPulse": {
       "types": "./dist/v2/animated/neon-pulse/index.d.ts",
@@ -1432,6 +1687,11 @@
       "import": "./dist/v2/components/pagination/pagination-list/index.js",
       "require": "./dist/v2/components/pagination/pagination-list/index.cjs"
     },
+    "./v2/Panel": {
+      "types": "./dist/v2/components/panel/index.d.ts",
+      "import": "./dist/v2/components/panel/index.js",
+      "require": "./dist/v2/components/panel/index.cjs"
+    },
     "./v2/PinField": {
       "types": "./dist/v2/components/pin-field/index.d.ts",
       "import": "./dist/v2/components/pin-field/index.js",
@@ -1447,10 +1707,10 @@
       "import": "./dist/v2/components/radio-button-group/index.js",
       "require": "./dist/v2/components/radio-button-group/index.cjs"
     },
-    "./v2/RangeField": {
-      "types": "./dist/v2/components/range-field/index.d.ts",
-      "import": "./dist/v2/components/range-field/index.js",
-      "require": "./dist/v2/components/range-field/index.cjs"
+    "./v2/Range": {
+      "types": "./dist/v2/components/range/index.d.ts",
+      "import": "./dist/v2/components/range/index.js",
+      "require": "./dist/v2/components/range/index.cjs"
     },
     "./v2/RichTextField": {
       "types": "./dist/v2/components/rich-text-field/index.d.ts",
@@ -1472,10 +1732,20 @@
       "import": "./dist/v2/components/skeleton/index.js",
       "require": "./dist/v2/components/skeleton/index.cjs"
     },
+    "./v2/Small": {
+      "types": "./dist/v2/components/small/index.d.ts",
+      "import": "./dist/v2/components/small/index.js",
+      "require": "./dist/v2/components/small/index.cjs"
+    },
     "./v2/SpeedDial": {
       "types": "./dist/v2/components/speed-dial/index.d.ts",
       "import": "./dist/v2/components/speed-dial/index.js",
       "require": "./dist/v2/components/speed-dial/index.cjs"
+    },
+    "./v2/Strong": {
+      "types": "./dist/v2/components/strong/index.d.ts",
+      "import": "./dist/v2/components/strong/index.js",
+      "require": "./dist/v2/components/strong/index.cjs"
     },
     "./v2/Switch": {
       "types": "./dist/v2/components/switch/index.d.ts",
@@ -1507,10 +1777,25 @@
       "import": "./dist/v2/components/text-field/index.js",
       "require": "./dist/v2/components/text-field/index.cjs"
     },
-    "./v2/Title": {
-      "types": "./dist/v2/components/title/index.d.ts",
-      "import": "./dist/v2/components/title/index.js",
-      "require": "./dist/v2/components/title/index.cjs"
+    "./v2/ThemePreview": {
+      "types": "./dist/v2/components/theme-preview/index.d.ts",
+      "import": "./dist/v2/components/theme-preview/index.js",
+      "require": "./dist/v2/components/theme-preview/index.cjs"
+    },
+    "./v2/ToggleButton": {
+      "types": "./dist/v2/components/toggle-button/index.d.ts",
+      "import": "./dist/v2/components/toggle-button/index.js",
+      "require": "./dist/v2/components/toggle-button/index.cjs"
+    },
+    "./v2/ToggleButtonGroup": {
+      "types": "./dist/v2/components/toggle-button-group/index.d.ts",
+      "import": "./dist/v2/components/toggle-button-group/index.js",
+      "require": "./dist/v2/components/toggle-button-group/index.cjs"
+    },
+    "./v2/ToggleIconButton": {
+      "types": "./dist/v2/components/toggle-icon-button/index.d.ts",
+      "import": "./dist/v2/components/toggle-icon-button/index.js",
+      "require": "./dist/v2/components/toggle-icon-button/index.cjs"
     },
     "./v2/Tooltip": {
       "types": "./dist/v2/components/tooltip/index.d.ts",

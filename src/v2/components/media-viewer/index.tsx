@@ -239,7 +239,7 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                 appearance="opaque"
                 color="base"
                 size="md"
-                rounded
+                radius="pill"
                 aria-label="Close viewer"
                 onClick={close}
               >
@@ -260,7 +260,7 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                     appearance="opaque"
                     color="base"
                     size="lg"
-                    rounded
+                    radius="pill"
                     aria-label="Previous"
                     onClick={() => step(-1)}
                   >
@@ -323,7 +323,7 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                     appearance="opaque"
                     color="base"
                     size="lg"
-                    rounded
+                    radius="pill"
                     aria-label="Next"
                     onClick={() => step(1)}
                   >

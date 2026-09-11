@@ -356,6 +356,11 @@ export const useTabIndicator = (
           return;
         }
 
+        if (event.buttons === 0) {
+          onPointerUp(event);
+          return;
+        }
+
         const distance = Math.hypot(
           event.clientX - start.x,
           event.clientY - start.y,

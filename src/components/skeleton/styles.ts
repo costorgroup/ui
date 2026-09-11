@@ -46,7 +46,7 @@ export const SSkeleton = styled('span', {
   height: ${({ height }) => toCssSize(height) ?? '1.2em'};
   flex-shrink: 0;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.colors.common.grey[7]};
+  background-color: ${({ theme }) => theme.palette.common.grey[7]};
 
   ${({ theme, animation, animationOffset }) => {
     if (animation === 'pulse') {
@@ -68,7 +68,7 @@ export const SSkeleton = styled('span', {
           background: linear-gradient(
             90deg,
             transparent,
-            ${theme.colors.common.grey[2]},
+            ${theme.palette.common.grey[2]},
             transparent
           );
           animation: ${wave} 1.6s linear ${animationOffset} infinite;

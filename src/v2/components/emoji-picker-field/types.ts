@@ -23,4 +23,5 @@ export type TEmojiPickerFieldProps = {
   className?: string;
   emojis?: TEmojiItem[];
   categories?: TEmojiCategory[];
+  actionBar?: ReactNode;
 };

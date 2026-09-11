@@ -2,10 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
-import {
-  Link,
-  Text
-} from '../../index';
+import { Link, Text } from '../../index';
 import type { TLinkSize, TLinkVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
@@ -19,13 +16,14 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TLinkVariant[] = ['underline', 'hover', 'plain'];
 const SIZES: TLinkSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof Link> = {
-  title: 'V2/Typography/Link',
+  title: 'V3/Typography/Link',
   component: Link,
   tags: ['autodocs'],
   argTypes: {
@@ -42,28 +40,32 @@ const meta: Meta<typeof Link> = {
       options: COLORS,
     },
   },
+  args: {
+    children: 'Read the docs',
+    href: '#',
+    variant: 'plain',
+    size: 'md',
+    color: 'primary',
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Link>;
 
-export const Default: Story = {
-  args: {
-    children: 'Read the docs',
-    href: '#',
-    variant: 'plain',
-    size: 'md',
-    color: 'default',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
-export const Inline: Story = {
+export const Colors: Story = {
   render: () => (
-    <Text>
-      See the <Link href="#">installation guide</Link> to add Costor UI to your
-      project.
-    </Text>
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <Link key={color} href="#" color={color}>
+          This link will be in '{color}' color.
+        </Link>
+      ))}
+    </Flex>
   ),
 };
 
@@ -72,9 +74,30 @@ export const Variants: Story = {
     <Flex gap="lg" wrap="wrap" align="center">
       {VARIANTS.map((variant) => (
         <Link key={variant} href="#" variant={variant}>
-          {variant}
+          This link will be in '{variant}' variant.
         </Link>
       ))}
     </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {SIZES.map((size) => (
+        <Link key={size} href="#" size={size}>
+          This link will be in '{size}' size.
+        </Link>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Inline: Story = {
+  render: () => (
+    <Text>
+      See the <Link href="#">installation guide</Link> to add Costor UI to your
+      project.
+    </Text>
   ),
 };

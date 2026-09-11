@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { fieldFocusRing } from "../../../surface";
 import {
   inputControlIdleHoverStyles,
   inputControlIdleStyles,
@@ -14,12 +15,12 @@ type TSInputCheckBoxProps = Pick<
 
 const customProps = new Set(["variant", "size", "color"]);
 
-const sizeMap: Record<TInputSize, { box: string; icon: string }> = {
-  xs: { box: "12px", icon: "8px" },
-  sm: { box: "14px", icon: "10px" },
-  md: { box: "16px", icon: "12px" },
-  lg: { box: "20px", icon: "14px" },
-  xl: { box: "24px", icon: "16px" },
+const iconInset: Record<TInputSize, string> = {
+  xs: "4px",
+  sm: "4px",
+  md: "6px",
+  lg: "6px",
+  xl: "8px",
 };
 
 export const SInputCheckBox = styled.span`
@@ -52,27 +53,27 @@ export const SInputCheckBoxControl = styled("span", {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: ${({ size = "md" }) => sizeMap[size].box};
-  height: ${({ size = "md" }) => sizeMap[size].box};
+  width: ${({ theme, size = "md" }) => theme.sizes[size].icon};
+  height: ${({ theme, size = "md" }) => theme.sizes[size].icon};
   border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.xs};
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease,
     color 0.15s ease;
 
-  ${({ theme, variant = "subtle", color = "default" }) =>
-    inputControlIdleStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = "surface", color = "primary" }) =>
+    inputControlIdleStyles(variant, theme.palette[color], theme)}
 
   .${inputCheckBoxClasses.input}:hover:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = "subtle", color = "default" }) =>
-      inputControlIdleHoverStyles(variant, theme.colors[color], theme)}
+    ${({ theme, variant = "surface", color = "primary" }) =>
+      inputControlIdleHoverStyles(variant, theme.palette[color], theme)}
   }
 
   .${inputCheckBoxClasses.input}:checked + & {
-    ${({ theme, color = "default" }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = "primary" }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.main};
@@ -83,8 +84,8 @@ export const SInputCheckBoxControl = styled("span", {
   }
 
   .${inputCheckBoxClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = "default" }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = "primary" }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.dark};
@@ -100,9 +101,9 @@ export const SInputCheckBoxControl = styled("span", {
   }
 
   .${inputCheckBoxClasses.input}:focus-visible + & {
-    outline: 2px solid
-      ${({ theme, color = "default" }) => theme.colors[color].main};
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: ${({ theme, color = "primary" }) =>
+      fieldFocusRing(theme.palette[color].main)};
   }
 
   .${inputCheckBoxClasses.input}:disabled + & {
@@ -110,8 +111,10 @@ export const SInputCheckBoxControl = styled("span", {
   }
 
   svg {
-    width: ${({ size = "md" }) => sizeMap[size].icon};
-    height: ${({ size = "md" }) => sizeMap[size].icon};
+    width: ${({ theme, size = "md" }) =>
+      `calc(${theme.sizes[size].icon} - ${iconInset[size]})`};
+    height: ${({ theme, size = "md" }) =>
+      `calc(${theme.sizes[size].icon} - ${iconInset[size]})`};
     opacity: 0;
     transform: scale(0.8);
     transition:
@@ -119,4 +122,3 @@ export const SInputCheckBoxControl = styled("span", {
       transform 0.15s ease;
   }
 `;
-

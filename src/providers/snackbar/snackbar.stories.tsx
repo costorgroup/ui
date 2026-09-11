@@ -20,6 +20,7 @@ const SNACKBAR_COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const SNACKBAR_VARIANTS: TAlertVariant[] = [

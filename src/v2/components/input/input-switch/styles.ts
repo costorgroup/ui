@@ -1,12 +1,51 @@
 import styled from '@emotion/styled';
-import {
-  inputFieldFocusStyles,
-  inputFieldHoverStyles,
-  inputFieldIdleStyles,
-} from '../variant-styles';
-import { TInputSize } from '../input-wrapper/types';
+import type { TTheme } from '../../../../theme/types';
+import { colorMix, fieldFocusRing } from '../../../surface';
+import type { TInputSize, TInputVariant } from '../input-wrapper/types';
 import { inputSwitchClasses } from './classes';
 import { TInputSwitchProps } from './types';
+
+const SWITCH_OFF_FILL = 30;
+const SWITCH_SURFACE_BORDER_IDLE = 10;
+const SWITCH_SURFACE_BORDER_HOVER = 30;
+const SWITCH_OUTLINE_BORDER_IDLE = 40;
+const SWITCH_OUTLINE_BORDER_HOVER = 60;
+
+const switchOffFill = (variant: TInputVariant, theme: TTheme) =>
+  variant === 'outline'
+    ? 'transparent'
+    : colorMix(theme.surfaces.mixer, SWITCH_OFF_FILL);
+
+const switchOffBorder = (
+  variant: TInputVariant,
+  theme: TTheme,
+  hover = false,
+) => {
+  if (variant === 'subtle') {
+    return 'transparent';
+  }
+
+  if (variant === 'outline') {
+    return colorMix(
+      theme.surfaces.mixer,
+      hover ? SWITCH_OUTLINE_BORDER_HOVER : SWITCH_OUTLINE_BORDER_IDLE,
+    );
+  }
+
+  return colorMix(
+    theme.surfaces.mixer,
+    hover ? SWITCH_SURFACE_BORDER_HOVER : SWITCH_SURFACE_BORDER_IDLE,
+  );
+};
+
+const switchOffChrome = (
+  variant: TInputVariant,
+  theme: TTheme,
+  hover = false,
+) => `
+  background-color: ${switchOffFill(variant, theme)};
+  border-color: ${switchOffBorder(variant, theme, hover)};
+`;
 
 type TSInputSwitchProps = Pick<TInputSwitchProps, 'variant' | 'size' | 'color'>;
 
@@ -46,9 +85,9 @@ export const SInputSwitchInput = styled.input`
 export const SInputSwitchThumb = styled.span`
   display: block;
   border-radius: ${({ theme }) => theme.radius.pill};
-  background-color: ${({ theme }) => theme.colors.common.white};
-  box-shadow: inset 0 0 2px color-mix(in lab, ${({ theme }) => theme.colors.common.black} 18%, transparent);
-  transition: transform 0.15s ease;
+  background-color: ${({ theme }) => theme.palette.common.white};
+  box-shadow: inset 0 0 2px color-mix(in oklab, ${({ theme }) => theme.palette.common.black} 18%, transparent);
+  transition: transform 0.15s ease, background-color 0.15s ease;
 `;
 
 export const SInputSwitchControl = styled('span', {
@@ -64,8 +103,11 @@ export const SInputSwitchControl = styled('span', {
   border-radius: ${({ theme }) => theme.radius.pill};
   transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 
-  ${({ theme, variant = 'subtle', color = 'default' }) =>
-    inputFieldIdleStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = 'surface' }) => `
+    ${switchOffChrome(variant, theme)}
+    color: ${theme.palette.default.main};
+    box-shadow: none;
+  `}
 
   .${inputSwitchClasses.thumb} {
     width: ${({ size = 'md' }) => sizeMap[size].thumb};
@@ -73,19 +115,20 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:hover:not(:disabled):not(:checked):not(:focus-visible) + & {
-    ${({ theme, variant = 'subtle', color = 'default' }) =>
-      inputFieldHoverStyles(variant, theme.colors[color], theme)}
+    ${({ theme, variant = 'surface' }) => switchOffChrome(variant, theme, true)}
   }
 
   .${inputSwitchClasses.input}:focus-visible:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = 'subtle', color = 'default' }) =>
-      inputFieldFocusStyles(variant, theme.colors[color], theme)}
-    outline: none;
+    ${({ theme, variant = 'surface', color = 'primary' }) => `
+      ${switchOffChrome(variant, theme)}
+      outline: none;
+      box-shadow: ${fieldFocusRing(theme.palette[color].main)};
+    `}
   }
 
   .${inputSwitchClasses.input}:checked + & {
-    ${({ theme, color = 'default' }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = 'primary' }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.main};
@@ -97,8 +140,8 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = 'default' }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = 'primary' }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.dark};
@@ -110,6 +153,8 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:checked + & .${inputSwitchClasses.thumb} {
+    background-color: ${({ theme, color = 'primary' }) =>
+      theme.palette[color].contrastText};
     transform: ${({ size = 'md' }) => {
       const track = parseInt(sizeMap[size].width, 10);
       const thumb = parseInt(sizeMap[size].thumb, 10);
@@ -118,8 +163,9 @@ export const SInputSwitchControl = styled('span', {
   }
 
   .${inputSwitchClasses.input}:focus-visible:checked + & {
-    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: ${({ theme, color = 'primary' }) =>
+      fieldFocusRing(theme.palette[color].main)};
   }
 
   .${inputSwitchClasses.input}:disabled + & {

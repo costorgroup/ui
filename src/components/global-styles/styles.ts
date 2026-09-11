@@ -10,7 +10,7 @@ export const createBaselineStyles = (theme: TTheme) => css`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
-    ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
+    ${CUI_CANVAS_VAR}: ${theme.palette.base.main};
   }
 
   *,
@@ -22,9 +22,9 @@ export const createBaselineStyles = (theme: TTheme) => css`
   body {
     margin: 0;
     font-family: ${theme.fontFamily};
-    color: ${theme.colors.default.main};
-    background-color: ${theme.colors.base.main};
-    font-size: ${theme.typography.text.medium};
+    color: ${theme.palette.default.main};
+    background-color: ${theme.surfaces.background};
+    font-size: ${theme.typography.text.md};
   }
 `;
 

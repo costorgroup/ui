@@ -2,6 +2,8 @@ import { generateUtilityClasses } from '../../../../helpers/generate-utility-cla
 
 export const inputWrapperClasses = generateUtilityClasses('InputWrapper', [
   'root',
+  'body',
+  'actionBar',
   'disabled',
   'error',
   'focused',

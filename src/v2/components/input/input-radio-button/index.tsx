@@ -1,8 +1,16 @@
-import React, { forwardRef } from 'react';
+import React, {
+  ChangeEvent,
+  FocusEvent,
+  ReactElement,
+  Ref,
+  forwardRef,
+} from 'react';
 import {
   isAriaInvalid,
   mergeClasses,
 } from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
+import { toHtmlValue } from '../../form-control/value';
 import { inputRadioButtonClasses } from './classes';
 import {
   SInputRadioButton,
@@ -12,58 +20,99 @@ import {
 } from './styles';
 import { TInputRadioButtonProps } from './types';
 
-const InputRadioButton = forwardRef<HTMLInputElement, TInputRadioButtonProps>(
-  (
-    {
-      variant = 'subtle',
-      size = 'md',
-      color = 'default',
-      className,
-      disabled,
-      checked,
-      defaultChecked,
-      'aria-invalid': ariaInvalid,
-      ...props
-    },
-    ref,
-  ) => {
-    return (
-      <SInputRadioButton
-        className={mergeClasses(
-          inputRadioButtonClasses.root,
-          disabled && inputRadioButtonClasses.disabled,
-          (checked ?? defaultChecked) && inputRadioButtonClasses.checked,
-          isAriaInvalid(ariaInvalid) && inputRadioButtonClasses.error,
-          className,
-        )}
-      >
-        <SInputRadioButtonInput
-          ref={ref}
-          type="radio"
-          disabled={disabled}
-          checked={checked}
-          defaultChecked={defaultChecked}
-          aria-invalid={ariaInvalid}
-          {...props}
-          className={inputRadioButtonClasses.input}
-        />
-        <SInputRadioButtonControl
-          className={inputRadioButtonClasses.control}
-          variant={variant}
-          size={size}
-          color={color}
-        >
-          <SInputRadioButtonDot
-            className={inputRadioButtonClasses.dot}
-            aria-hidden
-          />
-        </SInputRadioButtonControl>
-      </SInputRadioButton>
-    );
-  },
-);
+const InputRadioButtonInner = <T,>(
+  {
+    variant: variantProp,
+    size: sizeProp,
+    color: colorProp,
+    className,
+    disabled: disabledProp,
+    checked,
+    defaultChecked,
+    id,
+    value,
+    required: requiredProp,
+    onChange,
+    onFocus,
+    onBlur,
+    'aria-invalid': ariaInvalid,
+    'aria-describedby': ariaDescribedBy,
+    ...props
+  }: TInputRadioButtonProps<T>,
+  ref: Ref<HTMLInputElement>,
+) => {
+  const form = useFormControlState({
+    variant: variantProp,
+    size: sizeProp,
+    color: colorProp,
+    disabled: disabledProp,
+    required: requiredProp,
+    id,
+  });
+  const error = isAriaInvalid(ariaInvalid) || form.error;
 
-InputRadioButton.displayName = 'InputRadioButton';
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event);
+    form.onChange?.(event, value as T);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    form.setFocused?.(true);
+    onFocus?.(event);
+  };
+
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    form.setFocused?.(false);
+    onBlur?.(event);
+  };
+
+  return (
+    <SInputRadioButton
+      className={mergeClasses(
+        inputRadioButtonClasses.root,
+        form.disabled && inputRadioButtonClasses.disabled,
+        (checked ?? defaultChecked) && inputRadioButtonClasses.checked,
+        error && inputRadioButtonClasses.error,
+        className,
+      )}
+    >
+      <SInputRadioButtonInput
+        ref={ref}
+        {...props}
+        id={id ?? form.id}
+        type="radio"
+        value={toHtmlValue(value)}
+        disabled={form.disabled}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        required={form.required}
+        aria-invalid={error || undefined}
+        aria-describedby={ariaDescribedBy ?? form.helperId}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        className={inputRadioButtonClasses.input}
+      />
+      <SInputRadioButtonControl
+        className={inputRadioButtonClasses.control}
+        variant={form.variant}
+        size={form.size}
+        color={form.color}
+      >
+        <SInputRadioButtonDot
+          className={inputRadioButtonClasses.dot}
+          aria-hidden
+        />
+      </SInputRadioButtonControl>
+    </SInputRadioButton>
+  );
+};
+
+const InputRadioButton = forwardRef(InputRadioButtonInner) as <T = unknown>(
+  props: TInputRadioButtonProps<T> & { ref?: Ref<HTMLInputElement> },
+) => ReactElement | null;
+
+(InputRadioButton as { displayName?: string }).displayName = 'InputRadioButton';
 
 export { inputRadioButtonClasses } from './classes';
 export { InputRadioButton };

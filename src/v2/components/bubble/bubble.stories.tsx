@@ -24,6 +24,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TBubbleVariant[] = [
@@ -59,7 +60,7 @@ type Story = StoryObj<typeof Bubble>;
 
 export const Default: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'solid',
     align: 'start',
   },

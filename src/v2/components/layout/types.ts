@@ -5,9 +5,9 @@ export type TLayoutDirection = 'horizontal' | 'vertical';
 export type TLayoutProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
   direction?: TLayoutDirection;
-  /** 10% chrome border around the layout. */
+  /** Outer edge using `theme.surfaces.border`. */
   bordered?: boolean;
-  /** 10% chrome border between children. */
+  /** Child separators using `theme.surfaces.divider`. */
   divider?: boolean;
 };
 

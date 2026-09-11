@@ -10,6 +10,7 @@ export type TThemeColorScale = {
 export type TThemePaletteColors = {
   base: TThemeColorScale;
   default: TThemeColorScale;
+  inverted: TThemeColorScale;
   primary: TThemeColorScale;
   secondary: TThemeColorScale;
   success: TThemeColorScale;

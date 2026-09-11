@@ -12,7 +12,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { getDropdownPosition } from '../../../../helpers/get-dropdown-position';
 import type { TDropdownPlacement } from '../../../../helpers/get-dropdown-position';
 import { getNextListIndex } from '../../../../helpers/get-next-list-index';
@@ -59,19 +63,35 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
       defaultOpen = false,
       onOpenChange,
       name,
-      disabled = false,
-      variant = 'subtle',
-      size = 'md',
-      color = 'default',
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
       emojis = EMOJIS,
       categories = EMOJI_CATEGORIES,
       trigger,
+      actionBar,
       id,
       className,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const listId = useId();
     const searchId = useId();
     const isOpenControlled = openProp !== undefined;
@@ -391,15 +411,19 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
           color={color}
           disabled={disabled}
           trigger
+          actionBar={actionBar}
         >
           <SInputEmojiFieldTrigger
             ref={triggerRef as React.Ref<HTMLButtonElement>}
             type="button"
-            id={id}
+            id={fieldId}
             size={size}
+            disabled={disabled}
             aria-haspopup="dialog"
             aria-expanded={open}
             aria-controls={open ? listId : undefined}
+            aria-invalid={error || undefined}
+            aria-describedby={ariaDescribedBy ?? form.helperId}
             onClick={() => setOpen(!open)}
             onKeyDown={handleTriggerKeyDown}
           >

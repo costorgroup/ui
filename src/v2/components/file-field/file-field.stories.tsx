@@ -1,15 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import {
-  FileField,
-  Text
-} from '../../index';
-import {
-  Flex
-} from '../../../index';
+import type { TPaletteColor } from '../../../theme/types';
+import { Flex } from '../../../index';
+import { FileField, Text } from '../../index';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof FileField> = {
-  title: 'V2/Forms/FileField',
+  title: 'V3/Forms/FileField',
   component: FileField,
   tags: ['autodocs'],
   decorators: [
@@ -19,48 +33,10 @@ const meta: Meta<typeof FileField> = {
       </div>
     ),
   ],
-  parameters: {
-    controls: {
-      include: [
-        'label',
-        'description',
-        'helperText',
-        'accept',
-        'multiple',
-        'placeholder',
-        'size',
-        'variant',
-        'color',
-        'fullWidth',
-        'required',
-        'error',
-        'disabled',
-      ],
-    },
-  },
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
     accept: { control: 'text' },
     multiple: { control: 'boolean' },
     placeholder: { control: 'text' },
@@ -75,24 +51,58 @@ const meta: Meta<typeof FileField> = {
     value: { table: { disable: true } },
     defaultValue: { table: { disable: true } },
   },
+  args: {
+    label: 'Attachment',
+    helperText: 'Select a single file from your device.',
+    placeholder: 'Choose file…',
+    multiple: false,
+    size: 'md',
+    variant: 'surface',
+    color: 'primary',
+    fullWidth: true,
+    error: false,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof FileField>;
 
-export const Default: Story = {
-  args: {
-    label: 'Attachment',
-    helperText: 'Select a single file from your device.',
-    placeholder: 'Choose file…',
-    accept: undefined,
-    multiple: false,
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
-    fullWidth: true,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <FileField key={color} color={color} label={color} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <FileField variant={variant} label={variant} />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {SIZES.map((size) => (
+        <FileField key={size} size={size} label={size} />
+      ))}
+    </Flex>
+  ),
 };
 
 export const Images: Story = {
@@ -128,5 +138,14 @@ export const Multiple: Story = {
         </Text>
       </Flex>
     );
+  },
+};
+
+export const Error: Story = {
+  args: {
+    label: 'Contract',
+    helperText: 'A signed PDF is required.',
+    error: true,
+    placeholder: 'Choose file…',
   },
 };

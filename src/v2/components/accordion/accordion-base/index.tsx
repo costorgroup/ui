@@ -34,7 +34,7 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
     ref,
   ) => {
     const group = useAccordionGroupContext();
-    const color: TPaletteColor = colorProp ?? group?.color ?? 'default';
+    const color: TPaletteColor = colorProp ?? group?.color ?? 'primary';
     const variant: TAccordionVariant =
       variantProp ?? group?.variant ?? 'subtle';
     const size: TAccordionSize = sizeProp ?? group?.size ?? 'md';

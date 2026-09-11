@@ -14,6 +14,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const longContent = Array.from({ length: 12 }, (_, index) => (

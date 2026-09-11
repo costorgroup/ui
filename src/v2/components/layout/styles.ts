@@ -1,6 +1,4 @@
 import styled from '@emotion/styled';
-import { CHROME_HOVER } from '../../idle-variant-styles';
-import { colorMix } from '../../surface';
 import { TSLayoutProps } from './types';
 
 const customProps = new Set(['direction', 'bordered', 'divider']);
@@ -18,9 +16,7 @@ export const SLayout = styled('div', {
   min-height: 0;
   overflow: hidden;
   border: ${({ theme, bordered }) =>
-    bordered
-      ? `1px solid ${colorMix(theme.colors.base.contrastText, CHROME_HOVER)}`
-      : 'none'};
+    bordered ? `1px solid ${theme.surfaces.border}` : 'none'};
 
   ${({ theme, direction, divider }) => {
     if (!divider) {
@@ -32,7 +28,7 @@ export const SLayout = styled('div', {
 
     return `
       & > *:not(:last-child) {
-        ${edge}: 1px solid ${colorMix(theme.colors.base.contrastText, CHROME_HOVER)};
+        ${edge}: 1px solid ${theme.surfaces.divider};
       }
     `;
   }}

@@ -2,11 +2,29 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
 import { Skeleton, Text } from '../../index';
+import type { TSkeletonRadius } from './types';
+
+const RADIUS: TSkeletonRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
 
 const meta: Meta<typeof Skeleton> = {
-  title: 'V2/Feedbacks/Skeleton',
+  title: 'V3/Feedback/Skeleton',
   component: Skeleton,
   tags: ['autodocs'],
+  args: {
+    width: 240,
+    height: 20,
+    radius: 'md',
+    animation: 'pulse',
+  },
   argTypes: {
     width: {
       control: 'text',
@@ -16,7 +34,7 @@ const meta: Meta<typeof Skeleton> = {
     },
     radius: {
       control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
+      options: RADIUS,
     },
     animation: {
       control: 'select',
@@ -32,13 +50,8 @@ export default meta;
 
 type Story = StoryObj<typeof Skeleton>;
 
-export const Default: Story = {
-  args: {
-    width: 240,
-    height: 20,
-    radius: 'medium',
-    animation: 'pulse',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
 export const Animations: Story = {
@@ -60,13 +73,13 @@ export const Animations: Story = {
   ),
 };
 
-export const Shapes: Story = {
+export const Radius: Story = {
   render: () => (
     <Flex gap="md" align="center" wrap="wrap">
-      <Skeleton width={48} height={48} radius="circle" />
-      <Skeleton width={120} height={48} radius="large" />
+      <Skeleton width={48} height={48} radius="full" />
+      <Skeleton width={120} height={48} radius="lg" />
       <Skeleton width={180} height={16} radius="pill" />
-      <Skeleton width={200} height={120} radius="medium" />
+      <Skeleton width={200} height={120} radius="md" />
     </Flex>
   ),
 };
@@ -74,7 +87,7 @@ export const Shapes: Story = {
 export const CardPlaceholder: Story = {
   render: () => (
     <Flex direction="column" gap="sm" style={{ width: 280 }}>
-      <Skeleton width="100%" height={140} radius="large" animation="wave" />
+      <Skeleton width="100%" height={140} radius="lg" animation="wave" />
       <Skeleton width="70%" height={18} animationOffset={120} />
       <Skeleton width="100%" height={14} animationOffset={240} />
       <Skeleton width="90%" height={14} animationOffset={360} />

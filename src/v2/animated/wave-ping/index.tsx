@@ -23,7 +23,7 @@ const WavePing = forwardRef<HTMLDivElement, TWavePingProps>(
   ) => {
     const theme = useTheme();
     const { rootProps } = useAnimatedPlay(play);
-    const waveColor = color ?? theme.colors.info.main;
+    const waveColor = color ?? theme.palette.info.main;
 
     return (
       <SWavePing

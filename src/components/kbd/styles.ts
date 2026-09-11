@@ -53,7 +53,7 @@ export const SKbd = styled('kbd', {
   `}
 
   ${({ theme, variant = 'raised', color = 'base' }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     if (variant === 'raised') {
       return `

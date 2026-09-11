@@ -30,7 +30,7 @@ export const SFlipbookPage = styled('div', {
   border-radius: ${({ theme, hard }) =>
     hard ? theme.radius.medium : theme.radius.small};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
     return `
       0 1px 2px ${black}12,
       0 8px 24px ${black}14
@@ -38,7 +38,7 @@ export const SFlipbookPage = styled('div', {
   }};
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.primary.main};
+    outline: 2px solid ${({ theme }) => theme.palette.primary.main};
     outline-offset: 2px;
   }
 `;
@@ -52,7 +52,7 @@ export const SFlipbookPageFace = styled.div`
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  background: ${({ theme }) => theme.colors.common.white};
+  background: ${({ theme }) => theme.palette.common.white};
   border-radius: inherit;
 `;
 
@@ -64,11 +64,11 @@ export const SFlipbookPageFront = styled(SFlipbookPageFace)`
 
 export const SFlipbookPageBack = styled(SFlipbookPageFace)`
   transform: rotateY(180deg);
-  background: ${({ theme }) => theme.colors.common.grey[2]};
+  background: ${({ theme }) => theme.palette.common.grey[2]};
   background-image: linear-gradient(
     90deg,
-    ${({ theme }) => theme.colors.common.grey[4]} 0%,
-    ${({ theme }) => theme.colors.common.grey[1]} 12%,
-    ${({ theme }) => theme.colors.common.grey[2]} 100%
+    ${({ theme }) => theme.palette.common.grey[4]} 0%,
+    ${({ theme }) => theme.palette.common.grey[1]} 12%,
+    ${({ theme }) => theme.palette.common.grey[2]} 100%
   );
 `;

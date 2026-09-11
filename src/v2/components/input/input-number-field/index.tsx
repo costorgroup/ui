@@ -13,18 +13,19 @@ import {
   ArrowRightIcon,
   ArrowTopIcon,
 } from '../../../../icons';
+import { InputActions } from '../input-actions';
+import { InputButton } from '../input-button';
 import { InputIcon } from '../input-icon';
 import { InputWrapper } from '../input-wrapper';
-import { IconButton } from '../../icon-button';
 import {
   isAriaInvalid,
   mergeClasses,
 } from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputNumberFieldClasses } from './classes';
 import {
   SInputNumberFieldFlipIcon,
   SInputNumberFieldInput,
-  SInputNumberFieldSteppers,
 } from './styles';
 import { TInputNumberFieldProps } from './types';
 
@@ -81,11 +82,12 @@ const sanitizeNumberInput = (value: string) => {
 const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
   (
     {
-      size = 'md',
-      variant = 'subtle',
-      color = 'default',
+      size: sizeProp,
+      variant: variantProp,
+      color: colorProp,
       startIcon,
       endIcon,
+      actionBar,
       spinner = false,
       step = 1,
       min,
@@ -93,9 +95,9 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
       id,
       value,
       defaultValue,
-      disabled,
+      disabled: disabledProp,
       readOnly,
-      required,
+      required: requiredProp,
       name,
       onChange,
       onBlur,
@@ -103,10 +105,26 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
       onWheel,
       className,
       'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      size: sizeProp,
+      variant: variantProp,
+      color: colorProp,
+      disabled: disabledProp,
+      required: requiredProp,
+      id,
+    });
+    const size = form.size;
+    const variant = form.variant;
+    const color = form.color;
+    const disabled = form.disabled;
+    const required = form.required;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const localRef = useRef<HTMLInputElement>(null);
     const isControlled = value !== undefined;
     const [uncontrolledValue, setUncontrolledValue] = useState(
@@ -150,22 +168,25 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 
         const input = localRef.current;
 
-        onChange?.({
+        const event = {
           target: {
             ...(input ?? {}),
             value: next,
             name,
-            id,
+            id: fieldId,
           },
           currentTarget: {
             ...(input ?? {}),
             value: next,
             name,
-            id,
+            id: fieldId,
           },
-        } as ChangeEvent<HTMLInputElement>);
+        } as ChangeEvent<HTMLInputElement>;
+
+        onChange?.(event);
+        form.onChange?.(event, next);
       },
-      [id, isControlled, name, onChange],
+      [fieldId, form, isControlled, name, onChange],
     );
 
     const applyStep = useCallback(
@@ -259,26 +280,22 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
     };
 
     const incrementButton = (
-      <IconButton
-        type="button"
-        variant="ghost"
-        size={spinner ? 'md' : 'xs'}
-        color={color}
+      <InputButton
         tabIndex={-1}
         disabled={!canIncrement}
         aria-label="Increase value"
         onClick={() => applyStep(1)}
       >
-        {spinner ? <ArrowRightIcon /> : <ArrowTopIcon />}
-      </IconButton>
+        {spinner ? (
+          <ArrowRightIcon width="1em" height="1em" />
+        ) : (
+          <ArrowTopIcon width="1em" height="1em" />
+        )}
+      </InputButton>
     );
 
     const decrementButton = (
-      <IconButton
-        type="button"
-        variant="ghost"
-        size={spinner ? 'md' : 'xs'}
-        color={color}
+      <InputButton
         tabIndex={-1}
         disabled={!canDecrement}
         aria-label="Decrease value"
@@ -286,12 +303,12 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
       >
         {spinner ? (
           <SInputNumberFieldFlipIcon aria-hidden>
-            <ArrowRightIcon />
+            <ArrowRightIcon width="1em" height="1em" />
           </SInputNumberFieldFlipIcon>
         ) : (
-          <ArrowBottomIcon />
+          <ArrowBottomIcon width="1em" height="1em" />
         )}
-      </IconButton>
+      </InputButton>
     );
 
     return (
@@ -301,7 +318,8 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
         color={color}
         disabled={disabled}
         readOnly={readOnly}
-        error={isAriaInvalid(ariaInvalid)}
+        error={error}
+        actionBar={actionBar}
       >
         {spinner ? decrementButton : startIcon != null ? <InputIcon>{startIcon}</InputIcon> : null}
         <SInputNumberFieldInput
@@ -309,10 +327,11 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
           {...props}
           className={mergeClasses(
             inputNumberFieldClasses.root,
-            isAriaInvalid(ariaInvalid) && inputNumberFieldClasses.error,
+            error && inputNumberFieldClasses.error,
             className,
           )}
-          id={id}
+          id={fieldId}
+          aria-describedby={ariaDescribedBy ?? form.helperId}
           name={name}
           type="number"
           inputMode="decimal"
@@ -325,7 +344,7 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
           disabled={disabled}
           readOnly={readOnly}
           required={required}
-          aria-invalid={ariaInvalid}
+          aria-invalid={error || undefined}
           $center={spinner}
           onChange={handleChange}
           onBlur={handleBlur}
@@ -337,10 +356,10 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
         ) : (
           <>
             {endIcon != null ? <InputIcon>{endIcon}</InputIcon> : null}
-            <SInputNumberFieldSteppers>
+            <InputActions orientation="vertical">
               {incrementButton}
               {decrementButton}
-            </SInputNumberFieldSteppers>
+            </InputActions>
           </>
         )}
       </InputWrapper>

@@ -1,41 +1,55 @@
 import type { Preview } from '@storybook/react-vite';
+import {
+  Controls,
+  Description,
+  Primary,
+  Stories,
+  Subtitle,
+  Title,
+} from '@storybook/addon-docs/blocks';
 import React from 'react';
-import { GlobalStyles, ThemeProvider } from '../src';
-import { DDarkTheme, DLightTheme } from '../src/theme';
-
-const schemeThemes = {
-  dark: DDarkTheme,
-  light: DLightTheme,
-} as const;
+import { GlobalStyles, ThemeProvider, useTheme } from '../src';
+import type { TThemeAppearance } from '../src/theme';
 
 const StoryCanvas = ({
   children,
-  background,
-  color,
   fill = false,
 }: {
   children: React.ReactNode;
-  background: string;
-  color: string;
   fill?: boolean;
-}) => (
-  <div
-    style={{
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: fill ? 'stretch' : 'center',
-      justifyContent: fill ? 'stretch' : 'center',
-      width: '100%',
-      height: fill ? '100vh' : undefined,
-      minHeight: fill ? '100vh' : 200,
-      padding: fill ? 0 : 32,
-      backgroundColor: background,
-      color,
-    }}
-  >
-    {children}
-  </div>
+}) => {
+  const theme = useTheme();
+
+  return (
+    <div
+      style={{
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: fill ? 'stretch' : 'center',
+        justifyContent: fill ? 'stretch' : 'center',
+        width: '100%',
+        height: fill ? '100vh' : undefined,
+        minHeight: fill ? '100vh' : 200,
+        padding: fill ? 0 : 32,
+        backgroundColor: theme.surfaces.background,
+        color: theme.palette.default.main,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const AutodocsPage = () => (
+  <>
+    <Title />
+    <Subtitle />
+    <Description />
+    <Primary />
+    <Controls />
+    <Stories includePrimary={false} />
+  </>
 );
 
 const preview: Preview = {
@@ -64,10 +78,16 @@ const preview: Preview = {
     },
     layout: 'fullscreen',
     backgrounds: { disable: true },
+    docs: {
+      page: AutodocsPage,
+    },
     options: {
       storySort: {
         order: [
+          'V3',
           'V2',
+          'V2/Theme',
+          'V2/Surfaces',
           'V2/Animated',
           'V2/Buttons',
           'V2/Data Display',
@@ -84,17 +104,15 @@ const preview: Preview = {
   },
   decorators: [
     (Story, { globals, parameters }) => {
-      const scheme = (globals.theme ?? 'dark') as keyof typeof schemeThemes;
-      const theme = schemeThemes[scheme] ?? DDarkTheme;
+      const appearance = (globals.theme ?? 'dark') as TThemeAppearance;
 
       return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider
+          appearance={appearance}
+          allowedModes={['light', 'dark']}
+        >
           <GlobalStyles />
-          <StoryCanvas
-            fill={parameters.fill === true}
-            background={theme.colors.base.main}
-            color={theme.colors.default.main}
-          >
+          <StoryCanvas fill={parameters.fill === true}>
             <Story />
           </StoryCanvas>
         </ThemeProvider>

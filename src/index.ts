@@ -739,8 +739,8 @@ export type {
   TDateAdapterFormats,
 } from "./helpers/date-adapter";
 
-export { useSnackbar, useFloatingActions, useSteps } from "./hooks";
-export type { TUseStepsOptions, TUseStepsReturn } from "./hooks";
+export { useSnackbar, useFloatingActions, useSteps, useTheme } from "./hooks";
+export type { TUseStepsOptions, TUseStepsReturn, TUseThemeReturn } from "./hooks";
 
 export {
   EyeIcon,
@@ -768,6 +768,7 @@ export {
   FileIcon,
   SearchIcon,
   EmojiAddIcon,
+  QuoteIcon,
 } from "./icons";
 export {
   AmericanExpressLogo,
@@ -816,6 +817,7 @@ export type {
   TFileIconProps,
   TSearchIconProps,
   TEmojiAddIconProps,
+  TQuoteIconProps,
 } from "./icons";
 export {
   getInitials,
@@ -870,6 +872,16 @@ export {
   DDefaultTheme,
   createTheme,
   ThemeProvider,
+  defaultPalettes,
+  defaultAccents,
+  resolvePalette,
+  resolveAccent,
+  resolvePaletteColor,
+  resolvePaletteColors,
+  resolveAccentPalette,
+  accentSwatch,
+  paletteSwatch,
+  createModeColors,
   colors,
   breakpoints,
   breakpointKeys,
@@ -878,12 +890,23 @@ export {
   gap,
   radius,
   sizeScale,
+  sizes,
   spacing,
   typography,
   zIndex,
+  components,
+  shadows,
 } from "./theme";
 export type {
   TTheme,
+  TThemePalette,
+  TThemePaletteOptions,
+  TThemePaletteColor,
+  TThemeAccent,
+  TThemeAccentColor,
+  TThemeAccentPalette,
+  TThemeAppearance,
+  TThemeMode,
   TThemeOptions,
   TCreateTheme,
   TThemePaletteColors,
@@ -909,6 +932,12 @@ export type {
   TThemeZIndex,
   TThemeGlobalStyles,
   TThemeProviderProps,
+  TThemeComponents,
+  TThemeDensity,
+  TThemeSizes,
+  TThemeShadows,
+  TThemeSurfaceTokens,
+  TThemeStorageKind,
 } from "./theme";
 
 export * as V2 from "./v2";

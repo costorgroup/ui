@@ -26,6 +26,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TDataTableVariant[] = [

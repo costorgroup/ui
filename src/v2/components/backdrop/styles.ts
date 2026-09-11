@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { chromeTransparentFill } from '../../surface';
+import { overlayFade } from '../../motion';
 import { TSBackdropProps } from './types';
 
 const customProps = new Set([
@@ -36,7 +36,12 @@ export const SBackdrop = styled('div', {
   padding: ${({ theme, padding }) =>
     padding ? theme.spacing(theme.gap.xl) : 0};
   overflow: ${({ scrollable }) => (scrollable ? 'hidden' : 'auto')};
-  background-color: ${({ theme }) => chromeTransparentFill(theme, 42)};
+  background-color: ${({ theme }) => theme.surfaces.backdrop};
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  ${overlayFade}
+
+  &[hidden] {
+    display: none;
+  }
 `;

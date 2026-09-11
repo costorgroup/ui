@@ -24,6 +24,7 @@ export type TInputEmojiFieldProps = Omit<
   emojis?: TEmojiItem[];
   categories?: TEmojiCategory[];
   trigger?: ReactNode;
+  actionBar?: ReactNode;
 };
 
 export type TSInputEmojiFieldDropdownProps = {

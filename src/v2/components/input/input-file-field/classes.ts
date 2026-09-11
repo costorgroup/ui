@@ -3,6 +3,7 @@ import { generateUtilityClasses } from '../../../../helpers/generate-utility-cla
 export const inputFileFieldClasses = generateUtilityClasses('InputFileField', [
   'root',
   'disabled',
+  'error',
   'expanded',
   'open',
 ]);

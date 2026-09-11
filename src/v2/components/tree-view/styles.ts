@@ -11,7 +11,7 @@ type TStyledRowProps = {
 
 const appearanceProps = new Set(['variant', 'color', 'size']);
 
-const paletteAt = (theme: TTheme, color: TPaletteColor) => theme.colors[color];
+const paletteAt = (theme: TTheme, color: TPaletteColor) => theme.palette[color];
 
 export const STreeViewRoot = styled.div`
   box-sizing: border-box;
@@ -19,7 +19,7 @@ export const STreeViewRoot = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.palette.default.main};
   font-family: inherit;
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
 `;

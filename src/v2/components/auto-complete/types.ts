@@ -3,8 +3,8 @@ import type { TInputAutoCompleteProps } from '../input/input-auto-complete/types
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 import type { TPaletteColor } from '../../../theme/types';
 
-export type TAutoCompleteProps = Omit<
-  TInputAutoCompleteProps,
+export type TAutoCompleteProps<T = unknown> = Omit<
+  TInputAutoCompleteProps<T>,
   'color' | 'size' | 'variant'
 > & {
   label?: ReactNode;

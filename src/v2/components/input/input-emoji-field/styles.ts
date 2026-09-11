@@ -4,7 +4,7 @@ import { tabsClasses } from '../../tabs/classes';
 import { inputDropdownPanelStyles } from '../dropdown-styles';
 import { inputInnerResetStyles } from '../variant-styles';
 import { CHROME_FILL, CHROME_FOCUS } from '../../../idle-variant-styles';
-import { chromeOpaqueFill } from '../../../surface';
+import { fieldChromeFill } from '../../../surface';
 import { TInputSize } from '../input-wrapper/types';
 import { TSInputEmojiFieldDropdownProps } from './types';
 
@@ -182,25 +182,25 @@ export const SInputEmojiFieldOption = styled.button`
   cursor: pointer;
 
   &[aria-selected='true'] {
-    background-color: ${({ theme }) => chromeOpaqueFill(theme, CHROME_FILL)};
+    background-color: ${({ theme }) => fieldChromeFill(theme, CHROME_FILL)};
   }
 
   &[data-highlighted='true'],
   &:hover {
-    background-color: ${({ theme }) => chromeOpaqueFill(theme, CHROME_FOCUS)};
+    background-color: ${({ theme }) => fieldChromeFill(theme, CHROME_FOCUS)};
     box-shadow: inset 0 0 0 2px
-      ${({ theme }) => theme.colors.default.main};
+      ${({ theme }) => theme.palette.default.main};
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.default.main};
+    outline: 2px solid ${({ theme }) => theme.palette.default.main};
     outline-offset: 1px;
   }
 `;
 
 export const SInputEmojiFieldEmpty = styled.div`
   padding: ${({ theme }) => theme.spacing(theme.gap.md)};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.palette.default.main};
   opacity: 0.5;
   font-size: 13px;
   text-align: center;

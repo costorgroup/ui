@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import { TGap, TTheme } from '../../../theme/types';
+import { MOTION, reduceMotion } from '../../motion';
+import { paperShadow } from '../../surface';
 import { TSpeedDialLayout } from './data';
 import { TSpeedDialInset } from './types';
 
@@ -12,15 +14,16 @@ type TSSpeedDialItemsProps = {
   itemsGap?: TSpeedDialInset;
   itemsDirection?: TSpeedDialLayout['itemsDirection'];
   itemOffset?: string;
-  open?: boolean;
 };
 
 const rootProps = new Set(['flexDirection', 'gap']);
-const itemsProps = new Set(['itemsGap', 'itemsDirection', 'itemOffset', 'open']);
+const itemsProps = new Set(['itemsGap', 'itemsDirection', 'itemOffset']);
 
-const SPRING = 'cubic-bezier(0.34, 1.25, 0.64, 1)';
-const STAGGER_MS = 42;
+const STAGGER_MS = 56;
 const MAX_STAGGER_ITEMS = 8;
+const OPEN_MS = 360;
+const CLOSE_MS = 180;
+const POP = 'cubic-bezier(0.22, 1.45, 0.32, 1)';
 
 const toInset = (theme: TTheme, value?: TSpeedDialInset) => {
   if (value === undefined) {
@@ -38,21 +41,54 @@ const toInset = (theme: TTheme, value?: TSpeedDialInset) => {
   return value;
 };
 
-const staggerRules = (openSelector: string, closedSelector: string) =>
+const staggerRules = () =>
   Array.from({ length: MAX_STAGGER_ITEMS }, (_, index) => {
     const openDelay = index * STAGGER_MS;
-    const closeDelay = (MAX_STAGGER_ITEMS - 1 - index) * STAGGER_MS;
 
     return `
-      ${openSelector} > *:nth-of-type(${index + 1}) {
+      &[data-open='true'] > *:nth-of-type(${index + 1}) {
         transition-delay: ${openDelay}ms;
-      }
-
-      ${closedSelector} > *:nth-of-type(${index + 1}) {
-        transition-delay: ${closeDelay}ms;
       }
     `;
   }).join('');
+
+const itemsPlacement = (itemsDirection: TSpeedDialLayout['itemsDirection']) => {
+  switch (itemsDirection) {
+    case 'column':
+      return `
+        top: 100%;
+        left: 50%;
+        padding-top: var(--speed-dial-gap);
+        transform: translateX(-50%);
+        --speed-dial-origin: 50% 0%;
+      `;
+    case 'row':
+      return `
+        left: 100%;
+        top: 50%;
+        padding-left: var(--speed-dial-gap);
+        transform: translateY(-50%);
+        --speed-dial-origin: 0% 50%;
+      `;
+    case 'row-reverse':
+      return `
+        right: 100%;
+        top: 50%;
+        padding-right: var(--speed-dial-gap);
+        transform: translateY(-50%);
+        --speed-dial-origin: 100% 50%;
+      `;
+    case 'column-reverse':
+    default:
+      return `
+        bottom: 100%;
+        left: 50%;
+        padding-bottom: var(--speed-dial-gap);
+        transform: translateX(-50%);
+        --speed-dial-origin: 50% 100%;
+      `;
+  }
+};
 
 export const SSpeedDial = styled('div', {
   shouldForwardProp: (prop) => !rootProps.has(prop),
@@ -68,20 +104,21 @@ export const SSpeedDialTriggerWrap = styled.span`
   position: relative;
   z-index: 1;
   display: inline-flex;
-  filter: drop-shadow(
-    0 8px 18px color-mix(in lab, ${({ theme }) => theme.colors.common.black} 22%, transparent)
-  );
+  border-radius: inherit;
+  box-shadow: ${({ theme }) => paperShadow(theme, 4)};
 `;
 
-export const SSpeedDialTriggerIcon = styled.span<{ open?: boolean }>`
+export const SSpeedDialTriggerIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.38s ${SPRING};
+  transition: transform ${MOTION.duration} ${MOTION.easing};
 
   &[data-open='true'] {
     transform: rotate(45deg);
   }
+
+  ${reduceMotion}
 `;
 
 export const SSpeedDialItems = styled('div', {
@@ -94,59 +131,35 @@ export const SSpeedDialItems = styled('div', {
   gap: ${({ theme, itemsGap = 'sm' }) => toInset(theme, itemsGap)};
   visibility: hidden;
   pointer-events: none;
+  transition: visibility 0s linear ${CLOSE_MS}ms;
 
-  ${({ itemsDirection = 'column-reverse' }) => {
-    switch (itemsDirection) {
-      case 'column':
-        return `
-          top: 100%;
-          left: 50%;
-          padding-top: var(--speed-dial-gap);
-          transform: translateX(-50%);
-        `;
-      case 'row':
-        return `
-          left: 100%;
-          top: 50%;
-          padding-left: var(--speed-dial-gap);
-          transform: translateY(-50%);
-        `;
-      case 'row-reverse':
-        return `
-          right: 100%;
-          top: 50%;
-          padding-right: var(--speed-dial-gap);
-          transform: translateY(-50%);
-        `;
-      case 'column-reverse':
-      default:
-        return `
-          bottom: 100%;
-          left: 50%;
-          padding-bottom: var(--speed-dial-gap);
-          transform: translateX(-50%);
-        `;
-    }
-  }}
+  ${({ itemsDirection = 'column-reverse' }) => itemsPlacement(itemsDirection)}
 
   & > * {
     opacity: 0;
-    transform: scale(0.55) ${({ itemOffset = 'translateY(10px)' }) => itemOffset};
+    transform-origin: var(--speed-dial-origin);
+    transform: scale(0.28)
+      ${({ itemOffset = 'translateY(16px)' }) => itemOffset};
     transition:
-      opacity 0.32s ${SPRING},
-      transform 0.32s ${SPRING};
+      opacity ${CLOSE_MS}ms ease-in,
+      transform ${CLOSE_MS}ms ease-in;
     will-change: transform, opacity;
+    ${reduceMotion}
   }
 
   &[data-open='true'] {
     visibility: visible;
     pointer-events: auto;
+    transition: visibility 0s;
   }
 
   &[data-open='true'] > * {
     opacity: 1;
     transform: scale(1);
+    transition:
+      opacity ${OPEN_MS}ms ${POP},
+      transform ${OPEN_MS}ms ${POP};
   }
 
-  ${staggerRules("&[data-open='true']", "&:not([data-open='true'])")}
+  ${staggerRules()}
 `;

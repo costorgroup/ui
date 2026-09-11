@@ -6,6 +6,6 @@ export const SWindowContent = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
   min-width: 0;
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.palette.default.main};
 `;
 

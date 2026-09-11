@@ -1,12 +1,41 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import {
-  RadioButton,
-  RadioButtonGroup
-} from '../../index';
+import type { TPaletteColor } from '../../../theme/types';
+import { Flex } from '../../../index';
+import { RadioButton, RadioButtonGroup, Text } from '../../index';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+type TPlan = {
+  id: string;
+  name: string;
+  blurb: string;
+};
+
+const plans: TPlan[] = [
+  { id: 'free', name: 'Free', blurb: 'For individuals' },
+  { id: 'pro', name: 'Pro', blurb: 'For growing teams' },
+  { id: 'team', name: 'Team', blurb: 'Includes shared workspaces' },
+];
 
 const meta: Meta<typeof RadioButtonGroup> = {
-  title: 'V2/Forms/RadioButtonGroup',
+  title: 'V3/Forms/RadioButtonGroup',
   component: RadioButtonGroup,
   tags: ['autodocs'],
   decorators: [
@@ -21,28 +50,9 @@ const meta: Meta<typeof RadioButtonGroup> = {
       control: 'select',
       options: ['vertical', 'horizontal'],
     },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
     fullWidth: { control: 'boolean' },
     error: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -50,13 +60,25 @@ const meta: Meta<typeof RadioButtonGroup> = {
     description: { control: 'text' },
     helperText: { control: 'text' },
   },
+  args: {
+    label: 'Plan',
+    helperText: 'Change plans whenever you like.',
+    name: 'plan',
+    direction: 'vertical',
+    size: 'md',
+    variant: 'surface',
+    color: 'primary',
+    fullWidth: true,
+    error: false,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof RadioButtonGroup>;
 
-export const Default: Story = {
+export const Playground: Story = {
+  tags: ['!dev'],
   render: (args) => {
     const [plan, setPlan] = useState('free');
 
@@ -64,7 +86,7 @@ export const Default: Story = {
       <RadioButtonGroup
         {...args}
         value={plan}
-        onChange={(event) => setPlan(event.target.value)}
+        onChange={(_, next) => setPlan(next as string)}
       >
         <RadioButton value="free" label="Free" />
         <RadioButton value="pro" label="Pro" />
@@ -76,16 +98,88 @@ export const Default: Story = {
       </RadioButtonGroup>
     );
   },
-  args: {
-    label: 'Plan',
-    helperText: 'Change plans whenever you like.',
-    name: 'plan',
-    direction: 'vertical',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
-    fullWidth: true,
-    error: false,
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {COLORS.map((color) => (
+        <RadioButtonGroup
+          key={color}
+          color={color}
+          label={color}
+          defaultValue="a"
+          name={`color-${color}`}
+        >
+          <RadioButton value="a" label="A" />
+          <RadioButton value="b" label="B" />
+        </RadioButtonGroup>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <RadioButtonGroup
+            variant={variant}
+            defaultValue="a"
+            name={`variant-${variant}`}
+          >
+            <RadioButton value="a" label="A" />
+            <RadioButton value="b" label="B" />
+          </RadioButtonGroup>
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {SIZES.map((size) => (
+        <RadioButtonGroup
+          key={size}
+          size={size}
+          label={size}
+          defaultValue="a"
+          name={`size-${size}`}
+        >
+          <RadioButton value="a" label="A" />
+          <RadioButton value="b" label="B" />
+        </RadioButtonGroup>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Objects: Story = {
+  render: () => {
+    const [plan, setPlan] = useState<TPlan>(plans[1]);
+
+    return (
+      <RadioButtonGroup
+        label="Plan"
+        helperText={plan.blurb}
+        value={plan}
+        onChange={(_, next) => setPlan(next)}
+        isValueEqual={(a, b) => a.id === b.id}
+      >
+        {plans.map((item) => (
+          <RadioButton
+            key={item.id}
+            value={item}
+            label={item.name}
+            description={item.blurb}
+          />
+        ))}
+      </RadioButtonGroup>
+    );
   },
 };
 
@@ -98,14 +192,8 @@ export const Uncontrolled: Story = {
     </RadioButtonGroup>
   ),
   args: {
-    label: 'Plan',
     name: 'plan-uncontrolled',
     defaultValue: 'pro',
-    direction: 'vertical',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
-    fullWidth: true,
   },
 };
 
@@ -118,15 +206,9 @@ export const Error: Story = {
     </RadioButtonGroup>
   ),
   args: {
-    label: 'Plan',
     helperText: 'Please select a plan.',
     name: 'plan-error',
     defaultValue: '',
-    direction: 'vertical',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
-    fullWidth: true,
     error: true,
   },
 };

@@ -15,6 +15,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const meta: Meta<typeof Pagination> = {
@@ -51,7 +52,7 @@ type Story = StoryObj<typeof Pagination>;
 export const Basic: Story = {
   args: {
     count: 10,
-    color: 'default',
+    color: 'primary',
     size: 'md',
   },
 };

@@ -16,7 +16,7 @@ export const SSection = styled('section', {
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   box-sizing: border-box;
-  --section-path-color: ${({ theme, color }) => theme.colors[color].main};
+  --section-path-color: ${({ theme, color }) => theme.palette[color].main};
   --section-marker-offset: ${({ theme, align }) =>
     align === 'center'
       ? 'calc(var(--section-marker-size, 0.625rem) / 2)'

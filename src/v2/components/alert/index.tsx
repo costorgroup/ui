@@ -17,9 +17,10 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       title,
       actions,
       icon,
-      color = 'default',
+      color = 'primary',
       variant = 'subtle',
       size = 'md',
+      radius = 'md',
       onClose,
       className,
       ...props
@@ -34,6 +35,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
         color={color}
         variant={variant}
         size={size}
+        radius={radius}
         closable={closable}
         {...props}
         className={mergeClasses(
@@ -65,7 +67,12 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
 
 Alert.displayName = 'Alert';
 
-export type { TAlertProps, TAlertVariant, TAlertSize } from './types';
+export type {
+  TAlertProps,
+  TAlertVariant,
+  TAlertSize,
+  TAlertRadius,
+} from './types';
 export { alertClasses } from './classes';
 export { AlertBase, AlertBody, alertBaseClasses } from './alert-base';
 export type { TAlertBaseProps } from './alert-base';

@@ -9,7 +9,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputDateFieldClasses } from './classes';
 import {
   clampDate,
@@ -82,16 +86,32 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
       defaultOpen = false,
       onOpenChange,
       name,
-      disabled = false,
-      variant = 'subtle',
-      size = 'md',
-      color = 'default',
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      actionBar,
       id,
       className,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const listId = useId();
     const adapter = useDateAdapter(adapterProp);
     const ampm = ampmProp ?? adapter.is12HourCycleInCurrentLocale();
@@ -203,7 +223,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
         return;
       }
       const rect = trigger.getBoundingClientRect();
-      const width = Math.min(320, Math.max(rect.width, 280));
+      const width = Math.min(300, Math.max(rect.width, 220));
       const dropdownHeight =
         dropdownRef.current?.offsetHeight ||
         Math.min(380, window.innerHeight * 0.6);
@@ -574,16 +594,19 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
           color={color}
           disabled={disabled}
           trigger
+          actionBar={actionBar}
         >
           <SInputDateFieldTrigger
             ref={triggerRef}
             type="button"
-            id={id}
+            id={fieldId}
             size={size}
             disabled={disabled}
             aria-haspopup="dialog"
             aria-expanded={open}
             aria-controls={open ? listId : undefined}
+            aria-invalid={error || undefined}
+            aria-describedby={ariaDescribedBy ?? form.helperId}
             onClick={() => setOpen(!open)}
             onKeyDown={handleTriggerKeyDown}
           >
@@ -620,6 +643,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
               width={coords.width}
               placement={coords.placement}
               visible={visible}
+              color={color}
             >
               <SInputDateFieldPicker>
                 {showCalendar ? (
@@ -629,7 +653,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         type="button"
                         variant="ghost"
                         size="sm"
-                        color="base"
+                        color="default"
                         aria-label="Previous month"
                         disabled={!canGoPrev}
                         onClick={() =>
@@ -650,7 +674,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         type="button"
                         variant="ghost"
                         size="sm"
-                        color="base"
+                        color="default"
                         aria-label="Next month"
                         disabled={!canGoNext}
                         onClick={() =>
@@ -663,10 +687,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
 
                     <SInputDateFieldWeekdays>
                       {weekdays.map((label, index) => (
-                        <SInputDateFieldWeekday
-                          key={`${label}-${index}`}
-                          color={color}
-                        >
+                        <SInputDateFieldWeekday key={`${label}-${index}`}>
                           {label}
                         </SInputDateFieldWeekday>
                       ))}
@@ -696,7 +717,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                             outside={outside}
                             disabled={dayDisabled}
                             color={color}
-                            variant={variant}
                             aria-label={adapter.format(day, 'fullDate')}
                             aria-pressed={selected}
                             onClick={() => handleDaySelect(day)}
@@ -717,7 +737,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         items={monthItems}
                         value={selectedMonth}
                         color={color}
-                        variant={variant}
                         disabled={disabled}
                         onChange={(next) => handleMonthSelect(Number(next))}
                       />
@@ -726,7 +745,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         items={dayItems}
                         value={Math.min(selectedDay, daysInMonth)}
                         color={color}
-                        variant={variant}
                         disabled={disabled}
                         onChange={(next) => handleDateDaySelect(Number(next))}
                       />
@@ -735,7 +753,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         items={yearItems}
                         value={selectedYear}
                         color={color}
-                        variant={variant}
                         disabled={disabled}
                         infinite={false}
                         onChange={(next) => handleYearSelect(Number(next))}
@@ -765,7 +782,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         items={ampm ? HOURS_12 : HOURS_24}
                         value={ampm ? selectedHour12 : selectedHours}
                         color={color}
-                        variant={variant}
                         disabled={disabled}
                         onChange={(next) => handleHourSelect(Number(next))}
                       />
@@ -774,7 +790,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         items={MINUTES}
                         value={selectedMinutes}
                         color={color}
-                        variant={variant}
                         disabled={disabled}
                         onChange={(next) => handleMinuteSelect(Number(next))}
                       />
@@ -784,7 +799,6 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                           items={PERIODS}
                           value={selectedPeriod}
                           color={color}
-                          variant={variant}
                           disabled={disabled}
                           infinite={false}
                           onChange={(next) =>
@@ -799,9 +813,9 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         {mode === 'datetime' ? (
                           <Button
                             type="button"
-                            variant={variant}
+                            variant="ghost"
                             size="sm"
-                            color={color}
+                            color="default"
                             onClick={handleTimeBack}
                           >
                             Back

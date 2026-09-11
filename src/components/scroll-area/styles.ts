@@ -16,7 +16,7 @@ export const SScrollArea = styled("div", {
   overflow: auto;
 
   ${({ theme, mode, color, hovered }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     const visible = mode === "always" || hovered;
     const thumb = visible ? palette.main : "transparent";
 

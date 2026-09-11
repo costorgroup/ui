@@ -1,15 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useTheme } from '@emotion/react';
 import React from 'react';
 import { Flex } from '../../../index';
-import {
-  Button,
-  Text
-} from '../../index';
 import type { TPaletteColor } from '../../../theme/types';
-import type { TButtonSize, TButtonVariant } from './types';
-
-const SEMANTIC_COLORS = ['info', 'success', 'error', 'warning'] as const satisfies readonly TPaletteColor[];
+import { Button, ButtonGroup, Text } from '../../index';
+import type { TButtonRadius, TButtonSize, TButtonVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -22,6 +16,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TButtonVariant[] = [
@@ -34,9 +29,10 @@ const VARIANTS: TButtonVariant[] = [
 ];
 
 const SIZES: TButtonSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TButtonRadius[] = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill'];
 
 const meta: Meta<typeof Button> = {
-  title: 'V2/Buttons/Button',
+  title: 'V3/Buttons/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
@@ -44,7 +40,17 @@ const meta: Meta<typeof Button> = {
     appearance: { control: 'select', options: ['opaque', 'transparent'] },
     size: { control: 'select', options: SIZES },
     color: { control: 'select', options: COLORS },
+    radius: { control: 'select', options: RADIUS },
     disabled: { control: 'boolean' },
+  },
+  args: {
+    children: 'Button',
+    variant: 'solid',
+    appearance: 'opaque',
+    size: 'md',
+    color: 'default',
+    radius: 'sm',
+    disabled: false,
   },
 };
 
@@ -52,15 +58,20 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
-  args: {
-    children: 'Button',
-    variant: 'solid',
-    appearance: 'opaque',
-    size: 'md',
-    color: 'default',
-    disabled: false,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {COLORS.map((color) => (
+        <Button key={color} color={color}>
+          {color}
+        </Button>
+      ))}
+    </Flex>
+  ),
 };
 
 export const Variants: Story = {
@@ -75,7 +86,7 @@ export const Variants: Story = {
                 {color}
               </Button>
             ))}
-            <Button variant={variant} color="default" disabled>
+            <Button variant={variant} disabled>
               disabled
             </Button>
           </Flex>
@@ -89,7 +100,7 @@ export const Sizes: Story = {
   render: () => (
     <Flex gap="sm" wrap="wrap" align="center">
       {SIZES.map((size) => (
-        <Button key={size} size={size} color="info">
+        <Button key={size} size={size}>
           {size}
         </Button>
       ))}
@@ -97,23 +108,44 @@ export const Sizes: Story = {
   ),
 };
 
-export const MacSemanticColors: Story = {
-  render: function MacSemanticColorsStory() {
-    const theme = useTheme();
+export const Radius: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {RADIUS.map((radius) => (
+        <Button key={radius} radius={radius}>
+          {radius}
+        </Button>
+      ))}
+    </Flex>
+  ),
+};
 
-    return (
-      <Flex direction="column" gap="md">
-        <Text size="sm">
-          Semantic palettes are derived from main via createColorScale (±5–10%).
-        </Text>
-        <Flex gap="sm" wrap="wrap">
-          {SEMANTIC_COLORS.map((color) => (
-            <Button key={color} color={color}>
-              {color} · {theme.colors[color].main}
-            </Button>
-          ))}
-        </Flex>
-      </Flex>
-    );
-  },
+export const Group: Story = {
+  render: (args) => (
+    <Flex gap="lg" align="center" wrap="wrap">
+      <ButtonGroup
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <Button>Left</Button>
+        <Button>Center</Button>
+        <Button>Right</Button>
+      </ButtonGroup>
+      <ButtonGroup
+        rounded
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <Button>Left</Button>
+        <Button>Center</Button>
+        <Button>Right</Button>
+      </ButtonGroup>
+    </Flex>
+  ),
 };

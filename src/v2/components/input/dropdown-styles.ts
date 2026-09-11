@@ -2,14 +2,13 @@ import type { TTheme } from '../../../theme/types';
 import { CUI_CANVAS_VAR } from '../../../helpers/color/create-color-scale';
 import type { TPaletteColor } from '../../../theme/types';
 import {
-  chromeOpaqueFill,
   colorMix,
   surfacePanelBorder,
   surfacePanelShadow,
 } from '../../surface';
 import {
+  CHROME_FOCUS,
   CHROME_IDLE,
-  CHROME_HOVER,
 } from '../../idle-variant-styles';
 import type { TInputVariant } from './input-wrapper/types';
 
@@ -18,28 +17,32 @@ export type TInputDropdownChrome = {
   variant: TInputVariant;
 };
 
-/** Dropdown panel — opaque canvas fill. */
-export const inputDropdownPanelStyles = (theme: TTheme) => `
-  ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
-  background-color: ${theme.colors.base.main};
-  color: ${theme.colors.default.main};
-  border: ${surfacePanelBorder(theme)};
-  box-shadow: ${surfacePanelShadow(theme)};
-`;
+/** Dropdown panel — page surface, not the field wash. */
+export const inputDropdownPanelStyles = (theme: TTheme) => {
+  const surface = theme.surfaces.background;
+
+  return `
+    ${CUI_CANVAS_VAR}: ${surface};
+    background-color: ${surface};
+    color: ${theme.palette.default.main};
+    border: ${surfacePanelBorder(theme)};
+    box-shadow: ${surfacePanelShadow(theme)};
+  `;
+};
 
 export const inputDropdownOptionCssVars = (
   theme: TTheme,
-  _color: TPaletteColor,
+  color: TPaletteColor,
 ) => {
   return `
     --input-dropdown-option-hover: ${inputDropdownOptionHover(theme)};
-    --input-dropdown-option-selected: ${inputDropdownOptionSelected(theme)};
+    --input-dropdown-option-selected: ${inputDropdownOptionSelected(theme, color)};
   `;
 };
 
 /** Empty / muted dropdown copy. */
 export const inputDropdownMutedText = (theme: TTheme, alpha = 50) =>
-  colorMix(theme.colors.default.main, alpha);
+  colorMix(theme.palette.default.main, alpha);
 
 /** Compact dropdown option typography + padding. */
 export const INPUT_DROPDOWN_OPTION_FONT_SIZE = '12px';
@@ -49,8 +52,10 @@ export const inputDropdownOptionPadding = (theme: TTheme) =>
 
 /** Keyboard / pointer hover on unselected options. */
 export const inputDropdownOptionHover = (theme: TTheme) =>
-  chromeOpaqueFill(theme, CHROME_IDLE);
+  colorMix(theme.surfaces.mixer, CHROME_IDLE);
 
-/** Current value — stronger than hover; not replaced on hover. */
-export const inputDropdownOptionSelected = (theme: TTheme) =>
-  chromeOpaqueFill(theme, CHROME_HOVER);
+/** Current value — current color wash; not replaced on hover. */
+export const inputDropdownOptionSelected = (
+  theme: TTheme,
+  color: TPaletteColor,
+) => colorMix(theme.palette[color].main, CHROME_FOCUS);

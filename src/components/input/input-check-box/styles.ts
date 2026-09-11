@@ -58,7 +58,7 @@ export const SInputCheckBoxControl = styled("span", {
     color 0.15s ease;
 
   ${({ theme, variant = "subtle", color = "primary" }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case "surface":
@@ -97,7 +97,7 @@ export const SInputCheckBoxControl = styled("span", {
 
   .${inputCheckBoxClasses.input}:hover:not(:disabled) + & {
     ${({ theme, variant = "subtle", color = "primary" }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       switch (variant) {
         case "surface":
@@ -138,7 +138,7 @@ export const SInputCheckBoxControl = styled("span", {
 
   .${inputCheckBoxClasses.input}:checked + & {
     ${({ theme, color = "primary" }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.main};
@@ -150,7 +150,7 @@ export const SInputCheckBoxControl = styled("span", {
 
   .${inputCheckBoxClasses.input}:checked:hover:not(:disabled) + & {
     ${({ theme, color = "primary" }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.dark};
@@ -167,7 +167,7 @@ export const SInputCheckBoxControl = styled("span", {
 
   .${inputCheckBoxClasses.input}:focus-visible + & {
     outline: 2px solid
-      ${({ theme, color = "primary" }) => theme.colors[color].main};
+      ${({ theme, color = "primary" }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 

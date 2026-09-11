@@ -29,8 +29,8 @@ export const SImage = styled('span', {
   flex-shrink: 0;
   border-radius: ${({ theme, radius = 'medium' }) => theme.radius[radius]};
   background-color: ${({ theme, showFallback }) =>
-    showFallback ? theme.colors.common.grey[10] : 'transparent'};
-  color: ${({ theme }) => theme.colors.common.grey[16]};
+    showFallback ? theme.palette.common.grey[10] : 'transparent'};
+  color: ${({ theme }) => theme.palette.common.grey[16]};
 `;
 
 export const SImageMedia = styled('span', {

@@ -17,7 +17,7 @@ export const SMenuItem = styled('button', {
   border: none;
   border-radius: ${({ theme }) => theme.radius.medium};
   background: transparent;
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
   font: inherit;
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
@@ -31,8 +31,8 @@ export const SMenuItem = styled('button', {
   &:hover:not(:disabled),
   &:focus-visible {
     background-color: ${({ theme, color }) =>
-      `color-mix(in lab, ${theme.colors[color].main} 10%, transparent)`};
-    color: ${({ theme, color }) => theme.colors[color].dark};
+      `color-mix(in oklab, ${theme.palette[color].main} 10%, transparent)`};
+    color: ${({ theme, color }) => theme.palette[color].dark};
     outline: none;
   }
 

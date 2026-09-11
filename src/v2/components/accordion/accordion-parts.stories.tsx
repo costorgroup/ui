@@ -22,6 +22,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TAccordionVariant[] = [
@@ -47,7 +48,7 @@ type Story = StoryObj<typeof AccordionBase>;
 
 export const Default: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
   },
@@ -167,7 +168,7 @@ export const ExpandIconPosition: Story = {
 
 export const Grouped: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'surface',
     size: 'md',
     radius: 'medium',

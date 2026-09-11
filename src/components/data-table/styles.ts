@@ -68,9 +68,9 @@ export const SDataTable = styled('div', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
-    const black = theme.colors.common.black;
-    const white = theme.colors.common.white;
+    const palette = theme.palette[color];
+    const black = theme.palette.common.black;
+    const white = theme.palette.common.white;
     const shadow = `
       box-shadow:
         0 4px 10px ${black}0a,
@@ -89,30 +89,30 @@ export const SDataTable = styled('div', {
           & .${tableBaseClasses.root} {
             --table-fg: ${palette.contrastText};
             --table-head-fg: ${palette.contrastText};
-            --table-border: color-mix(in lab, ${palette.contrastText} 28%, transparent);
-            --table-head-bg: color-mix(in lab, ${palette.contrastText} 12%, transparent);
-            --table-row-hover: color-mix(in lab, ${palette.contrastText} 10%, transparent);
+            --table-border: color-mix(in oklab, ${palette.contrastText} 28%, transparent);
+            --table-head-bg: color-mix(in oklab, ${palette.contrastText} 12%, transparent);
+            --table-row-hover: color-mix(in oklab, ${palette.contrastText} 10%, transparent);
             --table-accent: ${palette.contrastText};
           }
 
           & .${dataTableClasses.search} .${inputWrapperClasses.root} {
             background-color: ${white};
-            color: ${theme.colors.base.darker};
+            color: ${theme.palette.base.darker};
             border-color: transparent;
 
             &:hover,
             &:focus-within {
               background-color: ${white};
-              color: ${theme.colors.base.darker};
+              color: ${theme.palette.base.darker};
               border-color: transparent;
             }
           }
         `;
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           ${shadow}
@@ -140,7 +140,7 @@ export const SDataTable = styled('div', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 6%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 6%, transparent);
           color: ${palette.darker};
           border-color: transparent;
           ${shadow}

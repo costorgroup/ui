@@ -47,8 +47,8 @@ export const STabsBase = styled('div', {
   font-family: inherit;
 
   ${({ theme, color, variant, anchor }) => {
-    const palette = theme.colors[color];
-    const track = theme.colors.base.lighter;
+    const palette = theme.palette[color];
+    const track = theme.palette.base.lighter;
     const lineWidth = '2px';
 
     const vars = `
@@ -56,10 +56,10 @@ export const STabsBase = styled('div', {
       --tabs-dark: ${palette.dark};
       --tabs-darker: ${palette.darker};
       --tabs-contrast: ${palette.contrastText};
-      --tabs-muted: ${theme.colors.base.light};
+      --tabs-muted: ${theme.palette.base.light};
       --tabs-track: ${track};
-      --tabs-subtle-bg: color-mix(in lab, ${palette.main} 8%, transparent);
-      --tabs-subtle-bg-hover: color-mix(in lab, ${palette.main} 14%, transparent);
+      --tabs-subtle-bg: color-mix(in oklab, ${palette.main} 8%, transparent);
+      --tabs-subtle-bg-hover: color-mix(in oklab, ${palette.main} 14%, transparent);
       --tabs-radius: ${theme.radius.medium};
     `;
 
@@ -89,7 +89,7 @@ export const STabsBase = styled('div', {
       return `
         ${vars}
         padding: ${theme.spacing(theme.gap.xs)};
-        background-color: ${theme.colors.base.lighter};
+        background-color: ${theme.palette.base.lighter};
         border-radius: ${theme.radius.large};
       `;
     }

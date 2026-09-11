@@ -2,4 +2,5 @@ import { generateUtilityClasses } from '../../../../helpers/generate-utility-cla
 
 export const blockquoteBaseClasses = generateUtilityClasses('V2BlockquoteBase', [
   'root',
+  'stack',
 ]);

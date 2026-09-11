@@ -46,6 +46,12 @@ export const SInputFileFieldTrigger = styled('button', {
       font-size: ${sizeFont[size]};
     `;
   }}
+
+  && {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
 `;
 
 export const SInputFileFieldValue = styled.span`
@@ -63,13 +69,7 @@ export const SInputFileFieldText = styled.span`
 `;
 
 export const SInputFileFieldPlaceholder = styled.span`
-  opacity: 0.5;
-`;
-
-export const SInputFileFieldActions = styled.span`
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
+  color: ${({ theme }) => theme.surfaces.muted};
 `;
 
 export const SInputFileFieldHiddenInput = styled.input`

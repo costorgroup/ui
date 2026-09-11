@@ -28,8 +28,8 @@ export const SVideo = styled('div', {
   height: ${({ height }) => toCssSize(height) ?? 'auto'};
   max-width: 100%;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.colors.common.black};
-  color: ${({ theme }) => theme.colors.common.white};
+  background-color: ${({ theme }) => theme.palette.common.black};
+  color: ${({ theme }) => theme.palette.common.white};
   cursor: pointer;
   user-select: none;
 
@@ -38,7 +38,7 @@ export const SVideo = styled('div', {
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 
@@ -47,7 +47,7 @@ export const SVideo = styled('div', {
     width: 100%;
     height: ${({ height }) => (height == null ? 'auto' : '100%')};
     object-fit: contain;
-    background-color: ${({ theme }) => theme.colors.common.black};
+    background-color: ${({ theme }) => theme.palette.common.black};
   }
 
   .${videoClasses.overlay} {
@@ -57,7 +57,7 @@ export const SVideo = styled('div', {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ theme }) => `${theme.colors.common.black}40`};
+    background-color: ${({ theme }) => `${theme.palette.common.black}40`};
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -80,8 +80,8 @@ export const SVideo = styled('div', {
       `${theme.spacing(theme.gap.md)} ${theme.spacing(theme.gap.md)} ${theme.spacing(theme.gap.sm)}`};
     background: linear-gradient(
       to top,
-      ${({ theme }) => `${theme.colors.common.black}cc`} 0%,
-      ${({ theme }) => `${theme.colors.common.black}00`} 100%
+      ${({ theme }) => `${theme.palette.common.black}cc`} 0%,
+      ${({ theme }) => `${theme.palette.common.black}00`} 100%
     );
     opacity: 1;
     pointer-events: auto;
@@ -103,7 +103,7 @@ export const SVideo = styled('div', {
     padding: 0;
     border: 0;
     border-radius: ${({ theme }) => theme.radius.pill};
-    background-color: ${({ theme }) => `${theme.colors.common.white}33`};
+    background-color: ${({ theme }) => `${theme.palette.common.white}33`};
     cursor: pointer;
     appearance: none;
     transition: height 0.12s ease;
@@ -119,7 +119,7 @@ export const SVideo = styled('div', {
     display: block;
     height: 100%;
     border-radius: inherit;
-    background-color: ${({ theme, color }) => theme.colors[color].main};
+    background-color: ${({ theme, color }) => theme.palette[color].main};
     pointer-events: none;
   }
 
@@ -136,10 +136,10 @@ export const SVideo = styled('div', {
   .${videoClasses.time} {
     margin: 0 ${({ theme }) => theme.spacing(theme.gap.xs)};
     font-variant-numeric: tabular-nums;
-    font-size: ${({ theme }) => theme.typography.text.small};
+    font-size: ${({ theme }) => theme.typography.text.sm};
     line-height: 1;
     white-space: nowrap;
-    color: ${({ theme }) => theme.colors.common.white};
+    color: ${({ theme }) => theme.palette.common.white};
     opacity: 0.92;
   }
 

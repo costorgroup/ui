@@ -2,33 +2,23 @@ import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { blockquoteClasses } from './classes';
 import { BlockquoteBase } from './blockquote-base';
-import { BlockquoteContent } from './blockquote-content';
-import { BlockquoteCaption } from './blockquote-caption';
 import { TBlockquoteProps } from './types';
 
 const Blockquote = forwardRef<HTMLQuoteElement, TBlockquoteProps>(
-  ({ children, caption, color = 'default', className, ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     return (
       <BlockquoteBase
         ref={ref}
-        color={color}
         {...props}
         className={mergeClasses(blockquoteClasses.root, className)}
-      >
-        {children != null ? (
-          <BlockquoteContent size="md">{children}</BlockquoteContent>
-        ) : null}
-        {caption != null ? (
-          <BlockquoteCaption size="sm">{caption}</BlockquoteCaption>
-        ) : null}
-      </BlockquoteBase>
+      />
     );
   },
 );
 
 Blockquote.displayName = 'Blockquote';
 
-export type { TBlockquoteProps } from './types';
+export type { TBlockquoteProps, TBlockquoteVariant } from './types';
 export { blockquoteClasses } from './classes';
 export { BlockquoteBase, blockquoteBaseClasses } from './blockquote-base';
 export type { TBlockquoteBaseProps } from './blockquote-base';
@@ -42,5 +32,9 @@ export type {
   TBlockquoteCaptionProps,
   TBlockquoteCaptionOwnProps,
 } from './blockquote-caption';
+export { BlockquoteIcon, blockquoteIconClasses } from './blockquote-icon';
+export type { TBlockquoteIconProps } from './blockquote-icon';
+export { BlockquoteRail, blockquoteRailClasses } from './blockquote-rail';
+export type { TBlockquoteRailProps } from './blockquote-rail';
 export { Blockquote };
 export default Blockquote;

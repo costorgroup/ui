@@ -33,13 +33,13 @@ export const SDropzone = styled('div', {
     color 0.15s ease;
 
   ${({ theme, color, active, disabled }) => {
-    const palette = theme.colors[color];
-    const idleBg = `color-mix(in lab, ${palette.main} 4%, transparent)`;
-    const activeBg = `color-mix(in lab, ${palette.main} 8%, transparent)`;
+    const palette = theme.palette[color];
+    const idleBg = `color-mix(in oklab, ${palette.main} 4%, transparent)`;
+    const activeBg = `color-mix(in oklab, ${palette.main} 8%, transparent)`;
 
     return `
       color: ${palette.darker};
-      border-color: color-mix(in lab, ${palette.main} 40%, transparent);
+      border-color: color-mix(in oklab, ${palette.main} 40%, transparent);
       background-color: ${active && !disabled ? activeBg : idleBg};
 
       ${
@@ -48,7 +48,7 @@ export const SDropzone = styled('div', {
           : `
         &:hover {
           background-color: ${activeBg};
-          border-color: color-mix(in lab, ${palette.main} 56%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 56%, transparent);
         }
 
         &:focus-visible {
@@ -87,7 +87,7 @@ export const SDropzoneDescription = styled.div`
   font-size: 0.875rem;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
 `;
 
 export const SDropzoneInput = styled.input`

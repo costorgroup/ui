@@ -6,4 +6,5 @@ export const inputLabelClasses = generateUtilityClasses('InputLabel', [
   'disabled',
   'error',
   'required',
+  'focused',
 ]);

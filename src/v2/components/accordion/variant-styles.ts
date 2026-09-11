@@ -16,13 +16,13 @@ type TAccordionShellState = {
 
 const chromeIdleFill = (theme: TTheme) =>
   colorMixBase(
-    theme.colors.base.contrastText,
+    theme.palette.base.contrastText,
     CHROME_FILL,
-    theme.colors.base.main,
+    theme.palette.base.main,
   );
 
 const chromeIdleBorder = (theme: TTheme) =>
-  colorMix(theme.colors.base.contrastText, CHROME_IDLE);
+  colorMix(theme.palette.base.contrastText, CHROME_IDLE);
 
 export const accordionGroupItemDivider = (theme: TTheme) =>
   `1px solid ${chromeTransparentFill(theme, CHROME_HOVER)}`;
@@ -132,7 +132,7 @@ export const accordionSummaryIdleColor = (
   palette: TThemeColorScale,
   theme: TTheme,
 ) =>
-  variant === 'solid' ? palette.contrastText : theme.colors.default.main;
+  variant === 'solid' ? palette.contrastText : theme.palette.default.main;
 
 export const accordionSummaryIconColors = (
   variant: TAccordionVariant,

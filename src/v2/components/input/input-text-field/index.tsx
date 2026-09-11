@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { ChangeEvent, FocusEvent, forwardRef } from 'react';
 import {
   isAriaInvalid,
   mergeClasses,
 } from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputTextFieldClasses } from './classes';
 import { SInputTextField } from './styles';
 import { TInputTextFieldProps } from './types';
@@ -11,28 +12,59 @@ const InputTextField = forwardRef<HTMLInputElement, TInputTextFieldProps>(
   (
     {
       className,
-      disabled,
+      disabled: disabledProp,
       readOnly,
-      required,
+      required: requiredProp,
+      id,
+      onChange,
+      onFocus,
+      onBlur,
       'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     ref,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      required: requiredProp,
+      id,
+    });
+    const error = isAriaInvalid(ariaInvalid) || form.error;
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(event);
+      form.onChange?.(event, event.target.value);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+      form.setFocused?.(true);
+      onFocus?.(event);
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      onBlur?.(event);
+    };
+
     return (
       <SInputTextField
         ref={ref}
-        disabled={disabled}
-        readOnly={readOnly}
-        required={required}
-        aria-invalid={ariaInvalid}
         {...props}
+        id={id ?? form.id}
+        disabled={form.disabled}
+        readOnly={readOnly}
+        required={form.required}
+        aria-invalid={error || undefined}
+        aria-describedby={ariaDescribedBy ?? form.helperId}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className={mergeClasses(
           inputTextFieldClasses.root,
-          disabled && inputTextFieldClasses.disabled,
-          isAriaInvalid(ariaInvalid) && inputTextFieldClasses.error,
+          form.disabled && inputTextFieldClasses.disabled,
+          error && inputTextFieldClasses.error,
           readOnly && inputTextFieldClasses.readOnly,
-          required && inputTextFieldClasses.required,
+          form.required && inputTextFieldClasses.required,
           className,
         )}
       />

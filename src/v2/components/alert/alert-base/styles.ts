@@ -1,16 +1,10 @@
 import styled from '@emotion/styled';
+import { CUI_CANVAS_VAR } from '../../../../helpers/color/create-color-scale';
 import { idleVariantAppearance } from '../../../idle-variant-styles';
-import { TAlertSize, TSAlertBaseProps } from './types';
+import { surfacePanelShadow } from '../../../surface';
+import { TSAlertBaseProps } from './types';
 
-const customProps = new Set(['color', 'variant', 'size', 'closable']);
-
-const sizeFont: Record<TAlertSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
+const customProps = new Set(['color', 'variant', 'size', 'radius', 'closable']);
 
 export const SAlertBase = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -21,50 +15,33 @@ export const SAlertBase = styled('div', {
   box-sizing: border-box;
   width: 100%;
   border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.radius.medium};
-  box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
-
-    return `
-      0 4px 10px ${black}0a,
-      0 1px 4px ${black}08,
-      0 1px 2px ${black}05
-    `;
-  }};
+  border-radius: ${({ theme, radius }) => theme.radius[radius]};
+  box-shadow: ${({ theme }) => surfacePanelShadow(theme)};
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
 
   ${({ theme, size, closable }) => {
-    const scale = theme.sizeScale[size];
-    const padY = `calc(${theme.spacing(theme.gap.sm)} * ${scale})`;
-    const padX = `calc(${theme.spacing(theme.gap.md)} * ${scale})`;
-    const gap = `calc(${theme.spacing(theme.gap.sm)} * ${scale})`;
-    const closePad = closable
-      ? `calc(${theme.spacing(theme.gap.xl)} * ${scale})`
-      : padX;
-
+    const step = theme.sizes[size];
     return `
-      gap: ${gap};
-      padding: ${padY} ${closePad} ${padY} ${padX};
-      font-size: ${sizeFont[size]};
-      --alert-gap: ${gap};
-      --alert-icon-size: ${size === 'sm' ? '1em' : size === 'lg' ? '1.35em' : '1.25em'};
+      gap: ${step.gap};
+      padding: ${step.padX};
+      ${closable ? `padding-right: calc(${step.padX} + ${step.icon});` : ''}
+      font-size: ${step.fontSize};
+      --alert-gap: ${step.gap};
+      --alert-icon-size: ${step.icon};
     `;
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
-    const { backgroundColor, borderColor, color: textColor } = idleVariantAppearance(
-      variant,
-      palette,
-      theme,
-    );
+    const palette = theme.palette[color];
+    const idle = idleVariantAppearance(variant, palette, theme);
 
     return `
-      background-color: ${backgroundColor};
-      color: ${textColor};
-      border-color: ${borderColor};
+      ${CUI_CANVAS_VAR}: ${idle.backgroundColor};
+      background-color: ${idle.backgroundColor};
+      color: ${idle.color};
+      border-color: ${idle.borderColor};
     `;
   }}
 `;

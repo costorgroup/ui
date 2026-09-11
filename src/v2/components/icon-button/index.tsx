@@ -13,9 +13,9 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
       appearance: appearanceProp,
       size: sizeProp,
       color: colorProp,
-      rounded = false,
+      radius = 'sm',
       className,
-      disabled,
+      disabled: disabledProp,
       ...props
     },
     ref,
@@ -25,6 +25,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
     const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
     const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
+    const disabled = disabledProp ?? group?.disabled ?? false;
 
     return (
       <SIconButton
@@ -34,7 +35,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
         appearance={appearance}
         size={size}
         color={color}
-        rounded={rounded}
+        radius={radius}
         disabled={disabled}
         {...props}
         className={mergeClasses(
@@ -56,6 +57,7 @@ export type {
   TIconButtonVariant,
   TIconButtonAppearance,
   TIconButtonSize,
+  TIconButtonRadius,
 } from './types';
 export { iconButtonClasses } from './classes';
 export { IconButton };

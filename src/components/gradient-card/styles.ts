@@ -16,7 +16,7 @@ export const SGradientCard = styled(Card, {
   min-width: 0;
   min-height: 0;
   background: ${({ theme, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     return `linear-gradient(
       135deg,
       ${palette.light} 0%,

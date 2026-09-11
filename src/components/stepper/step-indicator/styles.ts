@@ -38,33 +38,33 @@ export const SStepIndicator = styled('div', {
       switch (variant) {
         case 'subtle':
           return `
-            background-color: color-mix(in lab, var(--stepper-main) 8%, transparent);
+            background-color: color-mix(in oklab, var(--stepper-main) 8%, transparent);
             border-color: transparent;
             color: var(--stepper-darker);
           `;
         case 'surface':
           return `
-            background-color: color-mix(in lab, var(--stepper-main) 8%, transparent);
-            border-color: color-mix(in lab, var(--stepper-main) 24%, transparent);
+            background-color: color-mix(in oklab, var(--stepper-main) 8%, transparent);
+            border-color: color-mix(in oklab, var(--stepper-main) 24%, transparent);
             color: var(--stepper-darker);
           `;
         case 'outline':
           return `
             background-color: transparent;
-            border-color: color-mix(in lab, var(--stepper-main) 36%, transparent);
+            border-color: color-mix(in oklab, var(--stepper-main) 36%, transparent);
             color: var(--stepper-darker);
           `;
         case 'plain':
           return `
             background-color: transparent;
             border-color: transparent;
-            color: color-mix(in lab, var(--stepper-darker) 56%, transparent);
+            color: color-mix(in oklab, var(--stepper-darker) 56%, transparent);
           `;
         default:
           return `
             background-color: transparent;
             border-color: var(--stepper-track);
-            color: color-mix(in lab, var(--stepper-darker) 64%, transparent);
+            color: color-mix(in oklab, var(--stepper-darker) 64%, transparent);
           `;
       }
     }
@@ -73,14 +73,14 @@ export const SStepIndicator = styled('div', {
       switch (variant) {
         case 'subtle':
           return `
-            background-color: color-mix(in lab, var(--stepper-main) 16%, transparent);
+            background-color: color-mix(in oklab, var(--stepper-main) 16%, transparent);
             border-color: transparent;
             color: var(--stepper-darker);
-            box-shadow: 0 0 0 3px color-mix(in lab, var(--stepper-main) 16%, transparent);
+            box-shadow: 0 0 0 3px color-mix(in oklab, var(--stepper-main) 16%, transparent);
           `;
         case 'surface':
           return `
-            background-color: color-mix(in lab, var(--stepper-main) 14%, transparent);
+            background-color: color-mix(in oklab, var(--stepper-main) 14%, transparent);
             border-color: var(--stepper-main);
             color: var(--stepper-darker);
           `;
@@ -89,7 +89,7 @@ export const SStepIndicator = styled('div', {
             background-color: transparent;
             border-color: var(--stepper-main);
             color: var(--stepper-main);
-            box-shadow: 0 0 0 3px color-mix(in lab, var(--stepper-main) 16%, transparent);
+            box-shadow: 0 0 0 3px color-mix(in oklab, var(--stepper-main) 16%, transparent);
           `;
         case 'plain':
           return `
@@ -110,13 +110,13 @@ export const SStepIndicator = styled('div', {
     switch (variant) {
       case 'subtle':
         return `
-          background-color: color-mix(in lab, var(--stepper-main) 16%, transparent);
+          background-color: color-mix(in oklab, var(--stepper-main) 16%, transparent);
           border-color: transparent;
           color: var(--stepper-darker);
         `;
       case 'surface':
         return `
-          background-color: color-mix(in lab, var(--stepper-main) 14%, transparent);
+          background-color: color-mix(in oklab, var(--stepper-main) 14%, transparent);
           border-color: var(--stepper-main);
           color: var(--stepper-darker);
         `;

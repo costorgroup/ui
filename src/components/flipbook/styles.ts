@@ -25,11 +25,11 @@ export const SFlipbookMessage = styled.div`
   min-height: 12rem;
   padding: ${({ theme }) => theme.spacing(4)};
   border-radius: ${({ theme }) => theme.radius.medium};
-  border: 1px dashed ${({ theme }) => theme.colors.common.grey[6]};
-  background: ${({ theme }) => theme.colors.common.grey[1]};
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  border: 1px dashed ${({ theme }) => theme.palette.common.grey[6]};
+  background: ${({ theme }) => theme.palette.common.grey[1]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
   text-align: center;
-  font-size: ${({ theme }) => theme.typography.text.small};
+  font-size: ${({ theme }) => theme.typography.text.sm};
 `;
 
 export const SFlipbookPdfPage = styled.img`
@@ -37,7 +37,7 @@ export const SFlipbookPdfPage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background: ${({ theme }) => theme.colors.common.white};
+  background: ${({ theme }) => theme.palette.common.white};
   pointer-events: none;
   user-select: none;
 `;

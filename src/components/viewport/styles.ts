@@ -19,7 +19,7 @@ export const SViewport = styled('div', {
   border-radius: ${({ theme, radius = 'medium' }) => theme.radius[radius]};
 
   ${({ theme, variant = 'surface', color = 'base' }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'solid':
@@ -48,16 +48,16 @@ export const SViewport = styled('div', {
         `;
       case 'subtle':
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
           border-color: transparent;
         `;
       case 'surface':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
         `;
     }
   }}

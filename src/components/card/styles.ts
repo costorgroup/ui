@@ -12,9 +12,9 @@ export const SCard = styled('div', {
   height: 100%;
   overflow: hidden;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.colors.common.white};
+  background-color: ${({ theme }) => theme.palette.common.white};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,

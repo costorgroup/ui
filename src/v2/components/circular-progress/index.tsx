@@ -55,7 +55,7 @@ const CircularProgress = forwardRef<SVGSVGElement, TCircularProgressProps>(
     {
       width,
       height,
-      color = 'default',
+      color = 'primary',
       variant = 'solid',
       thickness = 2,
       role = 'status',

@@ -35,8 +35,6 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
       render,
       placement = 'top',
       offset = 8,
-      variant = 'surface',
-      color = 'default',
       className,
       ...props
     },
@@ -141,7 +139,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
         cancelAnimationFrame(outer);
         cancelAnimationFrame(inner);
       };
-    }, [mounted, updatePosition, tooltipBody, variant, color]);
+    }, [mounted, updatePosition, tooltipBody]);
 
     useEffect(() => {
       if (!mounted) {
@@ -195,8 +193,9 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
               }}
             >
               <STooltipPanel
-                variant={variant}
-                color={color}
+                elevation={2}
+                variant="surface"
+                radius="md"
                 className={tooltipClasses.panel}
               >
                 {tooltipBody}
@@ -232,7 +231,6 @@ export type {
   TTooltipPlacement,
   TTooltipRender,
   TTooltipRenderProps,
-  TTooltipVariant,
 } from './types';
 export { tooltipClasses } from './classes';
 export { Tooltip };

@@ -38,7 +38,7 @@ export const SChip = styled('button', {
   transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
 
   ${({ theme, variant = 'solid', color = 'primary' }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'subtle':
@@ -211,7 +211,7 @@ export const SChip = styled('button', {
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color = 'primary' }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 `;

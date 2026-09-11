@@ -124,32 +124,32 @@ export const SBadgeContent = styled('span', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'subtle':
         return `
-          background-color: color-mix(in lab, ${palette.main} 12%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 12%, transparent);
           color: ${palette.darker};
           border-color: transparent;
         `;
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         `;
       case 'outline':
         return `
-          background-color: ${theme.colors.common.white};
+          background-color: ${theme.palette.common.white};
           color: ${palette.main};
           border-color: ${palette.main};
         `;
       case 'ghost':
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.main};
           border-color: transparent;
         `;

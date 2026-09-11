@@ -9,7 +9,7 @@ const BreadcrumbBase = forwardRef<HTMLElement, TBreadcrumbBaseProps>(
     {
       children,
       size = 'md',
-      color = 'default',
+      color = 'primary',
       'aria-label': ariaLabel = 'Breadcrumb',
       className,
       ...props

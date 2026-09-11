@@ -1,8 +1,4 @@
 import { HTMLAttributes, ReactElement, ReactNode } from 'react';
-import { TPaletteColor } from '../../../theme/types';
-import type { TStaticVariant } from '../../variant-types';
-
-export type TTooltipVariant = TStaticVariant;
 
 export type TTooltipPlacement =
   | 'top-start'
@@ -24,12 +20,13 @@ export type TTooltipRenderProps = {
 
 export type TTooltipRender = (props: TTooltipRenderProps) => ReactNode;
 
-type TTooltipPropsBase = Omit<HTMLAttributes<HTMLSpanElement>, 'children' | 'color'> & {
+type TTooltipPropsBase = Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  'children' | 'color'
+> & {
   children: ReactElement;
   placement?: TTooltipPlacement;
   offset?: number;
-  variant?: TTooltipVariant;
-  color?: TPaletteColor;
 };
 
 export type TTooltipProps =
@@ -41,9 +38,4 @@ export type TSTooltipContentProps = {
   left: number;
   placement: TTooltipPlacement;
   visible: boolean;
-};
-
-export type TSTooltipPanelProps = {
-  variant: TTooltipVariant;
-  color: TPaletteColor;
 };

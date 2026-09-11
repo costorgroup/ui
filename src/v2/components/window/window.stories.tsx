@@ -3,7 +3,7 @@ import { useTheme } from "@emotion/react";
 import React, { ReactNode, useState } from "react";
 import {
   Button,
-  Title,
+  Heading,
   Window,
   WindowActions,
   WindowContent,
@@ -79,7 +79,7 @@ export const Default: Story = {
     return (
       <Window {...args} style={{ width: 360 }}>
         <WindowHead onClose={() => setOpen(false)}>
-          <Title as="h3">Workspace kit</Title>
+          <Heading as="h3">Workspace kit</Heading>
         </WindowHead>
         <WindowContent>
           Frosted window shell with a white content panel and right-aligned
@@ -101,7 +101,7 @@ export const Default: Story = {
 export const WithChromaBorder: Story = {
   render: function WithChromaBorderStory(args) {
     const theme = useTheme();
-    const { main } = theme.colors.info;
+    const { main } = theme.palette.info;
     const chromaColors = [main, "transparent", main, "transparent"];
 
     return (
@@ -114,7 +114,7 @@ export const WithChromaBorder: Story = {
       >
         <Window {...args}>
           <WindowHead>
-            <Title as="h3">Animated window</Title>
+            <Heading as="h3">Animated window</Heading>
           </WindowHead>
           <WindowContent>
             Info and transparent segments in the spinning chroma border.
@@ -137,7 +137,7 @@ export const WithHead: Story = {
   render: (args) => (
     <Window {...args} style={{ width: 340 }}>
       <WindowHead>
-        <Title as="h3">Notifications</Title>
+        <Heading as="h3">Notifications</Heading>
       </WindowHead>
       <WindowContent>
         White content area inside the frosted window.
@@ -161,7 +161,7 @@ export const Solid: Story = {
   render: (args) => (
     <Window {...args} style={{ width: 340 }}>
       <WindowHead>
-        <Title as="h3">Solid window</Title>
+        <Heading as="h3">Solid window</Heading>
       </WindowHead>
       <WindowContent>
         Flat surface fill without gradient or backdrop blur.

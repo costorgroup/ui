@@ -1,113 +1,103 @@
-import React, { ChangeEvent, forwardRef, useContext, useId } from 'react';
+import React, {
+  ChangeEvent,
+  ReactElement,
+  Ref,
+  forwardRef,
+  useContext,
+} from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { radioButtonClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
 import { InputRadioButton } from '../input/input-radio-button';
-import { RadioButtonGroupContext } from '../radio-button-group/context';
+import {
+  RadioButtonGroupContext,
+  TRadioButtonGroupContextValue,
+} from '../radio-button-group/context';
+import { isValueSelected } from '../form-control/value';
 import { TRadioButtonProps } from './types';
 
-const RadioButton = forwardRef<HTMLInputElement, TRadioButtonProps>(
-  (
-    {
-      label,
-      description,
-      helperText,
-      error,
-      fullWidth = true,
-      direction = 'ltr',
-      size,
-      variant,
-      color,
-      id,
-      name,
-      checked,
-      disabled,
-      onChange,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const group = useContext(RadioButtonGroupContext);
-    const generatedId = useId();
-    const fieldId = id ?? generatedId;
+const RadioButtonInner = <T,>(
+  {
+    label,
+    description,
+    helperText,
+    error,
+    fullWidth = true,
+    direction = 'ltr',
+    size,
+    variant,
+    color,
+    id,
+    name,
+    checked,
+    disabled,
+    onChange,
+    className,
+    value,
+    ...props
+  }: TRadioButtonProps<T>,
+  ref: Ref<HTMLInputElement>,
+) => {
+  const group = useContext(RadioButtonGroupContext) as TRadioButtonGroupContextValue<T> | null;
+  const resolvedSize = size ?? group?.size ?? 'md';
+  const resolvedVariant = variant ?? group?.variant ?? 'surface';
+  const resolvedColor = color ?? group?.color ?? 'primary';
+  const resolvedError = error ?? group?.error ?? false;
+  const resolvedDisabled = disabled ?? group?.disabled;
+  const selected =
+    group != null
+      ? isValueSelected(
+          group.value as T,
+          value as T,
+          group.isValueEqual,
+        )
+      : Boolean(checked);
 
-    const resolvedSize = size ?? group?.size ?? 'md';
-    const resolvedVariant = variant ?? group?.variant ?? 'subtle';
-    const resolvedColor = color ?? group?.color ?? 'default';
-    const resolvedError = error ?? group?.error ?? false;
-    const resolvedDisabled = disabled ?? group?.disabled;
-    const tone = resolvedError ? 'error' : resolvedColor;
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    onChange?.(event);
+    if (value !== undefined) {
+      group?.onSelect(event, value);
+    }
+  };
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      onChange?.(event);
-      group?.onChange(event);
-    };
-
-    return (
-      <InputFieldLayout
-        fullWidth={fullWidth}
-        direction={direction}
-        align="flex-start"
-        label={
-          label != null ? (
-            <InputLabel
-              htmlFor={fieldId}
-              size={resolvedSize}
-              style={{ lineHeight: 1 }}
-            >
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[resolvedSize]}>{description}</Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={resolvedSize} error={error}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
-      >
-        <InputRadioButton
-          ref={ref}
-          id={fieldId}
-          {...props}
-          name={name ?? group?.name}
-          size={resolvedSize}
-          variant={resolvedVariant}
-          color={tone}
-          checked={
-            group != null
-              ? String(group.value) === String(props.value)
-              : checked
-          }
-          disabled={resolvedDisabled}
-          aria-invalid={resolvedError || undefined}
-          onChange={handleChange}
-        
-        className={mergeClasses(
-          radioButtonClasses.root,
-          checked && radioButtonClasses.checked,
-          disabled && radioButtonClasses.disabled,
-          error && radioButtonClasses.error,
-          className,
-        )}
+  return (
+    <FormControl
+      label={label}
+      description={description}
+      helperText={helperText}
+      error={resolvedError}
+      fullWidth={fullWidth}
+      direction={direction}
+      size={resolvedSize}
+      variant={resolvedVariant}
+      color={resolvedColor}
+      disabled={resolvedDisabled}
+      id={id}
+      className={mergeClasses(
+        radioButtonClasses.root,
+        selected && radioButtonClasses.checked,
+        resolvedDisabled && radioButtonClasses.disabled,
+        resolvedError && radioButtonClasses.error,
+        className,
+      )}
+    >
+      <InputRadioButton
+        ref={ref}
+        {...props}
+        name={name ?? group?.name}
+        value={value}
+        checked={group != null ? selected : checked}
+        onChange={handleChange}
       />
-      </InputFieldLayout>
-    );
-  },
-);
+    </FormControl>
+  );
+};
 
-RadioButton.displayName = 'RadioButton';
+const RadioButton = forwardRef(RadioButtonInner) as <T = unknown>(
+  props: TRadioButtonProps<T> & { ref?: Ref<HTMLInputElement> },
+) => ReactElement | null;
+
+(RadioButton as { displayName?: string }).displayName = 'RadioButton';
 
 export type { TRadioButtonProps, TRadioButtonDirection } from './types';
 export { radioButtonClasses } from './classes';

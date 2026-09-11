@@ -10,7 +10,7 @@ const QrCode = forwardRef<HTMLDivElement, TQrCodeProps>(
   ({ value, color = 'primary', className, ...props }, ref) => {
     const theme = useTheme();
     const [svg, setSvg] = useState<string | null>(null);
-    const contrast = theme.colors[color].contrastText;
+    const contrast = theme.palette[color].contrastText;
 
     useEffect(() => {
       let cancelled = false;

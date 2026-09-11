@@ -25,7 +25,7 @@ export const SSnackbarItem = styled('div', {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,

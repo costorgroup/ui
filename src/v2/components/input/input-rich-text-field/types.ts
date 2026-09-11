@@ -24,4 +24,5 @@ export type TInputRichTextFieldProps = {
   'aria-invalid'?: boolean | 'true' | 'false';
   'aria-label'?: string;
   className?: string;
+  actionBar?: ReactNode;
 };

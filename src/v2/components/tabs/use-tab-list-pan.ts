@@ -74,6 +74,11 @@ export const useTabListPan = (
           return;
         }
 
+        if (moveEvent.buttons === 0) {
+          onPointerUp(moveEvent);
+          return;
+        }
+
         const start = startRef.current;
         const last = lastRef.current;
 

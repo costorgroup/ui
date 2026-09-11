@@ -6,7 +6,7 @@ export const SWindowHead = styled.div`
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(theme.gap.md)};
   flex-shrink: 0;
-  margin-bottom: ${({ theme }) => theme.spacing(6)};
+  margin-bottom: ${({ theme }) => theme.spacing(theme.gap.md)};
 `;
 
 export const SWindowHeadContent = styled.div`

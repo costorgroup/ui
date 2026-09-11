@@ -36,15 +36,15 @@ export const STab = styled('button', {
   color: ${({ active, color, theme, variant }) => {
     if (active) {
       return color != null
-        ? theme.colors[color].contrastText
-        : theme.colors.default.contrastText;
+        ? theme.palette[color].contrastText
+        : theme.palette.default.main;
     }
 
     if (variant === 'plain') {
-      return colorMix(theme.colors.default.main, 55);
+      return colorMix(theme.palette.default.main, 55);
     }
 
-    return theme.colors.default.main;
+    return theme.palette.default.main;
   }};
   cursor: ${({ selected, draggable, dragging }) => {
     if (!draggable || !selected) {
@@ -68,10 +68,10 @@ export const STab = styled('button', {
     outline: 2px solid
       ${({ appearance, color, theme }) =>
         color != null
-          ? theme.colors[color].main
+          ? theme.palette[color].main
           : appearance === 'transparent'
-            ? theme.colors.default.main
-            : theme.colors.base.main};
+            ? theme.palette.default.main
+            : theme.palette.base.main};
     outline-offset: 1px;
   }
 `;

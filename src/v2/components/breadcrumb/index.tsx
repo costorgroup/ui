@@ -5,7 +5,7 @@ import { breadcrumbClasses } from './classes';
 import { TBreadcrumbProps } from './types';
 
 const Breadcrumb = forwardRef<HTMLElement, TBreadcrumbProps>(
-  ({ children, size = 'md', color = 'default', className, ...props }, ref) => {
+  ({ children, size = 'md', color = 'primary', className, ...props }, ref) => {
     return (
       <BreadcrumbBase
         ref={ref}

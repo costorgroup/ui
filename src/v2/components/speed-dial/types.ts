@@ -1,6 +1,11 @@
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { TGap, TPaletteColor } from '../../../theme/types';
-import { TIconButtonSize, TIconButtonVariant } from '../icon-button/types';
+import {
+  TIconButtonAppearance,
+  TIconButtonRadius,
+  TIconButtonSize,
+  TIconButtonVariant,
+} from '../icon-button/types';
 
 export type TSpeedDialItemsDirection = 'left' | 'top' | 'right' | 'bottom';
 
@@ -18,6 +23,8 @@ export type TSpeedDialProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   color?: TPaletteColor;
   size?: TIconButtonSize;
   variant?: TIconButtonVariant;
+  appearance?: TIconButtonAppearance;
+  radius?: TIconButtonRadius;
   disabled?: boolean;
   triggerProps?: Omit<
     ButtonHTMLAttributes<HTMLButtonElement>,

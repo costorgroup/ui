@@ -8,7 +8,6 @@ import { InputHelperText } from '../input/input-helper-text';
 import { Text } from '../text';
 import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { actionFieldClasses } from './classes';
-import { SActionFieldBar } from './styles';
 import { TActionFieldProps } from './types';
 
 const ActionField = forwardRef<HTMLDivElement, TActionFieldProps>(
@@ -21,8 +20,8 @@ const ActionField = forwardRef<HTMLDivElement, TActionFieldProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
-      color = 'default',
+      variant = 'surface',
+      color = 'primary',
       children,
       id,
       className,
@@ -35,7 +34,6 @@ const ActionField = forwardRef<HTMLDivElement, TActionFieldProps>(
     ref,
   ) => {
     const tone = error ? 'error' : color;
-    const hasActions = children != null;
 
     return (
       <InputFieldLayout
@@ -81,7 +79,11 @@ const ActionField = forwardRef<HTMLDivElement, TActionFieldProps>(
           error={error}
           disabled={disabled}
           readOnly={readOnly}
-          stacked
+          actionBar={
+            children != null ? (
+              <div className={actionFieldClasses.actions}>{children}</div>
+            ) : undefined
+          }
         >
           <InputTextAreaField
             id={id}
@@ -93,14 +95,6 @@ const ActionField = forwardRef<HTMLDivElement, TActionFieldProps>(
             rows={rows}
             {...props}
           />
-          {hasActions ? (
-            <SActionFieldBar
-              size={size}
-              className={actionFieldClasses.actions}
-            >
-              {children}
-            </SActionFieldBar>
-          ) : null}
         </InputWrapper>
       </InputFieldLayout>
     );

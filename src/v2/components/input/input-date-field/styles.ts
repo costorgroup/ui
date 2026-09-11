@@ -1,27 +1,34 @@
 import styled from '@emotion/styled';
+import {
+  inputDropdownMutedText,
+  inputDropdownOptionCssVars,
+  inputDropdownPanelStyles,
+} from '../dropdown-styles';
 import { inputInnerResetStyles } from '../variant-styles';
 import { TInputSize } from '../input-wrapper/types';
 import {
   TSInputDateFieldDayProps,
   TSInputDateFieldDropdownProps,
-  TSInputDateFieldTimeWheelHighlightProps,
   TSInputDateFieldTimeWheelItemProps,
-  TSInputDateFieldWeekdayProps,
 } from './types';
 
 const triggerProps = new Set(['size']);
-const dropdownProps = new Set(['top', 'left', 'width', 'visible', 'placement']);
+const dropdownProps = new Set([
+  'top',
+  'left',
+  'width',
+  'visible',
+  'placement',
+  'color',
+]);
 const dayProps = new Set([
   'selected',
   'today',
   'outside',
   'disabled',
   'color',
-  'variant',
 ]);
-const weekdayProps = new Set(['color']);
-const timeHighlightProps = new Set(['color', 'variant']);
-const timeItemProps = new Set(['color', 'variant']);
+const timeItemProps = new Set(['color']);
 
 const sizeFont: Record<TInputSize, string> = {
   xs: '12px',
@@ -106,22 +113,15 @@ export const SInputDateFieldDropdown = styled('div', {
   z-index: ${({ theme }) => theme.zIndex.tooltip};
   box-sizing: border-box;
   width: ${({ width }) => `${width}px`};
-  max-width: 320px;
+  max-width: 300px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  border-radius: ${({ theme }) => theme.radius.medium};
-  background-color: ${({ theme }) => theme.colors.base.main};
-  color: ${({ theme }) => theme.colors.default.main};
-  box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
-
-    return `
-      0 4px 10px ${black}0a,
-      0 1px 4px ${black}08,
-      0 1px 2px ${black}05
-    `;
-  }};
+  border-radius: ${({ theme }) => theme.radius.md};
+  ${({ theme, color = 'primary' }) => `
+    ${inputDropdownOptionCssVars(theme, color)}
+    ${inputDropdownPanelStyles(theme)}
+  `}
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transform: ${({ visible }) => (visible ? 'scale(1)' : 'scale(0.96)')};
   transform-origin: ${({ placement }) =>
@@ -160,7 +160,7 @@ export const SInputDateFieldMonthLabel = styled.div`
   text-align: center;
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.common.black};
+  color: ${({ theme }) => theme.palette.default.main};
 `;
 
 export const SInputDateFieldWeekdays = styled.div`
@@ -169,16 +169,14 @@ export const SInputDateFieldWeekdays = styled.div`
   gap: 2px;
 `;
 
-export const SInputDateFieldWeekday = styled('div', {
-  shouldForwardProp: (prop) => !weekdayProps.has(prop),
-})<TSInputDateFieldWeekdayProps>`
+export const SInputDateFieldWeekday = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   height: 28px;
   font-size: 11px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme }) => inputDropdownMutedText(theme)};
 `;
 
 export const SInputDateFieldDays = styled.div`
@@ -198,87 +196,32 @@ export const SInputDateFieldDay = styled('button', {
   margin: 0;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  background-color: transparent;
+  color: ${({ theme }) => theme.palette.default.main};
   font-family: inherit;
   font-size: 13px;
+  font-weight: ${({ theme, today, selected }) =>
+    today && !selected
+      ? theme.typography.fontWeight.medium
+      : theme.typography.fontWeight.regular};
   line-height: 1;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ outside, disabled }) => (disabled ? 0.35 : outside ? 0.45 : 1)};
 
-  ${({ theme, selected, today, color, variant }) => {
-    const palette = theme.colors[color];
-
-    if (selected) {
-      switch (variant) {
-        case 'surface':
-          return `
-            color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 16%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
-          `;
-        case 'outline':
-          return `
-            color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
-          `;
-        case 'subtle':
-        default:
-          return `
-            color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 12%, transparent);
-            border-color: transparent;
-          `;
-      }
-    }
-
-    if (today) {
-      switch (variant) {
-        case 'surface':
-          return `
-            color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 14%, transparent);
-          `;
-        case 'outline':
-          return `
-            color: ${palette.main};
-            background-color: transparent;
-            border-color: color-mix(in lab, ${palette.main} 36%, transparent);
-          `;
-        case 'subtle':
-        default:
-          return `
-            color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: transparent;
-          `;
-      }
-    }
-
-    return `
-      color: ${palette.darker};
-      background-color: transparent;
-      border-color: transparent;
-    `;
-  }}
+  ${({ theme, selected, color }) =>
+    selected
+      ? `
+        color: ${theme.palette[color].main};
+        background-color: var(--input-dropdown-option-selected);
+      `
+      : ''}
 
   &:hover:not(:disabled) {
-    ${({ theme, selected, color, variant }) => {
-      const palette = theme.colors[color];
-      if (selected) {
-        switch (variant) {
-          case 'surface':
-            return `background-color: color-mix(in lab, ${palette.main} 20%, transparent);`;
-          case 'outline':
-            return `background-color: color-mix(in lab, ${palette.main} 8%, transparent);`;
-          case 'subtle':
-          default:
-            return `background-color: color-mix(in lab, ${palette.main} 16%, transparent);`;
-        }
-      }
-      return `background-color: color-mix(in lab, ${palette.main} 10%, transparent);`;
-    }}
+    ${({ selected }) =>
+      selected
+        ? ''
+        : 'background-color: var(--input-dropdown-option-hover);'}
   }
 `;
 
@@ -311,9 +254,7 @@ export const SInputDateFieldTimeWheel = styled.div`
   }
 `;
 
-export const SInputDateFieldTimeWheelHighlight = styled('div', {
-  shouldForwardProp: (prop) => !timeHighlightProps.has(prop),
-})<TSInputDateFieldTimeWheelHighlightProps>`
+export const SInputDateFieldTimeWheelHighlight = styled.div`
   position: absolute;
   top: 50%;
   left: 0;
@@ -322,31 +263,8 @@ export const SInputDateFieldTimeWheelHighlight = styled('div', {
   height: 36px;
   transform: translateY(-50%);
   pointer-events: none;
-  border-radius: ${({ theme }) => theme.radius.small};
-  border: 1px solid transparent;
-
-  ${({ theme, color, variant }) => {
-    const palette = theme.colors[color];
-
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
-          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-          border-color: transparent;
-        `;
-    }
-  }}
+  border-radius: ${({ theme }) => theme.radius.sm};
+  background-color: var(--input-dropdown-option-selected);
 `;
 
 export const SInputDateFieldTimeWheelList = styled.div`
@@ -402,19 +320,13 @@ export const SInputDateFieldTimeWheelItem = styled('button', {
   font-size: 16px;
   font-variant-numeric: tabular-nums;
   line-height: 1;
-  color: ${({ theme, color, variant }) =>
-    variant === 'outline'
-      ? theme.colors[color].main
-      : theme.colors[color].darker};
+  color: ${({ theme }) => theme.palette.default.main};
   cursor: pointer;
   opacity: 1;
   pointer-events: auto;
 
   &[data-selected='true'] {
-    color: ${({ theme, color, variant }) =>
-      variant === 'outline'
-        ? theme.colors[color].darker
-        : theme.colors[color].darker};
+    color: ${({ theme, color }) => theme.palette[color].main};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }
 

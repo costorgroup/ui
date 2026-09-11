@@ -11,8 +11,7 @@ export const SBubbleContent = styled('div', {
   width: fit-content;
   max-width: ${({ variant }) => (variant === 'ghost' ? '100%' : '80%')};
   min-width: 0;
-  padding: ${({ theme }) =>
-    `${theme.spacing(theme.gap.sm)} ${theme.spacing(theme.gap.md)}`};
+  padding: ${({ theme }) => theme.spacing(theme.gap.md)};
   border: 1px solid;
   border-radius: ${({ theme }) => theme.radius.large};
   font-family: inherit;
@@ -26,7 +25,7 @@ export const SBubbleContent = styled('div', {
     color 0.12s ease;
 
   ${({ theme, color, variant }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     const chrome = variantStyles(variant, palette, theme);
 
     if (variant === 'ghost') {
@@ -49,7 +48,7 @@ export const SBubbleContent = styled('div', {
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 `;

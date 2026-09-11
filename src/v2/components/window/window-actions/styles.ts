@@ -7,6 +7,5 @@ export const SWindowActions = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
-  margin-top: ${({ theme }) => theme.spacing(6)};
-  padding-top: ${({ theme }) => theme.spacing(theme.gap.sm)};
+  margin-top: ${({ theme }) => theme.spacing(theme.gap.md)};
 `;

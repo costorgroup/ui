@@ -12,7 +12,7 @@ type THeadingComponent = (<C extends THeadingAs = 'h1'>(
 };
 
 const Heading = forwardRef(function Heading<C extends THeadingAs = 'h1'>(
-  { as, children, color, className, ...props }: THeadingProps<C>,
+  { as, children, color = 'default', className, ...props }: THeadingProps<C>,
   ref: React.Ref<Element>,
 ) {
   const tag = (as ?? 'h1') as THeadingAs;

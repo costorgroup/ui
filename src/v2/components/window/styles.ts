@@ -25,8 +25,8 @@ export const SWindow = styled("div", {
   ${({ theme, appearance }) =>
     appearance === "opaque"
       ? `
-          ${CUI_CANVAS_VAR}: ${theme.colors.base.main};
-          background-color: ${theme.colors.base.main};
+          ${CUI_CANVAS_VAR}: ${theme.palette.base.main};
+          background-color: ${theme.palette.base.main};
           background-image: none;
         `
       : `

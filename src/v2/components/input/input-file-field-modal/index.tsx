@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { mergeClasses } from '../../../../helpers/generate-utility-classes';
 import { inputFileFieldModalClasses } from './classes';
 import {
@@ -6,33 +6,64 @@ import {
   mergeFiles,
   sameFile,
 } from '../../../../helpers/files';
-import { CloseIcon } from '../../../../icons';
+import { CloseIcon, FileIcon } from '../../../../icons';
 import { Button } from '../../button';
-import { Dropzone } from '../../../../components/dropzone';
-import { Flex } from '../../../../components/flex';
-import { Heading } from '../../../../components/heading';
+import { Dropzone } from '../../dropzone';
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from '../../empty';
 import { IconButton } from '../../icon-button';
-import { Modal } from '../../../../components/modal';
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemIcon,
+  ItemTitle,
+} from '../../item';
+import { Modal } from '../../modal';
 import { Text } from '../../text';
 import {
   SInputFileFieldModalContent,
-  SInputFileFieldModalEmpty,
   SInputFileFieldModalList,
-  SInputFileFieldModalRow,
-  SInputFileFieldModalRowMeta,
-  SInputFileFieldModalRowName,
-  SInputFileFieldModalRowSize,
 } from './styles';
 import { TInputFileFieldModalProps } from './types';
 
 const createFileId = (file: File, index: number) =>
   `${file.name}-${file.size}-${file.lastModified}-${index}`;
 
+const FileThumb = ({ file }: { file: File }) => {
+  const [src, setSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!file.type.startsWith('image/')) {
+      setSrc(null);
+      return;
+    }
+
+    const url = URL.createObjectURL(file);
+    setSrc(url);
+
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
+
+  if (src) {
+    return <img src={src} alt="" />;
+  }
+
+  return <FileIcon />;
+};
+
 const InputFileFieldModal = ({
   files = [],
   accept,
   disabled = false,
-  color = 'default',
+  color = 'primary',
+  variant = 'surface',
   title = 'Manage files',
   description = 'Add files with the dropzone, or remove files from the list.',
   onConfirm,
@@ -75,16 +106,24 @@ const InputFileFieldModal = ({
   return (
     <Modal
       size="lg"
+      variant="surface"
       onClose={handleCancel}
-      title={
-        <Flex direction="column" gap={0}>
-          <Heading as="h4">{title}</Heading>
-          {description != null ? <Text size="sm">{description}</Text> : null}
-        </Flex>
+      title={title}
+      description={description}
+      headActions={
+        <IconButton
+          variant="ghost"
+          color="default"
+          radius="pill"
+          aria-label="Close"
+          onClick={handleCancel}
+        >
+          <CloseIcon />
+        </IconButton>
       }
       actions={
         <>
-          <Button variant="outline" color={color} onClick={handleCancel}>
+          <Button variant="outline" color="default" onClick={handleCancel}>
             Cancel
           </Button>
           <Button color={color} onClick={handleConfirm} disabled={disabled}>
@@ -101,6 +140,7 @@ const InputFileFieldModal = ({
       <SInputFileFieldModalContent>
         <Dropzone
           color={color}
+          variant={variant}
           accept={accept}
           multiple
           disabled={disabled}
@@ -109,45 +149,54 @@ const InputFileFieldModal = ({
           onFiles={handleDropzoneFiles}
         />
 
-        <Flex direction="column" gap="sm">
-          <Text size="sm">
-            {draft.length > 0
-              ? `${draft.length} file${draft.length === 1 ? '' : 's'} selected`
-              : 'No files selected'}
-          </Text>
-
-          {entries.length > 0 ? (
-            <SInputFileFieldModalList role="table" aria-label="Selected files">
-              {entries.map((entry) => (
-                <SInputFileFieldModalRow key={entry.id} role="row">
-                  <SInputFileFieldModalRowMeta role="cell">
-                    <SInputFileFieldModalRowName title={entry.file.name}>
-                      {entry.file.name}
-                    </SInputFileFieldModalRowName>
-                    <SInputFileFieldModalRowSize>
-                      {formatFileSize(entry.file.size)}
-                    </SInputFileFieldModalRowSize>
-                  </SInputFileFieldModalRowMeta>
+        {entries.length > 0 ? (
+          <SInputFileFieldModalList
+            className={inputFileFieldModalClasses.list}
+            aria-label="Selected files"
+          >
+            <Text size="sm">
+              {`${draft.length} file${draft.length === 1 ? '' : 's'} selected`}
+            </Text>
+            {entries.map((entry) => (
+              <Item key={entry.id} size="sm" radius="md" appearance="opaque">
+                <ItemIcon>
+                  <FileThumb file={entry.file} />
+                </ItemIcon>
+                <ItemContent>
+                  <ItemTitle>{entry.file.name}</ItemTitle>
+                  <ItemDescription>
+                    {formatFileSize(entry.file.size)}
+                  </ItemDescription>
+                </ItemContent>
+                <ItemActions>
                   <IconButton
                     type="button"
                     size="sm"
                     variant="ghost"
-                    color={color}
+                    color="default"
                     aria-label={`Remove ${entry.file.name}`}
                     disabled={disabled}
                     onClick={() => handleRemove(entry.file)}
                   >
-                    <CloseIcon width="1em" height="1em" />
+                    <CloseIcon />
                   </IconButton>
-                </SInputFileFieldModalRow>
-              ))}
-            </SInputFileFieldModalList>
-          ) : (
-            <SInputFileFieldModalEmpty>
-              Drop files above to get started.
-            </SInputFileFieldModalEmpty>
-          )}
-        </Flex>
+                </ItemActions>
+              </Item>
+            ))}
+          </SInputFileFieldModalList>
+        ) : (
+          <Empty appearance="transparent">
+            <EmptyHeader>
+              <EmptyMedia variant="icon">
+                <FileIcon />
+              </EmptyMedia>
+              <EmptyTitle>No files selected</EmptyTitle>
+              <EmptyDescription>
+                Drop files above to get started.
+              </EmptyDescription>
+            </EmptyHeader>
+          </Empty>
+        )}
       </SInputFileFieldModalContent>
     </Modal>
   );

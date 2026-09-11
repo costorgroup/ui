@@ -13,21 +13,21 @@ export const speedDialLayout: Record<
   top: {
     flexDirection: 'column-reverse',
     itemsDirection: 'column-reverse',
-    itemOffset: 'translateY(10px)',
+    itemOffset: 'translateY(16px)',
   },
   bottom: {
     flexDirection: 'column',
     itemsDirection: 'column',
-    itemOffset: 'translateY(-10px)',
+    itemOffset: 'translateY(-16px)',
   },
   left: {
     flexDirection: 'row-reverse',
     itemsDirection: 'row-reverse',
-    itemOffset: 'translateX(10px)',
+    itemOffset: 'translateX(16px)',
   },
   right: {
     flexDirection: 'row',
     itemsDirection: 'row',
-    itemOffset: 'translateX(-10px)',
+    itemOffset: 'translateX(-16px)',
   },
 };

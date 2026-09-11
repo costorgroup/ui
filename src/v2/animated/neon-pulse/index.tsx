@@ -22,7 +22,7 @@ const NeonPulse = forwardRef<HTMLDivElement, TNeonPulseProps>(
   ) => {
     const theme = useTheme();
     const { rootProps } = useAnimatedPlay(play);
-    const neonColor = color ?? theme.colors.info.main;
+    const neonColor = color ?? theme.palette.info.main;
 
     return (
       <SNeonPulse

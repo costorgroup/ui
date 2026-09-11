@@ -5,6 +5,6 @@ export const SStepContent = styled.div`
   font-family: inherit;
   font-size: var(--stepper-description-size);
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.base.main};
+  color: ${({ theme }) => theme.palette.base.main};
   padding-top: ${({ theme }) => theme.spacing(theme.gap.xs)};
 `;

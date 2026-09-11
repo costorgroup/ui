@@ -8,7 +8,14 @@ import { THighlightOwnProps, THighlightProps } from './types';
 const Highlight = forwardRef(function Highlight<
   C extends ElementType = 'span',
 >(
-  { as, children, color = 'default', className, ...props }: THighlightProps<C>,
+  {
+    as,
+    children,
+    color = 'default',
+    variant = 'subtle',
+    className,
+    ...props
+  }: THighlightProps<C>,
   ref: React.Ref<Element>,
 ) {
   return (
@@ -16,6 +23,7 @@ const Highlight = forwardRef(function Highlight<
       as={as}
       ref={ref as React.Ref<HTMLElement>}
       color={color}
+      variant={variant}
       {...props}
       className={mergeClasses(highlightClasses.root, className)}
     >
@@ -26,7 +34,11 @@ const Highlight = forwardRef(function Highlight<
 
 Highlight.displayName = 'Highlight';
 
-export type { THighlightProps, THighlightOwnProps } from './types';
+export type {
+  THighlightProps,
+  THighlightOwnProps,
+  THighlightVariant,
+} from './types';
 export { highlightClasses } from './classes';
 export { Highlight };
 export default Highlight;

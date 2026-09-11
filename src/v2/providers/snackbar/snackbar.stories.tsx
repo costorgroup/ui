@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Flex, Text } from '../../../index';
 import { CheckIcon } from '../../../icons';
 import type { TPaletteColor } from '../../../theme/types';
@@ -21,6 +21,7 @@ const SNACKBAR_COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TAlertVariant[] = [
@@ -136,7 +137,7 @@ const VariantsDemo = () => {
             enqueue({
               title: variant,
               description: `Snackbar with variant="${variant}".`,
-              color: 'default',
+              color: 'primary',
               variant,
             })
           }
@@ -183,6 +184,26 @@ const CustomDemo = () => {
   );
 };
 
+const StackedDemo = () => {
+  const { enqueue } = useSnackbar();
+  const countRef = useRef(0);
+
+  return (
+    <Button
+      onClick={() => {
+        countRef.current += 1;
+        enqueue({
+          title: `Update ${countRef.current}`,
+          description: 'Stacked snackbars share size="md". Hover to expand.',
+          color: countRef.current % 2 === 0 ? 'success' : 'info',
+        });
+      }}
+    >
+      Enqueue snackbar
+    </Button>
+  );
+};
+
 const StretchDemo = () => {
   const { enqueue } = useSnackbar();
 
@@ -193,7 +214,7 @@ const StretchDemo = () => {
           enqueue({
             title: 'Short',
             description: 'Brief.',
-            color: 'default',
+            color: 'primary',
           })
         }
       >
@@ -216,7 +237,7 @@ const StretchDemo = () => {
 };
 
 const meta: Meta<TSnackbarStoryArgs> = {
-  title: 'V2/Feedbacks/Snackbar',
+  title: 'V3/Feedback/Snackbar',
   component: SnackbarProvider,
   tags: ['autodocs'],
   argTypes: {
@@ -262,7 +283,7 @@ export const Default: Story = {
     duration: 4000,
     title: 'Snackbar',
     description: 'Something happened.',
-    color: 'default',
+    color: 'primary',
     variant: 'solid',
   },
   render: ({ title, description, color, variant, ...providerArgs }) => (
@@ -382,6 +403,27 @@ export const CustomRender: Story = {
       <Flex direction="column" gap="md">
         <Text>Per-enqueue custom render override.</Text>
         <CustomDemo />
+      </Flex>
+    </SnackbarProvider>
+  ),
+};
+
+export const Stacked: Story = {
+  render: () => (
+    <SnackbarProvider
+      stacked
+      size="md"
+      maxVisible={3}
+      position="bottom-right"
+      duration={8000}
+    >
+      <Flex direction="column" gap="md">
+        <Text>
+          Enqueue several snackbars. Only 3 are visible in a stack; hover to
+          expand. Closing one brings the next from the queue. stacked requires
+          a shared size.
+        </Text>
+        <StackedDemo />
       </Flex>
     </SnackbarProvider>
   ),

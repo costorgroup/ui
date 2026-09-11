@@ -15,7 +15,7 @@ export const SHighlight = styled('span', {
   letter-spacing: inherit;
   line-height: inherit;
   background-color: ${({ theme, color = 'primary' }) =>
-    theme.colors[color].main};
+    theme.palette[color].main};
   color: ${({ theme, color = 'primary' }) =>
-    theme.colors[color].contrastText};
+    theme.palette[color].contrastText};
 `;

@@ -49,6 +49,8 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
       color = 'default',
       size = 'lg',
       variant = 'solid',
+      appearance = 'opaque',
+      radius = 'pill',
       disabled,
       triggerProps,
       onKeyDown,
@@ -150,7 +152,8 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
             color={color}
             size={size}
             variant={variant}
-            rounded
+            appearance={appearance}
+            radius={radius}
             disabled={disabled}
             aria-label={ariaLabel}
             aria-expanded={open}
@@ -165,17 +168,16 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
               triggerProps?.onClick?.(event);
             }}
           >
-            <SSpeedDialTriggerIcon data-open={open}>
+            <SSpeedDialTriggerIcon data-open={open ? 'true' : 'false'}>
               {icon ?? <SpeedDialPlusIcon />}
             </SSpeedDialTriggerIcon>
           </IconButton>
         </SSpeedDialTriggerWrap>
         <SSpeedDialItems
-          open={open}
           itemsDirection={layout.itemsDirection}
           itemsGap={itemsGap}
           itemOffset={layout.itemOffset}
-          data-open={open}
+          data-open={open ? 'true' : 'false'}
           data-items-direction={layout.itemsDirection}
           role="menu"
           className={speedDialClasses.items}

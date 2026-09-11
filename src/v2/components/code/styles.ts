@@ -1,34 +1,10 @@
 import styled from '@emotion/styled';
-import { staticChromeVariantStyles } from '../../idle-variant-styles';
-import { TCodeOwnProps, TCodeSize } from './types';
+import { typographyChromeStyles } from '../../typography-chrome';
+import { TCodeOwnProps } from './types';
 
 type TSCodeProps = Pick<TCodeOwnProps, 'variant' | 'size' | 'color'>;
 
 const customProps = new Set(['variant', 'size', 'color']);
-
-const sizeFont: Record<TCodeSize, string> = {
-  xs: '11px',
-  sm: '12px',
-  md: '13px',
-  lg: '14px',
-  xl: '15px',
-};
-
-const sizePadX: Record<TCodeSize, string> = {
-  xs: '0.25rem',
-  sm: '0.3rem',
-  md: '0.35rem',
-  lg: '0.4rem',
-  xl: '0.45rem',
-};
-
-const sizePadY: Record<TCodeSize, string> = {
-  xs: '0.05rem',
-  sm: '0.1rem',
-  md: '0.125rem',
-  lg: '0.15rem',
-  xl: '0.175rem',
-};
 
 export const SCode = styled('code', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -37,18 +13,15 @@ export const SCode = styled('code', {
   box-sizing: border-box;
   border: 1px solid;
   border-radius: ${({ theme }) => theme.radius.small};
+  padding: 0.1em 0.35em;
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas,
     'Liberation Mono', monospace;
+  font-size: ${({ theme, size = 'sm' }) => theme.typography.text[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: 1.4;
+  line-height: ${({ theme }) => theme.typography.lineHeight.text};
   white-space: break-spaces;
   vertical-align: baseline;
 
-  ${({ size = 'sm' }) => `
-    padding: ${sizePadY[size]} ${sizePadX[size]};
-    font-size: ${sizeFont[size]};
-  `}
-
-  ${({ theme, variant = 'subtle', color = 'base' }) =>
-    staticChromeVariantStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = 'subtle', color = 'default' }) =>
+    typographyChromeStyles(variant, theme.palette[color], theme)}
 `;

@@ -76,7 +76,7 @@ export const SFlipbookControls = styled.div`
 export const SFlipbookStatus = styled.span`
   min-width: 4.5rem;
   text-align: center;
-  font-size: ${({ theme }) => theme.typography.text.small};
+  font-size: ${({ theme }) => theme.typography.text.sm};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
 `;

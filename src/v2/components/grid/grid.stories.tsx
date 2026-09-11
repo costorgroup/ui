@@ -3,7 +3,7 @@ import React from 'react';
 import { Grid, GridCell, Text, Window } from '../../index';
 
 const meta: Meta<typeof Grid> = {
-  title: 'V2/Layout/Grid',
+  title: 'V3/Layout/Grid',
   component: Grid,
   tags: ['autodocs'],
   argTypes: {
@@ -43,7 +43,7 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 const Cell = ({ label }: { label: string }) => (
-  <Window radius="medium">
+  <Window radius="md">
     <Text>{label}</Text>
   </Window>
 );

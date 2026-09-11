@@ -8,16 +8,16 @@ const fadeColor = ({
   theme,
   variant,
 }: Pick<STTabsFadeProps, 'appearance' | 'variant'> & {
-  theme: { colors: { base: { main: string; contrastText: string } } };
+  theme: { palette: { base: { main: string; contrastText: string } } };
 }) => {
   if (variant === 'plain') {
-    return theme.colors.base.main;
+    return theme.palette.base.main;
   }
 
   return colorMixBase(
-    theme.colors.base.contrastText,
+    theme.palette.base.contrastText,
     CHROME_FILL,
-    appearance === 'transparent' ? 'transparent' : theme.colors.base.main,
+    appearance === 'transparent' ? 'transparent' : theme.palette.base.main,
   );
 };
 
@@ -56,7 +56,7 @@ export const STabs = styled('div', {
   border: 1px solid
     ${({ theme, variant }) =>
       variant === 'surface'
-        ? colorMix(theme.colors.base.contrastText, CHROME_IDLE)
+        ? colorMix(theme.palette.base.contrastText, CHROME_IDLE)
         : 'transparent'};
   background-color: ${({ theme, appearance, variant }) => {
     if (variant === 'plain') {
@@ -64,9 +64,9 @@ export const STabs = styled('div', {
     }
 
     return colorMixBase(
-      theme.colors.base.contrastText,
+      theme.palette.base.contrastText,
       CHROME_FILL,
-      appearance === 'transparent' ? 'transparent' : theme.colors.base.main,
+      appearance === 'transparent' ? 'transparent' : theme.palette.base.main,
     );
   }};
   flex-direction: ${({ orientation }) =>
@@ -118,26 +118,26 @@ export const STabIndicator = styled('span', {
   border-radius: ${({ theme }) => theme.radius.small};
   background-color: ${({ theme, appearance, color }) => {
     if (color != null) {
-      return theme.colors[color].main;
+      return theme.palette[color].main;
     }
 
     return appearance === 'transparent'
-      ? `color-mix(in lab, ${theme.colors.default.main} 80%, transparent)`
-      : theme.colors.default.main;
+      ? `color-mix(in oklab, ${theme.palette.default.main} 80%, transparent)`
+      : theme.palette.default.main;
   }};
   box-shadow: ${({ theme, appearance, color }) => {
     if (color != null) {
-      return `0 0 0 0.5px color-mix(in lab, ${theme.colors[color].main} 24%, transparent),
-         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 14%, transparent)`;
+      return `0 0 0 0.5px color-mix(in oklab, ${theme.palette[color].main} 24%, transparent),
+         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 14%, transparent)`;
     }
 
     return appearance === 'transparent'
-      ? `0 0 0 0.5px color-mix(in lab, ${theme.colors.default.main} 24%, transparent),
-         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 14%, transparent)`
-      : `0 0 0 0.5px color-mix(in lab, ${theme.colors.common.black} 8%, transparent),
-         0 0.5px 1px color-mix(in lab, ${theme.colors.common.black} 6%, transparent),
-         0 1px 3px color-mix(in lab, ${theme.colors.common.black} 10%, transparent),
-         0 2px 6px color-mix(in lab, ${theme.colors.common.black} 6%, transparent)`;
+      ? `0 0 0 0.5px color-mix(in oklab, ${theme.palette.default.main} 24%, transparent),
+         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 14%, transparent)`
+      : `0 0 0 0.5px color-mix(in oklab, ${theme.palette.common.black} 8%, transparent),
+         0 0.5px 1px color-mix(in oklab, ${theme.palette.common.black} 6%, transparent),
+         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 10%, transparent),
+         0 2px 6px color-mix(in oklab, ${theme.palette.common.black} 6%, transparent)`;
   }};
   transform: translate(-50%, -50%);
   transition: ${({ ready, dragging }) =>

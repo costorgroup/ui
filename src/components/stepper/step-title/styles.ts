@@ -6,5 +6,5 @@ export const SStepTitle = styled.p`
   font-size: var(--stepper-title-size);
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: ${({ theme }) => theme.colors.base.main};
+  color: ${({ theme }) => theme.palette.base.main};
 `;

@@ -4,7 +4,7 @@ import React from 'react';
 import {
   Button,
   Text,
-  Title,
+  Heading,
   ChromaConicSpin,
   NeonPulse,
   WavePing,
@@ -129,7 +129,7 @@ export const WavePingButton: StoryObj<typeof WavePing> = {
 export const WindowWithChroma: Story = {
   render: function WindowWithChromaStory() {
     const theme = useTheme();
-    const { lighter, light, main, dark, darker } = theme.colors.info;
+    const { lighter, light, main, dark, darker } = theme.palette.info;
 
     return (
       <ChromaConicSpin
@@ -141,7 +141,7 @@ export const WindowWithChroma: Story = {
       >
         <Window>
           <WindowHead>
-            <Title as="h3">Animated window</Title>
+            <Heading as="h3">Animated window</Heading>
           </WindowHead>
           <WindowContent>
             <Text>Wrap any V2 or V1 component to add a border effect.</Text>

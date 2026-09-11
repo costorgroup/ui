@@ -15,7 +15,7 @@ export const SList = styled('div', {
   overflow: hidden;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
   ${({ theme, color, variant }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     return listShellVariantStyles(variant, palette, theme);
   }}
 `;

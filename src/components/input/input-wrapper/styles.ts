@@ -96,7 +96,7 @@ export const SInputWrapper = styled('div', {
   }}
 
   ${({ theme, variant = 'subtle', color = 'primary' }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'surface':

@@ -7,7 +7,7 @@ const Box = ({ label }: { label: string }) => (
     style={{
       padding: 24,
       borderRadius: 8,
-      background: 'color-mix(in lab, currentColor 8%, transparent)',
+      background: 'color-mix(in oklab, currentColor 8%, transparent)',
       textAlign: 'center',
     }}
   >

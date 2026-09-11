@@ -22,7 +22,7 @@ export const SRating = styled('span', {
   flex-shrink: 0;
   align-items: center;
   color: ${({ theme, variant = 'solid', color = 'warning' }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'subtle':
@@ -72,7 +72,7 @@ export const SRating = styled('span', {
 
   .${ratingClasses.iconEmpty} {
     color: ${({ theme, variant = 'solid', color = 'warning' }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
 
       switch (variant) {
         case 'outline':
@@ -80,7 +80,7 @@ export const SRating = styled('span', {
         case 'plain':
           return palette.main;
         default:
-          return `color-mix(in lab, ${palette.main} 28%, transparent)`;
+          return `color-mix(in oklab, ${palette.main} 28%, transparent)`;
       }
     }};
   }

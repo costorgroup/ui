@@ -22,6 +22,16 @@ const sizeCell: Record<TInputSize, string> = {
   xl: '56px',
 };
 
+export const SInputPinFieldStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
+`;
+
 export const SInputPinField = styled('div', {
   shouldForwardProp: (prop) => !rootCustomProps.has(prop),
 })<TSInputPinFieldProps>`
@@ -75,8 +85,8 @@ export const SInputPinFieldCell = styled('div', {
     `;
   }}
 
-  ${({ theme, variant = 'subtle', color = 'default' }) =>
-    inputVariantStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = 'surface', color = 'primary' }) =>
+    inputVariantStyles(variant, theme.palette[color], theme)}
 
   &:focus-within {
     z-index: 1;

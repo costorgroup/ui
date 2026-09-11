@@ -14,6 +14,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const meta: Meta<typeof Kbd> = {

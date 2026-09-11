@@ -6,7 +6,7 @@ import { SText } from './styles';
 import { TTextOwnProps, TTextProps } from './types';
 
 const Text = forwardRef(function Text<C extends ElementType = 'p'>(
-  { as, children, color, size = 'md', className, ...props }: TTextProps<C>,
+  { as, children, color = 'default', size = 'md', className, ...props }: TTextProps<C>,
   ref: React.Ref<Element>,
 ) {
   return (

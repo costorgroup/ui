@@ -17,6 +17,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TListVariant[] = [
@@ -47,7 +48,7 @@ const meta: Meta<typeof List> = {
   component: List,
   tags: ['autodocs'],
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
     radius: 'medium',
@@ -100,7 +101,7 @@ export const Default: Story = {
 export const WithFields: Story = {
   args: {
     variant: 'surface',
-    color: 'default',
+    color: 'primary',
     size: 'sm',
   },
   render: (args) => (

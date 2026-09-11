@@ -12,7 +12,7 @@ export const defaultSnackbarRender: TSnackbarRender = ({
   onClose,
 }) => (
   <Alert
-    color={color ?? 'default'}
+    color={color ?? 'primary'}
     variant={variant}
     size={size}
     onClose={onClose}

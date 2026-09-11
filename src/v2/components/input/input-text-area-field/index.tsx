@@ -1,5 +1,6 @@
 import React, {
   ChangeEvent,
+  FocusEvent,
   forwardRef,
   useCallback,
   useLayoutEffect,
@@ -9,6 +10,7 @@ import {
   isAriaInvalid,
   mergeClasses,
 } from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputTextAreaFieldClasses } from './classes';
 import { SInputTextAreaField } from './styles';
 import { TInputTextAreaFieldProps } from './types';
@@ -21,60 +23,93 @@ const syncHeight = (element: HTMLTextAreaElement) => {
 const InputTextAreaField = forwardRef<
   HTMLTextAreaElement,
   TInputTextAreaFieldProps
->(({ autoGrow = false, rows = 3, onChange, className, disabled, readOnly, required, 'aria-invalid': ariaInvalid, ...props }, forwardedRef) => {
-  const localRef = useRef<HTMLTextAreaElement>(null);
-
-  const setRefs = useCallback(
-    (node: HTMLTextAreaElement | null) => {
-      localRef.current = node;
-
-      if (typeof forwardedRef === 'function') {
-        forwardedRef(node);
-      } else if (forwardedRef) {
-        forwardedRef.current = node;
-      }
+>(
+  (
+    {
+      autoGrow = false,
+      rows = 3,
+      onChange,
+      onFocus,
+      className,
+      disabled: disabledProp,
+      readOnly,
+      required: requiredProp,
+      id,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
+      ...props
     },
-    [forwardedRef],
-  );
+    forwardedRef,
+  ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      required: requiredProp,
+      id,
+    });
+    const localRef = useRef<HTMLTextAreaElement>(null);
+    const error = isAriaInvalid(ariaInvalid) || form.error;
 
-  useLayoutEffect(() => {
-    if (!autoGrow || !localRef.current) {
-      return;
-    }
+    const setRefs = useCallback(
+      (node: HTMLTextAreaElement | null) => {
+        localRef.current = node;
 
-    syncHeight(localRef.current);
-  }, [autoGrow, props.value, props.defaultValue, rows]);
+        if (typeof forwardedRef === 'function') {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
+      [forwardedRef],
+    );
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    if (autoGrow) {
-      syncHeight(event.currentTarget);
-    }
+    useLayoutEffect(() => {
+      if (!autoGrow || !localRef.current) {
+        return;
+      }
 
-    onChange?.(event);
-  };
+      syncHeight(localRef.current);
+    }, [autoGrow, props.value, props.defaultValue, rows]);
 
-  return (
-    <SInputTextAreaField
-      ref={setRefs}
-      rows={rows}
-      autoGrow={autoGrow}
-      onChange={handleChange}
-      disabled={disabled}
-      readOnly={readOnly}
-      required={required}
-      aria-invalid={ariaInvalid}
-      {...props}
-      className={mergeClasses(
-        inputTextAreaFieldClasses.root,
-        disabled && inputTextAreaFieldClasses.disabled,
-        isAriaInvalid(ariaInvalid) && inputTextAreaFieldClasses.error,
-        readOnly && inputTextAreaFieldClasses.readOnly,
-        required && inputTextAreaFieldClasses.required,
-        className,
-      )}
-    />
-  );
-});
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      if (autoGrow) {
+        syncHeight(event.currentTarget);
+      }
+
+      onChange?.(event);
+      form.onChange?.(event, event.target.value);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLTextAreaElement>) => {
+      form.setFocused?.(true);
+      onFocus?.(event);
+    };
+
+    return (
+      <SInputTextAreaField
+        ref={setRefs}
+        {...props}
+        id={id ?? form.id}
+        rows={rows}
+        autoGrow={autoGrow}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        disabled={form.disabled}
+        readOnly={readOnly}
+        required={form.required}
+        aria-invalid={error || undefined}
+        aria-describedby={ariaDescribedBy ?? form.helperId}
+        className={mergeClasses(
+          inputTextAreaFieldClasses.root,
+          form.disabled && inputTextAreaFieldClasses.disabled,
+          error && inputTextAreaFieldClasses.error,
+          readOnly && inputTextAreaFieldClasses.readOnly,
+          form.required && inputTextAreaFieldClasses.required,
+          className,
+        )}
+      />
+    );
+  },
+);
 
 InputTextAreaField.displayName = 'InputTextAreaField';
 

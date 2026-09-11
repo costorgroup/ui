@@ -26,7 +26,7 @@ export const STreeViewBranch = styled('ul', {
     );
     width: 1px;
     background-color: ${({ theme }) =>
-      `color-mix(in lab, ${theme.colors.common.black} 16%, transparent)`};
+      `color-mix(in oklab, ${theme.palette.common.black} 16%, transparent)`};
     pointer-events: none;
   }
 

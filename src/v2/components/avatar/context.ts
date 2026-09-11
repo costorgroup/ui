@@ -1,7 +1,7 @@
 import { createContext, HTMLAttributes, ReactNode } from 'react';
 import { TAvatarRadius, TAvatarSize } from './types';
 
-export type TAvatarGroupSpacing = 'small' | 'medium' | number;
+export type TAvatarGroupSpacing = 'sm' | 'md' | number;
 
 export type TAvatarGroupProps = Omit<
   HTMLAttributes<HTMLDivElement>,

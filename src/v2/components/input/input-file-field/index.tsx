@@ -4,20 +4,22 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
-  useId,
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputFileFieldClasses } from './classes';
 import { mergeFiles } from '../../../../helpers/files';
 import { CloseIcon } from '../../../../icons';
-import { IconButton } from '../../icon-button';
+import { InputButton } from '../input-button';
 import { InputFileFieldModal } from '../input-file-field-modal';
 import { InputWrapper } from '../input-wrapper';
 import {
   SInputFileField,
-  SInputFileFieldActions,
   SInputFileFieldHiddenInput,
   SInputFileFieldPlaceholder,
   SInputFileFieldText,
@@ -35,20 +37,34 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
       multiple = false,
       accept,
       placeholder = 'Choose file…',
-      disabled = false,
+      disabled: disabledProp,
       name,
-      variant = 'subtle',
-      size = 'md',
-      color = 'default',
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
       id,
       modalTitle = 'Manage files',
       modalDescription = 'Add files with the dropzone, or remove files from the list.',
       className,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
-    const inputId = useId();
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const size = form.size;
+    const color = form.color;
+    const variant = form.variant;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const isControlled = value !== undefined;
     const [uncontrolledFiles, setUncontrolledFiles] =
       useState<File[]>(defaultValue);
@@ -57,14 +73,15 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const setFiles = useCallback(
-      (next: File[]) => {
+      (next: File[], event?: unknown) => {
         const normalized = multiple ? next : next.slice(0, 1);
         if (!isControlled) {
           setUncontrolledFiles(normalized);
         }
         onChange?.(normalized);
+        form.onChange?.(event, normalized);
       },
-      [isControlled, multiple, onChange],
+      [form.onChange, isControlled, multiple, onChange],
     );
 
     useEffect(() => {
@@ -106,7 +123,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
         return;
       }
       const incoming = Array.from(list);
-      setFiles(mergeFiles(files, incoming, multiple));
+      setFiles(mergeFiles(files, incoming, multiple), event);
       event.target.value = '';
     };
 
@@ -130,12 +147,17 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
     })();
 
     return (
-      <SInputFileField ref={forwardedRef} {...props}
+      <SInputFileField
+        ref={forwardedRef}
+        {...props}
         className={mergeClasses(
           inputFileFieldClasses.root,
           disabled && inputFileFieldClasses.disabled,
+          error && inputFileFieldClasses.error,
+          modalOpen && inputFileFieldClasses.open,
           className,
-        )}>
+        )}
+      >
         {name != null
           ? files.map((file, index) => (
               <input
@@ -150,7 +172,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
 
         <SInputFileFieldHiddenInput
           ref={inputRef}
-          id={id ?? inputId}
+          id={fieldId}
           type="file"
           accept={accept}
           multiple={multiple}
@@ -161,19 +183,14 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
           onClick={(event) => event.stopPropagation()}
         />
 
-        <InputWrapper
-          open={modalOpen}
-          variant={variant}
-          size={size}
-          color={color}
-          disabled={disabled}
-          trigger
-        >
+        <InputWrapper open={modalOpen} trigger>
           <SInputFileFieldTrigger
             type="button"
             size={size}
             aria-haspopup={multiple ? 'dialog' : undefined}
             aria-expanded={multiple ? modalOpen : undefined}
+            aria-invalid={error || undefined}
+            aria-describedby={ariaDescribedBy ?? form.helperId}
             onClick={handleTriggerClick}
           >
             <SInputFileFieldValue>
@@ -185,23 +202,17 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
                 </SInputFileFieldPlaceholder>
               )}
             </SInputFileFieldValue>
-
-            {files.length > 0 ? (
-              <SInputFileFieldActions>
-                <IconButton
-                  type="button"
-                  size={size}
-                  variant="ghost"
-                  color={color}
-                  aria-label={multiple ? 'Clear files' : 'Remove file'}
-                  disabled={disabled}
-                  onClick={handleClear}
-                >
-                  <CloseIcon width="1em" height="1em" />
-                </IconButton>
-              </SInputFileFieldActions>
-            ) : null}
           </SInputFileFieldTrigger>
+          {files.length > 0 ? (
+            <InputButton
+              type="button"
+              aria-label={multiple ? 'Clear files' : 'Remove file'}
+              disabled={disabled}
+              onClick={handleClear}
+            >
+              <CloseIcon />
+            </InputButton>
+          ) : null}
         </InputWrapper>
 
         {modalOpen && multiple ? (
@@ -210,6 +221,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
             accept={accept}
             disabled={disabled}
             color={color}
+            variant={variant}
             title={modalTitle}
             description={modalDescription}
             onConfirm={handleModalConfirm}

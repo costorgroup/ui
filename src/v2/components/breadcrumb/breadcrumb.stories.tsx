@@ -32,7 +32,8 @@ const meta: Meta<typeof Breadcrumb> = {
         'dark',
         'light',
         'default',
-      ],
+        'inverted',
+],
     },
   },
 };
@@ -61,7 +62,7 @@ export const Default: Story = {
   ),
   args: {
     size: 'md',
-    color: 'default',
+    color: 'primary',
   },
 };
 

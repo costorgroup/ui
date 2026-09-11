@@ -1,13 +1,8 @@
 import styled from '@emotion/styled';
-import { staticChromeVariantStyles } from '../../idle-variant-styles';
-import {
-  TSTooltipContentProps,
-  TSTooltipPanelProps,
-  TTooltipPlacement,
-} from './types';
+import { Panel } from '../panel';
+import { TSTooltipContentProps, TTooltipPlacement } from './types';
 
 const customContentProps = new Set(['top', 'left', 'placement', 'visible']);
-const customPanelProps = new Set(['variant', 'color']);
 
 const hiddenTransform = (placement: TTooltipPlacement) => {
   if (placement.startsWith('top')) {
@@ -49,21 +44,14 @@ export const STooltipContent = styled('div', {
     transform 0.15s ease;
 `;
 
-export const STooltipPanel = styled('span', {
-  shouldForwardProp: (prop) => !customPanelProps.has(prop),
-})<TSTooltipPanelProps>`
+export const STooltipPanel = styled(Panel)`
   display: inline-flex;
   align-items: center;
-  box-sizing: border-box;
-  border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  max-width: 100%;
   font-family: inherit;
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  font-size: 12px;
-  line-height: 1.2;
-  padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  font-size: ${({ theme }) => theme.sizes.sm.fontSize};
+  line-height: 1.3;
+  padding: ${({ theme }) => theme.sizes.sm.padX};
   white-space: normal;
-
-  ${({ theme, variant = 'surface', color = 'default' }) =>
-    staticChromeVariantStyles(variant, theme.colors[color], theme)}
 `;

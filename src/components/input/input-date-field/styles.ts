@@ -70,56 +70,56 @@ export const SInputDateFieldTrigger = styled('button', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 20%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 20%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 28%, transparent);
           }
         `;
       case 'outline':
         return `
           background-color: transparent;
           color: ${palette.main};
-          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 52%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 52%, transparent);
             color: ${palette.dark};
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 68%, transparent);
             color: ${palette.darker};
           }
         `;
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
           color: ${palette.darker};
           border-color: transparent;
 
           &:hover:not(:disabled) {
-            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
           }
         `;
     }
@@ -170,9 +170,9 @@ export const SInputDateFieldDropdown = styled('div', {
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme }) => theme.radius.medium};
-  background-color: ${({ theme }) => theme.colors.common.white};
+  background-color: ${({ theme }) => theme.palette.common.white};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,
@@ -218,7 +218,7 @@ export const SInputDateFieldMonthLabel = styled.div`
   text-align: center;
   font-size: 14px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme }) => theme.colors.common.black};
+  color: ${({ theme }) => theme.palette.common.black};
 `;
 
 export const SInputDateFieldWeekdays = styled.div`
@@ -236,7 +236,7 @@ export const SInputDateFieldWeekday = styled('div', {
   height: 28px;
   font-size: 11px;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
 `;
 
 export const SInputDateFieldDays = styled.div`
@@ -264,27 +264,27 @@ export const SInputDateFieldDay = styled('button', {
   opacity: ${({ outside, disabled }) => (disabled ? 0.35 : outside ? 0.45 : 1)};
 
   ${({ theme, selected, today, color, variant }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     if (selected) {
       switch (variant) {
         case 'surface':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 16%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 16%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 28%, transparent);
           `;
         case 'outline':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 68%, transparent);
           `;
         case 'subtle':
         default:
           return `
             color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 12%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 12%, transparent);
             border-color: transparent;
           `;
       }
@@ -295,20 +295,20 @@ export const SInputDateFieldDay = styled('button', {
         case 'surface':
           return `
             color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 14%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
           `;
         case 'outline':
           return `
             color: ${palette.main};
             background-color: transparent;
-            border-color: color-mix(in lab, ${palette.main} 36%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
           `;
         case 'subtle':
         default:
           return `
             color: ${palette.darker};
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
             border-color: transparent;
           `;
       }
@@ -323,19 +323,19 @@ export const SInputDateFieldDay = styled('button', {
 
   &:hover:not(:disabled) {
     ${({ theme, selected, color, variant }) => {
-      const palette = theme.colors[color];
+      const palette = theme.palette[color];
       if (selected) {
         switch (variant) {
           case 'surface':
-            return `background-color: color-mix(in lab, ${palette.main} 20%, transparent);`;
+            return `background-color: color-mix(in oklab, ${palette.main} 20%, transparent);`;
           case 'outline':
-            return `background-color: color-mix(in lab, ${palette.main} 8%, transparent);`;
+            return `background-color: color-mix(in oklab, ${palette.main} 8%, transparent);`;
           case 'subtle':
           default:
-            return `background-color: color-mix(in lab, ${palette.main} 16%, transparent);`;
+            return `background-color: color-mix(in oklab, ${palette.main} 16%, transparent);`;
         }
       }
-      return `background-color: color-mix(in lab, ${palette.main} 10%, transparent);`;
+      return `background-color: color-mix(in oklab, ${palette.main} 10%, transparent);`;
     }}
   }
 `;
@@ -384,23 +384,23 @@ export const SInputDateFieldTimeWheelHighlight = styled('div', {
   border: 1px solid transparent;
 
   ${({ theme, color, variant }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
-          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
         `;
       case 'outline':
         return `
           background-color: transparent;
-          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
         `;
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
           border-color: transparent;
         `;
     }
@@ -462,8 +462,8 @@ export const SInputDateFieldTimeWheelItem = styled('button', {
   line-height: 1;
   color: ${({ theme, color, variant }) =>
     variant === 'outline'
-      ? theme.colors[color].main
-      : theme.colors[color].darker};
+      ? theme.palette[color].main
+      : theme.palette[color].darker};
   cursor: pointer;
   opacity: 1;
   pointer-events: auto;
@@ -471,8 +471,8 @@ export const SInputDateFieldTimeWheelItem = styled('button', {
   &[data-selected='true'] {
     color: ${({ theme, color, variant }) =>
       variant === 'outline'
-        ? theme.colors[color].darker
-        : theme.colors[color].darker};
+        ? theme.palette[color].darker
+        : theme.palette[color].darker};
     font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   }
 

@@ -1,134 +1,70 @@
 import type { TTheme } from '../../../theme/types';
 import type { TThemeColorScale } from '../../../theme/theming/color/types';
-import { PALETTE_TINT, SURFACE_BORDER_IDLE, SURFACE_BORDER_HOVER } from '../../idle-variant-styles';
 import {
-  chromeOpaqueFill,
-  paletteTint,
+  fieldBackground,
+  fieldBorderColor,
   surfaceBorder,
   surfaceMutedBackground,
 } from '../../surface';
 import type { TInputVariant } from './input-wrapper/types';
 
-const fieldText = (theme: TTheme) => theme.colors.default.main;
+const fieldText = (theme: TTheme) => theme.palette.default.main;
 
-const inputIdleBackground = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'subtle':
-    case 'surface':
-      return paletteTint(theme, palette.main, PALETTE_TINT);
-    case 'outline':
-      return 'transparent';
-  }
-};
+const fieldFill = (variant: TInputVariant, theme: TTheme) =>
+  variant === 'outline' ? 'transparent' : fieldBackground(theme);
 
-const inputHoverBackground = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'subtle':
-    case 'surface':
-      return paletteTint(theme, palette.dark, PALETTE_TINT);
-    case 'outline':
-      return 'transparent';
+const chromeBorder = (variant: TInputVariant, theme: TTheme, hover = false) => {
+  if (variant === 'subtle') {
+    return 'transparent';
   }
-};
 
-const inputFocusBackground = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'subtle':
-    case 'surface':
-      return paletteTint(theme, palette.darker, PALETTE_TINT);
-    case 'outline':
-      return 'transparent';
-  }
-};
-
-const inputIdleBorderColor = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'subtle':
-      return 'transparent';
-    case 'surface':
-      return palette.main;
-    case 'outline':
-      return chromeOpaqueFill(theme, SURFACE_BORDER_IDLE);
-  }
-};
-
-const inputHoverBorderColor = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'subtle':
-      return 'transparent';
-    case 'surface':
-      return palette.main;
-    case 'outline':
-      return chromeOpaqueFill(theme, SURFACE_BORDER_HOVER);
-  }
-};
-
-const inputFocusBorderColor = (
-  variant: TInputVariant,
-  palette: TThemeColorScale,
-) => {
-  switch (variant) {
-    case 'subtle':
-      return 'transparent';
-    case 'surface':
-    case 'outline':
-      return palette.main;
-  }
+  return fieldBorderColor(theme, hover);
 };
 
 const fieldChrome = (
   backgroundColor: string,
   text: string,
   border: string,
+  borderWidth: 1 | 2,
+  stabilize = false,
 ) => `
   background-color: ${backgroundColor};
   color: ${text};
   border-color: ${border};
+  border-width: ${borderWidth}px;
+  ${stabilize ? `padding: ${borderWidth === 1 ? '1px' : '0'};` : ''}
   box-shadow: none;
+  outline: none;
 `;
 
 const variantIdleStyles = (
   variant: TInputVariant,
-  palette: TThemeColorScale,
+  _palette: TThemeColorScale,
   theme: TTheme,
   text: string,
+  stabilize = false,
 ) =>
   fieldChrome(
-    inputIdleBackground(variant, palette, theme),
+    fieldFill(variant, theme),
     text,
-    inputIdleBorderColor(variant, palette, theme),
+    chromeBorder(variant, theme),
+    1,
+    stabilize,
   );
 
 const variantHoverStyles = (
   variant: TInputVariant,
-  palette: TThemeColorScale,
+  _palette: TThemeColorScale,
   theme: TTheme,
   text: string,
+  stabilize = false,
 ) =>
   fieldChrome(
-    inputHoverBackground(variant, palette, theme),
+    fieldFill(variant, theme),
     text,
-    inputHoverBorderColor(variant, palette, theme),
+    chromeBorder(variant, theme, true),
+    1,
+    stabilize,
   );
 
 const variantFocusStyles = (
@@ -136,11 +72,14 @@ const variantFocusStyles = (
   palette: TThemeColorScale,
   theme: TTheme,
   text: string,
+  stabilize = false,
 ) =>
   fieldChrome(
-    inputFocusBackground(variant, palette, theme),
+    fieldFill(variant, theme),
     text,
-    inputFocusBorderColor(variant, palette),
+    palette.main,
+    2,
+    stabilize,
   );
 
 const variantErrorStyles = (
@@ -148,8 +87,8 @@ const variantErrorStyles = (
   error: TThemeColorScale,
   theme: TTheme,
   text: string,
-) =>
-  fieldChrome(inputIdleBackground(variant, error, theme), text, error.main);
+  stabilize = false,
+) => fieldChrome(fieldFill(variant, theme), text, error.main, 1, stabilize);
 
 /** Strip border/fill/shadow from controls inside InputWrapper. */
 export const inputInnerResetStyles = `
@@ -181,11 +120,11 @@ export const inputFieldFocusStyles = (
   theme: TTheme,
 ) => variantFocusStyles(variant, palette, theme, fieldText(theme));
 
-/** Field error chrome — locked border; hover/focus do not override. */
+/** Field error chrome — red border; focus uses the same color at 2px. */
 export const inputFieldErrorStyles = (
   variant: TInputVariant,
   theme: TTheme,
-) => variantErrorStyles(variant, theme.colors.error, theme, fieldText(theme));
+) => variantErrorStyles(variant, theme.palette.error, theme, fieldText(theme));
 
 /** Soft field chrome for inputs, selects, pin cells, rich-text shell, etc. */
 export const inputVariantStyles = (
@@ -199,18 +138,28 @@ export const inputVariantStyles = (
   const text = fieldText(theme);
 
   if (options?.error) {
-    return variantErrorStyles(variant, theme.colors.error, theme, text);
+    return `
+      ${variantErrorStyles(variant, theme.palette.error, theme, text, true)}
+
+      &:hover:not(:focus-within):not([data-open='true']) {
+        ${variantErrorStyles(variant, theme.palette.error, theme, text, true)}
+      }
+
+      ${focus} {
+        ${variantFocusStyles(variant, theme.palette.error, theme, text, true)}
+      }
+    `;
   }
 
   return `
-    ${variantIdleStyles(variant, palette, theme, text)}
+    ${variantIdleStyles(variant, palette, theme, text, true)}
 
     &:hover:not(:focus-within):not([data-open='true']) {
-      ${variantHoverStyles(variant, palette, theme, text)}
+      ${variantHoverStyles(variant, palette, theme, text, true)}
     }
 
     ${focus} {
-      ${variantFocusStyles(variant, palette, theme, text)}
+      ${variantFocusStyles(variant, palette, theme, text, true)}
     }
   `;
 };
@@ -220,12 +169,12 @@ export const inputControlIdleStyles = (
   variant: TInputVariant,
   palette: TThemeColorScale,
   theme: TTheme,
-) => variantIdleStyles(variant, palette, theme, theme.colors.default.main);
+) => variantIdleStyles(variant, palette, theme, theme.palette.default.main);
 
 export const inputControlIdleHoverStyles = (
   variant: TInputVariant,
   palette: TThemeColorScale,
   theme: TTheme,
-) => variantHoverStyles(variant, palette, theme, theme.colors.default.main);
+) => variantHoverStyles(variant, palette, theme, theme.palette.default.main);
 
 export { surfaceBorder, surfaceMutedBackground };

@@ -41,7 +41,8 @@ const meta: Meta<typeof Tabs> = {
         'dark',
         'light',
         'default',
-      ] satisfies TPaletteColor[],
+        'inverted',
+] satisfies TPaletteColor[],
     },
   },
 };

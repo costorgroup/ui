@@ -93,7 +93,7 @@ const faceFor = (
     return BRAND_FACE[brand];
   }
 
-  const palette = theme.colors[color];
+  const palette = theme.palette[color];
 
   return {
     from: palette.light,
@@ -337,8 +337,8 @@ export const SCreditCardCvv = styled.div`
   height: 15cqh;
   padding: 0 2.2cqw;
   border-radius: 0.9cqw;
-  background: ${({ theme }) => theme.colors.common.white};
-  color: ${({ theme }) => theme.colors.common.black};
+  background: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.common.black};
   font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
   font-size: 4cqw;
   font-weight: 700;

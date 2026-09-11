@@ -70,7 +70,7 @@ export const SInputColorFieldSwatch = styled.span`
   border: 1px solid
     color-mix(
       in srgb,
-      ${({ theme }) => theme.colors.common.black} 16%,
+      ${({ theme }) => theme.palette.common.black} 16%,
       transparent
     );
   border-radius: ${({ theme }) => theme.radius.small};
@@ -81,10 +81,10 @@ export const SInputColorFieldSwatch = styled.span`
       var(--input-color-swatch, #000)
     ),
     conic-gradient(
-      ${({ theme }) => theme.colors.common.grey[6]} 0.25turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0 0.5turn,
-      ${({ theme }) => theme.colors.common.grey[6]} 0 0.75turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0
+      ${({ theme }) => theme.palette.common.grey[6]} 0.25turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0 0.5turn,
+      ${({ theme }) => theme.palette.common.grey[6]} 0 0.75turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0
     );
   background-size:
     100% 100%,
@@ -155,7 +155,7 @@ export const SInputColorFieldSpectrum = styled.div`
   box-shadow: inset 0 0 0 1px
     color-mix(
       in srgb,
-      ${({ theme }) => theme.colors.common.black} 12%,
+      ${({ theme }) => theme.palette.common.black} 12%,
       transparent
     );
   touch-action: none;
@@ -170,19 +170,19 @@ export const SInputColorFieldSpectrumMarker = styled.span`
   width: 14px;
   height: 14px;
   box-sizing: border-box;
-  border: 2px solid ${({ theme }) => theme.colors.common.white};
+  border: 2px solid ${({ theme }) => theme.palette.common.white};
   border-radius: ${({ theme }) => theme.radius.circle};
   box-shadow:
     0 0 0 1px
       color-mix(
         in srgb,
-        ${({ theme }) => theme.colors.common.black} 35%,
+        ${({ theme }) => theme.palette.common.black} 35%,
         transparent
       ),
     0 1px 4px
       color-mix(
         in srgb,
-        ${({ theme }) => theme.colors.common.black} 25%,
+        ${({ theme }) => theme.palette.common.black} 25%,
         transparent
       );
   transform: translate(-50%, -50%);
@@ -206,7 +206,7 @@ export const SInputColorFieldPreview = styled.span`
   border: 1px solid
     color-mix(
       in srgb,
-      ${({ theme }) => theme.colors.common.black} 16%,
+      ${({ theme }) => theme.palette.common.black} 16%,
       transparent
     );
   border-radius: ${({ theme }) => theme.radius.circle};
@@ -217,10 +217,10 @@ export const SInputColorFieldPreview = styled.span`
       var(--input-color-swatch, #000)
     ),
     conic-gradient(
-      ${({ theme }) => theme.colors.common.grey[6]} 0.25turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0 0.5turn,
-      ${({ theme }) => theme.colors.common.grey[6]} 0 0.75turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0
+      ${({ theme }) => theme.palette.common.grey[6]} 0.25turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0 0.5turn,
+      ${({ theme }) => theme.palette.common.grey[6]} 0 0.75turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0
     );
   background-size:
     100% 100%,
@@ -243,7 +243,7 @@ export const SInputColorFieldHue = styled.div`
   border: 0;
   border-radius: ${({ theme }) => theme.radius.pill};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,
@@ -272,7 +272,7 @@ export const SInputColorFieldAlpha = styled.div`
   border: 0;
   border-radius: ${({ theme }) => theme.radius.pill};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,
@@ -290,10 +290,10 @@ export const SInputColorFieldAlpha = styled.div`
       var(--input-color-opaque, #f00)
     ),
     conic-gradient(
-      ${({ theme }) => theme.colors.common.grey[6]} 0.25turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0 0.5turn,
-      ${({ theme }) => theme.colors.common.grey[6]} 0 0.75turn,
-      ${({ theme }) => theme.colors.common.grey[2]} 0
+      ${({ theme }) => theme.palette.common.grey[6]} 0.25turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0 0.5turn,
+      ${({ theme }) => theme.palette.common.grey[6]} 0 0.75turn,
+      ${({ theme }) => theme.palette.common.grey[2]} 0
     );
   background-size:
     100% 100%,
@@ -306,12 +306,12 @@ export const SInputColorFieldSliderMarker = styled.span`
   width: 14px;
   height: 14px;
   box-sizing: border-box;
-  border: 2px solid ${({ theme }) => theme.colors.common.white};
+  border: 2px solid ${({ theme }) => theme.palette.common.white};
   border-radius: ${({ theme }) => theme.radius.circle};
   box-shadow: 0 0 0 1px
     color-mix(
       in srgb,
-      ${({ theme }) => theme.colors.common.black} 35%,
+      ${({ theme }) => theme.palette.common.black} 35%,
       transparent
     );
   transform: translate(-50%, -50%);

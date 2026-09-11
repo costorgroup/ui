@@ -1,12 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import {
-  PinField,
-  Text
-} from '../../index';
+import type { TPaletteColor } from '../../../theme/types';
+import { Flex } from '../../../index';
+import { InputActions, InputButton, PinField, Text } from '../../index';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof PinField> = {
-  title: 'V2/Forms/PinField',
+  title: 'V3/Forms/PinField',
   component: PinField,
   tags: ['autodocs'],
   decorators: [
@@ -17,28 +34,9 @@ const meta: Meta<typeof PinField> = {
     ),
   ],
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
     type: {
       control: 'select',
       options: ['numeric', 'alphanumeric', 'alphabetic'],
@@ -56,25 +54,6 @@ const meta: Meta<typeof PinField> = {
     helperText: { control: 'text' },
     placeholder: { control: 'text' },
   },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof PinField>;
-
-export const Default: Story = {
-  render: (args) => {
-    const [value, setValue] = useState('');
-
-    return (
-      <>
-        <PinField {...args} value={value} onChange={setValue} />
-        <Text size="sm" style={{ marginTop: 12 }}>
-          Value: {value || '—'}
-        </Text>
-      </>
-    );
-  },
   args: {
     label: 'One-time code',
     helperText: 'Enter the 4-digit code from your authenticator.',
@@ -83,11 +62,52 @@ export const Default: Story = {
     otp: true,
     placeholder: '○',
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     error: false,
   },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof PinField>;
+
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <PinField key={color} color={color} label={color} length={4} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <PinField variant={variant} label={variant} length={4} />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {SIZES.map((size) => (
+        <PinField key={size} size={size} label={size} length={4} />
+      ))}
+    </Flex>
+  ),
 };
 
 export const Alphanumeric: Story = {
@@ -102,9 +122,6 @@ export const Alphanumeric: Story = {
     length: 6,
     type: 'alphanumeric',
     placeholder: '○',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
   },
 };
 
@@ -121,9 +138,6 @@ export const Masked: Story = {
     type: 'numeric',
     mask: true,
     placeholder: '○',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
   },
 };
 
@@ -140,9 +154,6 @@ export const Attached: Story = {
     otp: true,
     attached: true,
     placeholder: '○',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
   },
 };
 
@@ -153,14 +164,28 @@ export const Error: Story = {
     return <PinField {...args} value={value} onChange={setValue} />;
   },
   args: {
-    label: 'One-time code',
     helperText: 'Invalid code. Try again.',
-    length: 4,
-    type: 'numeric',
     error: true,
-    placeholder: '○',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
+  },
+};
+
+export const ActionBar: Story = {
+  render: (args) => {
+    const [value, setValue] = useState('');
+
+    return (
+      <PinField
+        {...args}
+        value={value}
+        onChange={setValue}
+        actionBar={
+          <Flex align="center" justify="flex-end">
+            <InputActions>
+              <InputButton radius="sm">Clear value</InputButton>
+            </InputActions>
+          </Flex>
+        }
+      />
+    );
   },
 };

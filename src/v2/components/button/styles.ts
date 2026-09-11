@@ -1,56 +1,61 @@
-import styled from "@emotion/styled";
-import { TButtonProps, TButtonSize } from "./types";
-import { V2_BUTTON_RADIUS, variantStyles } from "./variant-styles";
+import styled from '@emotion/styled';
+import { TButtonProps } from './types';
+import { variantStyles } from './variant-styles';
 
-type TSButtonProps = Pick<TButtonProps, "variant" | "appearance" | "size" | "color">;
+type TSButtonProps = Pick<
+  TButtonProps,
+  'variant' | 'appearance' | 'size' | 'color' | 'radius'
+>;
 
-const customProps = new Set(["variant", "appearance", "size", "color"]);
+const customProps = new Set(['variant', 'appearance', 'size', 'color', 'radius']);
 
-const sizeStyles: Record<
-  TButtonSize,
-  { fontSize: string; padY: string; padX: string; gap: string }
-> = {
-  xs: { fontSize: "11px", padY: "2px", padX: "8px", gap: "4px" },
-  sm: { fontSize: "12px", padY: "3px", padX: "10px", gap: "4px" },
-  md: { fontSize: "13px", padY: "4px", padX: "12px", gap: "5px" },
-  lg: { fontSize: "14px", padY: "5px", padX: "14px", gap: "6px" },
-  xl: { fontSize: "15px", padY: "6px", padX: "16px", gap: "6px" },
-};
-
-export const SButton = styled("button", {
+export const SButton = styled('button', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSButtonProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ size = "md" }) => sizeStyles[size].gap};
+  box-sizing: border-box;
   min-height: 0;
   border: 1px solid;
-  border-radius: ${V2_BUTTON_RADIUS};
+  border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: 1.2;
+  line-height: 1;
   letter-spacing: -0.01em;
   cursor: pointer;
   transition:
     background-color 0.12s ease,
+    background-image 0.12s ease,
     border-color 0.12s ease,
+    box-shadow 0.12s ease,
     color 0.12s ease,
     opacity 0.12s ease;
 
-  ${({ theme, variant = "solid", appearance = "opaque", color = "default" }) => {
-    const palette = theme.colors[color];
-    return variantStyles(variant, palette, theme, appearance);
-  }}
-
-  ${({ size = "md" }) => {
-    const scale = sizeStyles[size];
+  ${({ theme, size = 'md' }) => {
+    const step = theme.sizes[size];
 
     return `
-      padding: ${scale.padY} ${scale.padX};
-      font-size: ${scale.fontSize};
+      height: ${step.height};
+      gap: ${step.gap};
+      padding: 0 ${step.padX};
+      font-size: ${step.fontSize};
+
+      & svg {
+        width: ${step.icon};
+        height: ${step.icon};
+      }
     `;
   }}
+
+  ${({ theme, variant = 'solid', appearance = 'opaque', color = 'default' }) =>
+    variantStyles(
+      variant,
+      theme.palette[color],
+      theme,
+      appearance,
+      theme.surfaces.background,
+    )}
 
   &:disabled {
     opacity: 0.45;
@@ -59,7 +64,7 @@ export const SButton = styled("button", {
 
   &:focus-visible {
     outline: 2px solid
-      ${({ theme, color = "default" }) => theme.colors[color].main};
+      ${({ theme, color = 'default' }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 `;

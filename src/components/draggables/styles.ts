@@ -23,9 +23,9 @@ export const SDraggables = styled('div', {
     pointer-events: none;
     border-radius: ${({ theme }) => theme.radius.medium};
     background-color: ${({ theme }) =>
-      `color-mix(in lab, ${theme.colors.primary.main} 12%, transparent)`};
+      `color-mix(in oklab, ${theme.palette.primary.main} 12%, transparent)`};
     border: 1px dashed
       ${({ theme }) =>
-        `color-mix(in lab, ${theme.colors.primary.main} 36%, transparent)`};
+        `color-mix(in oklab, ${theme.palette.primary.main} 36%, transparent)`};
   }
 `;

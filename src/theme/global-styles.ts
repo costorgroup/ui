@@ -12,13 +12,13 @@ export const defaultGlobalStyles = (theme: TTheme) => css`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: ${theme.colors.primary.main};
+    background: ${theme.palette.primary.main};
     border-radius: ${theme.radius.pill};
     transition: background-color 0.15s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: ${theme.colors.primary.dark};
+    background: ${theme.palette.primary.dark};
   }
 `;
 

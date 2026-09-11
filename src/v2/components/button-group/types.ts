@@ -14,8 +14,12 @@ export type TButtonGroupProps = Omit<
   appearance?: TButtonAppearance;
   size?: TButtonSize;
   disabled?: boolean;
+  rounded?: boolean;
 };
 
 export type TSButtonGroupProps = {
   orientation: TButtonGroupOrientation;
+  variant?: TButtonVariant;
+  color: TPaletteColor;
+  rounded?: boolean;
 };

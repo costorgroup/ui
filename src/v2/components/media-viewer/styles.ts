@@ -63,15 +63,15 @@ export const SMediaViewerImage = styled.img`
   ${mediaFit}
   border-radius: ${({ theme }) => theme.radius.medium};
   box-shadow: 0 18px 48px
-    ${({ theme }) => colorMix(theme.colors.base.contrastText, 28)};
+    ${({ theme }) => colorMix(theme.palette.base.contrastText, 28)};
 `;
 
 export const SMediaViewerVideo = styled.video`
   ${mediaFit}
   border-radius: ${({ theme }) => theme.radius.medium};
-  background: ${({ theme }) => colorMix(theme.colors.base.contrastText, 18)};
+  background: ${({ theme }) => colorMix(theme.palette.base.contrastText, 18)};
   box-shadow: 0 18px 48px
-    ${({ theme }) => colorMix(theme.colors.base.contrastText, 28)};
+    ${({ theme }) => colorMix(theme.palette.base.contrastText, 28)};
 `;
 
 export const SMediaViewerClose = styled.div`
@@ -98,7 +98,7 @@ export const SMediaViewerCaption = styled.div`
   flex-shrink: 0;
   margin-top: ${({ theme }) => theme.spacing(theme.gap.sm)};
   max-width: 100%;
-  color: ${({ theme }) => theme.colors.base.main};
+  color: ${({ theme }) => theme.palette.base.main};
   text-align: center;
 
   .${textClasses.root} {
@@ -140,7 +140,7 @@ export const SMediaViewerThumb = styled('button', {
   overflow: hidden;
   border: 2px solid
     ${({ theme, selected }) =>
-      selected ? theme.colors.base.main : 'transparent'};
+      selected ? theme.palette.base.main : 'transparent'};
   border-radius: ${({ theme }) => theme.radius.small};
   background: none;
   cursor: pointer;
@@ -157,7 +157,7 @@ export const SMediaViewerThumb = styled('button', {
     max-width: none;
     object-fit: contain;
     pointer-events: none;
-    background: ${({ theme }) => colorMix(theme.colors.base.contrastText, 18)};
+    background: ${({ theme }) => colorMix(theme.palette.base.contrastText, 18)};
   }
 
   &:hover {
@@ -171,7 +171,7 @@ export const SMediaViewerThumbPlay = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.base.main};
+  color: ${({ theme }) => theme.palette.base.main};
   pointer-events: none;
 
   svg {

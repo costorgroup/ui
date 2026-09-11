@@ -21,17 +21,17 @@ const tonesFor = (
     case 'subtle':
       return {
         idle: {
-          background: `color-mix(in lab, ${palette.main} 8%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 8%, transparent)`,
           color: palette.darker,
           border: 'transparent',
         },
         hover: {
-          background: `color-mix(in lab, ${palette.main} 14%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 14%, transparent)`,
           color: palette.darker,
           border: 'transparent',
         },
         toggled: {
-          background: `color-mix(in lab, ${palette.main} 20%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 20%, transparent)`,
           color: palette.darker,
           border: 'transparent',
         },
@@ -39,19 +39,19 @@ const tonesFor = (
     case 'surface':
       return {
         idle: {
-          background: `color-mix(in lab, ${palette.main} 8%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 8%, transparent)`,
           color: palette.darker,
-          border: `color-mix(in lab, ${palette.main} 24%, transparent)`,
+          border: `color-mix(in oklab, ${palette.main} 24%, transparent)`,
         },
         hover: {
-          background: `color-mix(in lab, ${palette.main} 14%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 14%, transparent)`,
           color: palette.darker,
-          border: `color-mix(in lab, ${palette.main} 36%, transparent)`,
+          border: `color-mix(in oklab, ${palette.main} 36%, transparent)`,
         },
         toggled: {
-          background: `color-mix(in lab, ${palette.main} 20%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 20%, transparent)`,
           color: palette.darker,
-          border: `color-mix(in lab, ${palette.main} 48%, transparent)`,
+          border: `color-mix(in oklab, ${palette.main} 48%, transparent)`,
         },
       };
     case 'ghost':
@@ -62,12 +62,12 @@ const tonesFor = (
           border: 'transparent',
         },
         hover: {
-          background: `color-mix(in lab, ${palette.main} 8%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 8%, transparent)`,
           color: palette.dark,
           border: 'transparent',
         },
         toggled: {
-          background: `color-mix(in lab, ${palette.main} 14%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 14%, transparent)`,
           color: palette.darker,
           border: 'transparent',
         },
@@ -98,12 +98,12 @@ const tonesFor = (
           border: palette.main,
         },
         hover: {
-          background: `color-mix(in lab, ${palette.main} 8%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 8%, transparent)`,
           color: palette.dark,
           border: palette.dark,
         },
         toggled: {
-          background: `color-mix(in lab, ${palette.main} 14%, transparent)`,
+          background: `color-mix(in oklab, ${palette.main} 14%, transparent)`,
           color: palette.darker,
           border: palette.darker,
         },
@@ -135,7 +135,7 @@ export const toggleInteractionStyles = (
   variant: TButtonVariant = 'outline',
   color: TPaletteColor = 'primary',
 ) => {
-  const tones = tonesFor(variant, theme.colors[color]);
+  const tones = tonesFor(variant, theme.palette[color]);
 
   return `
     ${cssTone(tones.idle)}

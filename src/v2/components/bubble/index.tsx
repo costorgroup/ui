@@ -16,7 +16,7 @@ const Bubble = forwardRef<HTMLDivElement, TBubbleProps>(
   (
     {
       children,
-      color = 'default',
+      color = 'primary',
       variant = 'solid',
       align = 'start',
       className,

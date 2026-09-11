@@ -88,7 +88,7 @@ const Color = forwardRef<HTMLButtonElement, TColorProps>(
     ref,
   ) => {
     const theme = useTheme();
-    const fallback = theme.colors.default.main;
+    const fallback = theme.palette.default.main;
     const colors = toColorList(colorsProp, fallback);
 
     return (

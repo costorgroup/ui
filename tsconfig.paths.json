@@ -638,6 +638,15 @@
       "@costor/ui/v2/BlockquoteContent": [
         "./src/v2/components/blockquote/blockquote-content/index.tsx"
       ],
+      "@costor/ui/v2/BlockquoteIcon": [
+        "./src/v2/components/blockquote/blockquote-icon/index.tsx"
+      ],
+      "@costor/ui/v2/BlockquoteRail": [
+        "./src/v2/components/blockquote/blockquote-rail/index.tsx"
+      ],
+      "@costor/ui/v2/Box": [
+        "./src/v2/components/box/index.tsx"
+      ],
       "@costor/ui/v2/Breadcrumb": [
         "./src/v2/components/breadcrumb/index.tsx"
       ],
@@ -707,23 +716,83 @@
       "@costor/ui/v2/DatePickerField": [
         "./src/v2/components/date-picker-field/index.tsx"
       ],
+      "@costor/ui/v2/Dock": [
+        "./src/v2/components/dock/index.tsx"
+      ],
+      "@costor/ui/v2/DockItem": [
+        "./src/v2/components/dock/dock-item/index.tsx"
+      ],
+      "@costor/ui/v2/DockSeparator": [
+        "./src/v2/components/dock/dock-separator/index.tsx"
+      ],
+      "@costor/ui/v2/Drawer": [
+        "./src/v2/components/drawer/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerActions": [
+        "./src/v2/components/drawer/drawer-actions/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerBase": [
+        "./src/v2/components/drawer/drawer-base/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerBody": [
+        "./src/v2/components/drawer/drawer-body/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerDescription": [
+        "./src/v2/components/drawer/drawer-description/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerHead": [
+        "./src/v2/components/drawer/drawer-head/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerHeadActions": [
+        "./src/v2/components/drawer/drawer-head-actions/index.tsx"
+      ],
+      "@costor/ui/v2/DrawerTitle": [
+        "./src/v2/components/drawer/drawer-title/index.tsx"
+      ],
+      "@costor/ui/v2/Dropzone": [
+        "./src/v2/components/dropzone/index.tsx"
+      ],
       "@costor/ui/v2/Em": [
         "./src/v2/components/em/index.tsx"
       ],
       "@costor/ui/v2/EmojiPickerField": [
         "./src/v2/components/emoji-picker-field/index.tsx"
       ],
+      "@costor/ui/v2/Empty": [
+        "./src/v2/components/empty/index.tsx"
+      ],
+      "@costor/ui/v2/EmptyContent": [
+        "./src/v2/components/empty/empty-content/index.tsx"
+      ],
+      "@costor/ui/v2/EmptyDescription": [
+        "./src/v2/components/empty/empty-description/index.tsx"
+      ],
+      "@costor/ui/v2/EmptyHeader": [
+        "./src/v2/components/empty/empty-header/index.tsx"
+      ],
+      "@costor/ui/v2/EmptyMedia": [
+        "./src/v2/components/empty/empty-media/index.tsx"
+      ],
+      "@costor/ui/v2/EmptyTitle": [
+        "./src/v2/components/empty/empty-title/index.tsx"
+      ],
       "@costor/ui/v2/FileField": [
         "./src/v2/components/file-field/index.tsx"
       ],
-      "@costor/ui/v2/FloatingAction": [
-        "./src/v2/components/floating-action/index.tsx"
+      "@costor/ui/v2/Floating": [
+        "./src/v2/components/floating/index.tsx"
+      ],
+      "@costor/ui/v2/FormControl": [
+        "./src/v2/components/form-control/index.tsx"
       ],
       "@costor/ui/v2/Grid": [
         "./src/v2/components/grid/index.tsx"
       ],
       "@costor/ui/v2/GridCell": [
         "./src/v2/components/grid/grid-cell/index.tsx"
+      ],
+      "@costor/ui/v2/Heading": [
+        "./src/v2/components/heading/index.tsx"
       ],
       "@costor/ui/v2/Highlight": [
         "./src/v2/components/highlight/index.tsx"
@@ -734,11 +803,17 @@
       "@costor/ui/v2/Input": [
         "./src/v2/components/input/index.ts"
       ],
+      "@costor/ui/v2/InputActions": [
+        "./src/v2/components/input/input-actions/index.tsx"
+      ],
       "@costor/ui/v2/InputAutoComplete": [
         "./src/v2/components/input/input-auto-complete/index.tsx"
       ],
       "@costor/ui/v2/InputBase": [
         "./src/v2/components/input/input-base/index.tsx"
+      ],
+      "@costor/ui/v2/InputButton": [
+        "./src/v2/components/input/input-button/index.tsx"
       ],
       "@costor/ui/v2/InputCheckBox": [
         "./src/v2/components/input/input-check-box/index.tsx"
@@ -803,8 +878,32 @@
       "@costor/ui/v2/InputWrapper": [
         "./src/v2/components/input/input-wrapper/index.tsx"
       ],
+      "@costor/ui/v2/Item": [
+        "./src/v2/components/item/index.tsx"
+      ],
+      "@costor/ui/v2/ItemActions": [
+        "./src/v2/components/item/item-actions/index.tsx"
+      ],
+      "@costor/ui/v2/ItemContent": [
+        "./src/v2/components/item/item-content/index.tsx"
+      ],
+      "@costor/ui/v2/ItemDescription": [
+        "./src/v2/components/item/item-description/index.tsx"
+      ],
+      "@costor/ui/v2/ItemIcon": [
+        "./src/v2/components/item/item-icon/index.tsx"
+      ],
+      "@costor/ui/v2/ItemTitle": [
+        "./src/v2/components/item/item-title/index.tsx"
+      ],
       "@costor/ui/v2/Kbd": [
         "./src/v2/components/kbd/index.tsx"
+      ],
+      "@costor/ui/v2/Layer": [
+        "./src/v2/components/layers/layer/index.tsx"
+      ],
+      "@costor/ui/v2/Layers": [
+        "./src/v2/components/layers/index.tsx"
       ],
       "@costor/ui/v2/Layout": [
         "./src/v2/components/layout/index.tsx"
@@ -824,8 +923,62 @@
       "@costor/ui/v2/ListItem": [
         "./src/v2/components/list-item/index.tsx"
       ],
+      "@costor/ui/v2/Marker": [
+        "./src/v2/components/marker/index.tsx"
+      ],
+      "@costor/ui/v2/MarkerContent": [
+        "./src/v2/components/marker/marker-content/index.tsx"
+      ],
+      "@costor/ui/v2/MarkerIcon": [
+        "./src/v2/components/marker/marker-icon/index.tsx"
+      ],
+      "@costor/ui/v2/Marquee": [
+        "./src/v2/components/marquee/index.tsx"
+      ],
+      "@costor/ui/v2/MarqueeItem": [
+        "./src/v2/components/marquee/marquee-item/index.tsx"
+      ],
       "@costor/ui/v2/MediaViewer": [
         "./src/v2/components/media-viewer/index.tsx"
+      ],
+      "@costor/ui/v2/Menu": [
+        "./src/v2/components/menu/index.tsx"
+      ],
+      "@costor/ui/v2/MenuBase": [
+        "./src/v2/components/menu/menu-base/index.tsx"
+      ],
+      "@costor/ui/v2/MenuGroup": [
+        "./src/v2/components/menu/menu-group/index.tsx"
+      ],
+      "@costor/ui/v2/MenuItem": [
+        "./src/v2/components/menu/menu-item/index.tsx"
+      ],
+      "@costor/ui/v2/Modal": [
+        "./src/v2/components/modal/index.tsx"
+      ],
+      "@costor/ui/v2/ModalActions": [
+        "./src/v2/components/modal/modal-actions/index.tsx"
+      ],
+      "@costor/ui/v2/ModalBase": [
+        "./src/v2/components/modal/modal-base/index.tsx"
+      ],
+      "@costor/ui/v2/ModalBody": [
+        "./src/v2/components/modal/modal-body/index.tsx"
+      ],
+      "@costor/ui/v2/ModalDescription": [
+        "./src/v2/components/modal/modal-description/index.tsx"
+      ],
+      "@costor/ui/v2/ModalHead": [
+        "./src/v2/components/modal/modal-head/index.tsx"
+      ],
+      "@costor/ui/v2/ModalHeadActions": [
+        "./src/v2/components/modal/modal-head-actions/index.tsx"
+      ],
+      "@costor/ui/v2/ModalTitle": [
+        "./src/v2/components/modal/modal-title/index.tsx"
+      ],
+      "@costor/ui/v2/NativeSelect": [
+        "./src/v2/components/native-select/index.tsx"
       ],
       "@costor/ui/v2/NeonPulse": [
         "./src/v2/animated/neon-pulse/index.tsx"
@@ -848,6 +1001,9 @@
       "@costor/ui/v2/PaginationList": [
         "./src/v2/components/pagination/pagination-list/index.tsx"
       ],
+      "@costor/ui/v2/Panel": [
+        "./src/v2/components/panel/index.tsx"
+      ],
       "@costor/ui/v2/PinField": [
         "./src/v2/components/pin-field/index.tsx"
       ],
@@ -857,8 +1013,8 @@
       "@costor/ui/v2/RadioButtonGroup": [
         "./src/v2/components/radio-button-group/index.tsx"
       ],
-      "@costor/ui/v2/RangeField": [
-        "./src/v2/components/range-field/index.tsx"
+      "@costor/ui/v2/Range": [
+        "./src/v2/components/range/index.tsx"
       ],
       "@costor/ui/v2/RichTextField": [
         "./src/v2/components/rich-text-field/index.tsx"
@@ -872,8 +1028,14 @@
       "@costor/ui/v2/Skeleton": [
         "./src/v2/components/skeleton/index.tsx"
       ],
+      "@costor/ui/v2/Small": [
+        "./src/v2/components/small/index.tsx"
+      ],
       "@costor/ui/v2/SpeedDial": [
         "./src/v2/components/speed-dial/index.tsx"
+      ],
+      "@costor/ui/v2/Strong": [
+        "./src/v2/components/strong/index.tsx"
       ],
       "@costor/ui/v2/Switch": [
         "./src/v2/components/switch/index.tsx"
@@ -893,8 +1055,17 @@
       "@costor/ui/v2/TextField": [
         "./src/v2/components/text-field/index.tsx"
       ],
-      "@costor/ui/v2/Title": [
-        "./src/v2/components/title/index.tsx"
+      "@costor/ui/v2/ThemePreview": [
+        "./src/v2/components/theme-preview/index.tsx"
+      ],
+      "@costor/ui/v2/ToggleButton": [
+        "./src/v2/components/toggle-button/index.tsx"
+      ],
+      "@costor/ui/v2/ToggleButtonGroup": [
+        "./src/v2/components/toggle-button-group/index.tsx"
+      ],
+      "@costor/ui/v2/ToggleIconButton": [
+        "./src/v2/components/toggle-icon-button/index.tsx"
       ],
       "@costor/ui/v2/Tooltip": [
         "./src/v2/components/tooltip/index.tsx"

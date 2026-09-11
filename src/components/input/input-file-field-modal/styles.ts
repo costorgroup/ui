@@ -26,7 +26,7 @@ export const SInputFileFieldModalRow = styled.div`
   border-radius: ${({ theme }) => theme.radius.small};
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.colors.common.black} 3%,
+    ${({ theme }) => theme.palette.common.black} 3%,
     transparent
   );
 `;
@@ -43,17 +43,17 @@ export const SInputFileFieldModalRowName = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.875rem;
-  color: ${({ theme }) => theme.colors.common.grey[17]};
+  color: ${({ theme }) => theme.palette.common.grey[17]};
 `;
 
 export const SInputFileFieldModalRowSize = styled.span`
   font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
 `;
 
 export const SInputFileFieldModalEmpty = styled.div`
   padding: ${({ theme }) => theme.spacing(theme.gap.md)};
   text-align: center;
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
   font-size: 0.875rem;
 `;

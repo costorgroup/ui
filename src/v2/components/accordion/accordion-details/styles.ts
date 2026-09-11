@@ -28,10 +28,7 @@ export const SAccordionDetailsClip = styled.div`
 export const SAccordionDetailsInner = styled('div', {
   shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
 })<TSAccordionDetailsInnerProps>`
-  padding: ${({ theme, size }) => {
-    const scale = theme.sizeScale[size];
-    return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
-  }};
+  padding: ${({ theme, size }) => theme.sizes[size].padX};
   background-color: transparent;
   color: inherit;
 `;

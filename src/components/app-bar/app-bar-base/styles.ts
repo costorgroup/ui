@@ -75,8 +75,8 @@ export const SAppBarBase = styled('header', {
   }}
 
   ${({ theme, variant, color, position }) => {
-    const palette = theme.colors[color];
-    const black = theme.colors.common.black;
+    const palette = theme.palette[color];
+    const black = theme.palette.common.black;
     const elevated =
       position !== 'static'
         ? `
@@ -97,9 +97,9 @@ export const SAppBarBase = styled('header', {
         `;
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
           ${elevated}
@@ -125,7 +125,7 @@ export const SAppBarBase = styled('header', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
           border-color: transparent;
           ${elevated}

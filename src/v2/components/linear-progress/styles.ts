@@ -31,10 +31,10 @@ export const SLinearProgress = styled('div', {
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radius.pill};
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
 
   ${({ theme, color, variant }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     return trackVariantStyles(variant, palette, theme);
   }}
 `;

@@ -59,8 +59,8 @@ type Story = StoryObj<typeof InputGroup>;
 export const Default: Story = {
   args: {
     orientation: 'horizontal',
-    color: 'default',
-    variant: 'subtle',
+    color: 'primary',
+    variant: 'surface',
   },
   render: (args) => (
     <InputBase fullWidth>

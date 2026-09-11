@@ -12,17 +12,14 @@ export const SListItem = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSListItemProps>`
   min-width: 0;
-  padding: ${({ theme, size }) => {
-    const scale = theme.sizeScale[size];
-    return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
-  }};
+  padding: ${({ theme, size }) => theme.sizes[size].padX};
   background-color: ${({ theme, variant, color }) =>
-    listItemBackground(variant, theme.colors[color])};
+    listItemBackground(variant, theme.palette[color])};
   color: ${({ theme, variant, color }) =>
-    listItemColor(variant, theme.colors[color], theme)};
+    listItemColor(variant, theme.palette[color], theme)};
 
   &:not(:last-child) {
     border-bottom: ${({ theme, variant, color }) =>
-      listItemDivider(variant, theme.colors[color], theme)};
+      listItemDivider(variant, theme.palette[color], theme)};
   }
 `;

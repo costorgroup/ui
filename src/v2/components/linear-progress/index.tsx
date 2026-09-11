@@ -22,7 +22,7 @@ const LinearProgress = forwardRef<HTMLDivElement, TLinearProgressProps>(
     {
       width,
       height,
-      color = 'default',
+      color = 'primary',
       variant = 'solid',
       value = 0,
       max = 100,

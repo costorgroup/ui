@@ -28,4 +28,5 @@ export type TRichTextFieldProps = {
   id?: string;
   name?: string;
   className?: string;
+  actionBar?: ReactNode;
 };

@@ -19,6 +19,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const TabsBackdrop = ({ children }: { children: ReactNode }) => (

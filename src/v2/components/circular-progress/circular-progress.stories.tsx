@@ -15,6 +15,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS = [
@@ -56,7 +57,7 @@ export const Default: Story = {
   args: {
     width: 24,
     height: 24,
-    color: 'default',
+    color: 'primary',
     variant: 'solid',
     thickness: 2,
   },

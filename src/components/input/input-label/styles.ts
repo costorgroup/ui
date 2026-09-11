@@ -1,17 +1,9 @@
 import styled from '@emotion/styled';
-import { TInputLabelProps, TInputSize } from './types';
+import { TInputLabelProps } from './types';
 
 type TSInputLabelProps = Pick<TInputLabelProps, 'size'>;
 
 const customProps = new Set(['size']);
-
-const typographySizeMap: Record<TInputSize, 'small' | 'medium' | 'large'> = {
-  xs: 'small',
-  sm: 'small',
-  md: 'medium',
-  lg: 'large',
-  xl: 'large',
-};
 
 export const SInputLabel = styled('label', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -20,14 +12,13 @@ export const SInputLabel = styled('label', {
   align-items: center;
   gap: ${({ theme }) => theme.spacing(0.5)};
   font-family: inherit;
-  font-size: ${({ theme, size = 'sm' }) =>
-    theme.typography.text[typographySizeMap[size]]};
+  font-size: ${({ theme, size = 'sm' }) => theme.typography.text[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: ${({ theme }) => theme.colors.base.main};
+  color: ${({ theme }) => theme.palette.base.main};
   user-select: none;
 `;
 
 export const SInputLabelRequired = styled.span`
-  color: ${({ theme }) => theme.colors.error.main};
+  color: ${({ theme }) => theme.palette.error.main};
 `;

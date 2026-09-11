@@ -28,7 +28,7 @@ const sizePad: Record<TColorSize, string> = {
 };
 
 const glowColor = (theme: TTheme, colors: TColorValue[]) =>
-  colors[colors.length - 1] ?? theme.colors.default.main;
+  colors[colors.length - 1] ?? theme.palette.default.main;
 
 export const SColor = styled('button', {
   shouldForwardProp: (prop) => !customProps.has(prop),

@@ -1,13 +1,31 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import {
-  RadioButton
-} from '../../index';
+import type { TPaletteColor } from '../../../theme/types';
+import { Flex } from '../../../index';
+import { RadioButton, Text } from '../../index';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+import type { TRadioButtonDirection } from './types';
 
-const DIRECTIONS = ['ltr', 'ltr-alt', 'rtl', 'rtl-alt'] as const;
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const DIRECTIONS: TRadioButtonDirection[] = ['ltr', 'ltr-alt', 'rtl', 'rtl-alt'];
 
 const meta: Meta<typeof RadioButton> = {
-  title: 'V2/Forms/RadioButton',
+  title: 'V3/Forms/RadioButton',
   component: RadioButton,
   tags: ['autodocs'],
   decorators: [
@@ -18,32 +36,10 @@ const meta: Meta<typeof RadioButton> = {
     ),
   ],
   argTypes: {
-    direction: {
-      control: 'select',
-      options: [...DIRECTIONS],
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    direction: { control: 'select', options: DIRECTIONS },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
     fullWidth: { control: 'boolean' },
     error: { control: 'boolean' },
     disabled: { control: 'boolean' },
@@ -51,13 +47,6 @@ const meta: Meta<typeof RadioButton> = {
     description: { control: 'text' },
     helperText: { control: 'text' },
   },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof RadioButton>;
-
-export const Default: Story = {
   args: {
     label: 'Pro',
     description: 'Best for growing teams.',
@@ -66,30 +55,86 @@ export const Default: Story = {
     defaultChecked: true,
     direction: 'ltr',
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     error: false,
   },
 };
 
-export const LtrAlt: Story = {
-  args: {
-    ...Default.args,
-    direction: 'ltr-alt',
-  },
+export default meta;
+
+type Story = StoryObj<typeof RadioButton>;
+
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
-export const Rtl: Story = {
-  args: {
-    ...Default.args,
-    direction: 'rtl',
-  },
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <RadioButton
+          key={color}
+          color={color}
+          label={color}
+          name={`color-${color}`}
+          value={color}
+          defaultChecked
+        />
+      ))}
+    </Flex>
+  ),
 };
 
-export const RtlAlt: Story = {
-  args: {
-    ...Default.args,
-    direction: 'rtl-alt',
-  },
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <RadioButton
+            variant={variant}
+            label={variant}
+            name={`variant-${variant}`}
+            value={variant}
+            defaultChecked
+          />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {SIZES.map((size) => (
+        <RadioButton
+          key={size}
+          size={size}
+          label={size}
+          name={`size-${size}`}
+          value={size}
+          defaultChecked
+        />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Directions: Story = {
+  render: (args) => (
+    <Flex direction="column" gap="md">
+      {DIRECTIONS.map((direction) => (
+        <RadioButton
+          key={direction}
+          {...args}
+          direction={direction}
+          name={`direction-${direction}`}
+          label={direction}
+        />
+      ))}
+    </Flex>
+  ),
 };

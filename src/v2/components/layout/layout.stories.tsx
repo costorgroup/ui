@@ -11,7 +11,6 @@ import {
   StarIcon,
 } from '../../../icons';
 import {
-  ActionField,
   Bubble,
   BubbleAction,
   BubbleContent,
@@ -22,17 +21,17 @@ import {
   Layout,
   LayoutContent,
   Select,
-  SelectOption,
   Tab,
   Tabs,
   Text,
+  TextArea,
   TreeView,
   createTreeCollection,
   type TreeNode,
 } from '../../index';
 
 const meta: Meta<typeof Layout> = {
-  title: 'V2/Layout/Layout',
+  title: 'V3/Layout/Layout',
   component: Layout,
   tags: ['autodocs'],
   argTypes: {
@@ -428,40 +427,39 @@ export const AIEditor: Story = {
               </LayoutContent>
               <LayoutContent flex="0 0 auto">
                 <div style={{ padding: 12 }}>
-                  <ActionField
+                  <TextArea
                     placeholder="Plan, search, build anything"
                     size="sm"
                     variant="subtle"
+                    color="default"
                     rows={2}
-                  >
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 8,
-                      }}
-                    >
-                      <Select
-                        size="xs"
-                        fullWidth={false}
-                        defaultValue="agent"
-                        variant="subtle"
+                    actionBar={
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: 8,
+                        }}
                       >
-                        <SelectOption value="agent">Agent</SelectOption>
-                        <SelectOption value="ask">Ask</SelectOption>
-                        <SelectOption value="plan">Plan</SelectOption>
-                      </Select>
-                      <IconButton
-                        size="sm"
-                        variant="solid"
-                        rounded
-                        aria-label="Send"
-                      >
-                        <ArrowTopIcon />
-                      </IconButton>
-                    </div>
-                  </ActionField>
+                        <Select
+                          size="xs"
+                          fullWidth={false}
+                          options={['agent', 'ask', 'plan']}
+                          defaultValue="agent"
+                          variant="subtle"
+                        />
+                        <IconButton
+                          size="sm"
+                          variant="solid"
+                          radius="pill"
+                          aria-label="Send"
+                        >
+                          <ArrowTopIcon />
+                        </IconButton>
+                      </div>
+                    }
+                  />
                 </div>
               </LayoutContent>
             </Layout>

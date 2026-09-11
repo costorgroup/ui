@@ -32,8 +32,8 @@ export const SAvatar = styled('div', {
   width: ${({ size }) => sizeMap[size]};
   height: ${({ size }) => sizeMap[size]};
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.colors.common.grey[10]};
-  color: ${({ theme }) => theme.colors.common.grey[16]};
+  background-color: ${({ theme }) => theme.palette.common.grey[10]};
+  color: ${({ theme }) => theme.palette.common.grey[16]};
   font-family: inherit;
   font-size: ${({ size }) => fontMap[size]};
   font-weight: 600;

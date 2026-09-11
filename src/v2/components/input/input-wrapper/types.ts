@@ -20,4 +20,6 @@ export type TInputWrapperProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> &
   trigger?: boolean;
   /** Column layout for rich-text and similar stacked shells. */
   stacked?: boolean;
+  /** Actions rendered under the field, inside the chrome. */
+  actionBar?: ReactNode;
 };

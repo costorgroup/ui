@@ -18,9 +18,9 @@ export const SDivider = styled('div', {
   border: 0;
   margin: 0;
   padding: 0;
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
   font-family: inherit;
-  font-size: ${({ theme }) => theme.typography.text.small};
+  font-size: ${({ theme }) => theme.typography.text.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   white-space: nowrap;

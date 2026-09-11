@@ -8,9 +8,9 @@ import {
 } from '../../../icons';
 import {
   ActionField,
-  IconButton,
+  InputActions,
+  InputButton,
   Select,
-  SelectOption,
 } from '../../index';
 
 const meta: Meta<typeof ActionField> = {
@@ -46,7 +46,8 @@ const meta: Meta<typeof ActionField> = {
         'dark',
         'light',
         'default',
-      ],
+        'inverted',
+],
     },
     fullWidth: { control: 'boolean' },
     required: { control: 'boolean' },
@@ -65,22 +66,28 @@ type Story = StoryObj<typeof ActionField>;
 
 const ComposerActions = (
   <Flex align="center" justify="space-between" gap="xs">
-    <Select size="xs" fullWidth={false} defaultValue="agent" variant="subtle">
-      <SelectOption value="agent">Agent</SelectOption>
-      <SelectOption value="ask">Ask</SelectOption>
-      <SelectOption value="plan">Plan</SelectOption>
-    </Select>
-    <Flex align="center" gap="xs">
-      <IconButton size="sm" variant="plain" aria-label="More">
+    <Select
+      size="xs"
+      fullWidth={false}
+      options={['agent', 'ask', 'plan']}
+      defaultValue="agent"
+      variant="subtle"
+    />
+    <InputActions>
+      <InputButton aria-label="More">
         <MoreHorizontalIcon />
-      </IconButton>
-      <IconButton size="sm" variant="plain" aria-label="Folder">
+      </InputButton>
+      <InputButton aria-label="Folder">
         <FolderIcon />
-      </IconButton>
-      <IconButton size="sm" variant="solid" rounded aria-label="Send">
+      </InputButton>
+      <InputButton
+        variant="solid"
+        radius="pill"
+        aria-label="Send"
+      >
         <ArrowTopIcon />
-      </IconButton>
-    </Flex>
+      </InputButton>
+    </InputActions>
   </Flex>
 );
 
@@ -88,8 +95,8 @@ export const Default: Story = {
   args: {
     placeholder: 'Plan, search, build anything',
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     children: ComposerActions,
   },
@@ -101,8 +108,8 @@ export const WithLabel: Story = {
     helperText: 'Enter to send, Shift+Enter for a new line.',
     placeholder: 'Ask anything',
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     children: ComposerActions,
   },
@@ -116,8 +123,8 @@ export const Error: Story = {
     required: true,
     error: true,
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     children: ComposerActions,
   },

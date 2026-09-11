@@ -43,8 +43,8 @@ export const SAccordionSummary = styled('button', {
   font: inherit;
   color: ${({ theme, variant, paletteColor }) =>
     variant === 'solid'
-      ? theme.colors[paletteColor].contrastText
-      : theme.colors.default.main};
+      ? theme.palette[paletteColor].contrastText
+      : theme.palette.default.main};
   text-align: left;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition:
@@ -56,7 +56,7 @@ export const SAccordionSummary = styled('button', {
   justify-content: space-between;
 
   ${({ theme, paletteColor, variant, expanded, hasDetails }) => {
-    const palette = theme.colors[paletteColor];
+    const palette = theme.palette[paletteColor];
     const icon = accordionSummaryIconColors(
       variant,
       palette,
@@ -81,7 +81,7 @@ export const SAccordionSummary = styled('button', {
 
   &:focus-visible {
     outline: 2px solid
-      ${({ theme, paletteColor }) => theme.colors[paletteColor].main};
+      ${({ theme, paletteColor }) => theme.palette[paletteColor].main};
     outline-offset: -2px;
   }
 `;

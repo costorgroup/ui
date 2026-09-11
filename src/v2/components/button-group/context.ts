@@ -10,6 +10,7 @@ export type TButtonGroupContextValue = {
   variant?: TButtonVariant;
   appearance?: TButtonAppearance;
   size?: TButtonSize;
+  disabled?: boolean;
 };
 
 export const ButtonGroupContext =

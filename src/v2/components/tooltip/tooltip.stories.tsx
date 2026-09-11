@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
-import type { TPaletteColor } from '../../../theme/types';
 import { Button, Tooltip } from '../../index';
-import type { TTooltipPlacement, TTooltipVariant } from './types';
+import type { TTooltipPlacement } from './types';
 
 const PLACEMENTS: TTooltipPlacement[] = [
   'top-start',
@@ -20,43 +19,14 @@ const PLACEMENTS: TTooltipPlacement[] = [
   'right-end',
 ];
 
-const COLORS: TPaletteColor[] = [
-  'base',
-  'primary',
-  'secondary',
-  'success',
-  'error',
-  'warning',
-  'info',
-  'dark',
-  'light',
-  'default',
-];
-
-const VARIANTS: TTooltipVariant[] = [
-  'solid',
-  'subtle',
-  'surface',
-  'outline',
-  'plain',
-];
-
 const meta: Meta<typeof Tooltip> = {
-  title: 'V2/Overlays/Tooltip',
+  title: 'V3/Overlays/Tooltip',
   component: Tooltip,
   tags: ['autodocs'],
   argTypes: {
     placement: {
       control: 'select',
       options: PLACEMENTS,
-    },
-    variant: {
-      control: 'select',
-      options: VARIANTS,
-    },
-    color: {
-      control: 'select',
-      options: COLORS,
     },
     offset: {
       control: 'number',
@@ -68,11 +38,27 @@ const meta: Meta<typeof Tooltip> = {
       table: { disable: true },
     },
   },
+  args: {
+    title: 'Tooltip',
+    placement: 'top',
+    offset: 8,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Tooltip>;
+
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => (
+    <Flex justify="center" align="center" style={{ minHeight: 240 }}>
+      <Tooltip {...args}>
+        <Button>Hover me</Button>
+      </Tooltip>
+    </Flex>
+  ),
+};
 
 export const Default: Story = {
   render: (args) => (
@@ -82,13 +68,6 @@ export const Default: Story = {
       </Tooltip>
     </Flex>
   ),
-  args: {
-    title: 'Tooltip',
-    placement: 'top',
-    offset: 8,
-    variant: 'surface',
-    color: 'default',
-  },
 };
 
 export const Placements: Story = {
@@ -128,31 +107,7 @@ export const Placements: Story = {
   ),
 };
 
-export const Variants: Story = {
-  render: () => (
-    <Flex gap="sm" wrap="wrap" justify="center" align="center" style={{ minHeight: 120 }}>
-      {VARIANTS.map((variant) => (
-        <Tooltip key={variant} title={variant} variant={variant}>
-          <Button variant="outline">{variant}</Button>
-        </Tooltip>
-      ))}
-    </Flex>
-  ),
-};
-
-export const Colors: Story = {
-  render: () => (
-    <Flex direction="column" gap="md" align="center" style={{ padding: 24 }}>
-      {COLORS.map((color) => (
-        <Tooltip key={color} title={color} color={color} variant="surface">
-          <Button variant="outline">{color}</Button>
-        </Tooltip>
-      ))}
-    </Flex>
-  ),
-};
-
-export const Offset: Story = {
+export const Offsets: Story = {
   render: () => (
     <Flex gap="lg" justify="center" align="center" style={{ minHeight: 200 }}>
       <Tooltip placement="top" offset={4} title="offset={4}">
@@ -172,8 +127,6 @@ export const CustomRender: Story = {
   render: () => (
     <Flex justify="center" align="center" style={{ minHeight: 240 }}>
       <Tooltip
-        variant="surface"
-        color="info"
         render={() => (
           <>
             <strong>Custom</strong> content

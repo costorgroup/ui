@@ -1,79 +1,70 @@
-import React, { forwardRef } from 'react';
+import React, { ReactElement, Ref, forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { selectClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
+import type { TFormControlChangeHandler } from '../form-control/types';
 import { InputSelect } from '../input/input-select';
 import { TSelectProps } from './types';
 
-const Select = forwardRef<HTMLDivElement, TSelectProps>(
-  (
-    {
-      label,
-      description,
-      helperText,
-      required,
-      error = false,
-      fullWidth = true,
-      size = 'md',
-      variant = 'subtle',
-      color = 'default',
-      children,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const tone = error ? 'error' : color;
+const SelectInner = <T,>(
+  {
+    label,
+    description,
+    helperText,
+    required,
+    error = false,
+    fullWidth = true,
+    size = 'md',
+    variant = 'surface',
+    color = 'primary',
+    children,
+    className,
+    value,
+    defaultValue,
+    onChange,
+    isValueEqual,
+    disabled,
+    id,
+    ...props
+  }: TSelectProps<T>,
+  ref: Ref<HTMLDivElement>,
+) => {
+  return (
+    <FormControl
+      label={label}
+      description={description}
+      helperText={helperText}
+      required={required}
+      error={error}
+      fullWidth={fullWidth}
+      size={size}
+      variant={variant}
+      color={color}
+      disabled={disabled}
+      id={id}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange as TFormControlChangeHandler<T | T[]> | undefined}
+      isValueEqual={isValueEqual as ((a: T | T[], b: T | T[]) => boolean) | undefined}
+      className={mergeClasses(
+        selectClasses.root,
+        error && selectClasses.error,
+        required && selectClasses.required,
+        className,
+      )}
+    >
+      <InputSelect ref={ref} {...props}>
+        {children}
+      </InputSelect>
+    </FormControl>
+  );
+};
 
-    return (
-      <InputFieldLayout
-        fullWidth={fullWidth}
-        label={
-          label != null ? (
-            <InputLabel required={required} size={size}>
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]}>{description}</Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} error={error}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
-      >
-        <InputSelect
-          ref={ref}
-          size={size}
-          variant={variant}
-          color={tone}
-          aria-invalid={error || undefined}
-          {...props}
-        className={mergeClasses(
-          selectClasses.root,
-          error && selectClasses.error,
-          required && selectClasses.required,
-          className,
-        )}
-        >
-          {children}
-        </InputSelect>
-      </InputFieldLayout>
-    );
-  },
-);
+const Select = forwardRef(SelectInner) as <T = unknown>(
+  props: TSelectProps<T> & { ref?: Ref<HTMLDivElement> },
+) => ReactElement | null;
 
-Select.displayName = 'Select';
+(Select as { displayName?: string }).displayName = 'Select';
 
 export type { TSelectProps };
 export { selectClasses } from './classes';

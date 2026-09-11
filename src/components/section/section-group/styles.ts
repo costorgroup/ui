@@ -33,9 +33,9 @@ export const SSectionGroup = styled('div', {
   --section-marker-size: 0.625rem;
   --section-line-width: 2px;
   --section-rail-gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
-  --section-path-color: ${({ theme, color }) => theme.colors[color].main};
+  --section-path-color: ${({ theme, color }) => theme.palette[color].main};
   --section-path-line: ${({ theme, color }) =>
-    `color-mix(in lab, ${theme.colors[color].main} 40%, transparent)`};
+    `color-mix(in oklab, ${theme.palette[color].main} 40%, transparent)`};
   --section-path-gap: ${({ theme, gap }) => resolveGap(theme, gap)};
   gap: ${({ theme, gap }) => resolveGap(theme, gap)};
 

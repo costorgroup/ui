@@ -10,15 +10,15 @@ const neonPulse = keyframes`
   0%,
   100% {
     box-shadow:
-      0 0 12px -2px color-mix(in lab, var(--neon-color) 65%, transparent),
-      0 0 0 0 color-mix(in lab, var(--neon-color) 35%, transparent);
+      0 0 12px -2px color-mix(in oklab, var(--neon-color) 65%, transparent),
+      0 0 0 0 color-mix(in oklab, var(--neon-color) 35%, transparent);
     opacity: 0.85;
   }
 
   50% {
     box-shadow:
-      0 0 24px 2px color-mix(in lab, var(--neon-color) 80%, transparent),
-      0 0 48px 8px color-mix(in lab, var(--neon-color) 45%, transparent);
+      0 0 24px 2px color-mix(in oklab, var(--neon-color) 80%, transparent),
+      0 0 48px 8px color-mix(in oklab, var(--neon-color) 45%, transparent);
     opacity: 1;
   }
 `;
@@ -50,7 +50,7 @@ export const SNeonRing = styled.span`
   z-index: 0;
   border-radius: calc(var(--neon-radius) + var(--neon-thickness));
   border: var(--neon-thickness) solid var(--neon-color);
-  box-shadow: 0 0 14px -2px color-mix(in lab, var(--neon-color) 70%, transparent);
+  box-shadow: 0 0 14px -2px color-mix(in oklab, var(--neon-color) 70%, transparent);
 `;
 
 export const SNeonContent = styled.span`

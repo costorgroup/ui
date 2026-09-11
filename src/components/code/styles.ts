@@ -53,5 +53,5 @@ export const SCode = styled('code', {
   `}
 
   ${({ theme, variant = 'subtle', color = 'base' }) =>
-    staticChromeVariantStyles(variant, theme.colors[color], theme)}
+    staticChromeVariantStyles(variant, theme.palette[color], theme)}
 `;

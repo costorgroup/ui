@@ -36,7 +36,7 @@ export const SBackdrop = styled('div', {
   overflow: ${({ scrollable }) => (scrollable ? 'hidden' : 'auto')};
   background-color: color-mix(
     in srgb,
-    ${({ theme }) => theme.colors.common.black} 48%,
+    ${({ theme }) => theme.palette.common.black} 48%,
     transparent
   );
   backdrop-filter: blur(8px);

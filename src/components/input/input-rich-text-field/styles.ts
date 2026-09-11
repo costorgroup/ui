@@ -50,7 +50,7 @@ export const SInputRichTextField = styled('div', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'surface':
@@ -170,7 +170,7 @@ export const SInputRichTextToolbar = styled('div')`
   padding: var(--rtf-pad-y) var(--rtf-pad-x);
   border-bottom: 1px solid
     ${({ theme }) =>
-      `color-mix(in lab, ${theme.colors.base.main} 12%, transparent)`};
+      `color-mix(in oklab, ${theme.palette.base.main} 12%, transparent)`};
 `;
 
 export const SInputRichTextToolbarGroup = styled('div')`

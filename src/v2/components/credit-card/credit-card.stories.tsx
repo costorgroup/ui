@@ -27,7 +27,8 @@ const meta: Meta<typeof CreditCard> = {
         'dark',
         'light',
         'default',
-      ],
+        'inverted',
+],
     },
   },
 };

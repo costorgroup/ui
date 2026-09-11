@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { richTextFieldClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
-import { InputHelperText } from '../input/input-helper-text';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
 import { InputRichTextField } from '../input/input-rich-text-field';
-import { Text } from '../text';
 import { TRichTextFieldProps } from './types';
 
 const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
@@ -19,57 +15,39 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
-      color = 'default',
+      variant = 'surface',
+      color = 'primary',
       id,
       className,
+      disabled,
       ...props
     },
     ref,
   ) => {
-    const tone = error ? 'error' : color;
-
     return (
-      <InputFieldLayout
+      <FormControl
+        ref={ref}
+        label={label}
+        description={description}
+        helperText={helperText}
+        required={required}
+        error={error}
         fullWidth={fullWidth}
-        label={
-          label != null ? (
-            <InputLabel htmlFor={id} required={required} size={size}>
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]}>
-              {description}
-            </Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} error={error}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
-      >
-        <InputRichTextField
-          ref={ref}
-          id={id}
-          size={size}
-          variant={variant}
-          color={tone}
-          aria-invalid={error || undefined}
-          {...props}
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        id={id}
         className={mergeClasses(
           richTextFieldClasses.root,
+          disabled && richTextFieldClasses.disabled,
           error && richTextFieldClasses.error,
           required && richTextFieldClasses.required,
           className,
         )}
-        />
-      </InputFieldLayout>
+      >
+        <InputRichTextField disabled={disabled} {...props} />
+      </FormControl>
     );
   },
 );

@@ -9,7 +9,7 @@ const List = forwardRef<HTMLDivElement, TListProps>(
   (
     {
       children,
-      color = 'default',
+      color = 'primary',
       variant = 'subtle',
       size = 'md',
       radius = 'medium',

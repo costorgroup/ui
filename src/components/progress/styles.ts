@@ -26,9 +26,9 @@ export const SProgress = styled('div', {
   height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radius.pill};
-  color: ${({ theme, color }) => theme.colors[color].main};
+  color: ${({ theme, color }) => theme.palette[color].main};
   background-color: ${({ theme, color }) =>
-    `color-mix(in lab, ${theme.colors[color].main} 18%, transparent)`};
+    `color-mix(in oklab, ${theme.palette[color].main} 18%, transparent)`};
 `;
 
 export const SProgressRail = styled.div`

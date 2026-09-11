@@ -29,6 +29,20 @@ export type { TInputLabelProps } from './input-label/types';
 export { InputIcon } from './input-icon';
 export type { TInputIconProps } from './input-icon/types';
 
+export { InputButton } from './input-button';
+export type { TInputButtonProps } from './input-button/types';
+export { inputButtonClasses } from './input-button/classes';
+
+export {
+  InputActions,
+  INPUT_ACTIONS_ORIENTATIONS,
+  inputActionsClasses,
+} from './input-actions';
+export type {
+  TInputActionsProps,
+  TInputActionsOrientation,
+} from './input-actions/types';
+
 export { InputTextField } from './input-text-field';
 export type { TInputTextFieldProps } from './input-text-field/types';
 
@@ -70,6 +84,18 @@ export type { TInputSelectOptionProps } from './input-select-option/types';
 
 export { InputAutoComplete } from './input-auto-complete';
 export type { TInputAutoCompleteProps } from './input-auto-complete/types';
+
+export {
+  defaultGetOptionLabel,
+  defaultGetOptionKey,
+  defaultFilterOptions,
+  labelsForValue,
+} from './list-options';
+export type {
+  TOptionRenderState,
+  TFilterOptionsState,
+  TFilterOptions,
+} from './list-options';
 
 export { InputPinField } from './input-pin-field';
 export type {

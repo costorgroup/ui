@@ -55,23 +55,23 @@ export const SInputAutoCompleteTrigger = styled('div', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 14%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
 
           &:hover {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 20%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 20%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 28%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 28%, transparent);
           }
 
           &[data-disabled='true'] {
@@ -83,17 +83,17 @@ export const SInputAutoCompleteTrigger = styled('div', {
         return `
           background-color: transparent;
           color: ${palette.main};
-          border-color: color-mix(in lab, ${palette.main} 36%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
 
           &:hover {
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 52%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 52%, transparent);
             color: ${palette.dark};
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in lab, ${palette.main} 68%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
+            border-color: color-mix(in oklab, ${palette.main} 68%, transparent);
             color: ${palette.darker};
           }
 
@@ -105,16 +105,16 @@ export const SInputAutoCompleteTrigger = styled('div', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.main} 4%, transparent);
+          background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
           color: ${palette.darker};
           border-color: transparent;
 
           &:hover {
-            background-color: color-mix(in lab, ${palette.main} 8%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
           }
 
           &[data-open='true'] {
-            background-color: color-mix(in lab, ${palette.main} 10%, transparent);
+            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
           }
 
           &[data-disabled='true'] {
@@ -181,9 +181,9 @@ export const SInputAutoCompleteDropdown = styled('div', {
   flex-direction: column;
   padding: ${({ theme }) => theme.spacing(theme.gap.xs)};
   border-radius: ${({ theme }) => theme.radius.medium};
-  background-color: ${({ theme }) => theme.colors.common.white};
+  background-color: ${({ theme }) => theme.palette.common.white};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,
@@ -213,7 +213,7 @@ export const SInputAutoCompleteOptions = styled.div`
 export const SInputAutoCompleteEmpty = styled.div`
   padding: ${({ theme }) =>
     `${theme.spacing(theme.gap.sm)} ${theme.spacing(theme.gap.md)}`};
-  color: ${({ theme }) => theme.colors.common.grey[12]};
+  color: ${({ theme }) => theme.palette.common.grey[12]};
   font: inherit;
   text-align: center;
   user-select: none;

@@ -1,0 +1,3 @@
+export const SNACKBAR_STACK_PEEK = 12;
+export const SNACKBAR_STACK_SCALE_STEP = 0.05;
+export const SNACKBAR_MAX_VISIBLE_DEFAULT = 3;

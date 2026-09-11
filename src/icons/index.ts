@@ -23,6 +23,7 @@ import FolderIcon from './folder-icon';
 import FileIcon from './file-icon';
 import SearchIcon from './search-icon';
 import EmojiAddIcon from './emoji-add-icon';
+import QuoteIcon from './quote-icon';
 import type { TEyeIconProps } from './eye-icon/types';
 import type { TEyeClosedIconProps } from './eye-closed-icon/types';
 import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
@@ -48,6 +49,7 @@ import type { TFolderIconProps } from './folder-icon/types';
 import type { TFileIconProps } from './file-icon/types';
 import type { TSearchIconProps } from './search-icon/types';
 import type { TEmojiAddIconProps } from './emoji-add-icon/types';
+import type { TQuoteIconProps } from './quote-icon/types';
 
 export type {
   TEyeIconProps,
@@ -75,6 +77,7 @@ export type {
   TFileIconProps,
   TSearchIconProps,
   TEmojiAddIconProps,
+  TQuoteIconProps,
 };
 
 export {
@@ -103,4 +106,5 @@ export {
   FileIcon,
   SearchIcon,
   EmojiAddIcon,
+  QuoteIcon,
 };

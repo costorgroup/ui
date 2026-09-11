@@ -17,7 +17,7 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
     {
       width,
       height,
-      radius = 'medium',
+      radius = 'md',
       animation = 'pulse',
       animationOffset = 0,
       className,

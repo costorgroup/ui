@@ -40,13 +40,13 @@ export const SStepper = styled('ol', {
   --stepper-title-size: ${({ size }) => titleSize[size]};
   --stepper-description-size: ${({ size }) => descriptionSize[size]};
   --stepper-gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
-  --stepper-main: ${({ theme, color }) => theme.colors[color].main};
-  --stepper-dark: ${({ theme, color }) => theme.colors[color].dark};
-  --stepper-darker: ${({ theme, color }) => theme.colors[color].darker};
-  --stepper-contrast: ${({ theme, color }) => theme.colors[color].contrastText};
+  --stepper-main: ${({ theme, color }) => theme.palette[color].main};
+  --stepper-dark: ${({ theme, color }) => theme.palette[color].dark};
+  --stepper-darker: ${({ theme, color }) => theme.palette[color].darker};
+  --stepper-contrast: ${({ theme, color }) => theme.palette[color].contrastText};
   --stepper-track: ${({ theme, color }) =>
-    `color-mix(in lab, ${theme.colors[color].main} 22%, transparent)`};
-  --stepper-error: ${({ theme }) => theme.colors.error.main};
+    `color-mix(in oklab, ${theme.palette[color].main} 22%, transparent)`};
+  --stepper-error: ${({ theme }) => theme.palette.error.main};
 
   ${({ orientation, alternativeLabel }) =>
     orientation === 'horizontal'

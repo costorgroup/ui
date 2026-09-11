@@ -20,7 +20,7 @@ export const SPaginationEllipsis = styled('span', {
   box-sizing: border-box;
   min-width: ${({ size = 'md' }) => sizeBox[size]};
   height: ${({ size = 'md' }) => sizeBox[size]};
-  color: ${({ theme }) => theme.colors.default.main};
+  color: ${({ theme }) => theme.palette.default.main};
   user-select: none;
   pointer-events: none;
   line-height: 0;

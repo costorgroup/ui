@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/react';
 import { CHROME_IDLE } from '../../idle-variant-styles';
-import { chromeOpaqueFill } from '../../surface';
+import { colorMixBase } from '../../surface';
 import { TSSkeletonProps } from './types';
 
 const SKELETON_PEAK = 10;
@@ -38,8 +38,16 @@ export const SSkeleton = styled('span', {
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
 
   ${({ theme, animation, animationOffset }) => {
-    const idle = chromeOpaqueFill(theme, CHROME_IDLE);
-    const peak = chromeOpaqueFill(theme, SKELETON_PEAK);
+    const idle = colorMixBase(
+      theme.surfaces.mixer,
+      CHROME_IDLE,
+      theme.surfaces.background,
+    );
+    const peak = colorMixBase(
+      theme.surfaces.mixer,
+      SKELETON_PEAK,
+      theme.surfaces.background,
+    );
 
     if (animation === 'none') {
       return css`

@@ -3,14 +3,9 @@ import React, { useState } from 'react';
 import { Flex } from '../../../index';
 import { CheckIcon } from '../../../icons';
 import type { TPaletteColor } from '../../../theme/types';
-import {
-  Avatar,
-  Badge,
-  Button,
-  IconButton,
-  Text,
-} from '../../index';
-import type { TBadgeVariant } from './types';
+import { Avatar, Button, IconButton, Text } from '../../index';
+import { Badge } from './index';
+import type { TBadgeSize, TBadgeVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -23,56 +18,61 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TBadgeVariant[] = ['solid', 'subtle', 'surface'];
+const SIZES: TBadgeSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof Badge> = {
-  title: 'V2/Data Display/Badge',
+  title: 'V3/Data Display/Badge',
   component: Badge,
   tags: ['autodocs'],
-  argTypes: {
-    color: {
-      control: 'select',
-      options: COLORS,
-    },
-    variant: {
-      control: 'select',
-      options: VARIANTS,
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    overlap: {
-      control: 'inline-radio',
-      options: ['rectangular', 'circular'],
-    },
-    invisible: {
-      control: 'boolean',
-    },
-    showZero: {
-      control: 'boolean',
-    },
-    max: {
-      control: 'number',
-    },
-  },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof Badge>;
-
-export const Default: Story = {
   args: {
     badgeContent: 4,
     color: 'default',
     variant: 'solid',
     size: 'md',
+    overlap: 'rectangular',
+    invisible: false,
+    showZero: false,
+    max: 99,
+  },
+  argTypes: {
+    badgeContent: { control: 'text' },
+    color: { control: 'select', options: COLORS },
+    variant: { control: 'select', options: VARIANTS },
+    size: { control: 'select', options: SIZES },
+    overlap: { control: 'inline-radio', options: ['rectangular', 'circular'] },
+    invisible: { control: 'boolean' },
+    showZero: { control: 'boolean' },
+    max: { control: 'number' },
+    children: { control: false, table: { disable: true } },
+    anchorOrigin: { control: false, table: { disable: true } },
+  },
+  parameters: {
+    controls: {
+      include: [
+        'badgeContent',
+        'color',
+        'variant',
+        'size',
+        'overlap',
+        'invisible',
+        'showZero',
+        'max',
+      ],
+    },
   },
   render: (args) => (
-    <Badge {...args}>
+    <Badge
+      {...args}
+      badgeContent={
+        args.badgeContent === '' || args.badgeContent == null
+          ? undefined
+          : args.badgeContent
+      }
+    >
       <IconButton aria-label="Notifications" variant="outline">
         <CheckIcon />
       </IconButton>
@@ -80,25 +80,25 @@ export const Default: Story = {
   ),
 };
 
+export default meta;
+
+type Story = StoryObj<typeof Badge>;
+
+export const Playground: Story = {};
+
 export const Dot: Story = {
   args: {
+    badgeContent: '',
     color: 'error',
     variant: 'solid',
   },
-  render: (args) => (
-    <Badge {...args}>
-      <IconButton aria-label="Unread" variant="outline">
-        <CheckIcon />
-      </IconButton>
-    </Badge>
-  ),
 };
 
 export const Variants: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap" align="center">
       {VARIANTS.map((variant) => (
-        <Badge key={variant} badgeContent={3} variant={variant} color="default">
+        <Badge key={variant} badgeContent={3} variant={variant}>
           <Button size="sm" variant="outline">
             {variant}
           </Button>
@@ -116,6 +116,20 @@ export const Colors: Story = {
           <Button size="sm" variant="outline" color={color}>
             {color}
           </Button>
+        </Badge>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap="md" wrap="wrap" align="center">
+      {SIZES.map((size) => (
+        <Badge key={size} badgeContent={4} size={size}>
+          <IconButton aria-label={size} variant="outline" size={size}>
+            <CheckIcon />
+          </IconButton>
         </Badge>
       ))}
     </Flex>
@@ -185,19 +199,19 @@ export const Overlap: Story = {
   ),
 };
 
+const ORIGINS = [
+  { vertical: 'top' as const, horizontal: 'right' as const },
+  { vertical: 'top' as const, horizontal: 'left' as const },
+  { vertical: 'bottom' as const, horizontal: 'right' as const },
+  { vertical: 'bottom' as const, horizontal: 'left' as const },
+];
+
 export const AnchorOrigin: Story = {
   render: () => (
     <Flex direction="column" gap="md">
       <Text size="sm">Corners</Text>
       <Flex gap="lg" wrap="wrap" align="center">
-        {(
-          [
-            { vertical: 'top', horizontal: 'right' },
-            { vertical: 'top', horizontal: 'left' },
-            { vertical: 'bottom', horizontal: 'right' },
-            { vertical: 'bottom', horizontal: 'left' },
-          ] as const
-        ).map((origin) => (
+        {ORIGINS.map((origin) => (
           <Badge
             key={`${origin.vertical}-${origin.horizontal}`}
             badgeContent={4}
@@ -228,7 +242,7 @@ export const InvisibleToggle: Story = {
         <Button
           size="sm"
           variant="outline"
-          onClick={() => setInvisible((v) => !v)}
+          onClick={() => setInvisible((current) => !current)}
         >
           {invisible ? 'Show' : 'Hide'}
         </Button>

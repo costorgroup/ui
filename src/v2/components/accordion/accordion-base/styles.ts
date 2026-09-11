@@ -33,7 +33,7 @@ export const SAccordionBase = styled('div', {
   ${({ theme, radius, grouped }) =>
     grouped ? '' : `border-radius: ${theme.radius[radius]};`}
   ${({ theme, color, variant, expanded, grouped }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     return accordionShellVariantStyles(variant, palette, theme, {
       expanded,
       grouped,

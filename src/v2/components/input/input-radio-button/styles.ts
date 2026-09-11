@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
+import { fieldFocusRing } from '../../../surface';
 import {
   inputControlIdleHoverStyles,
   inputControlIdleStyles,
 } from '../variant-styles';
-import { TInputSize } from '../input-wrapper/types';
 import { inputRadioButtonClasses } from './classes';
 import { TInputRadioButtonProps } from './types';
 
@@ -13,14 +13,6 @@ type TSInputRadioButtonProps = Pick<
 >;
 
 const customProps = new Set(['variant', 'size', 'color']);
-
-const sizeMap: Record<TInputSize, { box: string; dot: string }> = {
-  xs: { box: '12px', dot: '5px' },
-  sm: { box: '14px', dot: '6px' },
-  md: { box: '16px', dot: '6px' },
-  lg: { box: '20px', dot: '8px' },
-  xl: { box: '24px', dot: '10px' },
-};
 
 export const SInputRadioButton = styled.span`
   position: relative;
@@ -60,28 +52,30 @@ export const SInputRadioButtonControl = styled('span', {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: ${({ size = 'md' }) => sizeMap[size].box};
-  height: ${({ size = 'md' }) => sizeMap[size].box};
+  width: ${({ theme, size = 'md' }) => theme.sizes[size].icon};
+  height: ${({ theme, size = 'md' }) => theme.sizes[size].icon};
   border: 1px solid;
   border-radius: ${({ theme }) => theme.radius.circle};
   transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 
   .${inputRadioButtonClasses.dot} {
-    width: ${({ size = 'md' }) => sizeMap[size].dot};
-    height: ${({ size = 'md' }) => sizeMap[size].dot};
+    width: ${({ theme, size = 'md' }) =>
+      `calc(${theme.sizes[size].icon} / 2.4)`};
+    height: ${({ theme, size = 'md' }) =>
+      `calc(${theme.sizes[size].icon} / 2.4)`};
   }
 
-  ${({ theme, variant = 'subtle', color = 'default' }) =>
-    inputControlIdleStyles(variant, theme.colors[color], theme)}
+  ${({ theme, variant = 'surface', color = 'primary' }) =>
+    inputControlIdleStyles(variant, theme.palette[color], theme)}
 
   .${inputRadioButtonClasses.input}:hover:not(:disabled):not(:checked) + & {
-    ${({ theme, variant = 'subtle', color = 'default' }) =>
-      inputControlIdleHoverStyles(variant, theme.colors[color], theme)}
+    ${({ theme, variant = 'surface', color = 'primary' }) =>
+      inputControlIdleHoverStyles(variant, theme.palette[color], theme)}
   }
 
   .${inputRadioButtonClasses.input}:checked + & {
-    ${({ theme, color = 'default' }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = 'primary' }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.main};
@@ -92,8 +86,8 @@ export const SInputRadioButtonControl = styled('span', {
   }
 
   .${inputRadioButtonClasses.input}:checked:hover:not(:disabled) + & {
-    ${({ theme, color = 'default' }) => {
-      const palette = theme.colors[color];
+    ${({ theme, color = 'primary' }) => {
+      const palette = theme.palette[color];
 
       return `
         background-color: ${palette.dark};
@@ -109,8 +103,9 @@ export const SInputRadioButtonControl = styled('span', {
   }
 
   .${inputRadioButtonClasses.input}:focus-visible + & {
-    outline: 2px solid ${({ theme, color = 'default' }) => theme.colors[color].main};
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: ${({ theme, color = 'primary' }) =>
+      fieldFocusRing(theme.palette[color].main)};
   }
 
   .${inputRadioButtonClasses.input}:disabled + & {

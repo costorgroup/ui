@@ -13,8 +13,9 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
       appearance: appearanceProp,
       size: sizeProp,
       color: colorProp,
+      radius = 'sm',
       className,
-      disabled,
+      disabled: disabledProp,
       ...props
     },
     ref,
@@ -24,6 +25,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
     const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
     const color = colorProp ?? group?.color ?? 'default';
     const size = sizeProp ?? group?.size ?? 'md';
+    const disabled = disabledProp ?? group?.disabled ?? false;
 
     return (
       <SButton
@@ -32,6 +34,7 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
         appearance={appearance}
         size={size}
         color={color}
+        radius={radius}
         disabled={disabled}
         {...props}
         className={mergeClasses(
@@ -48,7 +51,13 @@ const Button = forwardRef<HTMLButtonElement, TButtonProps>(
 
 Button.displayName = 'Button';
 
-export type { TButtonProps, TButtonVariant, TButtonAppearance, TButtonSize } from './types';
+export type {
+  TButtonProps,
+  TButtonVariant,
+  TButtonAppearance,
+  TButtonSize,
+  TButtonRadius,
+} from './types';
 export { buttonClasses } from './classes';
 export { Button };
 export default Button;

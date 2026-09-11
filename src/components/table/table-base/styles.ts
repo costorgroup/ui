@@ -23,21 +23,21 @@ export const STableBase = styled('table', {
   font-size: ${({ size }) => sizeFont[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: var(--table-fg, ${({ theme }) => theme.colors.base.darker});
+  color: var(--table-fg, ${({ theme }) => theme.palette.base.darker});
   text-align: left;
 
   ${({ theme, size, color }) => {
     const scale = theme.sizeScale[size];
     const padY = `calc(${theme.spacing(theme.gap.sm)} * ${scale})`;
     const padX = `calc(${theme.spacing(theme.gap.md)} * ${scale})`;
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     return `
       --table-pad-y: ${padY};
       --table-pad-x: ${padX};
-      --table-border: color-mix(in lab, ${palette.main} 18%, transparent);
-      --table-head-bg: color-mix(in lab, ${palette.main} 8%, transparent);
-      --table-row-hover: color-mix(in lab, ${palette.main} 8%, transparent);
+      --table-border: color-mix(in oklab, ${palette.main} 18%, transparent);
+      --table-head-bg: color-mix(in oklab, ${palette.main} 8%, transparent);
+      --table-row-hover: color-mix(in oklab, ${palette.main} 8%, transparent);
       --table-accent: ${palette.main};
     `;
   }}

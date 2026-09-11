@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
-import { InputFieldLayout } from '../input/input-base';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
 import { InputWrapper } from '../input/input-wrapper';
 import { InputTextField } from '../input/input-text-field';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { InputIcon } from '../input/input-icon';
 import { textFieldClasses } from './classes';
 import { TTextFieldProps } from './types';
@@ -21,10 +17,11 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
-      color = 'default',
+      variant = 'surface',
+      color = 'primary',
       startIcon,
       endIcon,
+      actionBar,
       id,
       className,
       disabled,
@@ -33,13 +30,20 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
     },
     ref,
   ) => {
-    const fieldId = id ?? (typeof label === 'string' ? undefined : undefined);
-    const tone = error ? 'error' : color;
-
     return (
-      <InputFieldLayout
+      <FormControl
         ref={ref}
+        label={label}
+        description={description}
+        helperText={helperText}
+        required={required}
+        error={error}
         fullWidth={fullWidth}
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        id={id}
         className={mergeClasses(
           textFieldClasses.root,
           disabled && textFieldClasses.disabled,
@@ -47,54 +51,13 @@ const TextField = forwardRef<HTMLDivElement, TTextFieldProps>(
           required && textFieldClasses.required,
           className,
         )}
-        label={
-          label != null ? (
-            <InputLabel
-              htmlFor={fieldId}
-              required={required}
-              error={error}
-              disabled={disabled}
-              size={size}
-            >
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]}>
-              {description}
-            </Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} error={error}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
       >
-        <InputWrapper
-          size={size}
-          variant={variant}
-          color={tone}
-          error={error}
-          disabled={disabled}
-          readOnly={readOnly}
-        >
+        <InputWrapper readOnly={readOnly} actionBar={actionBar}>
           {startIcon != null ? <InputIcon>{startIcon}</InputIcon> : null}
-          <InputTextField
-            id={fieldId}
-            aria-invalid={error || undefined}
-            disabled={disabled}
-            readOnly={readOnly}
-            required={required}
-            {...props}
-          />
+          <InputTextField disabled={disabled} readOnly={readOnly} {...props} />
           {endIcon != null ? <InputIcon>{endIcon}</InputIcon> : null}
         </InputWrapper>
-      </InputFieldLayout>
+      </FormControl>
     );
   },
 );

@@ -16,13 +16,13 @@ export const SBubbleReactions = styled('div', {
   box-sizing: border-box;
   padding: 2px 6px;
   border: 1px solid
-    ${({ theme }) => colorMix(theme.colors.base.contrastText, CHROME_HOVER)};
+    ${({ theme }) => colorMix(theme.palette.base.contrastText, CHROME_HOVER)};
   border-radius: ${({ theme }) => theme.radius.pill};
   background-color: ${({ theme }) =>
     colorMixBase(
-      theme.colors.base.contrastText,
+      theme.palette.base.contrastText,
       CHROME_FILL,
-      theme.colors.base.main,
+      theme.palette.base.main,
     )};
   font-size: 12px;
   line-height: 1.2;

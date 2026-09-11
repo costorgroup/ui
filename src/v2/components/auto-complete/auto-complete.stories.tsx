@@ -1,14 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { MouseEvent, useMemo, useState } from 'react';
-import {
-  AutoComplete,
-  AutoCompleteOption,
-  Chip,
-  IconButton,
-  Text,
-} from '../../index';
+import React, { MouseEvent, useState } from 'react';
+import type { TPaletteColor } from '../../../theme/types';
 import { Avatar, Flex } from '../../../index';
 import { CloseIcon } from '../../../icons';
+import {
+  AutoComplete,
+  Chip,
+  IconButton,
+  InputActions,
+  InputButton,
+  Text,
+} from '../../index';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 
 type TPerson = {
   name: string;
@@ -23,8 +26,32 @@ const people: TPerson[] = [
   { name: 'Trevor Henderson', src: 'https://i.pravatar.cc/150?img=5' },
 ];
 
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+const personLabel = (person: TPerson) => (
+  <Flex align="center" gap="sm">
+    <Avatar name={person.name} src={person.src} size="xs" />
+    <Text size="sm">{person.name}</Text>
+  </Flex>
+);
+
 const meta: Meta<typeof AutoComplete> = {
-  title: 'V2/Forms/AutoComplete',
+  title: 'V3/Forms/AutoComplete',
   component: AutoComplete,
   tags: ['autodocs'],
   decorators: [
@@ -35,28 +62,9 @@ const meta: Meta<typeof AutoComplete> = {
     ),
   ],
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
     fullWidth: { control: 'boolean' },
     required: { control: 'boolean' },
     error: { control: 'boolean' },
@@ -70,94 +78,105 @@ const meta: Meta<typeof AutoComplete> = {
     helperText: { control: 'text' },
     placeholder: { control: 'text' },
   },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof AutoComplete>;
-
-export const Default: Story = {
-  render: (args) => {
-    const [inputValue, setInputValue] = useState(people[0].name);
-    const [selected, setSelected] = useState<TPerson>(people[0]);
-
-    const options = useMemo(() => {
-      const query = inputValue.trim().toLowerCase();
-
-      if (!query) {
-        return people;
-      }
-
-      return people.filter((person) =>
-        person.name.toLowerCase().includes(query),
-      );
-    }, [inputValue]);
-
-    return (
-      <AutoComplete
-        {...args}
-        inputValue={inputValue}
-        onInputChange={(value) => setInputValue(value)}
-      >
-        {options.map((person) => (
-          <AutoCompleteOption
-            key={person.name}
-            value={person.name}
-            aria-selected={selected.name === person.name}
-            onClick={() => {
-              setSelected(person);
-              setInputValue(person.name);
-            }}
-          >
-            <Avatar name={person.name} src={person.src} size="xs" />
-            <Text size="sm">{person.name}</Text>
-          </AutoCompleteOption>
-        ))}
-      </AutoComplete>
-    );
-  },
   args: {
     label: 'Assignee',
     helperText: 'Type a name or pick from the list.',
     placeholder: 'Find a person',
     size: 'md',
-    variant: 'subtle',
-    color: 'default',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     multiSelect: false,
     error: false,
   },
 };
 
+export default meta;
+
+type Story = StoryObj<typeof AutoComplete<TPerson>>;
+
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => {
+    const [value, setValue] = useState<TPerson>(people[0]);
+
+    return (
+      <AutoComplete
+        {...args}
+        options={people}
+        value={value}
+        defaultInputValue={people[0].name}
+        onChange={(_, next) => setValue(next as TPerson)}
+        isValueEqual={(a, b) => a.name === b.name}
+        getOptionLabel={(person) => person.name}
+        renderOption={(person) => personLabel(person)}
+      />
+    );
+  },
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <AutoComplete
+          key={color}
+          color={color}
+          label={color}
+          options={people}
+          getOptionLabel={(person) => person.name}
+          defaultValue={people[0]}
+          defaultInputValue={people[0].name}
+          isValueEqual={(a, b) => a.name === b.name}
+        />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <AutoComplete
+            variant={variant}
+            label={variant}
+            options={people}
+            getOptionLabel={(person) => person.name}
+            defaultValue={people[0]}
+            defaultInputValue={people[0].name}
+            isValueEqual={(a, b) => a.name === b.name}
+          />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {SIZES.map((size) => (
+        <AutoComplete
+          key={size}
+          size={size}
+          label={size}
+          options={people}
+          getOptionLabel={(person) => person.name}
+          defaultValue={people[0]}
+          defaultInputValue={people[0].name}
+          isValueEqual={(a, b) => a.name === b.name}
+        />
+      ))}
+    </Flex>
+  ),
+};
+
 export const MultiSelect: Story = {
   render: (args) => {
-    const [inputValue, setInputValue] = useState('');
     const [value, setValue] = useState<TPerson[]>([people[0], people[2]]);
-
-    const options = useMemo(() => {
-      const query = inputValue.trim().toLowerCase();
-
-      if (!query) {
-        return people;
-      }
-
-      return people.filter((person) =>
-        person.name.toLowerCase().includes(query),
-      );
-    }, [inputValue]);
-
-    const togglePerson = (person: TPerson) => {
-      setValue((current) => {
-        const exists = current.some((item) => item.name === person.name);
-
-        if (exists) {
-          return current.filter((item) => item.name !== person.name);
-        }
-
-        return [...current, person];
-      });
-      setInputValue('');
-    };
 
     const removePerson = (event: MouseEvent, person: TPerson) => {
       event.stopPropagation();
@@ -172,70 +191,82 @@ export const MultiSelect: Story = {
         {...args}
         multiSelect
         hideSelectedOptions
-        inputValue={inputValue}
-        onInputChange={(next) => setInputValue(next)}
-        onRemoveLast={() => {
-          setValue((current) => current.slice(0, -1));
-        }}
-        renderValue={() =>
-          value.length > 0 ? (
+        options={people}
+        value={value}
+        onChange={(_, next) => setValue(next as TPerson[])}
+        isValueEqual={(a, b) => a.name === b.name}
+        getOptionLabel={(person) => person.name}
+        renderOption={(person) => personLabel(person)}
+        renderValue={(selected) => {
+          const items = Array.isArray(selected) ? selected : [];
+
+          return items.length > 0 ? (
             <Flex align="center" gap="xs" wrap="wrap">
-              {value.map((person) => (
-                <Chip
+              {items.map((person) => (
+                <span
                   key={person.name}
-                  size="sm"
-                  variant="subtle"
-                  color="base"
-                  rounded
                   onMouseDown={(event) => event.stopPropagation()}
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <Avatar name={person.name} src={person.src} size="xs" />
-                  <Text size="sm">{person.name}</Text>
-                  <IconButton
-                    size="xs"
-                    variant="ghost"
-                    color="base"
-                    aria-label={`Remove ${person.name}`}
-                    onMouseDown={(event) => event.stopPropagation()}
-                    onClick={(event) => removePerson(event, person)}
+                  <Chip
+                    size="sm"
+                    variant="solid"
+                    color="primary"
+                    radius="pill"
+                    onDelete={(event) => removePerson(event, person)}
                   >
-                    <CloseIcon />
-                  </IconButton>
-                </Chip>
+                    <Avatar name={person.name} src={person.src} size="xs" />
+                    {person.name}
+                  </Chip>
+                </span>
               ))}
             </Flex>
-          ) : null
-        }
-      >
-        {options.map((person) => {
-          const selected = value.some((item) => item.name === person.name);
-
-          return (
-            <AutoCompleteOption
-              key={person.name}
-              value={person.name}
-              aria-selected={selected}
-              onClick={() => togglePerson(person)}
-            >
-              <Avatar name={person.name} src={person.src} size="xs" />
-              <Text size="sm">{person.name}</Text>
-            </AutoCompleteOption>
-          );
-        })}
-      </AutoComplete>
+          ) : null;
+        }}
+      />
     );
   },
   args: {
     label: 'Assignees',
     helperText: 'Type to narrow the list, then pick people.',
     placeholder: 'Add people',
-    size: 'md',
-    variant: 'subtle',
-    color: 'default',
-    fullWidth: true,
     multiSelect: true,
     hideSelectedOptions: true,
-    error: false,
   },
+};
+
+export const Error: Story = {
+  args: {
+    helperText: 'Please pick an assignee.',
+    error: true,
+    required: true,
+  },
+  render: (args) => (
+    <AutoComplete
+      {...args}
+      options={people}
+      getOptionLabel={(person) => person.name}
+      renderOption={(person) => personLabel(person)}
+    />
+  ),
+};
+
+export const ActionBar: Story = {
+  render: (args) => (
+    <AutoComplete
+      {...args}
+      options={people}
+      getOptionLabel={(person) => person.name}
+      defaultValue={people[0]}
+      defaultInputValue={people[0].name}
+      isValueEqual={(a, b) => a.name === b.name}
+      actionBar={
+        <Flex align="center" justify="flex-end">
+          <InputActions>
+            <InputButton radius="sm">Clear value</InputButton>
+          </InputActions>
+        </Flex>
+      }
+    />
+  ),
 };

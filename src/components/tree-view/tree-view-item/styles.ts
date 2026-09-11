@@ -33,18 +33,18 @@ export const STreeViewItemContent = styled('div', {
     }
 
     if (selected) {
-      return `color-mix(in lab, ${theme.colors[color].main} 12%, transparent)`;
+      return `color-mix(in oklab, ${theme.palette[color].main} 12%, transparent)`;
     }
 
     return 'transparent';
   }};
   color: ${({ theme, selected, color, disabled }) => {
     if (disabled) {
-      return theme.colors.common.grey[14];
+      return theme.palette.common.grey[14];
     }
 
     if (selected) {
-      return theme.colors[color].darker;
+      return theme.palette[color].darker;
     }
 
     return 'inherit';
@@ -63,15 +63,15 @@ export const STreeViewItemContent = styled('div', {
       }
 
       if (selected) {
-        return `color-mix(in lab, ${theme.colors[color].main} 16%, transparent)`;
+        return `color-mix(in oklab, ${theme.palette[color].main} 16%, transparent)`;
       }
 
-      return `color-mix(in lab, ${theme.colors.common.black} 6%, transparent)`;
+      return `color-mix(in oklab, ${theme.palette.common.black} 6%, transparent)`;
     }};
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color }) => theme.colors[color].main};
+    outline: 2px solid ${({ theme, color }) => theme.palette[color].main};
     outline-offset: -2px;
   }
 `;

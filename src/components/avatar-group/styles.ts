@@ -36,7 +36,7 @@ export const SAvatarGroup = styled('div', {
   > * {
     margin-left: ${({ spacing }) => resolveSpacing(spacing)};
     box-shadow: ${({ theme, size }) =>
-      `0 0 0 ${sizeRing[size]} ${theme.colors.common.white}`};
+      `0 0 0 ${sizeRing[size]} ${theme.palette.common.white}`};
   }
 
   > *:last-of-type {

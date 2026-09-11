@@ -79,7 +79,7 @@ export const SInputRangeField = styled('span', {
   touch-action: none;
   user-select: none;
   cursor: pointer;
-  color: ${({ theme, color = 'primary' }) => theme.colors[color].main};
+  color: ${({ theme, color = 'primary' }) => theme.palette[color].main};
   border-radius: ${({ theme }) => theme.radius.pill};
 
   ${({
@@ -89,12 +89,12 @@ export const SInputRangeField = styled('span', {
     color = 'primary',
     direction = 'horizontal',
   }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
     const { track: trackSize, thumb, pad } = rangeSizeMap[size];
-    const rail = `color-mix(in lab, ${palette.main} 38%, transparent)`;
+    const rail = `color-mix(in oklab, ${palette.main} 38%, transparent)`;
     const fill = palette.main;
     const thumbBg =
-      variant === 'outline' ? theme.colors.common.white : palette.main;
+      variant === 'outline' ? theme.palette.common.white : palette.main;
     const thumbBorder = variant === 'outline' ? palette.main : 'transparent';
 
     return `
@@ -103,7 +103,7 @@ export const SInputRangeField = styled('span', {
       --range-fill: ${fill};
       --range-thumb: ${thumbBg};
       --range-thumb-border: ${thumbBorder};
-      --range-halo: color-mix(in lab, ${palette.main} 16%, transparent);
+      --range-halo: color-mix(in oklab, ${palette.main} 16%, transparent);
       --range-value-bg: ${palette.main};
       --range-value-fg: ${palette.contrastText};
 

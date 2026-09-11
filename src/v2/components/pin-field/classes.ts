@@ -2,6 +2,7 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const pinFieldClasses = generateUtilityClasses('PinField', [
   'root',
+  'disabled',
   'error',
   'required',
 ]);

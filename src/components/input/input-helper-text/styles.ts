@@ -21,6 +21,6 @@ export const SInputHelperText = styled('p', {
   font-size: ${({ size = 'sm' }) => sizeStyles[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme, color = 'base' }) => theme.colors[color].main};
+  color: ${({ theme, color = 'base' }) => theme.palette[color].main};
   user-select: none;
 `;

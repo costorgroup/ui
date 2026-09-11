@@ -22,7 +22,7 @@ export const SAlertBase = styled('div', {
   border: 1px solid transparent;
   border-radius: ${({ theme }) => theme.radius.medium};
   box-shadow: ${({ theme }) => {
-    const black = theme.colors.common.black;
+    const black = theme.palette.common.black;
 
     return `
       0 4px 10px ${black}0a,
@@ -53,7 +53,7 @@ export const SAlertBase = styled('div', {
   }}
 
   ${({ theme, variant, color }) => {
-    const palette = theme.colors[color];
+    const palette = theme.palette[color];
 
     switch (variant) {
       case 'solid':
@@ -64,9 +64,9 @@ export const SAlertBase = styled('div', {
         `;
       case 'surface':
         return `
-          background-color: color-mix(in lab, ${palette.lighter} 88%, transparent);
+          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
           color: ${palette.darker};
-          border-color: color-mix(in lab, ${palette.main} 24%, transparent);
+          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
         `;
@@ -91,7 +91,7 @@ export const SAlertBase = styled('div', {
       case 'subtle':
       default:
         return `
-          background-color: color-mix(in lab, ${palette.lighter} 92%, transparent);
+          background-color: color-mix(in oklab, ${palette.lighter} 92%, transparent);
           color: ${palette.darker};
           border-color: transparent;
           backdrop-filter: blur(10px);

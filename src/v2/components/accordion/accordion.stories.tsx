@@ -17,6 +17,7 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
 const VARIANTS: TAccordionVariant[] = [
@@ -72,7 +73,7 @@ export const Default: Story = {
   args: {
     summary: 'Summary',
     children: 'Details content goes here.',
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
     defaultExpanded: false,
@@ -94,7 +95,7 @@ export const Expanded: Story = {
         Manage your profile, security preferences, and notification settings.
       </Text>
     ),
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
     defaultExpanded: true,
@@ -110,7 +111,7 @@ export const Expanded: Story = {
 
 export const Variants: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
   },
   render: (args) => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
@@ -132,7 +133,7 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
   },
   render: (args) => (
@@ -155,7 +156,7 @@ export const Sizes: Story = {
 
 export const Controlled: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
   },
@@ -180,7 +181,7 @@ export const Controlled: Story = {
 
 export const IconPosition: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'subtle',
     size: 'md',
   },
@@ -198,7 +199,7 @@ export const IconPosition: Story = {
 
 export const Grouped: Story = {
   args: {
-    color: 'default',
+    color: 'primary',
     variant: 'surface',
     size: 'md',
     radius: 'medium',

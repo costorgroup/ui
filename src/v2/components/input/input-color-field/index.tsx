@@ -9,7 +9,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputColorFieldClasses } from './classes';
 import {
   formatColor,
@@ -64,16 +68,32 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       defaultOpen = false,
       onOpenChange,
       name,
-      disabled = false,
-      variant = 'subtle',
-      size = 'md',
-      color = 'default',
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      actionBar,
       id,
       className,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const listId = useId();
     const isOpenControlled = openProp !== undefined;
     const isValueControlled = value !== undefined;
@@ -328,19 +348,34 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       target.setPointerCapture(event.pointerId);
       onMove(event.clientX, event.clientY);
 
-      const handleMove = (moveEvent: PointerEvent) => {
-        onMove(moveEvent.clientX, moveEvent.clientY);
-      };
+      let active = true;
       const handleUp = (upEvent: PointerEvent) => {
-        target.releasePointerCapture(upEvent.pointerId);
+        if (!active) {
+          return;
+        }
+
+        active = false;
+        if (target.hasPointerCapture(upEvent.pointerId)) {
+          target.releasePointerCapture(upEvent.pointerId);
+        }
         target.removeEventListener('pointermove', handleMove);
         target.removeEventListener('pointerup', handleUp);
         target.removeEventListener('pointercancel', handleUp);
+        target.removeEventListener('lostpointercapture', handleUp);
+      };
+      const handleMove = (moveEvent: PointerEvent) => {
+        if (moveEvent.buttons === 0) {
+          handleUp(moveEvent);
+          return;
+        }
+
+        onMove(moveEvent.clientX, moveEvent.clientY);
       };
 
       target.addEventListener('pointermove', handleMove);
       target.addEventListener('pointerup', handleUp);
       target.addEventListener('pointercancel', handleUp);
+      target.addEventListener('lostpointercapture', handleUp);
     };
 
     const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -409,15 +444,19 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
           color={color}
           disabled={disabled}
           trigger
+          actionBar={actionBar}
         >
           <SInputColorFieldTrigger
             ref={triggerRef}
             type="button"
-            id={id}
+            id={fieldId}
             size={size}
+            disabled={disabled}
             aria-haspopup="dialog"
             aria-expanded={open}
             aria-controls={open ? listId : undefined}
+            aria-invalid={error || undefined}
+            aria-describedby={ariaDescribedBy ?? form.helperId}
             onClick={() => setOpen(!open)}
             onKeyDown={handleTriggerKeyDown}
             style={

@@ -21,6 +21,8 @@ const meta: Meta<typeof Heading> = {
         'info',
         'dark',
         'light',
+        'default',
+        'inverted',
       ],
     },
   },

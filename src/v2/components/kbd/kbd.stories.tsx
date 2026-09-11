@@ -2,10 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
-import {
-  Kbd,
-  Text
-} from '../../index';
+import { Kbd, Text } from '../../index';
+import type { TKbdSize, TKbdVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -18,31 +16,43 @@ const COLORS: TPaletteColor[] = [
   'dark',
   'light',
   'default',
+  'inverted',
 ];
 
+const VARIANTS: TKbdVariant[] = [
+  'raised',
+  'solid',
+  'subtle',
+  'surface',
+  'outline',
+  'plain',
+];
+
+const SIZES: TKbdSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 const meta: Meta<typeof Kbd> = {
-  title: 'V2/Typography/Kbd',
+  title: 'V3/Typography/Kbd',
   component: Kbd,
   tags: ['autodocs'],
   argTypes: {
     variant: {
       control: 'select',
-      options: [
-        'raised',
-        'subtle',
-        'surface',
-        'outline',
-        'plain',
-      ],
+      options: VARIANTS,
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: SIZES,
     },
     color: {
       control: 'select',
       options: COLORS,
     },
+  },
+  args: {
+    children: 'Shift + Tab',
+    variant: 'raised',
+    size: 'md',
+    color: 'default',
   },
 };
 
@@ -50,13 +60,44 @@ export default meta;
 
 type Story = StoryObj<typeof Kbd>;
 
-export const Default: Story = {
-  args: {
-    children: 'Shift + Tab',
-    variant: 'raised',
-    size: 'md',
-    color: 'base',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <Text key={color} size="sm">
+          This key will be in '{color}' color: <Kbd color={color}>F12</Kbd>
+        </Text>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {VARIANTS.map((variant) => (
+        <Kbd key={variant} variant={variant}>
+          {variant}
+        </Kbd>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {SIZES.map((size) => (
+        <Kbd key={size} size={size}>
+          {size}
+        </Kbd>
+      ))}
+    </Flex>
+  ),
 };
 
 export const Combinations: Story = {
@@ -71,79 +112,10 @@ export const Combinations: Story = {
   ),
 };
 
-export const FunctionKeys: Story = {
-  render: () => (
-    <Flex gap="xs" align="center">
-      <Kbd>⌘</Kbd>
-      <Kbd>⌥</Kbd>
-      <Kbd>⇧</Kbd>
-      <Kbd>⌃</Kbd>
-    </Flex>
-  ),
-};
-
-export const Variants: Story = {
-  render: () => (
-    <Flex gap="sm" wrap="wrap" align="center">
-      {(
-        [
-          'raised',
-          'subtle',
-          'surface',
-          'outline',
-          'plain',
-        ] as const
-      ).map((variant) => (
-        <Kbd key={variant} variant={variant}>
-          Shift + Tab
-        </Kbd>
-      ))}
-    </Flex>
-  ),
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <Flex gap="sm" wrap="wrap" align="center">
-      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map((size) => (
-        <Kbd key={size} size={size}>
-          Shift + Tab
-        </Kbd>
-      ))}
-    </Flex>
-  ),
-};
-
-export const WithinText: Story = {
+export const Inline: Story = {
   render: () => (
     <Text size="md">
       Press <Kbd>F12</Kbd> to open DevTools
     </Text>
-  ),
-};
-
-export const Colors: Story = {
-  render: () => (
-    <Flex direction="column" gap="md">
-      {COLORS.map((color) => (
-        <Flex key={color} gap="sm" wrap="wrap" align="center">
-          <Text size="sm" style={{ minWidth: 72 }}>
-            {color}
-          </Text>
-          <Kbd color={color} variant="raised">
-            raised
-          </Kbd>
-          <Kbd color={color} variant="subtle">
-            subtle
-          </Kbd>
-          <Kbd color={color} variant="surface">
-            surface
-          </Kbd>
-          <Kbd color={color} variant="plain">
-            plain
-          </Kbd>
-        </Flex>
-      ))}
-    </Flex>
   ),
 };

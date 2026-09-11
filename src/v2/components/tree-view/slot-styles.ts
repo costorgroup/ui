@@ -73,7 +73,7 @@ const selectedRowStyles = (
 
   return `
     background-color: ${chromeOpaqueFill(theme, CHROME_IDLE)};
-    color: ${theme.colors.default.main};
+    color: ${theme.palette.default.main};
   `;
 };
 
@@ -96,7 +96,7 @@ export const interactiveRowStyles = (
   padding-inline-start: calc(
     var(--tree-padding-inline) + var(--tree-indentation) * (var(--depth, 1) - 1)
   );
-  color: ${theme.colors.default.main};
+  color: ${theme.palette.default.main};
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -110,7 +110,7 @@ export const interactiveRowStyles = (
   }
 
   &[data-disabled] {
-    color: ${theme.colors.common.grey[14]};
+    color: ${theme.palette.common.grey[14]};
     cursor: default;
   }
 
@@ -119,7 +119,7 @@ export const interactiveRowStyles = (
   }
 
   &:focus-visible {
-    outline: 2px solid ${colorMix(theme.colors.default.main, 24)};
+    outline: 2px solid ${colorMix(theme.palette.default.main, 24)};
     outline-offset: -2px;
   }
 `;

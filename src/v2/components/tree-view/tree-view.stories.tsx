@@ -127,7 +127,7 @@ export const Default: Story = {
   args: {
     size: 'md',
     variant: 'subtle',
-    color: 'default',
+    color: 'primary',
   },
   render: function DefaultStory(args) {
     const collection = useMemo(() => createDemoCollection(), []);

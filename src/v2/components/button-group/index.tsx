@@ -10,19 +10,20 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
     {
       children,
       orientation = 'horizontal',
-      color,
+      color = 'default',
       variant,
       appearance,
       size,
       disabled = false,
+      rounded = false,
       className,
       ...props
     },
     ref,
   ) => {
     const contextValue = useMemo(
-      () => ({ orientation, color, variant, appearance, size }),
-      [appearance, color, orientation, size, variant],
+      () => ({ orientation, color, variant, appearance, size, disabled }),
+      [appearance, color, disabled, orientation, size, variant],
     );
 
     return (
@@ -30,6 +31,9 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
         <SButtonGroup
           ref={ref}
           orientation={orientation}
+          variant={variant}
+          color={color}
+          rounded={rounded}
           role="group"
           {...props}
           className={mergeClasses(
