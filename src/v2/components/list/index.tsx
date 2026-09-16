@@ -9,10 +9,10 @@ const List = forwardRef<HTMLDivElement, TListProps>(
   (
     {
       children,
-      color = 'primary',
+      color = 'default',
       variant = 'subtle',
       size = 'md',
-      radius = 'medium',
+      radius = 'md',
       className,
       ...props
     },
@@ -42,7 +42,7 @@ const List = forwardRef<HTMLDivElement, TListProps>(
 
 List.displayName = 'List';
 
-export type { TListProps, TListSize } from './types';
+export type { TListProps, TListSize, TListRadius } from './types';
 export type { TListVariant } from './variant-styles';
 export { listClasses } from './classes';
 export { ListContext, useListContext } from './context';

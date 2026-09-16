@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { Flex, Text, useTheme } from '../../../index';
-import { accentSwatch, resolveAccentPalette } from '../../../theme/palettes';
+import { accentSwatch } from '../../../theme/palettes';
 import { ThemePreview } from '../../index';
 
 const meta: Meta<typeof ThemePreview> = {
-  title: 'V2/Data Display/ThemePreview',
+  title: 'V3/Data Display/ThemePreview',
   component: ThemePreview,
   tags: ['autodocs'],
 };
@@ -20,7 +20,7 @@ export const Default: Story = {
 
     return (
       <ThemePreview
-        colors={[theme.palette.base.main, theme.palette.default.main]}
+        colors={[theme.surfaces.background, theme.surfaces.ink]}
         aria-label="Current theme"
       />
     );
@@ -52,7 +52,8 @@ export const Pairs: Story = {
 
 export const Palettes: Story = {
   render: function PalettesStory() {
-    const { accent, accents, palette, mode, setAccent } = useTheme();
+    const theme = useTheme();
+    const { accent, accents, setAccent } = theme;
 
     return (
       <Flex gap="md" wrap="wrap">
@@ -82,7 +83,7 @@ export const Palettes: Story = {
             >
               <ThemePreview
                 colors={[
-                  resolveAccentPalette(item, mode).base?.main ?? palette.base.main,
+                  theme.surfaces.background,
                   accentSwatch(item),
                 ]}
               />

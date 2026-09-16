@@ -8,8 +8,8 @@ import { DrawerActions } from './drawer-actions';
 import { DrawerBase } from './drawer-base';
 import { DrawerBody } from './drawer-body';
 import { DrawerDescription } from './drawer-description';
-import { DrawerHead } from './drawer-head';
-import { DrawerHeadActions } from './drawer-head-actions';
+import { DrawerHeader } from './drawer-header';
+import { DrawerHeaderActions } from './drawer-header-actions';
 import { DrawerTitle } from './drawer-title';
 import { TDrawerAnchor, TDrawerProps } from './types';
 
@@ -53,7 +53,7 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
       children,
       title,
       description,
-      headActions,
+      headerActions,
       actions,
       size = 'md',
       anchor = 'left',
@@ -85,14 +85,14 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
           {...props}
           className={mergeClasses(drawerClasses.root, className)}
         >
-          {title != null || description != null || headActions != null ? (
-            <DrawerHead>
+          {title != null || description != null || headerActions != null ? (
+            <DrawerHeader>
               {wrapSlot(title, DrawerTitle)}
               {wrapSlot(description, DrawerDescription)}
-              {headActions != null ? (
-                <DrawerHeadActions>{headActions}</DrawerHeadActions>
+              {headerActions != null ? (
+                <DrawerHeaderActions>{headerActions}</DrawerHeaderActions>
               ) : null}
-            </DrawerHead>
+            </DrawerHeader>
           ) : null}
           {children != null ? (
             <DrawerBody scrollable={scrollable}>{children}</DrawerBody>
@@ -110,13 +110,13 @@ export type { TDrawerProps, TDrawerSize, TDrawerAnchor, TDrawerVariant } from '.
 export { drawerClasses } from './classes';
 export { DrawerBase, drawerBaseClasses } from './drawer-base';
 export type { TDrawerBaseProps } from './drawer-base';
-export { DrawerHead, drawerHeadClasses } from './drawer-head';
-export type { TDrawerHeadProps } from './drawer-head';
+export { DrawerHeader, drawerHeaderClasses } from './drawer-header';
+export type { TDrawerHeaderProps } from './drawer-header';
 export {
-  DrawerHeadActions,
-  drawerHeadActionsClasses,
-} from './drawer-head-actions';
-export type { TDrawerHeadActionsProps } from './drawer-head-actions';
+  DrawerHeaderActions,
+  drawerHeaderActionsClasses,
+} from './drawer-header-actions';
+export type { TDrawerHeaderActionsProps } from './drawer-header-actions';
 export { DrawerBody, drawerBodyClasses } from './drawer-body';
 export type { TDrawerBodyProps } from './drawer-body';
 export { DrawerActions, drawerActionsClasses } from './drawer-actions';

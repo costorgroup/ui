@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { CHROME_FILL, CHROME_HOVER } from '../../../idle-variant-styles';
-import { colorMix, colorMixBase } from '../../../surface';
+import { CHROME_FILL } from '../../../idle-variant-styles';
+import { colorMixBase } from '../../../surface';
 import { TSBubbleReactionsProps } from '../types';
 
 const customProps = new Set(['side', 'align']);
@@ -12,19 +12,20 @@ export const SBubbleReactions = styled('div', {
   z-index: 1;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
   box-sizing: border-box;
   padding: 2px 6px;
-  border: 1px solid
-    ${({ theme }) => colorMix(theme.palette.base.contrastText, CHROME_HOVER)};
+  border: 1px solid ${({ theme }) => theme.surfaces.border};
   border-radius: ${({ theme }) => theme.radius.pill};
   background-color: ${({ theme }) =>
     colorMixBase(
-      theme.palette.base.contrastText,
+      theme.surfaces.mixer,
       CHROME_FILL,
-      theme.palette.base.main,
+      theme.surfaces.background,
     )};
-  font-size: 12px;
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.surfaces.background};
+  color: ${({ theme }) => theme.surfaces.ink};
+  font-size: ${({ theme }) => theme.sizes.sm.fontSize};
   line-height: 1.2;
   ${({ side }) => (side === 'top' ? 'top: -10px;' : 'bottom: -10px;')}
   ${({ align }) => (align === 'end' ? 'right: 8px;' : 'left: 8px;')}

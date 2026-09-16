@@ -14,7 +14,7 @@ export type TDrawerProps = Omit<
   children?: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
-  headActions?: ReactNode;
+  headerActions?: ReactNode;
   actions?: ReactNode;
   size?: TDrawerSize;
   anchor?: TDrawerAnchor;

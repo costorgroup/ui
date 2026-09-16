@@ -34,7 +34,7 @@ export const SBackdrop = styled('div', {
   align-items: ${({ align }) => alignMap[align]};
   justify-content: ${({ justify }) => justifyMap[justify]};
   padding: ${({ theme, padding }) =>
-    padding ? theme.spacing(theme.gap.xl) : 0};
+    padding ? theme.spacing(5) : 0};
   overflow: ${({ scrollable }) => (scrollable ? 'hidden' : 'auto')};
   background-color: ${({ theme }) => theme.surfaces.backdrop};
   backdrop-filter: blur(10px);

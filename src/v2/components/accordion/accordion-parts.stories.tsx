@@ -37,7 +37,7 @@ const VARIANTS: TAccordionVariant[] = [
 const SIZES: TAccordionSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof AccordionBase> = {
-  title: 'V2/Data Display/Accordion/Parts',
+  title: 'V3/Data Display/Accordion/Parts',
   component: AccordionBase,
   tags: ['autodocs'],
 };
@@ -48,9 +48,10 @@ type Story = StoryObj<typeof AccordionBase>;
 
 export const Default: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
+    radius: 'md',
   },
   render: (args) => (
     <AccordionBase {...args} style={{ width: 420 }}>
@@ -168,10 +169,10 @@ export const ExpandIconPosition: Story = {
 
 export const Grouped: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'surface',
     size: 'md',
-    radius: 'medium',
+    radius: 'md',
   },
   render: (args) => (
     <AccordionGroup

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { ReactNode, useState } from 'react';
+import React, { useState } from 'react';
 import { Flex } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
 import {
@@ -22,26 +22,14 @@ const COLORS: TPaletteColor[] = [
   'inverted',
 ];
 
-const TabsBackdrop = ({ children }: { children: ReactNode }) => (
-  <div
-    style={{
-      padding: 32,
-      borderRadius: 12,
-      background:
-        'linear-gradient(135deg, rgba(0, 18, 61, 0.72) 0%, rgba(0, 14, 46, 0.85) 100%)',
-    }}
-  >
-    {children}
-  </div>
-);
-
 const meta: Meta<typeof Tabs> = {
-  title: 'V2/Data Display/Tabs',
+  title: 'V3/Data Display/Tabs',
   component: Tabs,
   tags: ['autodocs'],
   args: {
     appearance: 'opaque',
     orientation: 'horizontal',
+    variant: 'subtle',
     fullWidth: true,
   },
   argTypes: {
@@ -60,13 +48,6 @@ const meta: Meta<typeof Tabs> = {
     fullWidth: { control: 'boolean' },
     color: { control: 'select', options: COLORS },
   },
-  decorators: [
-    (Story) => (
-      <TabsBackdrop>
-        <Story />
-      </TabsBackdrop>
-    ),
-  ],
 };
 
 export default meta;

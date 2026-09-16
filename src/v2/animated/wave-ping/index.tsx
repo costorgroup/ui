@@ -15,7 +15,7 @@ const WavePing = forwardRef<HTMLDivElement, TWavePingProps>(
       thickness = 2,
       duration = 1.4,
       spread = 0.5,
-      radius = 'medium',
+      radius = 'md',
       className,
       ...props
     },

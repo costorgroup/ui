@@ -7,8 +7,8 @@ import { ModalActions } from './modal-actions';
 import { ModalBase } from './modal-base';
 import { ModalBody } from './modal-body';
 import { ModalDescription } from './modal-description';
-import { ModalHead } from './modal-head';
-import { ModalHeadActions } from './modal-head-actions';
+import { ModalHeader } from './modal-header';
+import { ModalHeaderActions } from './modal-header-actions';
 import { ModalTitle } from './modal-title';
 
 const meta: Meta<typeof ModalBase> = {
@@ -39,12 +39,12 @@ export const AllParts: Story = {
             onClose={() => setOpen(false)}
           >
             <ModalBase size="md" scrollable>
-              <ModalHead>
+              <ModalHeader>
                 <ModalTitle>Custom modal</ModalTitle>
                 <ModalDescription>
                   Built from Backdrop + ModalBase parts.
                 </ModalDescription>
-                <ModalHeadActions>
+                <ModalHeaderActions>
                   <IconButton
                     variant="ghost"
                     color="default"
@@ -54,8 +54,8 @@ export const AllParts: Story = {
                   >
                     <CloseIcon />
                   </IconButton>
-                </ModalHeadActions>
-              </ModalHead>
+                </ModalHeaderActions>
+              </ModalHeader>
               <ModalBody>
                 <Text>Built from Backdrop + ModalBase parts.</Text>
               </ModalBody>

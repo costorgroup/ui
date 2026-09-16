@@ -110,7 +110,7 @@ const InputFileFieldModal = ({
       onClose={handleCancel}
       title={title}
       description={description}
-      headActions={
+      headerActions={
         <IconButton
           variant="ghost"
           color="default"

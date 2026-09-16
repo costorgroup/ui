@@ -10,7 +10,7 @@ export type TModalProps = Omit<
   children?: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
-  headActions?: ReactNode;
+  headerActions?: ReactNode;
   actions?: ReactNode;
   size?: TModalSize;
   variant?: TModalVariant;

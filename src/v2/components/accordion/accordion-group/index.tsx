@@ -12,7 +12,7 @@ const AccordionGroup = forwardRef<HTMLDivElement, TAccordionGroupProps>(
       color,
       variant,
       size,
-      radius = 'medium',
+      radius = 'md',
       className,
       ...props
     },

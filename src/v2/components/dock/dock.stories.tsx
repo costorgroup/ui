@@ -9,10 +9,11 @@ import {
   StarIcon,
 } from '../../../icons';
 import { Dock, DockItem, DockSeparator, Text } from '../../index';
-import type { TDockOrientation, TDockVariant } from './types';
+import type { TDockOrientation, TDockSize, TDockVariant } from './types';
 
 const VARIANTS: TDockVariant[] = ['subtle', 'surface', 'plain'];
 const ORIENTATIONS: TDockOrientation[] = ['horizontal', 'vertical'];
+const SIZES: TDockSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof Dock> = {
   title: 'V3/Layout/Dock',
@@ -22,6 +23,7 @@ const meta: Meta<typeof Dock> = {
     appearance: 'opaque',
     variant: 'surface',
     orientation: 'horizontal',
+    size: 'md',
   },
   argTypes: {
     orientation: {
@@ -35,6 +37,10 @@ const meta: Meta<typeof Dock> = {
     variant: {
       control: 'select',
       options: VARIANTS,
+    },
+    size: {
+      control: 'select',
+      options: SIZES,
     },
   },
 };
@@ -96,6 +102,21 @@ export const Orientations: Story = {
         <Flex key={orientation} direction="column" gap="xs">
           <Text size="sm">{orientation}</Text>
           <Dock orientation={orientation}>
+            <Items />
+          </Dock>
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {SIZES.map((size) => (
+        <Flex key={size} direction="column" gap="xs">
+          <Text size="sm">{size}</Text>
+          <Dock size={size}>
             <Items />
           </Dock>
         </Flex>

@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react';
-import { TDockOrientation } from './types';
+import { TDockOrientation, TDockSize } from './types';
 
 export type TDockContextValue = {
   orientation: TDockOrientation;
+  size: TDockSize;
 };
 
 export const DockContext = createContext<TDockContextValue | null>(null);

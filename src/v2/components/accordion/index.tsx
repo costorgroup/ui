@@ -70,6 +70,7 @@ Accordion.displayName = 'Accordion';
 
 export type {
   TAccordionProps,
+  TAccordionRadius,
   TAccordionExpandIconPosition,
   TAccordionSize,
 } from './types';

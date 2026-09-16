@@ -39,8 +39,8 @@ const ThemePreview = forwardRef<HTMLDivElement, TThemePreviewProps>(
     const theme = useTheme();
     const [canvas, ink] = toColorPair(
       colorsProp,
-      theme.palette.base.main,
-      theme.palette.default.main,
+      theme.surfaces.background,
+      theme.surfaces.ink,
     );
 
     return (

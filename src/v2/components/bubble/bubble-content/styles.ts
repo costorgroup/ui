@@ -13,9 +13,9 @@ export const SBubbleContent = styled('div', {
   min-width: 0;
   padding: ${({ theme }) => theme.spacing(theme.gap.md)};
   border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.large};
+  border-radius: ${({ theme }) => theme.radius.lg};
   font-family: inherit;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.sizes.md.fontSize};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   word-break: break-word;
@@ -26,7 +26,13 @@ export const SBubbleContent = styled('div', {
 
   ${({ theme, color, variant }) => {
     const palette = theme.palette[color];
-    const chrome = variantStyles(variant, palette, theme);
+    const chrome = variantStyles(
+      variant,
+      palette,
+      theme,
+      'opaque',
+      theme.surfaces.background,
+    );
 
     if (variant === 'ghost') {
       return `

@@ -27,7 +27,7 @@ const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
       variant = 'subtle',
       fullWidth = true,
       draggable = true,
-      color = 'primary',
+      color,
       className,
       ...props
     },

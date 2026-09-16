@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Flex, Text, TextField } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
 import { List, ListItem } from '../../index';
-import type { TListSize } from './types';
+import type { TListRadius, TListSize } from './types';
 import type { TListVariant } from './variant-styles';
 
 const COLORS: TPaletteColor[] = [
@@ -29,55 +29,38 @@ const VARIANTS: TListVariant[] = [
 ];
 
 const SIZES: TListSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
-
-const ListBackdrop = ({ children }: { children: ReactNode }) => (
-  <div
-    style={{
-      padding: 32,
-      borderRadius: 12,
-      background:
-        'linear-gradient(135deg, rgba(0, 18, 61, 0.72) 0%, rgba(0, 14, 46, 0.85) 100%)',
-    }}
-  >
-    {children}
-  </div>
-);
+const RADIUS: TListRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
 
 const meta: Meta<typeof List> = {
-  title: 'V2/Data Display/List',
+  title: 'V3/Data Display/List',
   component: List,
   tags: ['autodocs'],
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
-    radius: 'medium',
+    radius: 'md',
   },
   argTypes: {
-    color: {
-      control: 'select',
-      options: COLORS,
-    },
-    variant: {
-      control: 'select',
-      options: VARIANTS,
-    },
-    size: {
-      control: 'select',
-      options: SIZES,
-    },
-    radius: {
-      control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
-    },
+    color: { control: 'select', options: COLORS },
+    variant: { control: 'select', options: VARIANTS },
+    size: { control: 'select', options: SIZES },
+    radius: { control: 'select', options: RADIUS },
   },
   decorators: [
     (Story) => (
-      <ListBackdrop>
-        <div style={{ width: 420 }}>
-          <Story />
-        </div>
-      </ListBackdrop>
+      <div style={{ width: 420 }}>
+        <Story />
+      </div>
     ),
   ],
 };
@@ -101,7 +84,7 @@ export const Default: Story = {
 export const WithFields: Story = {
   args: {
     variant: 'surface',
-    color: 'primary',
+    color: 'default',
     size: 'sm',
   },
   render: (args) => (

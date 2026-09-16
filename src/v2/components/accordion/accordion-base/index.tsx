@@ -34,11 +34,11 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
     ref,
   ) => {
     const group = useAccordionGroupContext();
-    const color: TPaletteColor = colorProp ?? group?.color ?? 'primary';
+    const color: TPaletteColor = colorProp ?? group?.color ?? 'default';
     const variant: TAccordionVariant =
       variantProp ?? group?.variant ?? 'subtle';
     const size: TAccordionSize = sizeProp ?? group?.size ?? 'md';
-    const radius = radiusProp ?? group?.radius ?? 'medium';
+    const radius = radiusProp ?? group?.radius ?? 'md';
     const grouped = group != null;
     const isControlled = expandedProp !== undefined;
     const [uncontrolledExpanded, setUncontrolledExpanded] =

@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { accordionShellVariantStyles } from '../variant-styles';
-import { TAccordionSize } from './context';
 import { TSAccordionBaseProps } from './types';
 
 const rootCustomProps = new Set([
@@ -12,14 +11,6 @@ const rootCustomProps = new Set([
   'variant',
   'grouped',
 ]);
-
-const sizeFont: Record<TAccordionSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
 
 export const SAccordionBase = styled('div', {
   shouldForwardProp: (prop) => !rootCustomProps.has(prop),
@@ -40,7 +31,7 @@ export const SAccordionBase = styled('div', {
     });
   }}
   font-family: inherit;
-  font-size: ${({ size }) => sizeFont[size]};
+  font-size: ${({ theme, size }) => theme.sizes[size].fontSize};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   transition: background-color 0.12s ease, border-color 0.12s ease;

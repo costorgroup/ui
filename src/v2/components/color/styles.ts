@@ -1,31 +1,13 @@
 import styled from '@emotion/styled';
 import type { TTheme } from '../../../theme/types';
 import {
-  SURFACE_BORDER_IDLE,
+  CHROME_FILL,
   SURFACE_BORDER_HOVER,
 } from '../../idle-variant-styles';
-import { chromeOpaqueFill, chromeTransparentFill } from '../../surface';
-import { TColorSize, TColorValue, TSColorProps } from './types';
+import { colorMix, colorMixBase } from '../../surface';
+import { TColorValue, TSColorProps } from './types';
 
 const customProps = new Set(['size', 'colors']);
-
-const AVATAR_FILL = 10;
-
-const sizeBox: Record<TColorSize, string> = {
-  xs: '1.5rem',
-  sm: '1.75rem',
-  md: '2rem',
-  lg: '2.5rem',
-  xl: '3rem',
-};
-
-const sizePad: Record<TColorSize, string> = {
-  xs: '2px',
-  sm: '3px',
-  md: '4px',
-  lg: '5px',
-  xl: '6px',
-};
 
 const glowColor = (theme: TTheme, colors: TColorValue[]) =>
   colors[colors.length - 1] ?? theme.palette.default.main;
@@ -40,29 +22,42 @@ export const SColor = styled('button', {
   margin: 0;
   appearance: none;
   flex-shrink: 0;
-  width: ${({ size }) => sizeBox[size]};
-  height: ${({ size }) => sizeBox[size]};
-  padding: ${({ size }) => sizePad[size]};
   overflow: hidden;
   border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.circle};
-  background-color: ${({ theme }) => chromeOpaqueFill(theme, AVATAR_FILL)};
-  border-color: ${({ theme }) =>
-    chromeTransparentFill(theme, SURFACE_BORDER_IDLE)};
+  border-radius: ${({ theme }) => theme.radius.full};
+  background-color: ${({ theme }) =>
+    colorMixBase(theme.surfaces.mixer, CHROME_FILL, theme.surfaces.background)};
+  border-color: ${({ theme }) => theme.surfaces.border};
+  color: ${({ theme }) => theme.surfaces.ink};
   font-family: inherit;
   cursor: pointer;
   box-shadow: none;
   transition: border-color 0.15s ease;
 
+  ${({ theme, size }) => {
+    const step = theme.sizes[size];
+
+    return `
+      width: ${step.height};
+      height: ${step.height};
+      padding: calc(${step.gap} / 2);
+    `;
+  }}
+
   &:hover:not(:disabled):not(:focus-visible):not([aria-pressed='true']) {
     border-color: ${({ theme }) =>
-      chromeTransparentFill(theme, SURFACE_BORDER_HOVER)};
+      colorMix(theme.surfaces.mixer, SURFACE_BORDER_HOVER)};
   }
 
   &:focus-visible,
   &:active:not(:disabled),
   &[aria-pressed='true'] {
     border-color: ${({ theme, colors }) => glowColor(theme, colors)};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme, colors }) => glowColor(theme, colors)};
+    outline-offset: 2px;
   }
 
   &:disabled {
@@ -76,6 +71,6 @@ export const SColorSwatch = styled.svg`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border-radius: ${({ theme }) => theme.radius.circle};
+  border-radius: ${({ theme }) => theme.radius.full};
   pointer-events: none;
 `;

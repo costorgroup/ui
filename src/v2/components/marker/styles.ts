@@ -5,9 +5,6 @@ import { TSMarkerProps } from './types';
 
 const customProps = new Set(['variant', 'color']);
 
-const INK = 55;
-const LINE = 20;
-
 export const SMarker = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSMarkerProps>`
@@ -24,14 +21,18 @@ export const SMarker = styled('div', {
   border: 0;
   background: none;
   font-family: inherit;
-  font-size: ${({ theme }) => theme.typography.text.sm};
+  font-size: ${({ theme }) => theme.sizes.md.fontSize};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   text-align: left;
-  color: ${({ theme, color }) => colorMix(theme.palette[color].main, INK)};
+  color: ${({ theme, color }) =>
+    color === 'default' ? theme.surfaces.muted : theme.palette[color].main};
 
   ${({ theme, color, variant }) => {
-    const line = colorMix(theme.palette[color].main, LINE);
+    const line =
+      color === 'default'
+        ? theme.surfaces.divider
+        : colorMix(theme.palette[color].main, 30);
 
     if (variant === 'separator') {
       return `
@@ -82,7 +83,8 @@ export const SMarker = styled('div', {
   }
 
   a:hover {
-    color: ${({ theme, color }) => theme.palette[color].main};
+    color: ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].dark};
   }
 
   &[href],
@@ -94,12 +96,14 @@ export const SMarker = styled('div', {
 
   &[href]:hover,
   button&:hover {
-    color: ${({ theme, color }) => theme.palette[color].main};
+    color: ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].dark};
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color }) => theme.palette[color].main};
+    outline: 2px solid ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].main};
     outline-offset: 2px;
-    border-radius: ${({ theme }) => theme.radius.small};
+    border-radius: ${({ theme }) => theme.radius.sm};
   }
 `;

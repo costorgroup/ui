@@ -14,7 +14,7 @@ const NeonPulse = forwardRef<HTMLDivElement, TNeonPulseProps>(
       color,
       thickness = 2,
       duration = 1.4,
-      radius = 'medium',
+      radius = 'md',
       className,
       ...props
     },

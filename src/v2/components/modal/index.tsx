@@ -7,8 +7,8 @@ import { ModalActions } from './modal-actions';
 import { ModalBase } from './modal-base';
 import { ModalBody } from './modal-body';
 import { ModalDescription } from './modal-description';
-import { ModalHead } from './modal-head';
-import { ModalHeadActions } from './modal-head-actions';
+import { ModalHeader } from './modal-header';
+import { ModalHeaderActions } from './modal-header-actions';
 import { ModalTitle } from './modal-title';
 import { TModalProps } from './types';
 
@@ -37,7 +37,7 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
       children,
       title,
       description,
-      headActions,
+      headerActions,
       actions,
       size = 'md',
       variant = 'surface',
@@ -67,14 +67,14 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
           {...props}
           className={mergeClasses(modalClasses.root, className)}
         >
-          {title != null || description != null || headActions != null ? (
-            <ModalHead>
+          {title != null || description != null || headerActions != null ? (
+            <ModalHeader>
               {wrapSlot(title, ModalTitle)}
               {wrapSlot(description, ModalDescription)}
-              {headActions != null ? (
-                <ModalHeadActions>{headActions}</ModalHeadActions>
+              {headerActions != null ? (
+                <ModalHeaderActions>{headerActions}</ModalHeaderActions>
               ) : null}
-            </ModalHead>
+            </ModalHeader>
           ) : null}
           {children != null ? (
             <ModalBody scrollable={scrollable}>{children}</ModalBody>
@@ -92,13 +92,13 @@ export type { TModalProps, TModalSize, TModalVariant } from './types';
 export { modalClasses } from './classes';
 export { ModalBase, modalBaseClasses } from './modal-base';
 export type { TModalBaseProps } from './modal-base';
-export { ModalHead, modalHeadClasses } from './modal-head';
-export type { TModalHeadProps } from './modal-head';
+export { ModalHeader, modalHeaderClasses } from './modal-header';
+export type { TModalHeaderProps } from './modal-header';
 export {
-  ModalHeadActions,
-  modalHeadActionsClasses,
-} from './modal-head-actions';
-export type { TModalHeadActionsProps } from './modal-head-actions';
+  ModalHeaderActions,
+  modalHeaderActionsClasses,
+} from './modal-header-actions';
+export type { TModalHeaderActionsProps } from './modal-header-actions';
 export { ModalBody, modalBodyClasses } from './modal-body';
 export type { TModalBodyProps } from './modal-body';
 export { ModalActions, modalActionsClasses } from './modal-actions';

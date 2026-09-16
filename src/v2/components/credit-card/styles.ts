@@ -90,7 +90,12 @@ const faceFor = (
   theme: TTheme,
 ): TCardFace => {
   if (brand !== 'unknown') {
-    return BRAND_FACE[brand];
+    const face = BRAND_FACE[brand];
+
+    return {
+      ...face,
+      text: theme.palette.common.white,
+    };
   }
 
   const palette = theme.palette[color];
@@ -158,7 +163,7 @@ export const SCreditCardFace = styled('div', {
     ),
     linear-gradient(
       125deg,
-      ${colorMix('#ffffff', 18)} 0%,
+      ${({ theme }) => colorMix(theme.palette.common.white, 18)} 0%,
       transparent 34%
     ),
     linear-gradient(
@@ -168,8 +173,8 @@ export const SCreditCardFace = styled('div', {
       ${({ theme, brand, color }) => faceFor(brand, color, theme).to} 100%
     );
   box-shadow:
-    0 1px 0 ${colorMix('#ffffff', 18)} inset,
-    0 8cqh 11cqw ${colorMix('#000000', 28)};
+    0 1px 0 ${({ theme }) => colorMix(theme.palette.common.white, 18)} inset,
+    0 8cqh 11cqw ${({ theme }) => colorMix(theme.palette.common.black, 28)};
   user-select: none;
 
   &[data-side='back'] {
@@ -197,11 +202,14 @@ export const SCreditCardChip = styled.span`
   width: 11.5cqw;
   height: 13.4cqh;
   border-radius: 1.6cqw;
-  background:
-    linear-gradient(180deg, #f3e0a8 0%, #d4af37 46%, #b8860b 100%);
+  background: ${({ theme }) => {
+    const { warning } = theme.palette;
+
+    return `linear-gradient(180deg, ${warning.lighter} 0%, ${warning.main} 46%, ${warning.dark} 100%)`;
+  }};
   box-shadow:
-    inset 0 1px 0 ${colorMix('#ffffff', 50)},
-    0 1px 2px ${colorMix('#000000', 25)};
+    inset 0 1px 0 ${({ theme }) => colorMix(theme.palette.common.white, 50)},
+    0 1px 2px ${({ theme }) => colorMix(theme.palette.common.black, 25)};
   position: relative;
 
   &::before,
@@ -211,7 +219,7 @@ export const SCreditCardChip = styled.span`
     top: 20%;
     bottom: 20%;
     width: 1px;
-    background: ${colorMix('#000000', 22)};
+    background: ${({ theme }) => colorMix(theme.palette.common.black, 22)};
   }
 
   &::before {
@@ -242,7 +250,7 @@ export const SCreditCardNumber = styled.div`
   font-weight: 600;
   letter-spacing: 0.08em;
   line-height: 1.2;
-  text-shadow: 0 1px 0 ${colorMix('#000000', 25)};
+  text-shadow: 0 1px 0 ${({ theme }) => colorMix(theme.palette.common.black, 25)};
 `;
 
 export const SCreditCardMeta = styled.div`
@@ -306,7 +314,7 @@ export const SCreditCardBrand = styled.span`
 export const SCreditCardStripe = styled.div`
   height: 22%;
   margin-top: 8%;
-  background: ${colorMix('#000000', 82)};
+  background: ${({ theme }) => colorMix(theme.palette.common.black, 82)};
 `;
 
 export const SCreditCardPanel = styled.div`
@@ -320,13 +328,18 @@ export const SCreditCardSignature = styled.div`
   flex: 1;
   height: 15cqh;
   border-radius: 0.9cqw;
-  background: repeating-linear-gradient(
-    -12deg,
-    #f4f0e8,
-    #f4f0e8 1.3cqh,
-    #e4ddd0 1.3cqh,
-    #e4ddd0 2.6cqh
-  );
+  background: ${({ theme }) => {
+    const paper = theme.palette.common.grey[2];
+    const rule = theme.palette.common.grey[6];
+
+    return `repeating-linear-gradient(
+      -12deg,
+      ${paper},
+      ${paper} 1.3cqh,
+      ${rule} 1.3cqh,
+      ${rule} 2.6cqh
+    )`;
+  }};
 `;
 
 export const SCreditCardCvv = styled.div`

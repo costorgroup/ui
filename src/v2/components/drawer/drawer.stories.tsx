@@ -69,7 +69,7 @@ const DrawerDemo = ({
         onClose={() => setOpen(false)}
         title={title}
         description="A few details to get started."
-        headActions={
+        headerActions={
           <IconButton
             variant="ghost"
             color="default"

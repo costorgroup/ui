@@ -14,22 +14,26 @@ import type { TMarkerVariant } from './types';
 
 const VARIANTS: TMarkerVariant[] = ['default', 'border', 'separator'];
 const COLORS: TPaletteColor[] = [
-  'default',
+  'base',
   'primary',
   'secondary',
   'success',
   'error',
   'warning',
   'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
 ];
 
 const meta: Meta<typeof Marker> = {
-  title: 'V2/Data Display/Marker',
+  title: 'V3/Data Display/Marker',
   component: Marker,
   tags: ['autodocs'],
   args: {
     variant: 'default',
-    color: 'primary',
+    color: 'default',
   },
   argTypes: {
     variant: {

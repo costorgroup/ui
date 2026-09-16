@@ -61,7 +61,7 @@ const ITEMS: TMediaViewerItem[] = [
 ];
 
 const meta: Meta<typeof MediaViewer> = {
-  title: 'V2/Overlays/MediaViewer',
+  title: 'V3/Overlays/MediaViewer',
   component: MediaViewer,
   tags: ['autodocs'],
 };

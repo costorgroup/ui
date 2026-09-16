@@ -4,6 +4,7 @@ export type TThemeSurfaceTokens = {
   ink: string;
   muted: string;
   backdrop: string;
+  backdropText: string;
   divider: string;
   mixer: string;
 };

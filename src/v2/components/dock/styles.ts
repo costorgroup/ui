@@ -7,7 +7,7 @@ import {
 } from '../../surface';
 import { TSDockProps } from './types';
 
-const customProps = new Set(['orientation', 'appearance', 'variant']);
+const customProps = new Set(['orientation', 'appearance', 'variant', 'size']);
 const ELEVATION = 2;
 
 export const SDock = styled('div', {
@@ -18,9 +18,9 @@ export const SDock = styled('div', {
   flex-direction: ${({ orientation }) =>
     orientation === 'vertical' ? 'column' : 'row'};
   align-items: center;
-  padding: ${({ theme, variant }) =>
-    variant === 'plain' ? 0 : theme.spacing(theme.gap.md)};
-  gap: ${({ theme }) => theme.spacing(theme.gap.md)};
+  padding: ${({ theme, variant, size }) =>
+    variant === 'plain' ? 0 : theme.sizes[size].padY};
+  gap: ${({ theme, size }) => theme.sizes[size].gap};
   border-radius: ${({ theme, variant }) =>
     variant === 'plain' ? 0 : theme.radius.pill};
   color: ${({ theme }) => theme.surfaces.ink};

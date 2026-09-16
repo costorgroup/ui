@@ -85,10 +85,12 @@ const preview: Preview = {
       storySort: {
         order: [
           'V3',
+          'V3/Surfaces',
+          'V3/Layout',
+          'V3/Feedback',
           'V2',
           'V2/Theme',
           'V2/Surfaces',
-          'V2/Animated',
           'V2/Buttons',
           'V2/Data Display',
           'Typography',

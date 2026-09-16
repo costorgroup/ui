@@ -24,6 +24,13 @@ import FileIcon from './file-icon';
 import SearchIcon from './search-icon';
 import EmojiAddIcon from './emoji-add-icon';
 import QuoteIcon from './quote-icon';
+import ZoomInIcon from './zoom-in-icon';
+import ZoomOutIcon from './zoom-out-icon';
+import RotateLeftIcon from './rotate-left-icon';
+import RotateRightIcon from './rotate-right-icon';
+import MirrorHorizontalIcon from './mirror-horizontal-icon';
+import MirrorVerticalIcon from './mirror-vertical-icon';
+import DownloadIcon from './download-icon';
 import type { TEyeIconProps } from './eye-icon/types';
 import type { TEyeClosedIconProps } from './eye-closed-icon/types';
 import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
@@ -50,6 +57,13 @@ import type { TFileIconProps } from './file-icon/types';
 import type { TSearchIconProps } from './search-icon/types';
 import type { TEmojiAddIconProps } from './emoji-add-icon/types';
 import type { TQuoteIconProps } from './quote-icon/types';
+import type { TZoomInIconProps } from './zoom-in-icon/types';
+import type { TZoomOutIconProps } from './zoom-out-icon/types';
+import type { TRotateLeftIconProps } from './rotate-left-icon/types';
+import type { TRotateRightIconProps } from './rotate-right-icon/types';
+import type { TMirrorHorizontalIconProps } from './mirror-horizontal-icon/types';
+import type { TMirrorVerticalIconProps } from './mirror-vertical-icon/types';
+import type { TDownloadIconProps } from './download-icon/types';
 
 export type {
   TEyeIconProps,
@@ -78,6 +92,13 @@ export type {
   TSearchIconProps,
   TEmojiAddIconProps,
   TQuoteIconProps,
+  TZoomInIconProps,
+  TZoomOutIconProps,
+  TRotateLeftIconProps,
+  TRotateRightIconProps,
+  TMirrorHorizontalIconProps,
+  TMirrorVerticalIconProps,
+  TDownloadIconProps,
 };
 
 export {
@@ -107,4 +128,11 @@ export {
   SearchIcon,
   EmojiAddIcon,
   QuoteIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  RotateLeftIcon,
+  RotateRightIcon,
+  MirrorHorizontalIcon,
+  MirrorVerticalIcon,
+  DownloadIcon,
 };

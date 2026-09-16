@@ -54,7 +54,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       page: pageProp,
       defaultPage = 1,
       onChange,
-      color = 'primary',
+      color = 'default',
       variant = PAGINATION_DEFAULT_VARIANTS,
       size = 'md',
       disabled = false,

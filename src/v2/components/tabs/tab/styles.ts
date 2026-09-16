@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { colorMix } from '../../../surface';
 import { STabProps } from './types';
 
 const customProps = new Set([
@@ -24,12 +23,10 @@ export const STab = styled('button', {
   justify-content: center;
   flex-shrink: 0;
   margin: 0;
-  padding: 4px 14px;
   border: 0;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.sm};
   background: transparent;
   font-family: inherit;
-  font-size: 13px;
   line-height: 1.2;
   letter-spacing: -0.01em;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
@@ -37,14 +34,14 @@ export const STab = styled('button', {
     if (active) {
       return color != null
         ? theme.palette[color].contrastText
-        : theme.palette.default.main;
+        : theme.surfaces.background;
     }
 
     if (variant === 'plain') {
-      return colorMix(theme.palette.default.main, 55);
+      return theme.surfaces.muted;
     }
 
-    return theme.palette.default.main;
+    return theme.surfaces.ink;
   }};
   cursor: ${({ selected, draggable, dragging }) => {
     if (!draggable || !selected) {
@@ -59,6 +56,15 @@ export const STab = styled('button', {
   ${({ orientation, fullWidth }) =>
     orientation === 'vertical' && fullWidth ? 'width: 100%;' : ''}
 
+  ${({ theme }) => {
+    const step = theme.sizes.md;
+
+    return `
+      padding: ${step.padY} ${step.padX};
+      font-size: ${step.fontSize};
+    `;
+  }}
+
   &:disabled {
     opacity: 0.45;
     cursor: not-allowed;
@@ -66,12 +72,8 @@ export const STab = styled('button', {
 
   &:focus-visible {
     outline: 2px solid
-      ${({ appearance, color, theme }) =>
-        color != null
-          ? theme.palette[color].main
-          : appearance === 'transparent'
-            ? theme.palette.default.main
-            : theme.palette.base.main};
+      ${({ color, theme }) =>
+        color != null ? theme.palette[color].main : theme.surfaces.ink};
     outline-offset: 1px;
   }
 `;

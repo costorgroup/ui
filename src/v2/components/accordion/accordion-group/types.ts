@@ -1,10 +1,10 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import { TPaletteColor } from '../../../../theme/types';
-import { TWindowRadius } from '../../window/types';
-import { TAccordionSize } from '../accordion-base/context';
-import { TAccordionVariant } from '../variant-styles';
+import type { TPaletteColor } from '../../../../theme/types';
+import type { TAccordionSize } from '../accordion-base/context';
+import type { TAccordionRadius } from '../types';
+import type { TAccordionVariant } from '../variant-styles';
 
-export type TAccordionGroupRadius = TWindowRadius;
+export type TAccordionGroupRadius = TAccordionRadius;
 
 export type TAccordionGroupProps = Omit<
   HTMLAttributes<HTMLDivElement>,

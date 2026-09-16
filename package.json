@@ -1167,6 +1167,46 @@
       "import": "./dist/v2/components/button-group/index.js",
       "require": "./dist/v2/components/button-group/index.cjs"
     },
+    "./v2/Card": {
+      "types": "./dist/v2/components/card/index.d.ts",
+      "import": "./dist/v2/components/card/index.js",
+      "require": "./dist/v2/components/card/index.cjs"
+    },
+    "./v2/CardAction": {
+      "types": "./dist/v2/components/card/card-action/index.d.ts",
+      "import": "./dist/v2/components/card/card-action/index.js",
+      "require": "./dist/v2/components/card/card-action/index.cjs"
+    },
+    "./v2/CardContent": {
+      "types": "./dist/v2/components/card/card-content/index.d.ts",
+      "import": "./dist/v2/components/card/card-content/index.js",
+      "require": "./dist/v2/components/card/card-content/index.cjs"
+    },
+    "./v2/CardDescription": {
+      "types": "./dist/v2/components/card/card-description/index.d.ts",
+      "import": "./dist/v2/components/card/card-description/index.js",
+      "require": "./dist/v2/components/card/card-description/index.cjs"
+    },
+    "./v2/CardFooter": {
+      "types": "./dist/v2/components/card/card-footer/index.d.ts",
+      "import": "./dist/v2/components/card/card-footer/index.js",
+      "require": "./dist/v2/components/card/card-footer/index.cjs"
+    },
+    "./v2/CardHeader": {
+      "types": "./dist/v2/components/card/card-header/index.d.ts",
+      "import": "./dist/v2/components/card/card-header/index.js",
+      "require": "./dist/v2/components/card/card-header/index.cjs"
+    },
+    "./v2/CardImage": {
+      "types": "./dist/v2/components/card/card-image/index.d.ts",
+      "import": "./dist/v2/components/card/card-image/index.js",
+      "require": "./dist/v2/components/card/card-image/index.cjs"
+    },
+    "./v2/CardTitle": {
+      "types": "./dist/v2/components/card/card-title/index.d.ts",
+      "import": "./dist/v2/components/card/card-title/index.js",
+      "require": "./dist/v2/components/card/card-title/index.cjs"
+    },
     "./v2/CheckBox": {
       "types": "./dist/v2/components/check-box/index.d.ts",
       "import": "./dist/v2/components/check-box/index.js",
@@ -1252,15 +1292,15 @@
       "import": "./dist/v2/components/drawer/drawer-description/index.js",
       "require": "./dist/v2/components/drawer/drawer-description/index.cjs"
     },
-    "./v2/DrawerHead": {
-      "types": "./dist/v2/components/drawer/drawer-head/index.d.ts",
-      "import": "./dist/v2/components/drawer/drawer-head/index.js",
-      "require": "./dist/v2/components/drawer/drawer-head/index.cjs"
+    "./v2/DrawerHeader": {
+      "types": "./dist/v2/components/drawer/drawer-header/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-header/index.js",
+      "require": "./dist/v2/components/drawer/drawer-header/index.cjs"
     },
-    "./v2/DrawerHeadActions": {
-      "types": "./dist/v2/components/drawer/drawer-head-actions/index.d.ts",
-      "import": "./dist/v2/components/drawer/drawer-head-actions/index.js",
-      "require": "./dist/v2/components/drawer/drawer-head-actions/index.cjs"
+    "./v2/DrawerHeaderActions": {
+      "types": "./dist/v2/components/drawer/drawer-header-actions/index.d.ts",
+      "import": "./dist/v2/components/drawer/drawer-header-actions/index.js",
+      "require": "./dist/v2/components/drawer/drawer-header-actions/index.cjs"
     },
     "./v2/DrawerTitle": {
       "types": "./dist/v2/components/drawer/drawer-title/index.d.ts",
@@ -1632,15 +1672,15 @@
       "import": "./dist/v2/components/modal/modal-description/index.js",
       "require": "./dist/v2/components/modal/modal-description/index.cjs"
     },
-    "./v2/ModalHead": {
-      "types": "./dist/v2/components/modal/modal-head/index.d.ts",
-      "import": "./dist/v2/components/modal/modal-head/index.js",
-      "require": "./dist/v2/components/modal/modal-head/index.cjs"
+    "./v2/ModalHeader": {
+      "types": "./dist/v2/components/modal/modal-header/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-header/index.js",
+      "require": "./dist/v2/components/modal/modal-header/index.cjs"
     },
-    "./v2/ModalHeadActions": {
-      "types": "./dist/v2/components/modal/modal-head-actions/index.d.ts",
-      "import": "./dist/v2/components/modal/modal-head-actions/index.js",
-      "require": "./dist/v2/components/modal/modal-head-actions/index.cjs"
+    "./v2/ModalHeaderActions": {
+      "types": "./dist/v2/components/modal/modal-header-actions/index.d.ts",
+      "import": "./dist/v2/components/modal/modal-header-actions/index.js",
+      "require": "./dist/v2/components/modal/modal-header-actions/index.cjs"
     },
     "./v2/ModalTitle": {
       "types": "./dist/v2/components/modal/modal-title/index.d.ts",
@@ -1827,10 +1867,10 @@
       "import": "./dist/v2/components/window/window-content/index.js",
       "require": "./dist/v2/components/window/window-content/index.cjs"
     },
-    "./v2/WindowHead": {
-      "types": "./dist/v2/components/window/window-head/index.d.ts",
-      "import": "./dist/v2/components/window/window-head/index.js",
-      "require": "./dist/v2/components/window/window-head/index.cjs"
+    "./v2/WindowHeader": {
+      "types": "./dist/v2/components/window/window-header/index.d.ts",
+      "import": "./dist/v2/components/window/window-header/index.js",
+      "require": "./dist/v2/components/window/window-header/index.cjs"
     },
     "./Video": {
       "types": "./dist/components/video/index.d.ts",

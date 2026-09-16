@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Flex } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
 import { Accordion, AccordionGroup, Text } from '../../index';
-import type { TAccordionSize } from './types';
+import type { TAccordionRadius, TAccordionSize } from './types';
 import type { TAccordionVariant } from './variant-styles';
 
 const COLORS: TPaletteColor[] = [
@@ -30,11 +30,27 @@ const VARIANTS: TAccordionVariant[] = [
 ];
 
 const SIZES: TAccordionSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TAccordionRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
 
 const meta: Meta<typeof Accordion> = {
-  title: 'V2/Data Display/Accordion',
+  title: 'V3/Data Display/Accordion',
   component: Accordion,
   tags: ['autodocs'],
+  args: {
+    color: 'default',
+    variant: 'subtle',
+    size: 'md',
+    radius: 'md',
+  },
   argTypes: {
     expanded: {
       control: 'boolean',
@@ -60,7 +76,7 @@ const meta: Meta<typeof Accordion> = {
     },
     radius: {
       control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
+      options: RADIUS,
     },
   },
 };
@@ -73,9 +89,6 @@ export const Default: Story = {
   args: {
     summary: 'Summary',
     children: 'Details content goes here.',
-    color: 'primary',
-    variant: 'subtle',
-    size: 'md',
     defaultExpanded: false,
   },
   decorators: [
@@ -95,9 +108,6 @@ export const Expanded: Story = {
         Manage your profile, security preferences, and notification settings.
       </Text>
     ),
-    color: 'primary',
-    variant: 'subtle',
-    size: 'md',
     defaultExpanded: true,
   },
   decorators: [
@@ -110,9 +120,6 @@ export const Expanded: Story = {
 };
 
 export const Variants: Story = {
-  args: {
-    color: 'primary',
-  },
   render: (args) => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       {VARIANTS.map((variant) => (
@@ -122,6 +129,7 @@ export const Variants: Story = {
           variant={variant}
           color={args.color}
           size={args.size}
+          radius={args.radius}
           defaultExpanded
         >
           {variant} variant details use idle chrome fill.
@@ -132,10 +140,6 @@ export const Variants: Story = {
 };
 
 export const Sizes: Story = {
-  args: {
-    color: 'primary',
-    variant: 'subtle',
-  },
   render: (args) => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       {SIZES.map((size) => (
@@ -145,6 +149,7 @@ export const Sizes: Story = {
           size={size}
           color={args.color}
           variant={args.variant}
+          radius={args.radius}
           defaultExpanded
         >
           {size} size accordion details.
@@ -155,11 +160,6 @@ export const Sizes: Story = {
 };
 
 export const Controlled: Story = {
-  args: {
-    color: 'primary',
-    variant: 'subtle',
-    size: 'md',
-  },
   render: function ControlledStory(args) {
     const [expanded, setExpanded] = useState(false);
 
@@ -180,11 +180,6 @@ export const Controlled: Story = {
 };
 
 export const IconPosition: Story = {
-  args: {
-    color: 'primary',
-    variant: 'subtle',
-    size: 'md',
-  },
   render: (args) => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       <Accordion {...args} summary="Icon on the right" defaultExpanded>
@@ -199,10 +194,7 @@ export const IconPosition: Story = {
 
 export const Grouped: Story = {
   args: {
-    color: 'primary',
     variant: 'surface',
-    size: 'md',
-    radius: 'medium',
   },
   render: (args) => (
     <AccordionGroup

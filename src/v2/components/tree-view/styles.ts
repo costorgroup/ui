@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import type { TTheme, TPaletteColor } from '../../../theme/types';
-import { chromeTransparentFill } from '../../surface';
 import { interactiveRowStyles, treeSizeStyles } from './slot-styles';
 import type { TTreeViewSize, TTreeViewVariant } from './types';
 
@@ -19,7 +18,7 @@ export const STreeViewRoot = styled.div`
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
-  color: ${({ theme }) => theme.palette.default.main};
+  color: ${({ theme }) => theme.surfaces.ink};
   font-family: inherit;
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
 `;
@@ -31,7 +30,7 @@ export const STreeViewTree = styled('div', {
   flex-direction: column;
   margin: 0;
   padding: 0;
-  ${({ size }) => treeSizeStyles(size)}
+  ${({ theme, size }) => treeSizeStyles(size, theme)}
 
   svg {
     width: var(--tree-icon-size);
@@ -63,7 +62,7 @@ export const STreeViewBranchIndentGuide = styled.div`
   top: 0;
   bottom: 0;
   width: 1px;
-  background-color: ${({ theme }) => chromeTransparentFill(theme, 16)};
+  background-color: ${({ theme }) => theme.surfaces.divider};
   pointer-events: none;
   inset-inline-start: calc(
     var(--tree-padding-inline) + var(--tree-indentation) * (var(--depth, 1) - 1) +

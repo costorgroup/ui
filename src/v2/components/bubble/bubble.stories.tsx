@@ -37,9 +37,14 @@ const VARIANTS: TBubbleVariant[] = [
 ];
 
 const meta: Meta<typeof Bubble> = {
-  title: 'V2/Data Display/Bubble',
+  title: 'V3/Data Display/Bubble',
   component: Bubble,
   tags: ['autodocs'],
+  args: {
+    color: 'primary',
+    variant: 'solid',
+    align: 'start',
+  },
   decorators: [
     (Story) => (
       <div style={{ width: '100%', maxWidth: 480 }}>

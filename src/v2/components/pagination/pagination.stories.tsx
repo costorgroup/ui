@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Flex, Text } from '../../../index';
+import { Flex, Text, useTheme } from '../../../index';
 import type { TPaletteColor } from '../../../theme/types';
 import { Pagination, PAGINATION_DEFAULT_VARIANTS } from '../../index';
 
@@ -19,9 +19,14 @@ const COLORS: TPaletteColor[] = [
 ];
 
 const meta: Meta<typeof Pagination> = {
-  title: 'V2/Navigation/Pagination',
+  title: 'V3/Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs'],
+  args: {
+    count: 10,
+    color: 'default',
+    size: 'md',
+  },
   argTypes: {
     variant: {
       control: 'select',
@@ -49,13 +54,7 @@ export default meta;
 
 type Story = StoryObj<typeof Pagination>;
 
-export const Basic: Story = {
-  args: {
-    count: 10,
-    color: 'primary',
-    size: 'md',
-  },
-};
+export const Basic: Story = {};
 
 export const Colors: Story = {
   render: () => (
@@ -131,17 +130,21 @@ export const Controlled: Story = {
   },
 };
 
-export const OnDarkSurface: Story = {
-  render: () => (
-    <div
-      style={{
-        padding: 32,
-        borderRadius: 12,
-        background:
-          'linear-gradient(135deg, rgba(0, 18, 61, 0.72) 0%, rgba(0, 14, 46, 0.85) 100%)',
-      }}
-    >
-      <Pagination count={20} defaultPage={8} color="default" variant="solid" />
-    </div>
-  ),
+export const OnSurface: Story = {
+  render: function OnSurfaceStory() {
+    const theme = useTheme();
+
+    return (
+      <div
+        style={{
+          padding: 32,
+          borderRadius: theme.radius.md,
+          background: theme.surfaces.background,
+          border: `1px solid ${theme.surfaces.border}`,
+        }}
+      >
+        <Pagination count={20} defaultPage={8} color="default" variant="solid" />
+      </div>
+    );
+  },
 };

@@ -6,7 +6,7 @@ import { PaginationItem } from './pagination-item';
 import { PaginationList } from './pagination-list';
 
 const meta: Meta<typeof PaginationBase> = {
-  title: 'V2/Navigation/Pagination/Parts',
+  title: 'V3/Navigation/Pagination/Parts',
   component: PaginationBase,
   tags: ['autodocs'],
 };

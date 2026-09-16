@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
-import { accordionSummaryIconColors } from '../variant-styles';
-import { TAccordionSize } from '../accordion-base/context';
+import {
+  accordionSummaryDivider,
+  accordionSummaryIconColors,
+  accordionSummaryIdleColor,
+} from '../variant-styles';
 import { accordionSummaryClasses } from './classes';
 import {
   TSAccordionExpandIconProps,
@@ -17,14 +20,6 @@ const summaryCustomProps = new Set([
   'hasDetails',
 ]);
 
-const sizeFont: Record<TAccordionSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
-
 export const SAccordionSummary = styled('button', {
   shouldForwardProp: (prop) => !summaryCustomProps.has(prop),
 })<TSAccordionSummaryProps>`
@@ -39,12 +34,20 @@ export const SAccordionSummary = styled('button', {
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
   border: none;
+  border-bottom: ${({
+    theme,
+    paletteColor,
+    variant,
+    expanded,
+    hasDetails,
+  }) =>
+    expanded && hasDetails
+      ? accordionSummaryDivider(variant, theme.palette[paletteColor], theme)
+      : '1px solid transparent'};
   background: transparent;
   font: inherit;
   color: ${({ theme, variant, paletteColor }) =>
-    variant === 'solid'
-      ? theme.palette[paletteColor].contrastText
-      : theme.palette.default.main};
+    accordionSummaryIdleColor(variant, theme.palette[paletteColor], theme)};
   text-align: left;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition:
@@ -60,6 +63,7 @@ export const SAccordionSummary = styled('button', {
     const icon = accordionSummaryIconColors(
       variant,
       palette,
+      theme,
       expanded && hasDetails,
     );
 

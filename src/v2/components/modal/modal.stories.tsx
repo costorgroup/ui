@@ -67,7 +67,7 @@ const ModalDemo = ({
         onClose={() => setOpen(false)}
         title={title}
         description="Optional supporting copy under the title."
-        headActions={
+        headerActions={
           <IconButton
             variant="ghost"
             color="default"

@@ -1,9 +1,10 @@
 import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
-import { TPaletteColor } from '../../../theme/types';
-import { TWindowRadius } from '../window/types';
-import { TAccordionExpandIconPosition } from './accordion-summary/types';
-import { TAccordionSize } from './accordion-base/context';
-import { TAccordionVariant } from './variant-styles';
+import { TPaletteColor, TThemeRadius } from '../../../theme/types';
+import type { TAccordionExpandIconPosition } from './accordion-summary/types';
+import type { TAccordionSize } from './accordion-base/context';
+import type { TAccordionVariant } from './variant-styles';
+
+export type TAccordionRadius = keyof TThemeRadius;
 
 export type TAccordionProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -20,7 +21,7 @@ export type TAccordionProps = Omit<
   color?: TPaletteColor;
   variant?: TAccordionVariant;
   size?: TAccordionSize;
-  radius?: TWindowRadius;
+  radius?: TAccordionRadius;
 };
 
 export type { TAccordionSize } from './accordion-base/context';

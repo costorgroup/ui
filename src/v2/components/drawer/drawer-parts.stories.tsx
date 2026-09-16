@@ -6,8 +6,8 @@ import { Backdrop, Button, IconButton, Text } from '../../index';
 import { DrawerActions } from './drawer-actions';
 import { DrawerBase } from './drawer-base';
 import { DrawerBody } from './drawer-body';
-import { DrawerHead } from './drawer-head';
-import { DrawerHeadActions } from './drawer-head-actions';
+import { DrawerHeader } from './drawer-header';
+import { DrawerHeaderActions } from './drawer-header-actions';
 import { DrawerDescription } from './drawer-description';
 import { DrawerTitle } from './drawer-title';
 
@@ -39,12 +39,12 @@ export const AllParts: Story = {
             onClose={() => setOpen(false)}
           >
               <DrawerBase size="md" anchor="left" scrollable>
-                <DrawerHead>
+                <DrawerHeader>
                   <DrawerTitle>Custom drawer</DrawerTitle>
                   <DrawerDescription>
                     Built from Backdrop + DrawerBase parts.
                   </DrawerDescription>
-                  <DrawerHeadActions>
+                  <DrawerHeaderActions>
                     <IconButton
                       variant="ghost"
                       color="default"
@@ -54,8 +54,8 @@ export const AllParts: Story = {
                     >
                       <CloseIcon />
                     </IconButton>
-                  </DrawerHeadActions>
-                </DrawerHead>
+                  </DrawerHeaderActions>
+                </DrawerHeader>
                 <DrawerBody>
                   <Text>Built from Backdrop + DrawerBase parts.</Text>
                 </DrawerBody>

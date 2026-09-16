@@ -22,9 +22,14 @@ const PALETTE_COLORS: TPaletteColor[] = [
 const SIZES: TColorSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta: Meta<typeof Color> = {
-  title: 'V2/Data Display/Color',
+  title: 'V3/Data Display/Color',
   component: Color,
   tags: ['autodocs'],
+  args: {
+    size: 'md',
+    selected: false,
+    disabled: false,
+  },
   argTypes: {
     size: {
       control: 'select',
@@ -47,10 +52,6 @@ export default meta;
 type Story = StoryObj<typeof Color>;
 
 export const Default: Story = {
-  args: {
-    size: 'md',
-    selected: false,
-  },
   render: function DefaultStory(args) {
     const theme = useTheme();
 

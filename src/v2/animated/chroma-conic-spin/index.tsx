@@ -14,7 +14,7 @@ const ChromaConicSpin = forwardRef<HTMLDivElement, TChromaConicSpinProps>(
       colors,
       thickness,
       duration,
-      radius = 'medium',
+      radius = 'md',
       origin,
       maskComposite,
       webkitMaskComposite,

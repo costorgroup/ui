@@ -16,7 +16,7 @@ import {
   Window,
   WindowActions,
   WindowContent,
-  WindowHead,
+  WindowHeader,
 } from '../../index';
 import type { TWindowProps } from './types';
 
@@ -58,7 +58,7 @@ export const SettingsPreview = (props: TWindowProps) => {
 
   return (
     <Window style={{ width: 500 }} {...props}>
-      <WindowHead>
+      <WindowHeader>
         <div
           style={{
             display: 'flex',
@@ -97,7 +97,7 @@ export const SettingsPreview = (props: TWindowProps) => {
             </Accordion>
           </AccordionGroup>
         </div>
-      </WindowHead>
+      </WindowHeader>
       <WindowContent>
         {value === 'general' && (
           <List variant="surface" color="default" size="sm">

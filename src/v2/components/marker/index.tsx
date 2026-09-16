@@ -10,7 +10,7 @@ const Marker = forwardRef(function Marker<C extends ElementType = 'div'>(
     as,
     children,
     variant = 'default',
-    color = 'primary',
+    color = 'default',
     className,
     ...props
   }: TMarkerProps<C>,

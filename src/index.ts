@@ -769,6 +769,13 @@ export {
   SearchIcon,
   EmojiAddIcon,
   QuoteIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  RotateLeftIcon,
+  RotateRightIcon,
+  MirrorHorizontalIcon,
+  MirrorVerticalIcon,
+  DownloadIcon,
 } from "./icons";
 export {
   AmericanExpressLogo,
@@ -818,6 +825,13 @@ export type {
   TSearchIconProps,
   TEmojiAddIconProps,
   TQuoteIconProps,
+  TZoomInIconProps,
+  TZoomOutIconProps,
+  TRotateLeftIconProps,
+  TRotateRightIconProps,
+  TMirrorHorizontalIconProps,
+  TMirrorVerticalIconProps,
+  TDownloadIconProps,
 } from "./icons";
 export {
   getInitials,

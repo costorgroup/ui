@@ -12,12 +12,16 @@ const Dock = forwardRef<HTMLDivElement, TDockProps>(
       orientation = 'horizontal',
       appearance = 'opaque',
       variant = 'surface',
+      size = 'md',
       className,
       ...props
     },
     ref,
   ) => {
-    const contextValue = useMemo(() => ({ orientation }), [orientation]);
+    const contextValue = useMemo(
+      () => ({ orientation, size }),
+      [orientation, size],
+    );
 
     return (
       <DockContext.Provider value={contextValue}>
@@ -26,6 +30,7 @@ const Dock = forwardRef<HTMLDivElement, TDockProps>(
           orientation={orientation}
           appearance={appearance}
           variant={variant}
+          size={size}
           role="toolbar"
           {...props}
           className={mergeClasses(
@@ -52,6 +57,7 @@ export type {
   TDockAppearance,
   TDockOrientation,
   TDockVariant,
+  TDockSize,
 } from './types';
 export type { TDockItemProps } from './dock-item';
 export type { TDockSeparatorProps } from './dock-separator';

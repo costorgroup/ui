@@ -9,7 +9,7 @@ import { BreadcrumbLink } from './breadcrumb-link';
 import { BreadcrumbSeparator } from './breadcrumb-separator';
 
 const meta: Meta<typeof BreadcrumbBase> = {
-  title: 'V2/Data Display/Breadcrumb/Parts',
+  title: 'V3/Data Display/Breadcrumb/Parts',
   component: BreadcrumbBase,
   tags: ['autodocs'],
 };
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof BreadcrumbBase>;
 export const Default: Story = {
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
   render: (args) => (
     <BreadcrumbBase {...args}>

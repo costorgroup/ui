@@ -1,7 +1,7 @@
 import { createContext, SyntheticEvent, useContext } from 'react';
-import { TPaletteColor } from '../../../../theme/types';
-import { TWindowRadius } from '../../window/types';
-import { TAccordionVariant } from '../variant-styles';
+import type { TPaletteColor } from '../../../../theme/types';
+import type { TAccordionRadius } from '../types';
+import type { TAccordionVariant } from '../variant-styles';
 
 export type TAccordionSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -11,7 +11,7 @@ export type TAccordionContextValue = {
   color: TPaletteColor;
   variant: TAccordionVariant;
   size: TAccordionSize;
-  radius: TWindowRadius;
+  radius: TAccordionRadius;
   disabled: boolean;
   grouped: boolean;
   hasDetails: boolean;

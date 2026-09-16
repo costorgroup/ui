@@ -1,8 +1,8 @@
 import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
-import { TPaletteColor } from '../../../../theme/types';
-import { TWindowRadius } from '../../window/types';
-import { TAccordionVariant } from '../variant-styles';
-import { TAccordionSize } from './context';
+import type { TPaletteColor } from '../../../../theme/types';
+import type { TAccordionRadius } from '../types';
+import type { TAccordionVariant } from '../variant-styles';
+import type { TAccordionSize } from './context';
 
 export type TAccordionBaseProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -16,12 +16,12 @@ export type TAccordionBaseProps = Omit<
   color?: TPaletteColor;
   variant?: TAccordionVariant;
   size?: TAccordionSize;
-  radius?: TWindowRadius;
+  radius?: TAccordionRadius;
   hasDetails?: boolean;
 };
 
 export type TSAccordionBaseProps = {
-  radius: TWindowRadius;
+  radius: TAccordionRadius;
   size: TAccordionSize;
   expanded: boolean;
   disabled: boolean;

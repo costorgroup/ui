@@ -1,35 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { Flex } from '../../../index';
+import type { TPaletteColor } from '../../../theme/types';
 import { Button, CreditCard, Text } from '../../index';
 import { detectCreditCardBrand } from './detect';
 
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
 const meta: Meta<typeof CreditCard> = {
-  title: 'V2/Data Display/CreditCard',
+  title: 'V3/Data Display/CreditCard',
   component: CreditCard,
   tags: ['autodocs'],
+  args: {
+    number: '4111111111111111',
+    name: 'Ada Lovelace',
+    expiry: '08/28',
+    cvv: '123',
+    color: 'primary',
+    rotate: false,
+  },
   argTypes: {
     rotate: { control: 'boolean' },
     number: { control: 'text' },
     name: { control: 'text' },
     expiry: { control: 'text' },
     cvv: { control: 'text' },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-        'default',
-        'inverted',
-],
-    },
+    color: { control: 'select', options: COLORS },
   },
 };
 
@@ -105,6 +113,25 @@ export const Brands: Story = {
             name={sample.name}
             expiry="12/30"
             cvv="123"
+          />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex gap="lg" wrap="wrap">
+      {COLORS.map((color) => (
+        <Flex key={color} direction="column" gap="xs" style={{ width: 280 }}>
+          <Text size="sm">{color}</Text>
+          <CreditCard
+            color={color}
+            name="Ada Lovelace"
+            expiry="08/28"
+            cvv="123"
+            style={{ maxWidth: 'none' }}
           />
         </Flex>
       ))}

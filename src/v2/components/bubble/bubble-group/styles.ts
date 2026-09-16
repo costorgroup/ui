@@ -4,7 +4,7 @@ import { bubbleContentClasses } from '../bubble-content/classes';
 export const SBubbleGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
   width: 100%;
   min-width: 0;
 
@@ -14,21 +14,21 @@ export const SBubbleGroup = styled.div`
 
   & > [data-bubble][data-align='start']:not(:last-child)
     .${bubbleContentClasses.root} {
-    border-bottom-left-radius: ${({ theme }) => theme.radius.small};
+    border-bottom-left-radius: ${({ theme }) => theme.radius.sm};
   }
 
   & > [data-bubble][data-align='start']:not(:first-child)
     .${bubbleContentClasses.root} {
-    border-top-left-radius: ${({ theme }) => theme.radius.small};
+    border-top-left-radius: ${({ theme }) => theme.radius.sm};
   }
 
   & > [data-bubble][data-align='end']:not(:last-child)
     .${bubbleContentClasses.root} {
-    border-bottom-right-radius: ${({ theme }) => theme.radius.small};
+    border-bottom-right-radius: ${({ theme }) => theme.radius.sm};
   }
 
   & > [data-bubble][data-align='end']:not(:first-child)
     .${bubbleContentClasses.root} {
-    border-top-right-radius: ${({ theme }) => theme.radius.small};
+    border-top-right-radius: ${({ theme }) => theme.radius.sm};
   }
 `;

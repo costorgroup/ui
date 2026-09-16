@@ -11,7 +11,7 @@ import {
 } from '../../index';
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'V2/Data Display/Breadcrumb',
+  title: 'V3/Data Display/Breadcrumb',
   component: Breadcrumb,
   tags: ['autodocs'],
   argTypes: {
@@ -33,7 +33,7 @@ const meta: Meta<typeof Breadcrumb> = {
         'light',
         'default',
         'inverted',
-],
+      ],
     },
   },
 };
@@ -62,7 +62,7 @@ export const Default: Story = {
   ),
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
 };
 

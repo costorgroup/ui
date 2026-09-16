@@ -25,9 +25,18 @@ const VARIANTS = [
 ] as const;
 
 const meta: Meta<typeof LinearProgress> = {
-  title: 'V2/Feedbacks/LinearProgress',
+  title: 'V3/Feedback/LinearProgress',
   component: LinearProgress,
   tags: ['autodocs'],
+  args: {
+    width: '100%',
+    height: 8,
+    color: 'default',
+    variant: 'solid',
+    value: 45,
+    max: 100,
+    animated: false,
+  },
   argTypes: {
     width: {
       control: 'text',
@@ -60,15 +69,6 @@ export default meta;
 type Story = StoryObj<typeof LinearProgress>;
 
 export const Default: Story = {
-  args: {
-    width: '100%',
-    height: 8,
-    color: 'primary',
-    variant: 'solid',
-    value: 45,
-    max: 100,
-    animated: false,
-  },
   decorators: [
     (Story) => (
       <div style={{ width: 320 }}>
@@ -121,7 +121,7 @@ export const Animated: Story = {
   args: {
     width: '100%',
     height: 8,
-    color: 'primary',
+    color: 'default',
     variant: 'solid',
     value: 45,
     max: 100,

@@ -86,17 +86,21 @@ const TreeBody = () => (
 );
 
 const COLORS: TPaletteColor[] = [
+  'base',
   'primary',
   'secondary',
   'success',
   'error',
   'warning',
   'info',
+  'dark',
+  'light',
   'default',
+  'inverted',
 ];
 
 const meta: Meta<typeof TreeView.Root> = {
-  title: 'V2/Data Display/TreeView',
+  title: 'V3/Data Display/TreeView',
   component: TreeView.Root,
   tags: ['autodocs'],
   argTypes: {
@@ -127,7 +131,7 @@ export const Default: Story = {
   args: {
     size: 'md',
     variant: 'subtle',
-    color: 'primary',
+    color: 'default',
   },
   render: function DefaultStory(args) {
     const collection = useMemo(() => createDemoCollection(), []);

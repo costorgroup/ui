@@ -17,7 +17,7 @@ export const SThemePreview = styled('div', {
   height: 4.375rem;
   overflow: hidden;
   flex-shrink: 0;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  border-radius: ${({ theme }) => theme.radius.md};
   border: 1px solid
     color-mix(
       in oklab,

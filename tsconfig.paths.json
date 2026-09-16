@@ -689,6 +689,30 @@
       "@costor/ui/v2/ButtonGroup": [
         "./src/v2/components/button-group/index.tsx"
       ],
+      "@costor/ui/v2/Card": [
+        "./src/v2/components/card/index.tsx"
+      ],
+      "@costor/ui/v2/CardAction": [
+        "./src/v2/components/card/card-action/index.tsx"
+      ],
+      "@costor/ui/v2/CardContent": [
+        "./src/v2/components/card/card-content/index.tsx"
+      ],
+      "@costor/ui/v2/CardDescription": [
+        "./src/v2/components/card/card-description/index.tsx"
+      ],
+      "@costor/ui/v2/CardFooter": [
+        "./src/v2/components/card/card-footer/index.tsx"
+      ],
+      "@costor/ui/v2/CardHeader": [
+        "./src/v2/components/card/card-header/index.tsx"
+      ],
+      "@costor/ui/v2/CardImage": [
+        "./src/v2/components/card/card-image/index.tsx"
+      ],
+      "@costor/ui/v2/CardTitle": [
+        "./src/v2/components/card/card-title/index.tsx"
+      ],
       "@costor/ui/v2/CheckBox": [
         "./src/v2/components/check-box/index.tsx"
       ],
@@ -740,11 +764,11 @@
       "@costor/ui/v2/DrawerDescription": [
         "./src/v2/components/drawer/drawer-description/index.tsx"
       ],
-      "@costor/ui/v2/DrawerHead": [
-        "./src/v2/components/drawer/drawer-head/index.tsx"
+      "@costor/ui/v2/DrawerHeader": [
+        "./src/v2/components/drawer/drawer-header/index.tsx"
       ],
-      "@costor/ui/v2/DrawerHeadActions": [
-        "./src/v2/components/drawer/drawer-head-actions/index.tsx"
+      "@costor/ui/v2/DrawerHeaderActions": [
+        "./src/v2/components/drawer/drawer-header-actions/index.tsx"
       ],
       "@costor/ui/v2/DrawerTitle": [
         "./src/v2/components/drawer/drawer-title/index.tsx"
@@ -968,11 +992,11 @@
       "@costor/ui/v2/ModalDescription": [
         "./src/v2/components/modal/modal-description/index.tsx"
       ],
-      "@costor/ui/v2/ModalHead": [
-        "./src/v2/components/modal/modal-head/index.tsx"
+      "@costor/ui/v2/ModalHeader": [
+        "./src/v2/components/modal/modal-header/index.tsx"
       ],
-      "@costor/ui/v2/ModalHeadActions": [
-        "./src/v2/components/modal/modal-head-actions/index.tsx"
+      "@costor/ui/v2/ModalHeaderActions": [
+        "./src/v2/components/modal/modal-header-actions/index.tsx"
       ],
       "@costor/ui/v2/ModalTitle": [
         "./src/v2/components/modal/modal-title/index.tsx"
@@ -1085,8 +1109,8 @@
       "@costor/ui/v2/WindowContent": [
         "./src/v2/components/window/window-content/index.tsx"
       ],
-      "@costor/ui/v2/WindowHead": [
-        "./src/v2/components/window/window-head/index.tsx"
+      "@costor/ui/v2/WindowHeader": [
+        "./src/v2/components/window/window-header/index.tsx"
       ],
       "@costor/ui/Video": [
         "./src/components/video/index.tsx"

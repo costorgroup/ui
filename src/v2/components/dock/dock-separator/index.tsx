@@ -9,11 +9,13 @@ const DockSeparator = forwardRef<HTMLSpanElement, TDockSeparatorProps>(
   ({ className, ...props }, ref) => {
     const dock = useDockContext();
     const orientation = dock?.orientation ?? 'horizontal';
+    const size = dock?.size ?? 'md';
 
     return (
       <SDockSeparator
         ref={ref}
         orientation={orientation}
+        size={size}
         role="separator"
         aria-orientation={
           orientation === 'vertical' ? 'horizontal' : 'vertical'

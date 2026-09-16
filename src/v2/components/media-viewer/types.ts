@@ -31,15 +31,21 @@ export type TMediaViewerProps = Omit<
   videoProps?: Omit<VideoHTMLAttributes<HTMLVideoElement>, 'src'>;
 };
 
-export type TSMediaViewerNavProps = {
-  side: 'start' | 'end';
-};
-
 export type TSMediaViewerThumbProps = {
   selected: boolean;
 };
 
 export type TSMediaViewerTrackProps = {
   offset: number;
+  ready: boolean;
+};
+
+export type TSMediaViewerPanProps = {
+  canPan: boolean;
+  grabbing: boolean;
+  animated: boolean;
+};
+
+export type TSMediaViewerFitProps = {
   ready: boolean;
 };

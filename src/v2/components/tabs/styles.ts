@@ -1,24 +1,21 @@
 import styled from '@emotion/styled';
-import { CHROME_FILL, CHROME_IDLE } from '../../idle-variant-styles';
+import type { TTheme } from '../../../theme/types';
+import { CHROME_FILL } from '../../idle-variant-styles';
 import { colorMix, colorMixBase } from '../../surface';
 import { STTabIndicatorProps, STTabsFadeProps, STTabsProps } from './types';
 
-const fadeColor = ({
-  appearance,
-  theme,
-  variant,
-}: Pick<STTabsFadeProps, 'appearance' | 'variant'> & {
-  theme: { palette: { base: { main: string; contrastText: string } } };
-}) => {
+const trackFill = (
+  theme: TTheme,
+  appearance: STTabsProps['appearance'],
+  variant: STTabsProps['variant'],
+) => {
   if (variant === 'plain') {
-    return theme.palette.base.main;
+    return 'transparent';
   }
 
-  return colorMixBase(
-    theme.palette.base.contrastText,
-    CHROME_FILL,
-    appearance === 'transparent' ? 'transparent' : theme.palette.base.main,
-  );
+  return appearance === 'transparent'
+    ? colorMix(theme.surfaces.mixer, CHROME_FILL)
+    : colorMixBase(theme.surfaces.mixer, CHROME_FILL, theme.surfaces.background);
 };
 
 const tabsCustomProps = new Set([
@@ -52,23 +49,12 @@ export const STabs = styled('div', {
   overflow: hidden;
   padding: ${({ variant }) => (variant === 'plain' ? 0 : '3px')};
   border-radius: ${({ theme, variant }) =>
-    variant === 'plain' ? 0 : theme.radius.medium};
+    variant === 'plain' ? 0 : theme.radius.md};
   border: 1px solid
     ${({ theme, variant }) =>
-      variant === 'surface'
-        ? colorMix(theme.palette.base.contrastText, CHROME_IDLE)
-        : 'transparent'};
-  background-color: ${({ theme, appearance, variant }) => {
-    if (variant === 'plain') {
-      return 'transparent';
-    }
-
-    return colorMixBase(
-      theme.palette.base.contrastText,
-      CHROME_FILL,
-      appearance === 'transparent' ? 'transparent' : theme.palette.base.main,
-    );
-  }};
+      variant === 'surface' ? theme.surfaces.border : 'transparent'};
+  background-color: ${({ theme, appearance, variant }) =>
+    trackFill(theme, appearance, variant)};
   flex-direction: ${({ orientation }) =>
     orientation === 'vertical' ? 'column' : 'row'};
   align-items: stretch;
@@ -115,29 +101,29 @@ export const STabIndicator = styled('span', {
   display: block;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.sm};
   background-color: ${({ theme, appearance, color }) => {
     if (color != null) {
       return theme.palette[color].main;
     }
 
     return appearance === 'transparent'
-      ? `color-mix(in oklab, ${theme.palette.default.main} 80%, transparent)`
-      : theme.palette.default.main;
+      ? colorMix(theme.surfaces.ink, 80)
+      : theme.surfaces.ink;
   }};
   box-shadow: ${({ theme, appearance, color }) => {
     if (color != null) {
-      return `0 0 0 0.5px color-mix(in oklab, ${theme.palette[color].main} 24%, transparent),
-         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 14%, transparent)`;
+      return `0 0 0 0.5px ${colorMix(theme.palette[color].main, 24)},
+         0 1px 3px ${colorMix(theme.palette.common.black, 14)}`;
     }
 
     return appearance === 'transparent'
-      ? `0 0 0 0.5px color-mix(in oklab, ${theme.palette.default.main} 24%, transparent),
-         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 14%, transparent)`
-      : `0 0 0 0.5px color-mix(in oklab, ${theme.palette.common.black} 8%, transparent),
-         0 0.5px 1px color-mix(in oklab, ${theme.palette.common.black} 6%, transparent),
-         0 1px 3px color-mix(in oklab, ${theme.palette.common.black} 10%, transparent),
-         0 2px 6px color-mix(in oklab, ${theme.palette.common.black} 6%, transparent)`;
+      ? `0 0 0 0.5px ${colorMix(theme.surfaces.ink, 24)},
+         0 1px 3px ${colorMix(theme.palette.common.black, 14)}`
+      : `0 0 0 0.5px ${colorMix(theme.palette.common.black, 8)},
+         0 0.5px 1px ${colorMix(theme.palette.common.black, 6)},
+         0 1px 3px ${colorMix(theme.palette.common.black, 10)},
+         0 2px 6px ${colorMix(theme.palette.common.black, 6)}`;
   }};
   transform: translate(-50%, -50%);
   transition: ${({ ready, dragging }) =>
@@ -189,8 +175,10 @@ export const STabFade = styled('span', {
         : side === 'start'
           ? 'to right'
           : 'to left'},
-    ${({ appearance, theme, variant }) => fadeColor({ appearance, theme, variant })} 0%,
-    ${({ appearance, theme, variant }) => fadeColor({ appearance, theme, variant })} 18%,
+    ${({ appearance, theme, variant }) =>
+        trackFill(theme, appearance, variant)} 0%,
+    ${({ appearance, theme, variant }) =>
+        trackFill(theme, appearance, variant)} 18%,
     transparent 100%
   );
 `;

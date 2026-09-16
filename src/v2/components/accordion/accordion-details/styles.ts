@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 import {
+  accordionDetailsBackground,
+  accordionDetailsColor,
+} from '../variant-styles';
+import {
   TSAccordionDetailsInnerProps,
   TSAccordionDetailsProps,
 } from './types';
@@ -29,6 +33,8 @@ export const SAccordionDetailsInner = styled('div', {
   shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
 })<TSAccordionDetailsInnerProps>`
   padding: ${({ theme, size }) => theme.sizes[size].padX};
-  background-color: transparent;
-  color: inherit;
+  background-color: ${({ theme, variant, color }) =>
+    accordionDetailsBackground(variant, theme.palette[color])};
+  color: ${({ theme, variant, color }) =>
+    accordionDetailsColor(variant, theme.palette[color], theme)};
 `;

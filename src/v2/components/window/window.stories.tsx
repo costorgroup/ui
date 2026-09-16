@@ -7,7 +7,7 @@ import {
   Window,
   WindowActions,
   WindowContent,
-  WindowHead,
+  WindowHeader,
 } from "../../index";
 import { ChromaConicSpin } from "../../animated";
 import { BlurBackdrop, SettingsPreview } from "./settings-preview";
@@ -78,9 +78,9 @@ export const Default: Story = {
 
     return (
       <Window {...args} style={{ width: 360 }}>
-        <WindowHead onClose={() => setOpen(false)}>
+        <WindowHeader onClose={() => setOpen(false)}>
           <Heading as="h3">Workspace kit</Heading>
-        </WindowHead>
+        </WindowHeader>
         <WindowContent>
           Frosted window shell with a white content panel and right-aligned
           actions.
@@ -113,9 +113,9 @@ export const WithChromaBorder: Story = {
         style={{ width: 380 }}
       >
         <Window {...args}>
-          <WindowHead>
+          <WindowHeader>
             <Heading as="h3">Animated window</Heading>
-          </WindowHead>
+          </WindowHeader>
           <WindowContent>
             Info and transparent segments in the spinning chroma border.
           </WindowContent>
@@ -136,9 +136,9 @@ export const WithChromaBorder: Story = {
 export const WithHead: Story = {
   render: (args) => (
     <Window {...args} style={{ width: 340 }}>
-      <WindowHead>
+      <WindowHeader>
         <Heading as="h3">Notifications</Heading>
-      </WindowHead>
+      </WindowHeader>
       <WindowContent>
         White content area inside the frosted window.
       </WindowContent>
@@ -160,9 +160,9 @@ export const Solid: Story = {
   },
   render: (args) => (
     <Window {...args} style={{ width: 340 }}>
-      <WindowHead>
+      <WindowHeader>
         <Heading as="h3">Solid window</Heading>
-      </WindowHead>
+      </WindowHeader>
       <WindowContent>
         Flat surface fill without gradient or backdrop blur.
       </WindowContent>

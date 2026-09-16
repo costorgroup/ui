@@ -4,7 +4,7 @@ import type { TTreeViewAppearance } from './types';
 export const defaultTreeViewAppearance: TTreeViewAppearance = {
   size: 'md',
   variant: 'subtle',
-  color: 'primary',
+  color: 'default',
 };
 
 export const TreeViewAppearanceContext = createContext<TTreeViewAppearance>(

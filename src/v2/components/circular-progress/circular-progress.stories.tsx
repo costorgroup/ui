@@ -25,9 +25,16 @@ const VARIANTS = [
 ] as const;
 
 const meta: Meta<typeof CircularProgress> = {
-  title: 'V2/Feedbacks/CircularProgress',
+  title: 'V3/Feedback/CircularProgress',
   component: CircularProgress,
   tags: ['autodocs'],
+  args: {
+    width: 24,
+    height: 24,
+    color: 'default',
+    variant: 'solid',
+    thickness: 2,
+  },
   argTypes: {
     width: {
       control: 'text',
@@ -53,15 +60,7 @@ export default meta;
 
 type Story = StoryObj<typeof CircularProgress>;
 
-export const Default: Story = {
-  args: {
-    width: 24,
-    height: 24,
-    color: 'primary',
-    variant: 'solid',
-    thickness: 2,
-  },
-};
+export const Default: Story = {};
 
 export const Variants: Story = {
   render: () => (

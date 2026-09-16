@@ -15,7 +15,7 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
       selected = false,
       variant = PAGINATION_DEFAULT_VARIANTS,
       size = 'md',
-      color = 'primary',
+      color = 'default',
       disabled = false,
       className,
       ...props

@@ -11,7 +11,7 @@ import { TListItemProps } from './types';
 const ListItem = forwardRef<HTMLDivElement, TListItemProps>(
   ({ children, className, ...props }, ref) => {
     const list = useListContext();
-    const color: TPaletteColor = list?.color ?? 'primary';
+    const color: TPaletteColor = list?.color ?? 'default';
     const variant: TListVariant = list?.variant ?? 'subtle';
     const size: TListSize = list?.size ?? 'md';
 

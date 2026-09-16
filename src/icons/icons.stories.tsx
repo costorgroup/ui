@@ -27,6 +27,13 @@ import {
   SearchIcon,
   EmojiAddIcon,
   QuoteIcon,
+  ZoomInIcon,
+  ZoomOutIcon,
+  RotateLeftIcon,
+  RotateRightIcon,
+  MirrorHorizontalIcon,
+  MirrorVerticalIcon,
+  DownloadIcon,
 } from './index';
 
 const icons = [
@@ -56,6 +63,13 @@ const icons = [
   { name: 'SearchIcon', Icon: SearchIcon },
   { name: 'EmojiAddIcon', Icon: EmojiAddIcon },
   { name: 'QuoteIcon', Icon: QuoteIcon },
+  { name: 'ZoomInIcon', Icon: ZoomInIcon },
+  { name: 'ZoomOutIcon', Icon: ZoomOutIcon },
+  { name: 'RotateLeftIcon', Icon: RotateLeftIcon },
+  { name: 'RotateRightIcon', Icon: RotateRightIcon },
+  { name: 'MirrorHorizontalIcon', Icon: MirrorHorizontalIcon },
+  { name: 'MirrorVerticalIcon', Icon: MirrorVerticalIcon },
+  { name: 'DownloadIcon', Icon: DownloadIcon },
 ] as const;
 
 const meta: Meta = {

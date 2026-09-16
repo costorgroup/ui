@@ -10,7 +10,7 @@ export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'colo
   defaultValue?: string;
   onChange?: (value: string) => void;
   orientation?: TTabsOrientation;
-  /** `opaque` mixes onto `base.main`; `transparent` mixes onto air. */
+  /** `opaque` mixes onto `surfaces.background`; `transparent` mixes onto air. */
   appearance?: TTabsAppearance;
   /** `subtle` is fill only; `surface` adds a border; `plain` has no track. Active tab is solid in all. */
   variant?: TTabsVariant;
