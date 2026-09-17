@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { fileFieldClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
+import { FormControl } from '../form-control';
 import { InputFileField } from '../input/input-file-field';
-import { InputHelperText } from '../input/input-helper-text';
-import { InputLabel } from '../input/input-label';
-import { Text } from '../text';
 import { TFileFieldProps } from './types';
 
 const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
@@ -19,57 +15,48 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
+      variant = 'surface',
       color = 'primary',
       id,
       className,
+      disabled,
+      value,
+      defaultValue,
       ...props
     },
     ref,
   ) => {
-    const tone = error ? 'error' : color;
-
     return (
-      <InputFieldLayout
+      <FormControl
+        ref={ref}
+        label={label}
+        description={description}
+        helperText={helperText}
+        required={required}
+        error={error}
         fullWidth={fullWidth}
-        label={
-          label != null ? (
-            <InputLabel htmlFor={id} required={required} size={size}>
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="base">
-              {description}
-            </Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} color={tone}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
-      >
-        <InputFileField
-          ref={ref}
-          id={id}
-          size={size}
-          variant={variant}
-          color={tone}
-          aria-invalid={error || undefined}
-          {...props}
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        id={id}
+        value={value}
+        defaultValue={defaultValue}
         className={mergeClasses(
           fileFieldClasses.root,
+          disabled && fileFieldClasses.disabled,
           error && fileFieldClasses.error,
           required && fileFieldClasses.required,
           className,
         )}
+      >
+        <InputFileField
+          disabled={disabled}
+          value={value}
+          defaultValue={defaultValue}
+          {...props}
         />
-      </InputFieldLayout>
+      </FormControl>
     );
   },
 );

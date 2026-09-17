@@ -1,8 +1,7 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonVariant } from '../button/types';
-
-export type TButtonGroupOrientation = 'horizontal' | 'vertical';
+import { TButtonAppearance, TButtonSize, TButtonVariant } from '../button/types';
+import { TButtonGroupOrientation } from './context';
 
 export type TButtonGroupProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -12,5 +11,15 @@ export type TButtonGroupProps = Omit<
   orientation?: TButtonGroupOrientation;
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  appearance?: TButtonAppearance;
+  size?: TButtonSize;
   disabled?: boolean;
+  rounded?: boolean;
+};
+
+export type TSButtonGroupProps = {
+  orientation: TButtonGroupOrientation;
+  variant?: TButtonVariant;
+  color: TPaletteColor;
+  rounded?: boolean;
 };

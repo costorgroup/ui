@@ -1,5 +1,10 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
+import {
+  OverlayMotionContext,
+  overlayState,
+  usePresence,
+} from '../../motion';
 import { backdropClasses } from './classes';
 import { SBackdrop } from './styles';
 import { TBackdropProps } from './types';
@@ -14,6 +19,7 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
       padding = false,
       layer = 'modal',
       lockScroll = false,
+      open = true,
       onClose,
       onMouseDown,
       onClick,
@@ -23,9 +29,10 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
     ref,
   ) => {
     const backdropClick = useRef(false);
+    const { present, visible } = usePresence(open);
 
     useEffect(() => {
-      if (!lockScroll && !onClose) {
+      if (!present || (!lockScroll && !onClose)) {
         return;
       }
 
@@ -41,7 +48,7 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
         }
       };
 
-      if (onClose) {
+      if (open && onClose) {
         document.addEventListener('keydown', handleKeyDown);
       }
 
@@ -50,47 +57,49 @@ const Backdrop = forwardRef<HTMLDivElement, TBackdropProps>(
           document.body.style.overflow = previousOverflow;
         }
 
-        if (onClose) {
+        if (open && onClose) {
           document.removeEventListener('keydown', handleKeyDown);
         }
       };
-    }, [lockScroll, onClose]);
+    }, [present, open, lockScroll, onClose]);
 
     return (
-      <SBackdrop
-        ref={ref}
-        role="presentation"
-        scrollable={scrollable}
-        align={align}
-        justify={justify}
-        padding={padding}
-        layer={layer}
-        onMouseDown={(event) => {
-          backdropClick.current = event.target === event.currentTarget;
-          onMouseDown?.(event);
-        }}
-        onClick={(event) => {
-          onClick?.(event);
+      <OverlayMotionContext.Provider value={visible}>
+        <SBackdrop
+          ref={ref}
+          role="presentation"
+          scrollable={scrollable}
+          align={align}
+          justify={justify}
+          padding={padding}
+          layer={layer}
+          hidden={!present}
+          aria-hidden={!present}
+          onMouseDown={(event) => {
+            backdropClick.current = event.target === event.currentTarget;
+            onMouseDown?.(event);
+          }}
+          onClick={(event) => {
+            onClick?.(event);
 
-          if (event.defaultPrevented) {
-            return;
-          }
+            if (event.defaultPrevented || !open) {
+              return;
+            }
 
-          if (!backdropClick.current) {
-            return;
-          }
+            if (!backdropClick.current) {
+              return;
+            }
 
-          backdropClick.current = false;
-          onClose?.();
-        }}
-        {...props}
-        className={mergeClasses(
-          backdropClasses.root,
-          className,
-        )}
-      >
-        {children}
-      </SBackdrop>
+            backdropClick.current = false;
+            onClose?.();
+          }}
+          {...props}
+          {...overlayState(visible)}
+          className={mergeClasses(backdropClasses.root, className)}
+        >
+          {children}
+        </SBackdrop>
+      </OverlayMotionContext.Provider>
     );
   },
 );

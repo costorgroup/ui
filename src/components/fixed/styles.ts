@@ -4,7 +4,7 @@ import { TFixedInset, TFixedOwnProps } from './types';
 
 type TSFixedProps = Pick<TFixedOwnProps, 'top' | 'right' | 'bottom' | 'left'>;
 
-const customProps = new Set(['top', 'right', 'bottom', 'left']);
+const customProps = new Set(['top', 'right', 'bottom', 'left', 'as']);
 
 const toInset = (theme: TTheme, value?: TFixedInset) => {
   if (value === undefined) {

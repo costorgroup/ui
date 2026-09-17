@@ -6,8 +6,7 @@ import React, {
   useState,
 } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import StarBorderIcon from '../../icons/star-border-icon';
-import StarIcon from '../../icons/star-icon';
+import { StarBorderIcon, StarIcon } from '../../icons';
 import { ratingClasses } from './classes';
 import { SRating } from './styles';
 import { TRatingProps } from './types';

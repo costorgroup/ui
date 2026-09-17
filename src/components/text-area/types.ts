@@ -16,4 +16,5 @@ export type TTextAreaProps = Omit<
   variant?: TInputVariant;
   color?: TPaletteColor;
   autoGrow?: boolean;
+  actionBar?: ReactNode;
 };

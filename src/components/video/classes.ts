@@ -1,13 +1,13 @@
 import { generateUtilityClasses } from '../../helpers/generate-utility-classes';
 
-export const videoClasses = generateUtilityClasses('Video', [
+export const videoClasses = generateUtilityClasses('V2Video', [
   'root',
   'media',
   'overlay',
   'controls',
+  'dock',
   'progress',
   'played',
-  'bar',
   'time',
   'volume',
   'volumeTrack',

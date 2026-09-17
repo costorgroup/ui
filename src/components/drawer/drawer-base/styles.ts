@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { Card } from '../../card';
+import { overlaySlide } from '../../../motion';
+import { Panel } from '../../panel';
 import { TDrawerAnchor, TDrawerSize, TSDrawerBaseProps } from './types';
 
 const sizeMap: Record<TDrawerSize, string> = {
@@ -15,51 +16,45 @@ const customProps = new Set(['size', 'scrollable', 'anchor']);
 const isHorizontal = (anchor: TDrawerAnchor) =>
   anchor === 'left' || anchor === 'right';
 
-export const SDrawerBase = styled(Card, {
+export const SDrawerBase = styled(Panel, {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSDrawerBaseProps>`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border-radius: ${({ theme, anchor }) => {
-    const radius = theme.radius.large;
+  padding: ${({ theme }) => theme.spacing(theme.gap.md)};
+  border-radius: ${({ theme }) => theme.radius.lg};
+  margin: ${({ theme }) => theme.spacing(theme.gap.sm)};
+  ${({ anchor }) => overlaySlide(anchor)}
 
-    switch (anchor) {
-      case 'left':
-        return `0 ${radius} ${radius} 0`;
-      case 'right':
-        return `${radius} 0 0 ${radius}`;
-      case 'top':
-        return `0 0 ${radius} ${radius}`;
-      case 'bottom':
-        return `${radius} ${radius} 0 0`;
-    }
-  }};
+  ${({ theme, anchor, size, scrollable }) => {
+    const inset = theme.spacing(theme.gap.sm);
 
-  ${({ anchor, size, scrollable }) =>
-    isHorizontal(anchor)
+    return isHorizontal(anchor)
       ? `
     width: 100%;
-    max-width: min(${sizeMap[size]}, 100%);
+    max-width: min(${sizeMap[size]}, calc(100% - ${inset} * 2));
     ${
       scrollable
         ? `
-      height: 100%;
-      max-height: 100%;
+      align-self: stretch;
+      min-height: 0;
+      height: auto;
       overflow: hidden;
     `
         : `
-      min-height: 100%;
+      min-height: calc(100% - ${inset} * 2);
       height: auto;
       overflow: visible;
     `
     }
   `
       : `
-    width: 100%;
-    max-width: 100%;
-    height: min(${sizeMap[size]}, 100%);
-    max-height: ${scrollable ? '100%' : 'none'};
-    overflow: hidden;
-  `}
+    width: calc(100% - ${inset} * 2);
+    max-width: none;
+    height: min(${sizeMap[size]}, calc(100% - ${inset} * 2));
+    max-height: calc(100% - ${inset} * 2);
+    overflow: ${scrollable ? 'hidden' : 'visible'};
+  `;
+  }}
 `;

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import { inputInnerResetStyles } from '../variant-styles';
 import { TInputSize } from '../input-wrapper/types';
-import { TSInputFileFieldTriggerProps } from './types';
 
-const triggerProps = new Set(['variant', 'size', 'color', 'open']);
+const triggerProps = new Set(['size']);
 
 const sizeFont: Record<TInputSize, string> = {
   xs: '12px',
@@ -21,24 +21,21 @@ export const SInputFileField = styled.div`
 
 export const SInputFileFieldTrigger = styled('button', {
   shouldForwardProp: (prop) => !triggerProps.has(prop),
-})<TSInputFileFieldTriggerProps>`
+})<{ size: TInputSize }>`
+  ${inputInnerResetStyles}
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
   margin: 0;
-  border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  padding: 0;
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   text-align: left;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  cursor: inherit;
+  color: inherit;
 
   ${({ theme, size }) => {
     const scale = theme.sizeScale[size];
@@ -50,61 +47,11 @@ export const SInputFileFieldTrigger = styled('button', {
     `;
   }}
 
-  ${({ theme, variant, color }) => {
-    const palette = theme.palette[color];
-
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          color: ${palette.darker};
-          border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 20%, transparent);
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 28%, transparent);
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 52%, transparent);
-            color: ${palette.dark};
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 68%, transparent);
-            color: ${palette.darker};
-          }
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-          }
-        `;
-    }
-  }}
+  && {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
 `;
 
 export const SInputFileFieldValue = styled.span`
@@ -122,13 +69,7 @@ export const SInputFileFieldText = styled.span`
 `;
 
 export const SInputFileFieldPlaceholder = styled.span`
-  opacity: 0.5;
-`;
-
-export const SInputFileFieldActions = styled.span`
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
+  color: ${({ theme }) => theme.surfaces.muted};
 `;
 
 export const SInputFileFieldHiddenInput = styled.input`

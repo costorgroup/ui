@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colorMixBase } from '../../../helpers/variant-styles/surface';
 import { TSMenuItemProps } from './types';
 
 const customProps = new Set(['color', 'hasSubmenu']);
@@ -9,42 +10,49 @@ export const SMenuItem = styled('button', {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
   margin: 0;
-  padding: ${({ theme }) =>
-    `${theme.spacing(theme.gap.sm)} ${theme.spacing(theme.gap.md)}`};
   border: none;
-  border-radius: ${({ theme }) => theme.radius.medium};
   background: transparent;
-  color: ${({ theme, color }) => theme.palette[color].main};
-  font: inherit;
-  font-size: 14px;
+  font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: ${({ theme }) => theme.typography.lineHeight.text};
+  line-height: 1.3;
   text-align: left;
   cursor: pointer;
   transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+    background-color 0.12s ease,
+    color 0.12s ease;
 
-  &:hover:not(:disabled),
-  &:focus-visible {
-    background-color: ${({ theme, color }) =>
-      `color-mix(in oklab, ${theme.palette[color].main} 10%, transparent)`};
-    color: ${({ theme, color }) => theme.palette[color].dark};
-    outline: none;
-  }
+  ${({ theme, color }) => {
+    const step = theme.sizes.sm;
+    const palette = theme.palette[color];
+    const hover = colorMixBase(palette.main, 12, theme.surfaces.background);
+
+    return `
+      gap: ${step.gap};
+      padding: ${step.padY} ${step.padX};
+      border-radius: ${theme.radius.sm};
+      font-size: ${step.fontSize};
+      color: ${palette.main};
+
+      &:hover:not(:disabled),
+      &:focus-visible {
+        background-color: ${hover};
+        color: ${palette.dark};
+        outline: none;
+      }
+    `;
+  }}
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 
   svg {
     flex-shrink: 0;
-    width: 1em;
-    height: 1em;
+    width: ${({ theme }) => theme.sizes.sm.icon};
+    height: ${({ theme }) => theme.sizes.sm.icon};
   }
 `;
 

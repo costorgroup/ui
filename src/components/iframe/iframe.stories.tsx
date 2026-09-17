@@ -1,25 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { ThemeProvider, useTheme } from '../../theme';
 import {
   Center,
-  Flex,
-  FloatingAction,
-  FloatingActionsProvider,
   Heading,
   Iframe,
   IconButton,
   SpeedDial,
   Text,
-  ThemeProvider,
-  useFloatingActions,
-} from '../../index';
-import {
-  CheckIcon,
-  CloseIcon,
-  ImageIcon,
-  MoreHorizontalIcon,
-  UploadIcon,
-} from '../../icons';
+} from '../..';
+import { CheckIcon, ImageIcon, MoreHorizontalIcon, UploadIcon } from '../../icons';
 
 const meta: Meta<typeof Iframe> = {
   title: 'Utilities/Iframe',
@@ -47,40 +37,56 @@ export const Default: Story = {
   },
 };
 
-const ScreenActions = () => {
-  const { naturalItemsDirection } = useFloatingActions();
+const ScreenContent = () => {
+  const theme = useTheme();
 
   return (
-    <>
-      <FloatingAction>
+    <div
+      style={{
+        position: 'relative',
+        boxSizing: 'border-box',
+        width: '100%',
+        height: '100%',
+        background: theme.surfaces.background,
+        color: theme.surfaces.ink,
+      }}
+    >
+      <Center absolute>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, textAlign: 'center' }}>
+          <Heading as="h2" style={{ margin: 0 }}>
+            Preview
+          </Heading>
+          <Text>Rendered inside the iframe document, themed independently.</Text>
+        </div>
+      </Center>
+      <div
+        style={{
+          position: 'absolute',
+          right: 16,
+          bottom: 16,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-end',
+          gap: 12,
+        }}
+      >
         <SpeedDial
-          itemsDirection={naturalItemsDirection}
+          itemsDirection="top"
           aria-label="Create"
           icon={<MoreHorizontalIcon />}
-          closeIcon={<CloseIcon />}
         >
-          <IconButton aria-label="Upload" rounded color="primary" variant="subtle">
+          <IconButton aria-label="Upload" radius="pill" color="primary" variant="subtle">
             <UploadIcon />
           </IconButton>
-          <IconButton aria-label="Image" rounded color="primary" variant="subtle">
+          <IconButton aria-label="Image" radius="pill" color="primary" variant="subtle">
             <ImageIcon />
           </IconButton>
-          <IconButton aria-label="Done" rounded color="primary" variant="subtle">
+          <IconButton aria-label="Done" radius="pill" color="primary" variant="subtle">
             <CheckIcon />
           </IconButton>
         </SpeedDial>
-      </FloatingAction>
-      <FloatingAction>
-        <IconButton aria-label="Upload file" rounded color="primary" variant="solid">
-          <UploadIcon />
-        </IconButton>
-      </FloatingAction>
-      <FloatingAction>
-        <IconButton aria-label="Add image" rounded color="secondary" variant="solid">
-          <ImageIcon />
-        </IconButton>
-      </FloatingAction>
-    </>
+      </div>
+    </div>
   );
 };
 
@@ -92,23 +98,27 @@ export const WithChildren: Story = {
         width: 600,
         height: 400,
         border: '1px solid #e5e7eb',
-        background: '#f8fafc',
       }}
     >
-      <ThemeProvider>
-        <FloatingActionsProvider position="bottom-right" itemsDirection="vertical">
-          <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
-            <Center absolute>
-              <Flex direction="column" align="center" gap="sm" style={{ textAlign: 'center' }}>
-                <Heading as="h2" style={{ margin: 0 }}>
-                  Preview
-                </Heading>
-                <Text>Rendered inside the iframe document.</Text>
-              </Flex>
-            </Center>
-            <ScreenActions />
-          </div>
-        </FloatingActionsProvider>
+      <ThemeProvider defaultAppearance="light">
+        <ScreenContent />
+      </ThemeProvider>
+    </Iframe>
+  ),
+};
+
+export const DarkMode: Story = {
+  render: () => (
+    <Iframe
+      title="600x400 dark screen"
+      style={{
+        width: 600,
+        height: 400,
+        border: '1px solid #e5e7eb',
+      }}
+    >
+      <ThemeProvider defaultAppearance="dark">
+        <ScreenContent />
       </ThemeProvider>
     </Iframe>
   ),

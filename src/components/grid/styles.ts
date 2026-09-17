@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { TGap } from '../../theme/types';
-import { TGridOwnProps, TGridTrack } from './types';
+import { TGridOwnProps, TGridTemplate, TGridTrack } from './types';
 
 type TSGridProps = Pick<
   TGridOwnProps,
@@ -23,9 +23,13 @@ const customProps = new Set([
   'alignItems',
   'justifyItems',
   'minChildWidth',
+  'as',
 ]);
 
-const toTemplate = (track: TGridTrack | undefined, fallback: TGridTrack) => {
+const toRepeat = (
+  track: TGridTrack | undefined,
+  fallback: TGridTrack,
+) => {
   const value = track ?? fallback;
 
   if (value === 'auto') {
@@ -35,14 +39,28 @@ const toTemplate = (track: TGridTrack | undefined, fallback: TGridTrack) => {
   return `repeat(${value}, 1fr)`;
 };
 
+const toTemplate = (template: TGridTemplate | undefined) => {
+  if (template == null) {
+    return undefined;
+  }
+
+  if (Array.isArray(template)) {
+    return template
+      .map((track) => (typeof track === 'number' ? `${track}px` : track))
+      .join(' ');
+  }
+
+  return template;
+};
+
 export const SGrid = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSGridProps>`
   display: grid;
   grid-template-columns: ${({ columns, templateColumns }) =>
-    templateColumns ?? toTemplate(columns, 3)};
+    toTemplate(templateColumns) ?? toRepeat(columns, 3)};
   grid-template-rows: ${({ rows, templateRows }) =>
-    templateRows ?? toTemplate(rows, 'auto')};
+    toTemplate(templateRows) ?? toRepeat(rows, 'auto')};
   align-items: ${({ alignItems }) => alignItems};
   justify-items: ${({ justifyItems }) => justifyItems};
   gap: ${({ theme, gap }) => {

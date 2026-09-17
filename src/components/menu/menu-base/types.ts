@@ -10,5 +10,4 @@ export type TMenuBaseProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
 export type TSMenuBaseProps = {
   top: number;
   left: number;
-  visible: boolean;
 };

@@ -5,33 +5,17 @@ import { SModalBody, SModalBodyPlain } from './styles';
 import { TModalBodyProps } from './types';
 
 const ModalBody = forwardRef<HTMLDivElement, TModalBodyProps>(
-  (
-    {
-      children,
-      scrollable = true,
-      mode = 'hover',
-      color = 'primary',
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    if (!scrollable) {
-      return (
-        <SModalBodyPlain ref={ref} {...props}
-        className={mergeClasses(
-          modalBodyClasses.root,
-          className,
-        )}>
-          {children}
-        </SModalBodyPlain>
-      );
-    }
+  ({ children, scrollable = true, className, ...props }, ref) => {
+    const Root = scrollable ? SModalBody : SModalBodyPlain;
 
     return (
-      <SModalBody ref={ref} mode={mode} color={color} {...props}>
+      <Root
+        ref={ref}
+        {...props}
+        className={mergeClasses(modalBodyClasses.root, className)}
+      >
         {children}
-      </SModalBody>
+      </Root>
     );
   },
 );

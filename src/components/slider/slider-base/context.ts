@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
 
 export type TSliderContextValue = {
@@ -28,3 +28,13 @@ export type TSliderContextValue = {
 };
 
 export const SliderContext = createContext<TSliderContextValue | null>(null);
+
+export const useSliderContext = () => {
+  const slider = useContext(SliderContext);
+
+  if (slider == null) {
+    throw new Error('Slider parts must be used within Slider');
+  }
+
+  return slider;
+};

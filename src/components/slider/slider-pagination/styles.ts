@@ -23,17 +23,17 @@ export const SSliderPaginationDot = styled('button', {
   border-radius: ${({ theme }) => theme.radius.pill};
   cursor: pointer;
   background-color: ${({ theme, color, active }) => {
-    const palette = theme.palette[color];
-    return active
-      ? palette.main
-      : `color-mix(in oklab, ${palette.main} 35%, transparent)`;
+    const fill =
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].main;
+    return active ? fill : `color-mix(in oklab, ${fill} 35%, transparent)`;
   }};
   transition:
     width 0.2s ease,
     background-color 0.2s ease;
 
   &:hover {
-    background-color: ${({ theme, color }) => theme.palette[color].main};
+    background-color: ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].main};
   }
 
   &:disabled {

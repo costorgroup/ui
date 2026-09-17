@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
+import { CheckIcon } from '../../icons';
 import {
   Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbSeparator,
-  BreadcrumbLink,
-  BreadcrumbIcon,
   BreadcrumbEllipsis,
-  CheckIcon,
-} from '../../index';
+  BreadcrumbIcon,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
+} from '../..';
+
 const meta: Meta<typeof Breadcrumb> = {
   title: 'Data Display/Breadcrumb',
   component: Breadcrumb,
@@ -30,6 +31,8 @@ const meta: Meta<typeof Breadcrumb> = {
         'info',
         'dark',
         'light',
+        'default',
+        'inverted',
       ],
     },
   },
@@ -59,13 +62,13 @@ export const Default: Story = {
   ),
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
 };
 
 export const WithIcon: Story = {
   render: () => (
-    <Breadcrumb color="primary">
+    <Breadcrumb color="default">
       <BreadcrumbItem>
         <BreadcrumbIcon>
           <CheckIcon />
@@ -88,7 +91,7 @@ export const WithIcon: Story = {
 
 export const WithEllipsis: Story = {
   render: () => (
-    <Breadcrumb color="primary">
+    <Breadcrumb color="default">
       <BreadcrumbItem>
         <BreadcrumbLink href="#">Home</BreadcrumbLink>
       </BreadcrumbItem>

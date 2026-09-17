@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Container, Flex, Text } from '../../index';
+import { Container, Text, Flex } from '../..';
 
 const Box = ({ label }: { label: string }) => (
   <div

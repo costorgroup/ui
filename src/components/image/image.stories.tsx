@@ -1,10 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, Flex, Image, Text } from '../../index';
+import { Button, Image, Text, Flex } from '../..';
+
+const RADIUS = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill', 'full'] as const;
+
 const meta: Meta<typeof Image> = {
   title: 'Data Display/Image',
   component: Image,
   tags: ['autodocs'],
+  args: {
+    src: 'https://picsum.photos/seed/costor/320/240',
+    width: 320,
+    height: 240,
+    alt: 'Sample',
+    radius: 'md',
+  },
   argTypes: {
     width: {
       control: 'text',
@@ -14,7 +24,7 @@ const meta: Meta<typeof Image> = {
     },
     radius: {
       control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
+      options: RADIUS,
     },
     animation: {
       control: 'select',
@@ -30,14 +40,8 @@ export default meta;
 
 type Story = StoryObj<typeof Image>;
 
-export const Default: Story = {
-  args: {
-    src: 'https://picsum.photos/seed/costor/320/240',
-    width: 320,
-    height: 240,
-    alt: 'Sample',
-    radius: 'medium',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
 export const Fallback: Story = {
@@ -102,41 +106,16 @@ export const Animations: Story = {
 export const Radius: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap" align="center">
-      <Image
-        src="https://picsum.photos/seed/radius-sm/120/120"
-        width={120}
-        height={120}
-        radius="small"
-        alt="small"
-      />
-      <Image
-        src="https://picsum.photos/seed/radius-md/120/120"
-        width={120}
-        height={120}
-        radius="medium"
-        alt="medium"
-      />
-      <Image
-        src="https://picsum.photos/seed/radius-lg/120/120"
-        width={120}
-        height={120}
-        radius="large"
-        alt="large"
-      />
-      <Image
-        src="https://picsum.photos/seed/radius-pill/200/120"
-        width={200}
-        height={120}
-        radius="pill"
-        alt="pill"
-      />
-      <Image
-        src="https://picsum.photos/seed/radius-circle/120/120"
-        width={120}
-        height={120}
-        radius="circle"
-        alt="circle"
-      />
+      {RADIUS.filter((radius) => radius !== 'none').map((radius) => (
+        <Image
+          key={radius}
+          src={`https://picsum.photos/seed/radius-${radius}/120/120`}
+          width={radius === 'pill' ? 200 : 120}
+          height={120}
+          radius={radius}
+          alt={radius}
+        />
+      ))}
     </Flex>
   ),
 };

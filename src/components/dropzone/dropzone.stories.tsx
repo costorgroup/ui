@@ -1,9 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Dropzone, Flex, Text } from '../../index';
+import type { TPaletteColor } from '../../theme/types';
+import { Dropzone, Text, Flex } from '../..';
+import type { TInputVariant } from '../input/input-wrapper/types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
 
 const meta: Meta<typeof Dropzone> = {
-  title: 'Forms & Inputs/Dropzone',
+  title: 'Forms/Dropzone',
   component: Dropzone,
   tags: ['autodocs'],
   decorators: [
@@ -13,33 +31,9 @@ const meta: Meta<typeof Dropzone> = {
       </div>
     ),
   ],
-  parameters: {
-    controls: {
-      include: [
-        'title',
-        'description',
-        'color',
-        'accept',
-        'multiple',
-        'disabled',
-      ],
-    },
-  },
   argTypes: {
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    color: { control: 'select', options: COLORS },
+    variant: { control: 'select', options: VARIANTS },
     title: { control: 'text' },
     description: { control: 'text' },
     accept: { control: 'text' },
@@ -49,26 +43,51 @@ const meta: Meta<typeof Dropzone> = {
     icon: { table: { disable: true } },
     inputProps: { table: { disable: true } },
   },
+  args: {
+    color: 'primary',
+    variant: 'surface',
+    title: 'Upload files',
+    description: 'Drag and drop files here, or click to browse.',
+    multiple: true,
+    disabled: false,
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof Dropzone>;
 
-export const Default: Story = {
-  args: {
-    color: 'primary',
-    title: 'Upload files',
-    description: 'Drag and drop files here, or click to browse.',
-    multiple: true,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <Dropzone key={color} color={color} title={color} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <Dropzone variant={variant} title={variant} />
+        </Flex>
+      ))}
+    </Flex>
+  ),
 };
 
 export const ImagesOnly: Story = {
   args: {
-    color: 'primary',
     title: 'Upload images',
-    description: 'PNG, JPG, or WEBP up to 10MB. Drop files here or click to select.',
+    description: 'PNG, JPG, or WEBP. Drop files here or click to select.',
     accept: 'image/png,image/jpeg,image/webp',
     multiple: true,
   },

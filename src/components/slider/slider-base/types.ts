@@ -26,6 +26,7 @@ export type TSliderBaseProps = Omit<
   pauseOnHover?: boolean;
   color?: TPaletteColor;
   sliderRef?: Ref<TSliderHandle>;
+  onSlideCountChange?: (count: number) => void;
 };
 
 export type TSSliderProps = {

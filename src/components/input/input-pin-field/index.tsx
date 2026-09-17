@@ -10,12 +10,17 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputPinFieldClasses } from './classes';
 import {
   SInputPinField,
   SInputPinFieldCell,
   SInputPinFieldInput,
+  SInputPinFieldStack,
 } from './styles';
 import { TInputPinFieldProps, TInputPinFieldType } from './types';
 
@@ -89,22 +94,38 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       otp = false,
       name,
       id,
-      disabled = false,
+      disabled: disabledProp,
       readOnly = false,
       autoFocus = false,
       blurOnComplete = false,
       attached = false,
-      variant = 'subtle',
-      size = 'md',
-      color = 'primary',
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      actionBar,
       'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
+      onFocus,
+      onBlur,
       className,
       ...props
     },
     ref,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const reactId = useId();
-    const fieldId = id ?? reactId;
+    const fieldId = id ?? form.id ?? reactId;
     const isControlled = valueProp !== undefined;
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const value = isControlled ? valueProp : uncontrolledValue;
@@ -119,7 +140,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
     const firstEmptyIndex = getFirstEmptyIndex(cells, length);
 
     const syncValue = useCallback(
-      (nextCells: string[]) => {
+      (nextCells: string[], event?: unknown) => {
         cellsRef.current = nextCells;
         const next = nextCells.join('');
 
@@ -128,6 +149,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         }
 
         onChange?.(next);
+        form.onChange?.(event, next);
 
         const isComplete =
           nextCells.length === length && nextCells.every((cell) => cell !== '');
@@ -145,7 +167,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
           completedRef.current = false;
         }
       },
-      [blurOnComplete, isControlled, length, onChange, onComplete],
+      [blurOnComplete, form.onChange, isControlled, length, onChange, onComplete],
     );
 
     const focusIndex = (index: number) => {
@@ -200,7 +222,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         if (raw === '') {
           const next = [...cellsRef.current];
           next[index] = '';
-          syncValue(next);
+          syncValue(next, event);
         }
         return;
       }
@@ -217,7 +239,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         cursor += 1;
       }
 
-      syncValue(next);
+      syncValue(next, event);
       focusIndex(Math.min(cursor, length - 1));
     };
 
@@ -237,13 +259,13 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
 
           if (next[index]) {
             next[index] = '';
-            syncValue(next);
+            syncValue(next, event);
             return;
           }
 
           if (index > 0) {
             next[index - 1] = '';
-            syncValue(next);
+            syncValue(next, event);
             focusIndex(index - 1);
           }
           break;
@@ -252,7 +274,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
           event.preventDefault();
           const next = [...cellsRef.current];
           next[index] = '';
-          syncValue(next);
+          syncValue(next, event);
           break;
         }
         case 'ArrowLeft': {
@@ -318,7 +340,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         cursor += 1;
       }
 
-      syncValue(next);
+      syncValue(next, event);
       focusIndex(Math.min(cursor, length - 1));
     };
 
@@ -333,19 +355,21 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       event.target.select();
     };
 
-    return (
-      <SInputPinField
-        ref={ref}
-        attached={attached}
-        size={size}
-        role="group"
-        aria-disabled={disabled || undefined}
-        {...props}
-        className={mergeClasses(
-          inputPinFieldClasses.root,
-          className,
-        )}
-      >
+    const handleGroupFocus = (event: FocusEvent<HTMLDivElement>) => {
+      form.setFocused?.(true);
+      onFocus?.(event);
+    };
+
+    const handleGroupBlur = (event: FocusEvent<HTMLDivElement>) => {
+      if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+        form.setFocused?.(false);
+      }
+
+      onBlur?.(event);
+    };
+
+    const pinChildren = (
+      <>
         {name ? (
           <input
             type="hidden"
@@ -355,7 +379,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
           />
         ) : null}
         {cells.map((cell, index) => {
-          const inputId = `${fieldId}-pin-${index}`;
+          const inputId = index === 0 ? fieldId : `${fieldId}-pin-${index}`;
           const locked = index > firstEmptyIndex;
 
           return (
@@ -383,7 +407,10 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
                 autoCorrect="off"
                 spellCheck={false}
                 aria-label={`Pin character ${index + 1} of ${length}`}
-                aria-invalid={ariaInvalid}
+                aria-invalid={error || undefined}
+                aria-describedby={
+                  index === 0 ? (ariaDescribedBy ?? form.helperId) : undefined
+                }
                 data-mask={mask ? 'true' : undefined}
                 type="text"
                 onChange={(event) => handleChange(index, event)}
@@ -394,7 +421,42 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
             </SInputPinFieldCell>
           );
         })}
-      </SInputPinField>
+      </>
+    );
+
+    if (actionBar == null) {
+      return (
+        <SInputPinField
+          ref={ref}
+          attached={attached}
+          size={size}
+          role="group"
+          aria-disabled={disabled || undefined}
+          {...props}
+          className={mergeClasses(inputPinFieldClasses.root, className)}
+          onFocus={handleGroupFocus}
+          onBlur={handleGroupBlur}
+        >
+          {pinChildren}
+        </SInputPinField>
+      );
+    }
+
+    return (
+      <SInputPinFieldStack
+        ref={ref}
+        role="group"
+        aria-disabled={disabled || undefined}
+        {...props}
+        className={mergeClasses(inputPinFieldClasses.root, className)}
+        onFocus={handleGroupFocus}
+        onBlur={handleGroupBlur}
+      >
+        <SInputPinField attached={attached} size={size}>
+          {pinChildren}
+        </SInputPinField>
+        {actionBar}
+      </SInputPinFieldStack>
     );
   },
 );

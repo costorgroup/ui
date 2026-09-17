@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../helpers/variant-styles/surface';
 import { TDividerSize, TSDividerProps } from './types';
+
+// Same recipe the Marker component's separator/border line uses: the
+// mode-aware divider token for the neutral case, a semi-transparent tint of
+// the accent for everything else, so every color reads consistently.
+const ACCENT_LINE_TINT = 30;
 
 const customProps = new Set(['orientation', 'variant', 'size', 'color', 'labeled']);
 
@@ -18,15 +24,26 @@ export const SDivider = styled('div', {
   border: 0;
   margin: 0;
   padding: 0;
-  color: ${({ theme, color }) => theme.palette[color].main};
   font-family: inherit;
   font-size: ${({ theme }) => theme.typography.text.sm};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   white-space: nowrap;
 
+  ${({ theme, color }) => {
+    const isDefault = color === 'default';
+    const line = isDefault
+      ? theme.surfaces.divider
+      : colorMix(theme.palette[color].main, ACCENT_LINE_TINT);
+
+    return `
+      --divider-line: ${line};
+      color: ${isDefault ? theme.surfaces.muted : theme.palette[color].main};
+    `;
+  }}
+
   ${({ orientation, labeled, size, variant }) => {
-    const line = `${thickness[size]} ${variant} currentColor`;
+    const line = `${thickness[size]} ${variant} var(--divider-line)`;
 
     if (orientation === 'vertical') {
       if (labeled) {

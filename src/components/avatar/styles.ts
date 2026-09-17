@@ -1,23 +1,9 @@
 import styled from '@emotion/styled';
-import { TAvatarSize, TSAvatarProps } from './types';
+import { CHROME_FILL } from '../../helpers/variant-styles';
+import { colorMixBase } from '../../helpers/variant-styles/surface';
+import { TSAvatarProps } from './types';
 
 const customProps = new Set(['size', 'radius']);
-
-const sizeMap: Record<TAvatarSize, string> = {
-  xs: '1.25rem',
-  sm: '2rem',
-  md: '2.5rem',
-  lg: '3rem',
-  xl: '3.5rem',
-};
-
-const fontMap: Record<TAvatarSize, string> = {
-  xs: '0.625rem',
-  sm: '0.75rem',
-  md: '0.875rem',
-  lg: '1rem',
-  xl: '1.125rem',
-};
 
 export const SAvatar = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -29,16 +15,24 @@ export const SAvatar = styled('div', {
   box-sizing: border-box;
   overflow: hidden;
   flex-shrink: 0;
-  width: ${({ size }) => sizeMap[size]};
-  height: ${({ size }) => sizeMap[size]};
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.palette.common.grey[10]};
-  color: ${({ theme }) => theme.palette.common.grey[16]};
+  background-color: ${({ theme }) =>
+    colorMixBase(theme.surfaces.mixer, CHROME_FILL, theme.surfaces.background)};
+  color: ${({ theme }) => theme.surfaces.ink};
   font-family: inherit;
-  font-size: ${({ size }) => fontMap[size]};
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: 1;
   user-select: none;
+
+  ${({ theme, size }) => {
+    const step = theme.sizes[size];
+
+    return `
+      width: ${step.height};
+      height: ${step.height};
+      font-size: ${step.fontSize};
+    `;
+  }}
 
   img {
     position: absolute;

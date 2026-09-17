@@ -17,6 +17,7 @@ type TSFlexProps = Pick<
 >;
 
 const customProps = new Set([
+  'as',
   'direction',
   'align',
   'justify',

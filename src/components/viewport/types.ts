@@ -1,18 +1,12 @@
-import { HTMLAttributes } from 'react';
-import { TPaletteColor, TThemeRadius } from '../../theme/types';
+import { HTMLAttributes, ReactNode } from 'react';
+import type { TPanelElevation, TPanelRadius, TPanelVariant } from '../panel/types';
 
-export type TViewportRadius = keyof TThemeRadius;
-
-export type TViewportVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'ghost'
-  | 'plain';
+export type TViewportRadius = TPanelRadius;
+export type TViewportVariant = TPanelVariant;
 
 export type TViewportProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
+  children?: ReactNode;
   radius?: TViewportRadius;
-  color?: TPaletteColor;
   variant?: TViewportVariant;
+  elevation?: TPanelElevation;
 };

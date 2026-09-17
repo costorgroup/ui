@@ -1,8 +1,18 @@
 import { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonSize, TButtonVariant } from '../button/types';
+import type { TButtonSize, TButtonVariant } from '../button/types';
 
 export type TPaginationVariant = TButtonVariant;
+
+export type TPaginationVariantProp =
+  | TPaginationVariant
+  | readonly [TPaginationVariant, TPaginationVariant];
+
+export const PAGINATION_DEFAULT_VARIANTS = [
+  'solid',
+  'ghost',
+] as const satisfies readonly [TPaginationVariant, TPaginationVariant];
+
 export type TPaginationSize = TButtonSize;
 
 export type TPaginationItemType =
@@ -30,7 +40,7 @@ export type TPaginationProps = Omit<
   defaultPage?: number;
   onChange?: (event: MouseEvent<HTMLButtonElement>, page: number) => void;
   color?: TPaletteColor;
-  variant?: TPaginationVariant;
+  variant?: TPaginationVariantProp;
   size?: TPaginationSize;
   disabled?: boolean;
   hidePrevButton?: boolean;
@@ -46,3 +56,5 @@ export type TPaginationProps = Omit<
   ) => string;
   children?: ReactNode;
 };
+
+export const PAGINATION_INACTIVE_COLOR = 'default' as const satisfies TPaletteColor;

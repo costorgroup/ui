@@ -1,5 +1,8 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
-export type TTableHeadProps = HTMLAttributes<HTMLTableSectionElement> & {
+export type TTableHeadProps = Omit<
+  HTMLAttributes<HTMLTableSectionElement>,
+  'children'
+> & {
   children?: ReactNode;
 };

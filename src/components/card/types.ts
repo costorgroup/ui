@@ -1,19 +1,19 @@
-import { ElementType, ReactNode } from 'react';
-import type { TPolymorphicProps } from '../../helpers/polymorphic';
-import { TThemeRadius } from '../../theme/types';
+import { HTMLAttributes, ReactNode } from 'react';
+import type { TPanelElevation, TPanelRadius, TPanelVariant } from '../panel/types';
 
-export type TCardRadius = keyof TThemeRadius;
+export type TCardSize = 'sm' | 'md' | 'lg';
 
-export type TCardOwnProps = {
+export type TCardProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
-  radius?: TCardRadius;
+  elevation?: TPanelElevation;
+  variant?: TPanelVariant;
+  radius?: TPanelRadius;
+  size?: TCardSize;
 };
 
-export type TCardProps<C extends ElementType = 'div'> = TPolymorphicProps<
-  C,
-  TCardOwnProps
->;
-
 export type TSCardProps = {
-  radius: TCardRadius;
+  elevation: TPanelElevation;
+  variant: TPanelVariant;
+  radius: TPanelRadius;
+  size: TCardSize;
 };

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../helpers/variant-styles/surface';
 import { ratingClasses } from './classes';
 import { TRatingProps, TRatingSize } from './types';
 
@@ -28,11 +29,6 @@ export const SRating = styled('span', {
       case 'subtle':
       case 'surface':
         return palette.darker;
-      case 'outline':
-      case 'ghost':
-      case 'plain':
-        return palette.main;
-      case 'solid':
       default:
         return palette.main;
     }
@@ -80,7 +76,7 @@ export const SRating = styled('span', {
         case 'plain':
           return palette.main;
         default:
-          return `color-mix(in oklab, ${palette.main} 28%, transparent)`;
+          return colorMix(palette.main, 28);
       }
     }};
   }

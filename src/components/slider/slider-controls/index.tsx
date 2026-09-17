@@ -7,11 +7,12 @@ import { TSliderControlsProps } from './types';
 const SliderControls = forwardRef<HTMLDivElement, TSliderControlsProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SSliderControls ref={ref} {...props}
-        className={mergeClasses(
-          sliderControlsClasses.root,
-          className,
-        )}>
+      <SSliderControls
+        ref={ref}
+        data-slot="controls"
+        {...props}
+        className={mergeClasses(sliderControlsClasses.root, className)}
+      >
         {children}
       </SSliderControls>
     );

@@ -22,8 +22,5 @@ export type TInputFileFieldProps = Omit<
 };
 
 export type TSInputFileFieldTriggerProps = {
-  variant: TInputVariant;
   size: TInputSize;
-  color: TPaletteColor;
-  open: boolean;
 };

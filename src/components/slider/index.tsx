@@ -1,73 +1,50 @@
-import React, { Children, forwardRef, isValidElement } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { sliderClasses } from './classes';
-import { SliderAction } from './slider-action';
-import { SliderActions } from './slider-actions';
-import { SliderContent } from './slider-content';
-import { SliderControls } from './slider-controls';
-import { SliderPagination } from './slider-pagination';
-import { SliderSlide } from './slider-slide';
-import { SliderSlides } from './slider-slides';
 import { SSlider } from './styles';
 import { TSliderProps } from './types';
 
 const Slider = forwardRef<HTMLDivElement, TSliderProps>(
-  (
-    {
-      children,
-      content,
-      showActions = true,
-      showPagination = true,
-      color = 'primary',
-      sliderRef,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const slides = Children.map(children, (child, index) => {
-      if (
-        isValidElement(child) &&
-        (child.type === SliderSlide ||
-          (typeof child.type !== 'string' &&
-            'displayName' in child.type &&
-            child.type.displayName === 'SliderSlide'))
-      ) {
-        return child;
-      }
-
-      return <SliderSlide key={index}>{child}</SliderSlide>;
-    });
-
-    const showControls = showActions || showPagination;
-
-    return (
-      <SSlider ref={ref} sliderRef={sliderRef} color={color} {...props}
-        className={mergeClasses(
-          sliderClasses.root,
-          className,
-        )}>
-        <SliderSlides>{slides}</SliderSlides>
-        {content != null ? <SliderContent>{content}</SliderContent> : null}
-        {showControls ? (
-          <SliderControls>
-            {showActions ? (
-              <SliderActions>
-                <SliderAction direction="prev" />
-                <SliderAction direction="next" />
-              </SliderActions>
-            ) : null}
-            {showPagination ? <SliderPagination /> : null}
-          </SliderControls>
-        ) : null}
-      </SSlider>
-    );
-  },
+  ({ className, ...props }, ref) => (
+    <SSlider
+      ref={ref}
+      data-slot="slider"
+      {...props}
+      className={mergeClasses(sliderClasses.root, className)}
+    />
+  ),
 );
 
 Slider.displayName = 'Slider';
 
 export type { TSliderProps, TSliderHandle } from './types';
+export type {
+  TUseSliderOptions,
+  TUseSliderReturn,
+  TUseSliderSliderProps,
+} from '../../hooks/use-slider';
 export { sliderClasses } from './classes';
+export { useSlider } from '../../hooks/use-slider';
+export { SliderSlides } from './slider-slides';
+export type { TSliderSlidesProps } from './slider-slides/types';
+export { sliderSlidesClasses } from './slider-slides';
+export { SliderSlide } from './slider-slide';
+export type { TSliderSlideProps } from './slider-slide/types';
+export { sliderSlideClasses } from './slider-slide';
+export { SlidePermanentContent } from './slide-permanent-content';
+export type { TSlidePermanentContentProps } from './slide-permanent-content/types';
+export { slidePermanentContentClasses } from './slide-permanent-content';
+export { SliderControls } from './slider-controls';
+export type { TSliderControlsProps } from './slider-controls/types';
+export { sliderControlsClasses } from './slider-controls';
+export { SliderControl } from './slider-control';
+export type {
+  TSliderControlProps,
+  TSliderControlDirection,
+} from './slider-control/types';
+export { sliderControlClasses } from './slider-control';
+export { SliderPagination } from './slider-pagination';
+export type { TSliderPaginationProps } from './slider-pagination/types';
+export { sliderPaginationClasses } from './slider-pagination';
 export { Slider };
 export default Slider;

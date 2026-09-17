@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Card, CardContent, Grid, GridCell, Text } from '../../index';
+import { Grid, GridCell, Text, Window } from '../..';
+
 const meta: Meta<typeof Grid> = {
   title: 'Layout/Grid',
   component: Grid,
@@ -10,6 +11,12 @@ const meta: Meta<typeof Grid> = {
       control: 'number',
     },
     rows: {
+      control: 'text',
+    },
+    templateColumns: {
+      control: 'text',
+    },
+    templateRows: {
       control: 'text',
     },
     gap: {
@@ -36,11 +43,9 @@ export default meta;
 type Story = StoryObj<typeof Grid>;
 
 const Cell = ({ label }: { label: string }) => (
-  <Card>
-    <CardContent>
-      <Text>{label}</Text>
-    </CardContent>
-  </Card>
+  <Window radius="md">
+    <Text>{label}</Text>
+  </Window>
 );
 
 export const Default: Story = {
@@ -100,8 +105,10 @@ export const Spans: Story = {
 export const CustomTemplate: Story = {
   render: () => (
     <Grid
-      templateColumns="2fr 1fr 1fr"
-      templateRows="auto auto"
+      columns={3}
+      rows="auto"
+      templateColumns={['2fr', '1fr', '1fr']}
+      templateRows={['auto', 'auto']}
       gap="lg"
       style={{ width: 640 }}
     >

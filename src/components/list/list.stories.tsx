@@ -1,134 +1,158 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Flex, List, ListItem } from '../../index';
-import type { TListSize, TListStyle } from './types';
+import type { TPaletteColor } from '../../theme/types';
+import { List, ListItem, Flex, Text, TextField } from '../..';
+import type { TListRadius, TListSize } from './types';
+import type { TListVariant } from './variant-styles';
 
-const LIST_STYLES: TListStyle[] = ['ordered', 'unordered', 'none'];
-const LIST_SIZES: TListSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TListVariant[] = [
+  'solid',
+  'subtle',
+  'surface',
+  'outline',
+  'plain',
+];
+
+const SIZES: TListSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TListRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
 
 const meta: Meta<typeof List> = {
   title: 'Data Display/List',
   component: List,
   tags: ['autodocs'],
-  argTypes: {
-    listStyle: {
-      control: 'select',
-      options: LIST_STYLES,
-    },
-    size: {
-      control: 'select',
-      options: LIST_SIZES,
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
-    titleAs: {
-      control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-    },
-    title: { control: 'text' },
-    description: { control: 'text' },
+  args: {
+    color: 'default',
+    variant: 'subtle',
+    size: 'md',
+    radius: 'md',
   },
+  argTypes: {
+    color: { control: 'select', options: COLORS },
+    variant: { control: 'select', options: VARIANTS },
+    size: { control: 'select', options: SIZES },
+    radius: { control: 'select', options: RADIUS },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 420 }}>
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof List>;
 
+const sampleItems = (
+  <>
+    <ListItem>Display name</ListItem>
+    <ListItem>Email address</ListItem>
+    <ListItem>Language preference</ListItem>
+  </>
+);
+
 export const Default: Story = {
+  render: (args) => <List {...args}>{sampleItems}</List>,
+};
+
+export const WithFields: Story = {
   args: {
-    listStyle: 'unordered',
-    size: 'md',
-    color: 'primary',
-    title: 'Getting started',
-    description: 'Follow these steps to set up your workspace.',
+    variant: 'surface',
+    color: 'default',
+    size: 'sm',
   },
   render: (args) => (
     <List {...args}>
-      <ListItem>Create a new project</ListItem>
-      <ListItem>Install the design system package</ListItem>
-      <ListItem>Wrap your app with the theme provider</ListItem>
+      <ListItem>
+        <TextField
+          label="Display name"
+          defaultValue="Costor"
+          color="info"
+          variant="surface"
+          size="sm"
+        />
+      </ListItem>
+      <ListItem>
+        <TextField
+          label="Email"
+          type="email"
+          defaultValue="hello@costor.dev"
+          color="info"
+          variant="surface"
+          size="sm"
+        />
+      </ListItem>
+      <ListItem>
+        <Text size="sm" color="default">
+          Idle chrome list rows with embedded fields.
+        </Text>
+      </ListItem>
     </List>
   ),
 };
 
-export const Ordered: Story = {
-  args: {
-    listStyle: 'ordered',
-    size: 'md',
-    color: 'secondary',
-    title: 'Verification steps',
-    description: 'Complete each step in order.',
-  },
-  render: (args) => (
-    <List {...args}>
-      <ListItem>Confirm your email address</ListItem>
-      <ListItem>Enable two-factor authentication</ListItem>
-      <ListItem>Review account recovery options</ListItem>
-    </List>
-  ),
-};
-
-export const WithoutHeader: Story = {
-  args: {
-    listStyle: 'unordered',
-    size: 'md',
-    color: 'primary',
-  },
-  render: (args) => (
-    <List {...args}>
-      <ListItem>First item</ListItem>
-      <ListItem>Second item</ListItem>
-      <ListItem>Third item</ListItem>
-    </List>
-  ),
-};
-
-export const Sizes: Story = {
+export const Variants: Story = {
   render: () => (
-    <Flex direction="column" gap="lg">
-      {LIST_SIZES.map((size) => (
-        <List
-          key={size}
-          size={size}
-          listStyle="unordered"
-          color="primary"
-          title={size}
-          description={`List size ${size}`}
-        >
-          <ListItem>First item</ListItem>
-          <ListItem>Second item</ListItem>
-          <ListItem>Third item</ListItem>
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {VARIANTS.map((variant) => (
+        <List key={variant} variant={variant} color="default" size="sm">
+          <ListItem>{variant}</ListItem>
+          <ListItem>Second row</ListItem>
+          <ListItem>Third row</ListItem>
         </List>
       ))}
     </Flex>
   ),
 };
 
-export const Styles: Story = {
+export const Sizes: Story = {
   render: () => (
-    <Flex direction="column" gap="lg">
-      {LIST_STYLES.map((listStyle) => (
-        <List
-          key={listStyle}
-          listStyle={listStyle}
-          color="primary"
-          title={listStyle}
-        >
-          <ListItem>{listStyle} — one</ListItem>
-          <ListItem>{listStyle} — two</ListItem>
-          <ListItem>{listStyle} — three</ListItem>
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {SIZES.map((size) => (
+        <List key={size} size={size} variant="surface" color="default">
+          <ListItem>{size} size list</ListItem>
+          <ListItem>Second row</ListItem>
+        </List>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Colors: Story = {
+  args: {
+    variant: 'surface',
+  },
+  render: (args) => (
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {COLORS.map((color) => (
+        <List key={color} {...args} color={color} size="sm">
+          <ListItem>{color}</ListItem>
+          <ListItem>Second row</ListItem>
         </List>
       ))}
     </Flex>

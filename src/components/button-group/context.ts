@@ -1,12 +1,19 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonVariant } from '../button/types';
+import { TButtonAppearance, TButtonSize, TButtonVariant } from '../button/types';
+
+export type TButtonGroupOrientation = 'horizontal' | 'vertical';
 
 export type TButtonGroupContextValue = {
+  orientation: TButtonGroupOrientation;
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  appearance?: TButtonAppearance;
+  size?: TButtonSize;
+  disabled?: boolean;
 };
 
-export const ButtonGroupContext = createContext<TButtonGroupContextValue | null>(
-  null,
-);
+export const ButtonGroupContext =
+  createContext<TButtonGroupContextValue | null>(null);
+
+export const useButtonGroupContext = () => useContext(ButtonGroupContext);

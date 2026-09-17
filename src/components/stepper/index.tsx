@@ -110,5 +110,35 @@ export type {
 } from './types';
 export { stepperClasses } from './classes';
 export { StepperContext, StepContext } from './context';
+export { Step } from './step';
+export type { TStepProps } from './step';
+export { stepClasses } from './step';
+export {
+  StepMain,
+  StepLabels,
+  StepRail,
+  StepBody,
+} from './step';
+export { StepIndicator } from './step-indicator';
+export type { TStepIndicatorProps } from './step-indicator';
+export { stepIndicatorClasses } from './step-indicator';
+export { StepStatus } from './step-status';
+export type { TStepStatusProps, TStepStatusRender } from './step-status';
+export { stepStatusClasses } from './step-status';
+export { StepNumber } from './step-number';
+export type { TStepNumberProps } from './step-number';
+export { stepNumberClasses } from './step-number';
+export { StepTitle } from './step-title';
+export type { TStepTitleProps } from './step-title';
+export { stepTitleClasses } from './step-title';
+export { StepDescription } from './step-description';
+export type { TStepDescriptionProps } from './step-description';
+export { stepDescriptionClasses } from './step-description';
+export { StepContent } from './step-content';
+export type { TStepContentProps } from './step-content';
+export { stepContentClasses } from './step-content';
+export { StepSeparator } from './step-separator';
+export type { TStepSeparatorProps } from './step-separator';
+export { stepSeparatorClasses } from './step-separator';
 export { Stepper };
 export default Stepper;

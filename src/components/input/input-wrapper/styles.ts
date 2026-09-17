@@ -1,24 +1,41 @@
 import styled from '@emotion/styled';
 import { iconButtonClasses } from '../../icon-button/classes';
+import { inputVariantStyles } from '../variant-styles';
+import { inputActionsClasses } from '../input-actions/classes';
+import { inputButtonClasses } from '../input-button/classes';
 import { inputIconClasses } from '../input-icon/classes';
 import { inputNumberFieldClasses } from '../input-number-field/classes';
 import { inputTextAreaFieldClasses } from '../input-text-area-field/classes';
 import { inputTextFieldClasses } from '../input-text-field/classes';
-import { TInputWrapperProps, TInputSize } from './types';
+import { inputWrapperClasses } from './classes';
+import { TInputSize, TInputWrapperProps } from './types';
 
-type TSInputWrapperProps = Pick<TInputWrapperProps, 'variant' | 'size' | 'color'>;
+type TSInputWrapperProps = Pick<
+  TInputWrapperProps,
+  'variant' | 'size' | 'color' | 'disabled' | 'open' | 'trigger' | 'stacked' | 'error'
+>;
 
-const customProps = new Set(['variant', 'size', 'color', 'error', 'disabled', 'readOnly']);
+const customProps = new Set([
+  'variant',
+  'size',
+  'color',
+  'error',
+  'disabled',
+  'readOnly',
+  'open',
+  'trigger',
+  'stacked',
+]);
 
-const sizeFont: Record<TInputSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
+const body = `.${inputWrapperClasses.body}`;
+const inRow = (selector: string) =>
+  `& > ${selector}, & > ${body} > ${selector}`;
 
-const fieldClass = `& > .${inputTextFieldClasses.root}, & > .${inputNumberFieldClasses.root}, & > .${inputTextAreaFieldClasses.root}`;
+const fieldClass = [
+  inRow(`.${inputTextFieldClasses.root}`),
+  inRow(`.${inputNumberFieldClasses.root}`),
+  inRow(`.${inputTextAreaFieldClasses.root}`),
+].join(', ');
 
 export const SInputWrapper = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -29,185 +46,145 @@ export const SInputWrapper = styled('div', {
   box-sizing: border-box;
   padding: 0;
   border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  border-radius: ${({ theme }) => theme.radius.sm};
+  overflow: hidden;
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  cursor: text;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  cursor: ${({ trigger, disabled }) =>
+    disabled ? 'not-allowed' : trigger ? 'pointer' : 'text'};
+  opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+
+  ${({ trigger }) =>
+    trigger &&
+    `
+      & > * {
+        width: 100%;
+      }
+
+      & > ${body} > * {
+        width: 100%;
+      }
+    `}
+
+  ${({ stacked }) =>
+    stacked &&
+    `
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
+
+      & > * {
+        width: 100%;
+      }
+    `}
 
   ${({ theme, size = 'md' }) => {
-    const scale = theme.sizeScale[size];
-    const padY = theme.spacing(theme.gap.sm);
-    const padX = theme.spacing(theme.gap.md);
-    const gap = theme.spacing(theme.gap.sm);
+    const step = theme.sizes[size];
 
     return `
-      gap: calc(${gap} * ${scale});
-      font-size: ${sizeFont[size]};
+      gap: ${step.gap};
+      font-size: ${step.fontSize};
 
       ${fieldClass} {
-        padding-top: calc(${padY} * ${scale});
-        padding-bottom: calc(${padY} * ${scale});
-        padding-left: calc(${padX} * ${scale});
-        padding-right: calc(${padX} * ${scale});
+        padding-top: ${step.padY};
+        padding-bottom: ${step.padY};
+        padding-left: ${step.padX};
+        padding-right: ${step.padX};
       }
 
-      & > .${inputIconClasses.root} ~ .${inputTextFieldClasses.root},
-      & > .${inputIconClasses.root} ~ .${inputNumberFieldClasses.root},
-      & > .${inputIconClasses.root} ~ .${inputTextAreaFieldClasses.root},
-      & > .${iconButtonClasses.root} ~ .${inputTextFieldClasses.root},
-      & > .${iconButtonClasses.root} ~ .${inputNumberFieldClasses.root},
-      & > .${iconButtonClasses.root} ~ .${inputTextAreaFieldClasses.root} {
+      ${inRow(`.${inputIconClasses.root} ~ .${inputTextFieldClasses.root}`)},
+      ${inRow(`.${inputIconClasses.root} ~ .${inputNumberFieldClasses.root}`)},
+      ${inRow(`.${inputIconClasses.root} ~ .${inputTextAreaFieldClasses.root}`)},
+      ${inRow(`.${iconButtonClasses.root} ~ .${inputTextFieldClasses.root}`)},
+      ${inRow(`.${iconButtonClasses.root} ~ .${inputNumberFieldClasses.root}`)},
+      ${inRow(`.${iconButtonClasses.root} ~ .${inputTextAreaFieldClasses.root}`)},
+      ${inRow(`.${inputButtonClasses.root} ~ .${inputTextFieldClasses.root}`)},
+      ${inRow(`.${inputButtonClasses.root} ~ .${inputNumberFieldClasses.root}`)},
+      ${inRow(`.${inputButtonClasses.root} ~ .${inputTextAreaFieldClasses.root}`)} {
         padding-left: 0;
       }
 
-      & > .${inputTextFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}),
-      & > .${inputNumberFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}),
-      & > .${inputTextAreaFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}) {
+      ${inRow(`.${inputTextFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}, ~ .${inputButtonClasses.root}, ~ .${inputActionsClasses.root})`)},
+      ${inRow(`.${inputNumberFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}, ~ .${inputButtonClasses.root}, ~ .${inputActionsClasses.root})`)},
+      ${inRow(`.${inputTextAreaFieldClasses.root}:has(~ .${inputIconClasses.root}, ~ .${iconButtonClasses.root}, ~ .${inputButtonClasses.root}, ~ .${inputActionsClasses.root})`)} {
         padding-right: 0;
       }
 
-      & > .${inputIconClasses.root} {
-        padding-left: calc(${padX} * ${scale});
-        padding-right: calc(${padX} * ${scale});
+      ${inRow(`.${inputIconClasses.root}`)} {
+        padding-left: ${step.padX};
+        padding-right: ${step.padX};
       }
 
-      & > .${inputTextFieldClasses.root} ~ .${inputIconClasses.root},
-      & > .${inputNumberFieldClasses.root} ~ .${inputIconClasses.root},
-      & > .${inputTextAreaFieldClasses.root} ~ .${inputIconClasses.root},
-      & > .${iconButtonClasses.root} ~ .${inputIconClasses.root},
-      & > .${inputIconClasses.root} ~ .${inputIconClasses.root} {
+      ${inRow(`.${inputTextFieldClasses.root} ~ .${inputIconClasses.root}`)},
+      ${inRow(`.${inputNumberFieldClasses.root} ~ .${inputIconClasses.root}`)},
+      ${inRow(`.${inputTextAreaFieldClasses.root} ~ .${inputIconClasses.root}`)},
+      ${inRow(`.${iconButtonClasses.root} ~ .${inputIconClasses.root}`)},
+      ${inRow(`.${inputIconClasses.root} ~ .${inputIconClasses.root}`)} {
         padding-left: 0;
       }
 
-      & > .${inputIconClasses.root}:has(+ .${inputTextFieldClasses.root}),
-      & > .${inputIconClasses.root}:has(+ .${inputNumberFieldClasses.root}),
-      & > .${inputIconClasses.root}:has(+ .${inputTextAreaFieldClasses.root}),
-      & > .${inputIconClasses.root}:has(+ .${iconButtonClasses.root}),
-      & > .${inputIconClasses.root}:has(+ .${inputIconClasses.root}) {
+      ${inRow(`.${inputIconClasses.root}:has(+ .${inputTextFieldClasses.root})`)},
+      ${inRow(`.${inputIconClasses.root}:has(+ .${inputNumberFieldClasses.root})`)},
+      ${inRow(`.${inputIconClasses.root}:has(+ .${inputTextAreaFieldClasses.root})`)},
+      ${inRow(`.${inputIconClasses.root}:has(+ .${iconButtonClasses.root})`)},
+      ${inRow(`.${inputIconClasses.root}:has(+ .${inputIconClasses.root})`)} {
         padding-right: 0;
       }
 
-      & > .${iconButtonClasses.root} {
+      ${inRow(`.${iconButtonClasses.root}`)} {
         align-self: center;
+      }
+
+      ${inRow(`.${inputButtonClasses.root}`)} {
+        align-self: stretch;
+        width: 1.75em;
+        height: auto;
+        min-height: 0;
+      }
+
+      ${inRow(`.${inputButtonClasses.root}:first-child`)} {
+        margin-right: -${step.gap};
+      }
+
+      ${inRow(`.${inputNumberFieldClasses.root} ~ .${inputButtonClasses.root}`)} {
+        margin-left: -${step.gap};
+      }
+
+      ${inRow(`.${inputActionsClasses.vertical}`)} {
+        align-self: stretch;
+        margin-left: -${step.gap};
       }
     `;
   }}
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) => {
-    const palette = theme.palette[color];
+  ${({ theme, variant = 'surface', color = 'primary', error }) =>
+    inputVariantStyles(variant, theme.palette[color], theme, { error })}
+`;
 
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 14%,
-            transparent
-          );
+export const SInputWrapperBody = styled.div`
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: inherit;
+  box-sizing: border-box;
+`;
 
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
+export const SInputWrapperActionBar = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'size',
+})<{ size: TInputSize }>`
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: ${({ theme, size }) => {
+    const scale = theme.sizeScale[size];
+    const padY = theme.spacing(theme.gap.xs);
+    const padX = theme.spacing(theme.gap.sm);
 
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 28%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 36%,
-            transparent
-          );
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 52%,
-              transparent
-            );
-            color: ${palette.dark};
-          }
-
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 68%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 4%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-    }
-  }}
+    return `0 calc(${padX} * ${scale}) calc(${padY} * ${scale})`;
+  }};
 `;

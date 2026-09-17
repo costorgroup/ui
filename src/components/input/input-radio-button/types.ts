@@ -1,14 +1,15 @@
 import { InputHTMLAttributes } from 'react';
 import { TPaletteColor } from '../../../theme/types';
-import { TInputSize } from '../input-wrapper/types';
+import { TInputSize, TInputVariant } from '../input-wrapper/types';
 
-export type TInputRadioButtonVariant = 'subtle' | 'surface' | 'outline';
+export type TInputRadioButtonVariant = TInputVariant;
 
-export type TInputRadioButtonProps = Omit<
+export type TInputRadioButtonProps<T = unknown> = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'color' | 'size' | 'type'
+  'color' | 'size' | 'type' | 'value'
 > & {
   variant?: TInputRadioButtonVariant;
   size?: TInputSize;
   color?: TPaletteColor;
+  value?: T;
 };

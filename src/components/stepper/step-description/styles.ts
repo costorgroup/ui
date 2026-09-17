@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../../helpers/variant-styles/surface';
 
 export const SStepDescription = styled.p`
   margin: 0;
@@ -6,6 +7,5 @@ export const SStepDescription = styled.p`
   font-size: var(--stepper-description-size);
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) =>
-    `color-mix(in oklab, ${theme.palette.base.main} 68%, transparent)`};
+  color: ${({ theme }) => colorMix(theme.surfaces.ink, 68)};
 `;

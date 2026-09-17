@@ -7,11 +7,11 @@ import { TBreadcrumbIconProps } from './types';
 const BreadcrumbIcon = forwardRef<HTMLSpanElement, TBreadcrumbIconProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SBreadcrumbIcon ref={ref} {...props}
-        className={mergeClasses(
-          breadcrumbIconClasses.root,
-          className,
-        )}>
+      <SBreadcrumbIcon
+        ref={ref}
+        {...props}
+        className={mergeClasses(breadcrumbIconClasses.root, className)}
+      >
         {children}
       </SBreadcrumbIcon>
     );

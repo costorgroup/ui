@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
+import { inputInnerResetStyles } from '../variant-styles';
+import { inputDropdownPanelStyles } from '../dropdown-styles';
 import { TInputSize } from '../input-wrapper/types';
 import {
   TSInputColorFieldDropdownProps,
-  TSInputColorFieldTriggerProps,
 } from './types';
 
-const triggerProps = new Set(['variant', 'size', 'color', 'open']);
+const triggerProps = new Set(['size']);
 const dropdownProps = new Set(['top', 'left', 'width', 'visible', 'placement']);
 
 const sizeFont: Record<TInputSize, string> = {
@@ -25,24 +26,21 @@ export const SInputColorField = styled.div`
 
 export const SInputColorFieldTrigger = styled('button', {
   shouldForwardProp: (prop) => !triggerProps.has(prop),
-})<TSInputColorFieldTriggerProps>`
+})<{ size: TInputSize }>`
+  ${inputInnerResetStyles}
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
   width: 100%;
   margin: 0;
-  border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  padding: 0;
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   text-align: left;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  cursor: inherit;
+  color: inherit;
 
   ${({ theme, size }) => {
     const scale = theme.sizeScale[size];
@@ -52,62 +50,6 @@ export const SInputColorFieldTrigger = styled('button', {
         calc(${theme.spacing(theme.gap.md)} * ${scale});
       font-size: ${sizeFont[size]};
     `;
-  }}
-
-  ${({ theme, variant, color }) => {
-    const palette = theme.palette[color];
-
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          color: ${palette.darker};
-          border-color: color-mix(in oklab, ${palette.main} 14%, transparent);
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 20%, transparent);
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 28%, transparent);
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: color-mix(in oklab, ${palette.main} 36%, transparent);
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 52%, transparent);
-            color: ${palette.dark};
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-            border-color: color-mix(in oklab, ${palette.main} 68%, transparent);
-            color: ${palette.darker};
-          }
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 4%, transparent);
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          }
-
-          &[data-open='true'] {
-            background-color: color-mix(in oklab, ${palette.main} 10%, transparent);
-          }
-        `;
-    }
   }}
 `;
 
@@ -185,16 +127,7 @@ export const SInputColorFieldDropdown = styled('div', {
   display: flex;
   flex-direction: column;
   border-radius: ${({ theme }) => theme.radius.medium};
-  background-color: ${({ theme }) => theme.palette.common.white};
-  box-shadow: ${({ theme }) => {
-    const black = theme.palette.common.black;
-
-    return `
-      0 4px 10px ${black}0a,
-      0 1px 4px ${black}08,
-      0 1px 2px ${black}05
-    `;
-  }};
+  ${({ theme }) => inputDropdownPanelStyles(theme)}
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transform: ${({ visible }) => (visible ? 'scale(1)' : 'scale(0.96)')};
   transform-origin: ${({ placement }) =>

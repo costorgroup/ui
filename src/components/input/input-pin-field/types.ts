@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import type { TInputSize, TInputVariant } from '../input-wrapper/types';
 import type { TPaletteColor } from '../../../theme/types';
 
@@ -28,6 +28,7 @@ export type TInputPinFieldProps = Omit<
   variant?: TInputVariant;
   size?: TInputSize;
   color?: TPaletteColor;
+  actionBar?: ReactNode;
 };
 
 export type TSInputPinFieldProps = {

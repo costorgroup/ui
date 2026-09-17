@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { inputVariantStyles } from '../variant-styles';
 import { TInputSize } from '../input-wrapper/types';
 import { TSInputPinFieldCellProps, TSInputPinFieldProps } from './types';
 
@@ -20,6 +21,16 @@ const sizeCell: Record<TInputSize, string> = {
   lg: '48px',
   xl: '56px',
 };
+
+export const SInputPinFieldStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
+`;
 
 export const SInputPinField = styled('div', {
   shouldForwardProp: (prop) => !rootCustomProps.has(prop),
@@ -48,7 +59,7 @@ export const SInputPinFieldCell = styled('div', {
   font-size: ${({ size = 'md' }) => sizeFont[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: 1;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 
   ${({ theme, attached }) => {
     if (!attached) {
@@ -74,120 +85,12 @@ export const SInputPinFieldCell = styled('div', {
     `;
   }}
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) => {
-    const palette = theme.palette[color];
+  ${({ theme, variant = 'surface', color = 'primary' }) =>
+    inputVariantStyles(variant, theme.palette[color], theme)}
 
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 14%,
-            transparent
-          );
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-          }
-
-          &:focus-within {
-            z-index: 1;
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 28%,
-              transparent
-            );
-          }
-        `;
-      case 'subtle':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 4%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-          }
-
-          &:focus-within {
-            z-index: 1;
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-          }
-        `;
-      case 'outline':
-      default:
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 36%,
-            transparent
-          );
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 52%,
-              transparent
-            );
-            color: ${palette.dark};
-          }
-
-          &:focus-within {
-            z-index: 1;
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 68%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-    }
-  }}
+  &:focus-within {
+    z-index: 1;
+  }
 
   &[data-disabled='true'] {
     opacity: 0.5;

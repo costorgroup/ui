@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { TBreakpoint } from '../../theme/types';
 import { TSContainerProps } from './types';
 
-const customProps = new Set(['maxWidth', 'fixed', 'disableGutters']);
+const customProps = new Set(['maxWidth', 'fixed', 'disableGutters', 'as']);
 
 const orderedBreakpoints: TBreakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 

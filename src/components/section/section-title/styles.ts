@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { TSSectionTitleProps } from './types';
 
-const customProps = new Set(['align', 'variant']);
+const customProps = new Set(['align', 'variant', 'as']);
 
 const railPad = `calc(
   var(--section-marker-size, 0.625rem) +
@@ -21,7 +21,7 @@ export const SSectionTitle = styled('h3', {
   font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
   font-size: ${({ theme }) => theme.typography.heading.h3};
-  color: ${({ theme }) => theme.palette.base.main};
+  color: ${({ theme }) => theme.surfaces.ink};
   box-sizing: border-box;
 
   ${({ align, variant }) => {

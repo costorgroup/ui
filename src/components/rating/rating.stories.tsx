@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { CheckIcon, Flex, Rating, Text } from '../../index';
+import { CheckIcon } from '../../icons';
+import { Flex, Text } from '../..';
+import { Rating } from './';
 
 const COLORS = [
   'base',
@@ -37,7 +39,7 @@ const labels: Record<number, string> = {
 };
 
 const meta: Meta<typeof Rating> = {
-  title: 'Forms & Inputs/Rating',
+  title: 'Forms/Rating',
   component: Rating,
   tags: ['autodocs'],
   argTypes: {
@@ -106,6 +108,31 @@ export const HoverFeedback: Story = {
       </Flex>
     );
   },
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} align="center" gap="sm">
+          <Text size="sm" style={{ width: 64 }}>
+            {variant}
+          </Text>
+          <Rating variant={variant} defaultValue={3} precision={0.5} />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <Rating key={color} color={color} defaultValue={3} />
+      ))}
+    </Flex>
+  ),
 };
 
 export const Sizes: Story = {

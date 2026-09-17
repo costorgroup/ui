@@ -1,13 +1,9 @@
 import { ElementType, ReactNode } from 'react';
 import type { TPolymorphicProps } from '../../helpers/polymorphic';
 import { TPaletteColor } from '../../theme/types';
+import type { TStaticVariant } from '../../helpers/variant-styles/types';
 
-export type TCodeVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'plain';
+export type TCodeVariant = TStaticVariant;
 
 export type TCodeSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

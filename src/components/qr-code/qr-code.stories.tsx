@@ -1,27 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { GradientCard } from '../../index';
-import { QrCode } from './index';
+import { Card, QrCode, Flex } from '../..';
 
 const meta: Meta<typeof QrCode> = {
   title: 'Data Display/QrCode',
   component: QrCode,
   tags: ['autodocs'],
   argTypes: {
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
     value: {
       control: 'text',
     },
@@ -35,27 +20,33 @@ type Story = StoryObj<typeof QrCode>;
 export const Default: Story = {
   args: {
     value: 'https://costor.app',
-    color: 'primary',
   },
   render: (args) => (
-    <div style={{ width: 180, height: 180 }}>
-      <GradientCard color={args.color} padding="xl">
-        <QrCode {...args} />
-      </GradientCard>
+    <div style={{ width: 160, height: 160 }}>
+      <QrCode {...args} />
     </div>
   ),
 };
 
-export const Colors: Story = {
+export const InheritsColor: Story = {
   render: () => (
-    <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-      {(['primary', 'secondary', 'success', 'error'] as const).map((color) => (
-        <div key={color} style={{ width: 140, height: 140 }}>
-          <GradientCard color={color} padding="lg">
-            <QrCode value="https://costor.app" color={color} />
-          </GradientCard>
+    <Flex gap="lg" wrap="wrap">
+      {['inherit', 'tomato', 'dodgerblue', '#22c55e'].map((color) => (
+        <div
+          key={color}
+          style={{ width: 120, height: 120, color }}
+        >
+          <QrCode value="https://costor.app" />
         </div>
       ))}
-    </div>
+    </Flex>
+  ),
+};
+
+export const OnCardSurface: Story = {
+  render: () => (
+    <Card variant="surface" style={{ width: 200, padding: 24 }}>
+      <QrCode value="https://costor.app" />
+    </Card>
   ),
 };

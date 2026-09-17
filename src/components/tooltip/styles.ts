@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { TTooltipPlacement, TSTooltipContentProps } from './types';
+import { Panel } from '../panel';
+import { TSTooltipContentProps, TTooltipPlacement } from './types';
 
 const customContentProps = new Set(['top', 'left', 'placement', 'visible']);
 
@@ -41,4 +42,16 @@ export const STooltipContent = styled('div', {
   transition:
     opacity 0.15s ease,
     transform 0.15s ease;
+`;
+
+export const STooltipPanel = styled(Panel)`
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  font-family: inherit;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  font-size: ${({ theme }) => theme.sizes.sm.fontSize};
+  line-height: 1.3;
+  padding: ${({ theme }) => theme.sizes.sm.padX};
+  white-space: normal;
 `;

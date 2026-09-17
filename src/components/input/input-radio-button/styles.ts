@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
-import { TInputSize } from '../input-wrapper/types';
+import { fieldFocusRing } from '../../../helpers/variant-styles/surface';
+import {
+  inputControlIdleHoverStyles,
+  inputControlIdleStyles,
+} from '../variant-styles';
 import { inputRadioButtonClasses } from './classes';
 import { TInputRadioButtonProps } from './types';
 
@@ -9,14 +13,6 @@ type TSInputRadioButtonProps = Pick<
 >;
 
 const customProps = new Set(['variant', 'size', 'color']);
-
-const sizeMap: Record<TInputSize, { box: string; dot: string }> = {
-  xs: { box: '12px', dot: '5px' },
-  sm: { box: '14px', dot: '6px' },
-  md: { box: '16px', dot: '6px' },
-  lg: { box: '20px', dot: '8px' },
-  xl: { box: '24px', dot: '10px' },
-};
 
 export const SInputRadioButton = styled.span`
   position: relative;
@@ -56,94 +52,25 @@ export const SInputRadioButtonControl = styled('span', {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  width: ${({ size = 'md' }) => sizeMap[size].box};
-  height: ${({ size = 'md' }) => sizeMap[size].box};
+  width: ${({ theme, size = 'md' }) => theme.sizes[size].icon};
+  height: ${({ theme, size = 'md' }) => theme.sizes[size].icon};
   border: 1px solid;
   border-radius: ${({ theme }) => theme.radius.circle};
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 
   .${inputRadioButtonClasses.dot} {
-    width: ${({ size = 'md' }) => sizeMap[size].dot};
-    height: ${({ size = 'md' }) => sizeMap[size].dot};
+    width: ${({ theme, size = 'md' }) =>
+      `calc(${theme.sizes[size].icon} / 2.4)`};
+    height: ${({ theme, size = 'md' }) =>
+      `calc(${theme.sizes[size].icon} / 2.4)`};
   }
 
-  ${({ theme, variant = 'subtle', color = 'primary' }) => {
-    const palette = theme.palette[color];
+  ${({ theme, variant = 'surface', color = 'primary' }) =>
+    inputControlIdleStyles(variant, theme.palette[color], theme)}
 
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-    }
-  }}
-
-  .${inputRadioButtonClasses.input}:hover:not(:disabled) + & {
-    ${({ theme, variant = 'subtle', color = 'primary' }) => {
-      const palette = theme.palette[color];
-
-      switch (variant) {
-        case 'surface':
-          return `
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 36%,
-              transparent
-            );
-          `;
-        case 'outline':
-          return `
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            border-color: ${palette.dark};
-            color: ${palette.dark};
-          `;
-        case 'subtle':
-        default:
-          return `
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-          `;
-      }
-    }}
+  .${inputRadioButtonClasses.input}:hover:not(:disabled):not(:checked) + & {
+    ${({ theme, variant = 'surface', color = 'primary' }) =>
+      inputControlIdleHoverStyles(variant, theme.palette[color], theme)}
   }
 
   .${inputRadioButtonClasses.input}:checked + & {
@@ -176,8 +103,9 @@ export const SInputRadioButtonControl = styled('span', {
   }
 
   .${inputRadioButtonClasses.input}:focus-visible + & {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.palette[color].main};
-    outline-offset: 2px;
+    outline: none;
+    box-shadow: ${({ theme, color = 'primary' }) =>
+      fieldFocusRing(theme.palette[color].main)};
   }
 
   .${inputRadioButtonClasses.input}:disabled + & {

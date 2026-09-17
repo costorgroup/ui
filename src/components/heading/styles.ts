@@ -6,7 +6,7 @@ type TSHeadingProps = {
   color?: THeadingOwnProps['color'];
 };
 
-const customProps = new Set(['level', 'color']);
+const customProps = new Set(['level', 'color', 'as']);
 
 export const SHeading = styled('h1', {
   shouldForwardProp: (prop) => !customProps.has(prop),

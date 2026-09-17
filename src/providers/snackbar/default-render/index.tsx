@@ -5,14 +5,14 @@ import { TSnackbarRender } from '../shared-types';
 export const defaultSnackbarRender: TSnackbarRender = ({
   title,
   description,
-  color = 'primary',
-  variant = 'subtle',
+  color,
+  variant = 'solid',
   size = 'md',
   icon,
   onClose,
 }) => (
   <Alert
-    color={color}
+    color={color ?? 'primary'}
     variant={variant}
     size={size}
     onClose={onClose}

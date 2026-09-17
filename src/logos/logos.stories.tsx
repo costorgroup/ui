@@ -9,7 +9,7 @@ import {
   MastercardLogo,
   UnionPayLogo,
   VisaLogo,
-} from './index';
+} from './';
 import type { TLogoVariant } from './types';
 
 const logos = [

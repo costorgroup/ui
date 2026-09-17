@@ -19,7 +19,8 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
     basis,
     gap,
     inline = false,
-    className, ...props
+    className,
+    ...props
   }: TFlexProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -38,10 +39,7 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
       gap={gap}
       inline={inline}
       {...props}
-        className={mergeClasses(
-          flexClasses.root,
-          className,
-        )}
+      className={mergeClasses(flexClasses.root, className)}
     >
       {children}
     </SFlex>

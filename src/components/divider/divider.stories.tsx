@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Divider, Flex, Text } from '../../index';
+import { Divider, Text, Flex } from '../..';
 import type { TPaletteColor } from '../../theme/types';
 import type { TDividerSize, TDividerVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
-  'base',
+  'default',
   'primary',
   'secondary',
   'success',
@@ -14,7 +14,7 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
-  'default',
+  'base',
   'inverted',
 ];
 
@@ -54,7 +54,7 @@ export const Default: Story = {
     orientation: 'horizontal',
     variant: 'solid',
     size: 'md',
-    color: 'base',
+    color: 'default',
   },
 };
 
@@ -84,6 +84,21 @@ export const Variants: Story = {
           <Divider variant={variant} />
         </Flex>
       ))}
+    </Flex>
+  ),
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {(['default', 'primary', 'success', 'error'] as TPaletteColor[]).map(
+        (color) => (
+          <Flex key={color} direction="column" gap="xs">
+            <Text size="sm">color={color}</Text>
+            <Divider color={color}>{color}</Divider>
+          </Flex>
+        ),
+      )}
     </Flex>
   ),
 };

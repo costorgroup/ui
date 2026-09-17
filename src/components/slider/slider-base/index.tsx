@@ -52,11 +52,13 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
       dragThreshold = 0.2,
       transitionMs = 400,
       pauseOnHover = true,
-      color = 'primary',
+      color = 'inverted',
       sliderRef,
+      onSlideCountChange,
       onMouseEnter,
       onMouseLeave,
       className,
+      style,
       ...props
     },
     ref,
@@ -66,7 +68,7 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
     const [slideCount, setSlideCount] = useState(0);
     const [uncontrolledSlide, setUncontrolledSlide] = useState(defaultSlide);
     const [offset, setOffset] = useState(0);
-    const [viewportWidth, setViewportWidth] = useState(600);
+    const [viewportWidth, setViewportWidth] = useState(0);
     const [disableTransition, setDisableTransition] = useState(false);
     const [transitioning, setTransitioning] = useState(false);
     const [dragging, setDragging] = useState(false);
@@ -318,6 +320,14 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
       transitioning,
     ]);
 
+    const setSlideCountAndNotify = useCallback(
+      (count: number) => {
+        setSlideCount(count);
+        onSlideCountChange?.(count);
+      },
+      [onSlideCountChange],
+    );
+
     const getHandle = useCallback(
       (): TSliderHandle => ({
         element: rootRef.current,
@@ -385,7 +395,7 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
         color,
         viewportWidth,
         setViewportWidth,
-        setSlideCount,
+        setSlideCount: setSlideCountAndNotify,
         setOffset,
         shiftBy,
         beginSettle,
@@ -410,6 +420,7 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
         onTrackTransitionEnd,
         prevSlide,
         setSlide,
+        setSlideCountAndNotify,
         shiftBy,
         slideCount,
         transitionMs,
@@ -433,10 +444,13 @@ const SliderBase = forwardRef<HTMLDivElement, TSliderBaseProps>(
             onMouseLeave?.(event);
           }}
           {...props}
-        className={mergeClasses(
-          sliderBaseClasses.root,
-          className,
-        )}
+          style={{
+            ...style,
+            ['--cui-slider-frame' as string]:
+              viewportWidth > 0 ? `${viewportWidth}px` : '100%',
+          }}
+          data-slot="slider"
+          className={mergeClasses(sliderBaseClasses.root, className)}
         >
           {children}
         </SSliderBase>
@@ -449,5 +463,6 @@ SliderBase.displayName = 'SliderBase';
 
 export type { TSliderBaseProps, TSliderHandle } from './types';
 export { sliderBaseClasses } from './classes';
+export { useSliderContext } from './context';
 export { SliderBase };
 export default SliderBase;

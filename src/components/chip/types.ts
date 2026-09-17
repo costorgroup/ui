@@ -1,20 +1,19 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
-import { TPaletteColor } from '../../theme/types';
+import { HTMLAttributes, MouseEventHandler, ReactNode } from 'react';
+import { TPaletteColor, TThemeRadius } from '../../theme/types';
+import type { TAppearance, TInteractiveVariant } from '../../helpers/variant-styles/types';
 
-export type TChipVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'ghost'
-  | 'plain';
-
+export type TChipVariant = TInteractiveVariant;
+export type TChipAppearance = TAppearance;
+export type TChipRadius = keyof TThemeRadius;
 export type TChipSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export type TChipProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> & {
+export type TChipProps = Omit<HTMLAttributes<HTMLSpanElement>, 'color'> & {
   children?: ReactNode;
   variant?: TChipVariant;
+  appearance?: TChipAppearance;
   size?: TChipSize;
   color?: TPaletteColor;
-  rounded?: boolean;
+  radius?: TChipRadius;
+  disabled?: boolean;
+  onDelete?: MouseEventHandler<HTMLButtonElement>;
 };

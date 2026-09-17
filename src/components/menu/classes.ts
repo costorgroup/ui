@@ -1,6 +1,3 @@
 import { generateUtilityClasses } from '../../helpers/generate-utility-classes';
 
-export const menuClasses = generateUtilityClasses('Menu', [
-  'root',
-  'open',
-]);
+export const menuClasses = generateUtilityClasses('V2Menu', ['root', 'open']);

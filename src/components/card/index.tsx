@@ -1,33 +1,54 @@
-import React, { ElementType, forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { cardClasses } from './classes';
-import type { TPolymorphicComponent } from '../../helpers/polymorphic';
 import { SCard } from './styles';
-import { TCardOwnProps, TCardProps } from './types';
+import { TCardProps } from './types';
 
-const Card = forwardRef(function Card<C extends ElementType = 'div'>(
-  { as, children, radius = 'large', className, ...props }: TCardProps<C>,
-  ref: React.Ref<Element>,
-) {
-  return (
+const Card = forwardRef<HTMLDivElement, TCardProps>(
+  (
+    {
+      children,
+      elevation = 1,
+      variant = 'surface',
+      radius = 'xl',
+      size = 'md',
+      className,
+      ...props
+    },
+    ref,
+  ) => (
     <SCard
-      as={as}
-      ref={ref as React.Ref<HTMLDivElement>}
+      ref={ref}
+      elevation={elevation}
+      variant={variant}
       radius={radius}
+      size={size}
+      data-slot="card"
       {...props}
-        className={mergeClasses(
-          cardClasses.root,
-          className,
-        )}
+      className={mergeClasses(cardClasses.root, cardClasses[size], className)}
     >
       {children}
     </SCard>
-  );
-}) as TPolymorphicComponent<'div', TCardOwnProps>;
+  ),
+);
 
 Card.displayName = 'Card';
 
-export type { TCardProps, TCardOwnProps, TCardRadius } from './types';
+export type { TCardProps, TCardSize } from './types';
+export type { TCardImageProps } from './card-image';
+export type { TCardHeaderProps } from './card-header';
+export type { TCardTitleProps } from './card-title';
+export type { TCardDescriptionProps } from './card-description';
+export type { TCardActionProps } from './card-action';
+export type { TCardContentProps } from './card-content';
+export type { TCardFooterProps, TCardFooterVariant } from './card-footer';
 export { cardClasses } from './classes';
+export { CardImage, cardImageClasses } from './card-image';
+export { CardHeader, cardHeaderClasses } from './card-header';
+export { CardTitle, cardTitleClasses } from './card-title';
+export { CardDescription, cardDescriptionClasses } from './card-description';
+export { CardAction, cardActionClasses } from './card-action';
+export { CardContent, cardContentClasses } from './card-content';
+export { CardFooter, cardFooterClasses } from './card-footer';
 export { Card };
 export default Card;

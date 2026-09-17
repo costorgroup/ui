@@ -1,25 +1,39 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardImage,
-  CardTitle,
-  Chip,
-  Flex,
-  Text,
-} from '../../index';
+import { ArrowRightIcon } from '../../icons';
+import { Button, Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardImage, CardTitle, Chip, Link, List, ListItem, Text, TextField, Flex } from '../..';
+import type { TCardSize } from './types';
+import type { TPanelVariant } from '../panel/types';
+
+const SIZES: TCardSize[] = ['sm', 'md', 'lg'];
+const VARIANTS: TPanelVariant[] = ['subtle', 'surface', 'outline'];
+const RADIUS = ['none', 'sm', 'md', 'lg', 'xl', 'pill'] as const;
 
 const meta: Meta<typeof Card> = {
-  title: 'Data Display/Card',
+  title: 'Surfaces/Card',
   component: Card,
   tags: ['autodocs'],
+  args: {
+    elevation: 1,
+    variant: 'surface',
+    radius: 'xl',
+    size: 'md',
+  },
   argTypes: {
+    elevation: {
+      control: { type: 'range', min: 0, max: 24, step: 1 },
+    },
+    variant: {
+      control: 'select',
+      options: VARIANTS,
+    },
     radius: {
       control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
+      options: RADIUS,
+    },
+    size: {
+      control: 'select',
+      options: SIZES,
     },
   },
 };
@@ -28,78 +42,206 @@ export default meta;
 
 type Story = StoryObj<typeof Card>;
 
-export const Default: Story = {
-  args: {
-    radius: 'large',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
   render: (args) => (
-    <Card {...args} style={{ width: 320 }}>
+    <Card {...args} style={{ maxWidth: 380 }}>
+      <CardHeader>
+        <CardTitle>Login to your account</CardTitle>
+        <CardDescription>
+          Enter your email below to login to your account
+        </CardDescription>
+        <CardAction>
+          <Link size="sm" href="#signup">
+            Sign Up
+          </Link>
+        </CardAction>
+      </CardHeader>
       <CardContent>
-        <CardTitle>Card title</CardTitle>
-        <Text>Card content uses spacing and colors from the theme.</Text>
-      </CardContent>
-    </Card>
-  ),
-};
-
-export const ProductSale: Story = {
-  render: () => (
-    <Card style={{ width: 280 }}>
-      <CardImage
-        src="https://picsum.photos/seed/mug/640/400"
-        alt="Stoneware mug"
-        height={180}
-      >
-        <Chip size="sm" color="error">
-          -20%
-        </Chip>
-      </CardImage>
-      <CardContent>
-        <CardTitle>Stoneware mug</CardTitle>
-        <Text size="sm" color="dark">
-          Matte glaze, 350 ml
-        </Text>
-        <Flex gap="sm" align="center">
-          <Text>$24.00</Text>
-          <Text
-            size="sm"
-            color="dark"
-            style={{ textDecoration: 'line-through', opacity: 0.55 }}
-          >
-            $30.00
-          </Text>
+        <Flex direction="column" gap="md">
+          <TextField
+            label="Email"
+            placeholder="m@example.com"
+            variant="subtle"
+            autoComplete="email"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            variant="subtle"
+            autoComplete="current-password"
+            helperText={
+              <Link size="sm" href="#forgot">
+                Forgot your password?
+              </Link>
+            }
+          />
         </Flex>
       </CardContent>
-      <CardActions>
-        <Button size="sm">Add to cart</Button>
-        <Button size="sm" variant="ghost">
-          Details
-        </Button>
-      </CardActions>
+      <CardFooter>
+        <Flex direction="column" gap="sm" style={{ width: '100%' }}>
+          <Button style={{ width: '100%' }}>Login</Button>
+          <Button variant="outline" style={{ width: '100%' }}>
+            Login with Google
+          </Button>
+        </Flex>
+      </CardFooter>
     </Card>
   ),
 };
 
-export const MediaAndActions: Story = {
-  render: () => (
-    <Card style={{ width: 320 }}>
-      <CardImage
-        src="https://picsum.photos/seed/desk/640/360"
-        alt="Workspace"
-        height={160}
-      />
+export const Login: Story = {
+  render: (args) => (
+    <Card {...args} style={{ maxWidth: 380 }}>
+      <CardHeader>
+        <CardTitle>Login to your account</CardTitle>
+        <CardDescription>
+          Enter your email below to login to your account
+        </CardDescription>
+        <CardAction>
+          <Link size="sm" href="#signup">
+            Sign Up
+          </Link>
+        </CardAction>
+      </CardHeader>
       <CardContent>
-        <CardTitle as="h4">Workspace kit</CardTitle>
-        <Text>
-          Compose image, title, body, and actions for richer layouts.
+        <Flex direction="column" gap="md">
+          <TextField
+            label="Email"
+            placeholder="m@example.com"
+            variant="subtle"
+            autoComplete="email"
+          />
+          <TextField
+            label="Password"
+            type="password"
+            placeholder="••••••••"
+            variant="subtle"
+            autoComplete="current-password"
+            helperText={
+              <Link size="sm" href="#forgot">
+                Forgot your password?
+              </Link>
+            }
+          />
+        </Flex>
+      </CardContent>
+      <CardFooter>
+        <Flex direction="column" gap="sm" style={{ width: '100%' }}>
+          <Button style={{ width: '100%' }}>Login</Button>
+          <Button variant="outline" style={{ width: '100%' }}>
+            Login with Google
+          </Button>
+        </Flex>
+      </CardFooter>
+    </Card>
+  ),
+};
+
+export const Size: Story = {
+  args: {
+    size: 'sm',
+  },
+  render: (args) => (
+    <Card {...args} style={{ maxWidth: 380 }}>
+      <CardHeader>
+        <CardTitle>Scheduled reports</CardTitle>
+        <CardDescription>
+          Weekly snapshots. No more manual exports.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <List variant="plain" size="sm">
+          <ListItem>Choose a schedule (daily, or weekly).</ListItem>
+          <ListItem>Send to channels or specific teammates.</ListItem>
+          <ListItem>Include charts, tables, and key metrics.</ListItem>
+        </List>
+      </CardContent>
+      <CardFooter>
+        <Button size="sm">Set up scheduled reports</Button>
+        <Button size="sm" variant="ghost">
+          See what&apos;s new
+          <ArrowRightIcon />
+        </Button>
+      </CardFooter>
+    </Card>
+  ),
+};
+
+export const Image: Story = {
+  render: (args) => (
+    <Card {...args} style={{ maxWidth: 380 }}>
+      <CardImage>
+        <img
+          src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=800&h=420&fit=crop"
+          alt="Event cover"
+        />
+        <Chip
+          size="sm"
+          color="inverted"
+          style={{ position: 'absolute', top: 12, left: 12 }}
+        >
+          Featured
+        </Chip>
+      </CardImage>
+      <CardHeader>
+        <CardTitle>Design systems meetup</CardTitle>
+        <CardDescription>
+          A practical talk on component APIs, accessibility, and shipping
+          faster.
+        </CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Button size="sm" style={{ width: '100%' }}>
+          View Event
+        </Button>
+      </CardFooter>
+    </Card>
+  ),
+};
+
+export const MutedFooter: Story = {
+  render: (args) => (
+    <Card {...args} style={{ maxWidth: 420 }}>
+      <CardHeader>
+        <CardTitle>Terms of Service</CardTitle>
+        <CardDescription>
+          Review the terms before accepting the agreement.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Text size="sm">
+          These terms govern your use of the workspace, including access to
+          shared documents, project files, and collaboration tools.
         </Text>
       </CardContent>
-      <CardActions justify="end">
-        <Button size="sm" variant="outline">
-          Share
+      <CardFooter variant="muted">
+        <Button size="sm" variant="outline" style={{ marginLeft: 'auto' }}>
+          Decline
         </Button>
-        <Button size="sm">Buy</Button>
-      </CardActions>
+        <Button size="sm">Accept</Button>
+      </CardFooter>
     </Card>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap="md" wrap="wrap" align="start">
+      {SIZES.map((size) => (
+        <Card key={size} size={size} style={{ width: 280 }}>
+          <CardHeader>
+            <CardTitle>{size}</CardTitle>
+            <CardDescription>
+              Spacing scales with size via --card-spacing.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter>
+            <Button size={size === 'lg' ? 'md' : 'sm'}>Continue</Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </Flex>
   ),
 };

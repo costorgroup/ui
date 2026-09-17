@@ -1,11 +1,5 @@
-import { THeadingAs, THeadingOwnProps } from '../../heading/types';
-import type { TPolymorphicProps } from '../../../helpers/polymorphic';
+import { HTMLAttributes, ReactNode } from 'react';
 
-export type TCardTitleAs = THeadingAs;
-
-export type TCardTitleOwnProps = THeadingOwnProps;
-
-export type TCardTitleProps<C extends TCardTitleAs = 'h3'> = TPolymorphicProps<
-  C,
-  TCardTitleOwnProps
->;
+export type TCardTitleProps = HTMLAttributes<HTMLHeadingElement> & {
+  children?: ReactNode;
+};

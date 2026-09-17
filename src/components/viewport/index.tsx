@@ -5,20 +5,17 @@ import { SViewport } from './styles';
 import { TViewportProps } from './types';
 
 const Viewport = forwardRef<HTMLDivElement, TViewportProps>(
-  ({
-    children,
-    radius = 'medium',
-    color = 'base',
-    variant = 'surface',
-    className,
-    ...props
-  }, ref) => {
+  (
+    { children, radius = 'medium', variant = 'surface', elevation = 1, className, ...props },
+    ref,
+  ) => {
     return (
       <SViewport
         ref={ref}
         radius={radius}
-        color={color}
         variant={variant}
+        elevation={elevation}
+        data-slot="viewport"
         {...props}
         className={mergeClasses(viewportClasses.root, className)}
       >

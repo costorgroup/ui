@@ -2,6 +2,7 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const accordionSummaryClasses = generateUtilityClasses('AccordionSummary', [
   'root',
-  'disabled',
+  'content',
+  'expandIcon',
   'expanded',
 ]);

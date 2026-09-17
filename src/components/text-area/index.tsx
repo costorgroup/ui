@@ -1,12 +1,8 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { InputFieldLayout } from '../input/input-base';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
 import { InputWrapper } from '../input/input-wrapper';
 import { InputTextAreaField } from '../input/input-text-area-field';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
 import { textAreaClasses } from './classes';
 import { TTextAreaProps } from './types';
 
@@ -20,22 +16,31 @@ const TextArea = forwardRef<HTMLDivElement, TTextAreaProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
+      variant = 'surface',
       color = 'primary',
       id,
       className,
       disabled,
       readOnly,
+      actionBar,
       ...props
     },
     ref,
   ) => {
-    const tone = error ? 'error' : color;
-
     return (
-      <InputFieldLayout
+      <FormControl
         ref={ref}
+        label={label}
+        description={description}
+        helperText={helperText}
+        required={required}
+        error={error}
         fullWidth={fullWidth}
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        id={id}
         className={mergeClasses(
           textAreaClasses.root,
           disabled && textAreaClasses.disabled,
@@ -43,52 +48,15 @@ const TextArea = forwardRef<HTMLDivElement, TTextAreaProps>(
           required && textAreaClasses.required,
           className,
         )}
-        label={
-          label != null ? (
-            <InputLabel
-              htmlFor={id}
-              required={required}
-              error={error}
-              disabled={disabled}
-              size={size}
-            >
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="base">
-              {description}
-            </Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} color={tone} error={error}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
       >
-        <InputWrapper
-          size={size}
-          variant={variant}
-          color={tone}
-          error={error}
-          disabled={disabled}
-          readOnly={readOnly}
-        >
+        <InputWrapper readOnly={readOnly} actionBar={actionBar}>
           <InputTextAreaField
-            id={id}
-            aria-invalid={error || undefined}
             disabled={disabled}
             readOnly={readOnly}
-            required={required}
             {...props}
           />
         </InputWrapper>
-      </InputFieldLayout>
+      </FormControl>
     );
   },
 );

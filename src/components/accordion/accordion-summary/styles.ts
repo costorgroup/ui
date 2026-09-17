@@ -1,41 +1,91 @@
 import styled from '@emotion/styled';
 import {
+  accordionSummaryDivider,
+  accordionSummaryIconColors,
+  accordionSummaryIdleColor,
+} from '../variant-styles';
+import { accordionSummaryClasses } from './classes';
+import {
   TSAccordionExpandIconProps,
   TSAccordionSummaryProps,
 } from './types';
 
-const customSummaryProps = new Set(['expandIconPosition', 'expanded', 'variant']);
-const customIconProps = new Set(['expanded', 'variant']);
+const summaryCustomProps = new Set([
+  'paletteColor',
+  'variant',
+  'expanded',
+  'disabled',
+  'expandIconPosition',
+  'size',
+  'hasDetails',
+]);
 
 export const SAccordionSummary = styled('button', {
-  shouldForwardProp: (prop) => !customSummaryProps.has(prop),
+  shouldForwardProp: (prop) => !summaryCustomProps.has(prop),
 })<TSAccordionSummaryProps>`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-direction: ${({ expandIconPosition }) =>
-    expandIconPosition === 'left' ? 'row-reverse' : 'row'};
-  gap: var(--accordion-gap);
+  gap: ${({ theme, size }) =>
+    `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`};
   width: 100%;
   margin: 0;
-  padding: var(--accordion-pad-y) var(--accordion-pad-x);
-  border: 0;
-  border-radius: inherit;
+  padding: ${({ theme, size }) => {
+    const scale = theme.sizeScale[size];
+    return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
+  }};
+  border: none;
+  border-bottom: ${({
+    theme,
+    paletteColor,
+    variant,
+    expanded,
+    hasDetails,
+  }) =>
+    expanded && hasDetails
+      ? accordionSummaryDivider(variant, theme.palette[paletteColor], theme)
+      : '1px solid transparent'};
   background: transparent;
-  color: inherit;
   font: inherit;
+  color: ${({ theme, variant, paletteColor }) =>
+    accordionSummaryIdleColor(variant, theme.palette[paletteColor], theme)};
   text-align: left;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    color 0.12s ease;
+  flex-direction: ${({ expandIconPosition }) =>
+    expandIconPosition === 'left' ? 'row-reverse' : 'row'};
+  justify-content: space-between;
 
-  &:hover {
-    background-color: ${({ variant }) =>
-      variant === 'solid' || variant === 'plain'
-        ? 'transparent'
-        : 'color-mix(in oklab, currentColor 6%, transparent)'};
-  }
+  ${({ theme, paletteColor, variant, expanded, hasDetails }) => {
+    const palette = theme.palette[paletteColor];
+    const icon = accordionSummaryIconColors(
+      variant,
+      palette,
+      theme,
+      expanded && hasDetails,
+    );
+
+    return `
+      & .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.idle};
+      }
+
+      &:hover:not(:disabled) .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.hover};
+      }
+
+      &:active:not(:disabled) .${accordionSummaryClasses.expandIcon},
+      &:focus-visible .${accordionSummaryClasses.expandIcon} {
+        color: ${icon.focus};
+      }
+    `;
+  }}
 
   &:focus-visible {
-    outline: 2px solid currentColor;
+    outline: 2px solid
+      ${({ theme, paletteColor }) => theme.palette[paletteColor].main};
     outline-offset: -2px;
   }
 `;
@@ -46,14 +96,11 @@ export const SAccordionSummaryContent = styled.span`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
 `;
 
-export const SAccordionExpandIcon = styled('span', {
-  shouldForwardProp: (prop) => !customIconProps.has(prop),
-})<TSAccordionExpandIconProps>`
+export const SAccordionExpandIcon = styled.span<TSAccordionExpandIconProps>`
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  opacity: ${({ variant }) => (variant === 'solid' ? 0.9 : 0.7)};
+  transition: transform 0.2s ease, color 0.12s ease;
   transform: ${({ expanded }) => (expanded ? 'rotate(180deg)' : 'rotate(0deg)')};
-  transition: transform 0.2s ease;
 `;

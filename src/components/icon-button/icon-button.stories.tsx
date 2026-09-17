@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Flex, IconButton, Text } from '../../index';
-import { CheckIcon } from '../../icons';
+import { CheckIcon, CloseIcon, EyeIcon } from '../../icons';
 import type { TPaletteColor } from '../../theme/types';
-import type { TIconButtonSize, TIconButtonVariant } from './types';
+import { ButtonGroup, IconButton, Text, Flex } from '../..';
+import type { TIconButtonRadius, TIconButtonSize, TIconButtonVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -29,30 +29,29 @@ const VARIANTS: TIconButtonVariant[] = [
 ];
 
 const SIZES: TIconButtonSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TIconButtonRadius[] = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill'];
 
 const meta: Meta<typeof IconButton> = {
   title: 'Buttons/IconButton',
   component: IconButton,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: VARIANTS,
-    },
-    size: {
-      control: 'select',
-      options: SIZES,
-    },
-    color: {
-      control: 'select',
-      options: COLORS,
-    },
-    rounded: {
-      control: 'boolean',
-    },
-    disabled: {
-      control: 'boolean',
-    },
+    variant: { control: 'select', options: VARIANTS },
+    appearance: { control: 'select', options: ['opaque', 'transparent'] },
+    size: { control: 'select', options: SIZES },
+    color: { control: 'select', options: COLORS },
+    radius: { control: 'select', options: RADIUS },
+    disabled: { control: 'boolean' },
+  },
+  args: {
+    children: <CheckIcon />,
+    'aria-label': 'Check',
+    variant: 'solid',
+    appearance: 'opaque',
+    size: 'md',
+    color: 'default',
+    radius: 'sm',
+    disabled: false,
   },
 };
 
@@ -60,16 +59,20 @@ export default meta;
 
 type Story = StoryObj<typeof IconButton>;
 
-export const Default: Story = {
-  args: {
-    children: <CheckIcon />,
-    'aria-label': 'Check',
-    variant: 'solid',
-    size: 'md',
-    color: 'primary',
-    rounded: false,
-    disabled: false,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {COLORS.map((color) => (
+        <IconButton key={color} color={color} aria-label={color}>
+          <CheckIcon />
+        </IconButton>
+      ))}
+    </Flex>
+  ),
 };
 
 export const Variants: Story = {
@@ -89,12 +92,7 @@ export const Variants: Story = {
                 <CheckIcon />
               </IconButton>
             ))}
-            <IconButton
-              variant={variant}
-              color="primary"
-              disabled
-              aria-label="disabled"
-            >
+            <IconButton variant={variant} disabled aria-label="disabled">
               <CheckIcon />
             </IconButton>
           </Flex>
@@ -116,14 +114,56 @@ export const Sizes: Story = {
   ),
 };
 
-export const Rounded: Story = {
+export const Radius: Story = {
   render: () => (
     <Flex gap="sm" wrap="wrap" align="center">
-      {SIZES.map((size) => (
-        <IconButton key={size} size={size} rounded aria-label={size}>
+      {RADIUS.map((radius) => (
+        <IconButton key={radius} radius={radius} aria-label={radius}>
           <CheckIcon />
         </IconButton>
       ))}
+    </Flex>
+  ),
+};
+
+export const Group: Story = {
+  render: (args) => (
+    <Flex gap="lg" align="center" wrap="wrap">
+      <ButtonGroup
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <IconButton aria-label="Check">
+          <CheckIcon />
+        </IconButton>
+        <IconButton aria-label="Preview">
+          <EyeIcon />
+        </IconButton>
+        <IconButton aria-label="Close">
+          <CloseIcon />
+        </IconButton>
+      </ButtonGroup>
+      <ButtonGroup
+        rounded
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <IconButton aria-label="Check">
+          <CheckIcon />
+        </IconButton>
+        <IconButton aria-label="Preview">
+          <EyeIcon />
+        </IconButton>
+        <IconButton aria-label="Close">
+          <CloseIcon />
+        </IconButton>
+      </ButtonGroup>
     </Flex>
   ),
 };

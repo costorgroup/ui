@@ -5,17 +5,15 @@ import { SDrawerActions } from './styles';
 import { TDrawerActionsProps } from './types';
 
 const DrawerActions = forwardRef<HTMLDivElement, TDrawerActionsProps>(
-  ({ children, className, ...props }, ref) => {
-    return (
-      <SDrawerActions ref={ref} {...props}
-        className={mergeClasses(
-          drawerActionsClasses.root,
-          className,
-        )}>
-        {children}
-      </SDrawerActions>
-    );
-  },
+  ({ children, className, ...props }, ref) => (
+    <SDrawerActions
+      ref={ref}
+      {...props}
+      className={mergeClasses(drawerActionsClasses.root, className)}
+    >
+      {children}
+    </SDrawerActions>
+  ),
 );
 
 DrawerActions.displayName = 'DrawerActions';

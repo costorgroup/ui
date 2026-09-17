@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import { TGap, TTheme } from '../../theme/types';
+import { MOTION, reduceMotion } from '../../motion';
+import { paperShadow } from '../../helpers/variant-styles/surface';
 import { TSpeedDialLayout } from './data';
 import { TSpeedDialInset } from './types';
 
@@ -11,11 +13,17 @@ type TSSpeedDialProps = {
 type TSSpeedDialItemsProps = {
   itemsGap?: TSpeedDialInset;
   itemsDirection?: TSpeedDialLayout['itemsDirection'];
-  open?: boolean;
+  itemOffset?: string;
 };
 
 const rootProps = new Set(['flexDirection', 'gap']);
-const itemsProps = new Set(['itemsGap', 'itemsDirection', 'open']);
+const itemsProps = new Set(['itemsGap', 'itemsDirection', 'itemOffset']);
+
+const STAGGER_MS = 56;
+const MAX_STAGGER_ITEMS = 8;
+const OPEN_MS = 360;
+const CLOSE_MS = 180;
+const POP = 'cubic-bezier(0.22, 1.45, 0.32, 1)';
 
 const toInset = (theme: TTheme, value?: TSpeedDialInset) => {
   if (value === undefined) {
@@ -33,6 +41,55 @@ const toInset = (theme: TTheme, value?: TSpeedDialInset) => {
   return value;
 };
 
+const staggerRules = () =>
+  Array.from({ length: MAX_STAGGER_ITEMS }, (_, index) => {
+    const openDelay = index * STAGGER_MS;
+
+    return `
+      &[data-open='true'] > *:nth-of-type(${index + 1}) {
+        transition-delay: ${openDelay}ms;
+      }
+    `;
+  }).join('');
+
+const itemsPlacement = (itemsDirection: TSpeedDialLayout['itemsDirection']) => {
+  switch (itemsDirection) {
+    case 'column':
+      return `
+        top: 100%;
+        left: 50%;
+        padding-top: var(--speed-dial-gap);
+        transform: translateX(-50%);
+        --speed-dial-origin: 50% 0%;
+      `;
+    case 'row':
+      return `
+        left: 100%;
+        top: 50%;
+        padding-left: var(--speed-dial-gap);
+        transform: translateY(-50%);
+        --speed-dial-origin: 0% 50%;
+      `;
+    case 'row-reverse':
+      return `
+        right: 100%;
+        top: 50%;
+        padding-right: var(--speed-dial-gap);
+        transform: translateY(-50%);
+        --speed-dial-origin: 100% 50%;
+      `;
+    case 'column-reverse':
+    default:
+      return `
+        bottom: 100%;
+        left: 50%;
+        padding-bottom: var(--speed-dial-gap);
+        transform: translateX(-50%);
+        --speed-dial-origin: 50% 100%;
+      `;
+  }
+};
+
 export const SSpeedDial = styled('div', {
   shouldForwardProp: (prop) => !rootProps.has(prop),
 })<TSSpeedDialProps>`
@@ -41,6 +98,27 @@ export const SSpeedDial = styled('div', {
   flex-direction: ${({ flexDirection = 'column-reverse' }) => flexDirection};
   align-items: center;
   --speed-dial-gap: ${({ theme, gap = 'md' }) => toInset(theme, gap)};
+`;
+
+export const SSpeedDialTriggerWrap = styled.span`
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  border-radius: inherit;
+  box-shadow: ${({ theme }) => paperShadow(theme, 4)};
+`;
+
+export const SSpeedDialTriggerIcon = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform ${MOTION.duration} ${MOTION.easing};
+
+  &[data-open='true'] {
+    transform: rotate(45deg);
+  }
+
+  ${reduceMotion}
 `;
 
 export const SSpeedDialItems = styled('div', {
@@ -53,100 +131,35 @@ export const SSpeedDialItems = styled('div', {
   gap: ${({ theme, itemsGap = 'sm' }) => toInset(theme, itemsGap)};
   visibility: hidden;
   pointer-events: none;
-  transform: scale(0.7);
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0s linear 0.2s;
+  transition: visibility 0s linear ${CLOSE_MS}ms;
 
-  ${({ itemsDirection = 'column-reverse' }) => {
-    switch (itemsDirection) {
-      case 'column':
-        return `
-          top: 100%;
-          left: 50%;
-          padding-top: var(--speed-dial-gap);
-          transform: translateX(-50%) scale(0.7);
-          transform-origin: top center;
-        `;
-      case 'row':
-        return `
-          left: 100%;
-          top: 50%;
-          padding-left: var(--speed-dial-gap);
-          transform: translateY(-50%) scale(0.7);
-          transform-origin: left center;
-        `;
-      case 'row-reverse':
-        return `
-          right: 100%;
-          top: 50%;
-          padding-right: var(--speed-dial-gap);
-          transform: translateY(-50%) scale(0.7);
-          transform-origin: right center;
-        `;
-      case 'column-reverse':
-      default:
-        return `
-          bottom: 100%;
-          left: 50%;
-          padding-bottom: var(--speed-dial-gap);
-          transform: translateX(-50%) scale(0.7);
-          transform-origin: bottom center;
-        `;
-    }
-  }}
+  ${({ itemsDirection = 'column-reverse' }) => itemsPlacement(itemsDirection)}
+
+  & > * {
+    opacity: 0;
+    transform-origin: var(--speed-dial-origin);
+    transform: scale(0.28)
+      ${({ itemOffset = 'translateY(16px)' }) => itemOffset};
+    transition:
+      opacity ${CLOSE_MS}ms ease-in,
+      transform ${CLOSE_MS}ms ease-in;
+    will-change: transform, opacity;
+    ${reduceMotion}
+  }
 
   &[data-open='true'] {
     visibility: visible;
     pointer-events: auto;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s;
+    transition: visibility 0s;
   }
 
-  &[data-open='true'][data-items-direction='column'] {
-    transform: translateX(-50%) scale(1);
-  }
-
-  &[data-open='true'][data-items-direction='row'] {
-    transform: translateY(-50%) scale(1);
-  }
-
-  &[data-open='true'][data-items-direction='row-reverse'] {
-    transform: translateY(-50%) scale(1);
-  }
-
-  &[data-open='true'][data-items-direction='column-reverse'] {
-    transform: translateX(-50%) scale(1);
-  }
-`;
-
-export const SSpeedDialIconWrap = styled.span`
-  display: grid;
-  place-items: center;
-`;
-
-export const SSpeedDialIcon = styled.span`
-  display: flex;
-  grid-area: 1 / 1;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &[data-slot='icon'] {
-    transform: rotate(0deg);
+  &[data-open='true'] > * {
     opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity ${OPEN_MS}ms ${POP},
+      transform ${OPEN_MS}ms ${POP};
   }
 
-  &[data-slot='icon'][data-open='true'] {
-    transform: rotate(90deg);
-    opacity: 0;
-  }
-
-  &[data-slot='close'] {
-    transform: rotate(-90deg);
-    opacity: 0;
-  }
-
-  &[data-slot='close'][data-open='true'] {
-    transform: rotate(0deg);
-    opacity: 1;
-  }
+  ${staggerRules()}
 `;

@@ -1,13 +1,30 @@
 import styled from '@emotion/styled';
-import type { TPaletteColor } from '../../theme/types';
+import type { TPaletteColor, TTheme } from '../../theme/types';
+import {
+  colorMix,
+  fieldBackground,
+  fieldBorderColor,
+  fieldFocusRing,
+} from '../../helpers/variant-styles/surface';
+import type { TInputVariant } from '../input/input-wrapper/types';
 
 type TSDropzoneProps = {
   color: TPaletteColor;
+  variant: TInputVariant;
   active: boolean;
   disabled: boolean;
 };
 
-const customProps = new Set(['color', 'active', 'disabled']);
+const customProps = new Set(['color', 'variant', 'active', 'disabled']);
+
+const dropzoneFill = (variant: TInputVariant, theme: TTheme) =>
+  variant === 'outline' ? 'transparent' : fieldBackground(theme);
+
+const dropzoneBorder = (
+  variant: TInputVariant,
+  theme: TTheme,
+  hover = false,
+) => (variant === 'subtle' ? 'transparent' : fieldBorderColor(theme, hover));
 
 export const SDropzone = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -22,38 +39,44 @@ export const SDropzone = styled('div', {
   width: 100%;
   padding: ${({ theme }) => theme.spacing(theme.gap.xl)};
   border: 1.5px dashed;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  border-radius: ${({ theme }) => theme.radius.md};
   text-align: center;
   user-select: none;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
+  color: ${({ theme }) => theme.surfaces.ink};
   transition:
     background-color 0.15s ease,
     border-color 0.15s ease,
-    color 0.15s ease;
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 
-  ${({ theme, color, active, disabled }) => {
+  ${({ theme, color, variant, active, disabled }) => {
     const palette = theme.palette[color];
-    const idleBg = `color-mix(in oklab, ${palette.main} 4%, transparent)`;
-    const activeBg = `color-mix(in oklab, ${palette.main} 8%, transparent)`;
+    const idleBg = dropzoneFill(variant, theme);
+    const idleBorder = dropzoneBorder(variant, theme);
+    const hoverBg =
+      variant === 'outline' ? colorMix(theme.surfaces.mixer, 4) : idleBg;
+    const hoverBorder = dropzoneBorder(variant, theme, true);
+    const activeBg = colorMix(palette.main, 8);
+    const activeBorder = colorMix(palette.main, 56);
 
     return `
-      color: ${palette.darker};
-      border-color: color-mix(in oklab, ${palette.main} 40%, transparent);
       background-color: ${active && !disabled ? activeBg : idleBg};
+      border-color: ${active && !disabled ? activeBorder : idleBorder};
 
       ${
         disabled
           ? ''
           : `
         &:hover {
-          background-color: ${activeBg};
-          border-color: color-mix(in oklab, ${palette.main} 56%, transparent);
+          background-color: ${active ? activeBg : hoverBg};
+          border-color: ${active ? activeBorder : hoverBorder};
         }
 
         &:focus-visible {
-          outline: 2px solid ${palette.main};
-          outline-offset: 2px;
+          outline: none;
+          box-shadow: ${fieldFocusRing(palette.main)};
         }
       `
       }
@@ -78,7 +101,7 @@ export const SDropzoneTitle = styled.div`
   font-size: 1rem;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.heading};
-  color: inherit;
+  color: ${({ theme }) => theme.surfaces.ink};
 `;
 
 export const SDropzoneDescription = styled.div`
@@ -87,7 +110,7 @@ export const SDropzoneDescription = styled.div`
   font-size: 0.875rem;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.palette.common.grey[12]};
+  color: ${({ theme }) => theme.surfaces.muted};
 `;
 
 export const SDropzoneInput = styled.input`

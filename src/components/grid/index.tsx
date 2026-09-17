@@ -1,7 +1,7 @@
 import React, { ElementType, forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { gridClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
+import { gridClasses } from './classes';
 import { SGrid } from './styles';
 import { TGridOwnProps, TGridProps } from './types';
 
@@ -17,7 +17,8 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
     alignItems,
     justifyItems,
     minChildWidth,
-    className, ...props
+    className,
+    ...props
   }: TGridProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -34,10 +35,7 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
       justifyItems={justifyItems}
       minChildWidth={minChildWidth}
       {...props}
-        className={mergeClasses(
-          gridClasses.root,
-          className,
-        )}
+      className={mergeClasses(gridClasses.root, className)}
     >
       {children}
     </SGrid>
@@ -46,7 +44,20 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
 
 Grid.displayName = 'Grid';
 
-export type { TGridProps, TGridOwnProps, TGridGap, TGridTrack } from './types';
+export type {
+  TGridProps,
+  TGridOwnProps,
+  TGridGap,
+  TGridTrack,
+  TGridTemplate,
+  TGridTemplateTrack,
+} from './types';
 export { gridClasses } from './classes';
+export {
+  GridCell,
+  gridCellClasses,
+  type TGridCellProps,
+  type TGridCellOwnProps,
+} from './grid-cell';
 export { Grid };
 export default Grid;

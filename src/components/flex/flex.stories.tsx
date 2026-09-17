@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Button, Flex, Text } from '../../index';
+import { Button, Text } from '../..';
+import { Flex } from './';
+
 const meta: Meta<typeof Flex> = {
   title: 'Layout/Flex',
   component: Flex,

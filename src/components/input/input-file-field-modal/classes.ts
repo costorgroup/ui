@@ -3,4 +3,5 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 export const inputFileFieldModalClasses = generateUtilityClasses('InputFileFieldModal', [
   'root',
   'disabled',
+  'list',
 ]);

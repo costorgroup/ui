@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import type { TPaletteColor } from '../../theme/types';
-import { Flex, Text } from '../../index';
 import { ArrowTopIcon } from '../../icons';
+import { Text, Flex } from '../..';
 import { AccordionBase } from './accordion-base';
-import { AccordionSummary } from './accordion-summary';
 import { AccordionDetails } from './accordion-details';
 import { AccordionGroup } from './accordion-group';
-import type { TAccordionVariant } from './accordion-base/context';
+import { AccordionSummary } from './accordion-summary';
+import type { TAccordionSize } from './accordion-base/context';
+import type { TAccordionVariant } from './variant-styles';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -32,8 +33,10 @@ const VARIANTS: TAccordionVariant[] = [
   'plain',
 ];
 
+const SIZES: TAccordionSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 const meta: Meta<typeof AccordionBase> = {
-  title: 'Components/Accordion/Parts',
+  title: 'Data Display/Accordion/Parts',
   component: AccordionBase,
   tags: ['autodocs'],
 };
@@ -44,22 +47,21 @@ type Story = StoryObj<typeof AccordionBase>;
 
 export const Default: Story = {
   args: {
-    color: 'primary',
+    color: 'default',
     variant: 'subtle',
     size: 'md',
+    radius: 'md',
   },
-  render: function DefaultStory(args) {
-    return (
-      <AccordionBase {...args} style={{ width: 420 }}>
-        <AccordionSummary>Accordion title</AccordionSummary>
-        <AccordionDetails>
-          <Text>
-            Details content expands and collapses with a short height animation.
-          </Text>
-        </AccordionDetails>
-      </AccordionBase>
-    );
-  },
+  render: (args) => (
+    <AccordionBase {...args} style={{ width: 420 }}>
+      <AccordionSummary>Accordion title</AccordionSummary>
+      <AccordionDetails>
+        <Text>
+          Details content expands and collapses with a short height animation.
+        </Text>
+      </AccordionDetails>
+    </AccordionBase>
+  ),
 };
 
 export const Controlled: Story = {
@@ -90,7 +92,7 @@ export const Variants: Story = {
         <AccordionBase
           key={variant}
           variant={variant}
-          color="primary"
+          color="default"
           defaultExpanded
         >
           <AccordionSummary>{variant}</AccordionSummary>
@@ -111,6 +113,21 @@ export const Colors: Story = {
           <AccordionSummary>{color}</AccordionSummary>
           <AccordionDetails>
             <Text>{color} subtle accordion.</Text>
+          </AccordionDetails>
+        </AccordionBase>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {SIZES.map((size) => (
+        <AccordionBase key={size} size={size} defaultExpanded>
+          <AccordionSummary>{size} size</AccordionSummary>
+          <AccordionDetails>
+            <Text>Accordion at {size} size.</Text>
           </AccordionDetails>
         </AccordionBase>
       ))}
@@ -149,22 +166,34 @@ export const ExpandIconPosition: Story = {
   ),
 };
 
-export const Group: Story = {
-  render: () => (
-    <AccordionGroup radius="medium" style={{ width: 420 }}>
-      <AccordionBase variant="surface" color="primary">
+export const Grouped: Story = {
+  args: {
+    color: 'default',
+    variant: 'surface',
+    size: 'md',
+    radius: 'md',
+  },
+  render: (args) => (
+    <AccordionGroup
+      color={args.color}
+      variant={args.variant}
+      size={args.size}
+      radius={args.radius}
+      style={{ width: 420 }}
+    >
+      <AccordionBase>
         <AccordionSummary>First accordion</AccordionSummary>
         <AccordionDetails>
           <Text>Top corners are rounded.</Text>
         </AccordionDetails>
       </AccordionBase>
-      <AccordionBase variant="surface" color="primary">
+      <AccordionBase defaultExpanded>
         <AccordionSummary>Middle accordion</AccordionSummary>
         <AccordionDetails>
           <Text>No corner radius between items.</Text>
         </AccordionDetails>
       </AccordionBase>
-      <AccordionBase variant="surface" color="primary">
+      <AccordionBase>
         <AccordionSummary>Last accordion</AccordionSummary>
         <AccordionDetails>
           <Text>Bottom corners are rounded.</Text>

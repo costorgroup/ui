@@ -5,33 +5,17 @@ import { SDrawerBody, SDrawerBodyPlain } from './styles';
 import { TDrawerBodyProps } from './types';
 
 const DrawerBody = forwardRef<HTMLDivElement, TDrawerBodyProps>(
-  (
-    {
-      children,
-      scrollable = true,
-      mode = 'hover',
-      color = 'primary',
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    if (!scrollable) {
-      return (
-        <SDrawerBodyPlain ref={ref} {...props}
-        className={mergeClasses(
-          drawerBodyClasses.root,
-          className,
-        )}>
-          {children}
-        </SDrawerBodyPlain>
-      );
-    }
+  ({ children, scrollable = true, className, ...props }, ref) => {
+    const Root = scrollable ? SDrawerBody : SDrawerBodyPlain;
 
     return (
-      <SDrawerBody ref={ref} mode={mode} color={color} {...props}>
+      <Root
+        ref={ref}
+        {...props}
+        className={mergeClasses(drawerBodyClasses.root, className)}
+      >
         {children}
-      </SDrawerBody>
+      </Root>
     );
   },
 );

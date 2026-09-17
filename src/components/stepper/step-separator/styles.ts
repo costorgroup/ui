@@ -9,9 +9,7 @@ export const SStepSeparator = styled('div', {
   flex: 1 1 auto;
   pointer-events: none;
   background-color: ${({ status }) =>
-    status === 'complete'
-      ? 'var(--stepper-main)'
-      : 'var(--stepper-track)'};
+    status === 'complete' ? 'var(--stepper-fill)' : 'var(--stepper-track)'};
   transition: background-color 0.15s ease;
 
   ${({ orientation }) =>

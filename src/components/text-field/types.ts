@@ -17,4 +17,5 @@ export type TTextFieldProps = Omit<
   color?: TPaletteColor;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
+  actionBar?: ReactNode;
 };

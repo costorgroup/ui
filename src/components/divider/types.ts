@@ -13,6 +13,8 @@ export type TDividerProps = Omit<
   orientation?: TDividerOrientation;
   variant?: TDividerVariant;
   size?: TDividerSize;
+  /** `default` follows the current light/dark surface divider — pass an
+   * accent to color the line and label instead. */
   color?: TPaletteColor;
 };
 

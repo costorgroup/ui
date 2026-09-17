@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { accordionClasses } from './classes';
-import { AccordionBase } from './accordion-base';
-import { AccordionSummary } from './accordion-summary';
-import { AccordionDetails } from './accordion-details';
 import { ArrowBottomIcon } from '../../icons';
+import { AccordionBase } from './accordion-base';
+import { AccordionDetails } from './accordion-details';
+import { AccordionSummary } from './accordion-summary';
+import { accordionClasses } from './classes';
 import { TAccordionProps } from './types';
 
 const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
@@ -21,11 +21,14 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       color,
       variant,
       size,
+      radius,
       className,
       ...props
     },
     ref,
   ) => {
+    const hasDetails = children != null;
+
     return (
       <AccordionBase
         ref={ref}
@@ -36,6 +39,8 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         color={color}
         variant={variant}
         size={size}
+        radius={radius}
+        hasDetails={hasDetails}
         {...props}
         className={mergeClasses(
           accordionClasses.root,
@@ -47,11 +52,14 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         <AccordionSummary
           expandIcon={icon ?? <ArrowBottomIcon />}
           expandIconPosition={expandIconPosition}
+          className={accordionClasses.summary}
         >
           {summary}
         </AccordionSummary>
-        {children != null ? (
-          <AccordionDetails>{children}</AccordionDetails>
+        {hasDetails ? (
+          <AccordionDetails className={accordionClasses.details}>
+            {children}
+          </AccordionDetails>
         ) : null}
       </AccordionBase>
     );
@@ -60,7 +68,24 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
 
 Accordion.displayName = 'Accordion';
 
-export type { TAccordionProps };
+export type {
+  TAccordionProps,
+  TAccordionRadius,
+  TAccordionExpandIconPosition,
+  TAccordionSize,
+} from './types';
+export type { TAccordionVariant } from './variant-styles';
+export { AccordionBase } from './accordion-base';
+export type { TAccordionBaseProps } from './accordion-base';
+export { accordionBaseClasses } from './accordion-base';
+export { AccordionSummary } from './accordion-summary';
+export type { TAccordionSummaryProps } from './accordion-summary';
+export { accordionSummaryClasses } from './accordion-summary';
+export { AccordionDetails } from './accordion-details';
+export type { TAccordionDetailsProps } from './accordion-details';
+export { accordionDetailsClasses } from './accordion-details';
+export { AccordionGroup, accordionGroupClasses } from './accordion-group';
+export type { TAccordionGroupProps } from './accordion-group';
 export { accordionClasses } from './classes';
 export { Accordion };
 export default Accordion;

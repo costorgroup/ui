@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Center, Fixed, Heading, Text, Viewport } from '../../index';
+import { Center, Fixed, Heading, Text, Viewport } from '../..';
 
 const meta: Meta<typeof Viewport> = {
   title: 'Layout/Viewport',
@@ -9,25 +9,11 @@ const meta: Meta<typeof Viewport> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'subtle', 'surface', 'outline', 'ghost', 'plain'],
+      options: ['subtle', 'surface', 'outline'],
     },
     radius: {
       control: 'select',
       options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
     },
   },
 };
@@ -39,7 +25,6 @@ type Story = StoryObj<typeof Viewport>;
 export const Default: Story = {
   args: {
     radius: 'medium',
-    color: 'base',
     variant: 'surface',
     style: { width: 600, height: 400 },
   },

@@ -20,7 +20,7 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
     {
       children,
       badgeContent,
-      color = 'primary',
+      color = 'default',
       variant = 'solid',
       size = 'md',
       max = 99,
@@ -52,10 +52,7 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
         vertical={vertical}
         horizontal={horizontal}
         {...props}
-        className={mergeClasses(
-          badgeClasses.root,
-          className,
-        )}
+        className={mergeClasses(badgeClasses.root, className)}
       >
         {children}
         <SBadgeContent
@@ -68,6 +65,11 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
           vertical={vertical}
           horizontal={horizontal}
           aria-hidden={invisible || undefined}
+          className={mergeClasses(
+            badgeClasses.content,
+            isDot && badgeClasses.dot,
+            invisible && badgeClasses.invisible,
+          )}
         >
           {displayContent}
         </SBadgeContent>

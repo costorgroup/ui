@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { alertClasses } from './classes';
 import { CloseIcon } from '../../icons';
+import { alertClasses } from './classes';
 import { AlertBase, AlertBody } from './alert-base';
 import { AlertIcon } from './alert-icon';
 import { AlertTitle } from './alert-title';
@@ -20,6 +20,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       color = 'primary',
       variant = 'subtle',
       size = 'md',
+      radius = 'md',
       onClose,
       className,
       ...props
@@ -34,6 +35,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
         color={color}
         variant={variant}
         size={size}
+        radius={radius}
         closable={closable}
         {...props}
         className={mergeClasses(
@@ -65,7 +67,22 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
 
 Alert.displayName = 'Alert';
 
-export type { TAlertProps, TAlertVariant, TAlertSize } from './types';
+export type {
+  TAlertProps,
+  TAlertVariant,
+  TAlertSize,
+  TAlertRadius,
+} from './types';
 export { alertClasses } from './classes';
+export { AlertBase, AlertBody, alertBaseClasses } from './alert-base';
+export type { TAlertBaseProps } from './alert-base';
+export { AlertIcon, alertIconClasses } from './alert-icon';
+export type { TAlertIconProps } from './alert-icon';
+export { AlertTitle, alertTitleClasses } from './alert-title';
+export type { TAlertTitleProps } from './alert-title';
+export { AlertContent, alertContentClasses } from './alert-content';
+export type { TAlertContentProps } from './alert-content';
+export { AlertActions, alertActionsClasses } from './alert-actions';
+export type { TAlertActionsProps } from './alert-actions';
 export { Alert };
 export default Alert;

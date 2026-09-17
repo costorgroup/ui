@@ -24,4 +24,5 @@ export type TColorPickerFieldProps = {
   name?: string;
   id?: string;
   className?: string;
+  actionBar?: ReactNode;
 };

@@ -1,10 +1,9 @@
-import React, { forwardRef, MouseEvent, useState } from 'react';
+import React, { forwardRef, MouseEvent, useCallback, useMemo, useState } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { ToggleButtonGroupContext } from './context';
 import { toggleButtonGroupClasses } from './classes';
+import { ToggleButtonGroupContext, TToggleButtonValue } from './context';
 import { SToggleButtonGroup } from './styles';
 import { TToggleButtonGroupProps } from './types';
-import { TToggleButtonValue } from './context';
 
 const nextGroupValue = (
   exclusive: boolean,
@@ -33,10 +32,13 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, TToggleButtonGroupProps>(
     {
       children,
       orientation = 'horizontal',
-      color,
+      color = 'default',
       variant = 'outline',
+      appearance,
+      size,
       className,
       disabled = false,
+      rounded = false,
       exclusive = true,
       value: valueProp,
       defaultValue = exclusive ? null : [],
@@ -49,37 +51,51 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, TToggleButtonGroupProps>(
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
     const value = isControlled ? valueProp : uncontrolledValue;
 
-    const handleSelect = (
-      event: MouseEvent<HTMLButtonElement>,
-      buttonValue: TToggleButtonValue | undefined,
-    ) => {
-      const next = nextGroupValue(exclusive, value, buttonValue);
+    const handleSelect = useCallback(
+      (
+        event: MouseEvent<HTMLButtonElement>,
+        buttonValue: TToggleButtonValue | undefined,
+      ) => {
+        const next = nextGroupValue(exclusive, value, buttonValue);
 
-      if (!isControlled) {
-        setUncontrolledValue(next);
-      }
+        if (!isControlled) {
+          setUncontrolledValue(next);
+        }
 
-      onChange?.(event, next);
-    };
+        onChange?.(event, next);
+      },
+      [exclusive, isControlled, onChange, value],
+    );
+
+    const contextValue = useMemo(
+      () => ({
+        color,
+        variant,
+        appearance,
+        size,
+        disabled,
+        exclusive,
+        value,
+        onSelect: handleSelect,
+      }),
+      [appearance, color, disabled, exclusive, handleSelect, size, value, variant],
+    );
 
     return (
-      <ToggleButtonGroupContext.Provider
-        value={{
-          color,
-          variant,
-          disabled,
-          exclusive,
-          value,
-          onSelect: handleSelect,
-        }}
-      >
+      <ToggleButtonGroupContext.Provider value={contextValue}>
         <SToggleButtonGroup
           ref={ref}
           orientation={orientation}
+          variant={variant}
+          color={color}
+          rounded={rounded}
           role="group"
           {...props}
           className={mergeClasses(
             toggleButtonGroupClasses.root,
+            orientation === 'vertical'
+              ? toggleButtonGroupClasses.vertical
+              : toggleButtonGroupClasses.horizontal,
             disabled && toggleButtonGroupClasses.disabled,
             className,
           )}
@@ -95,11 +111,16 @@ ToggleButtonGroup.displayName = 'ToggleButtonGroup';
 
 export type {
   TToggleButtonGroupProps,
-  TToggleButtonGroupOrientation,
 } from './types';
-export type { TToggleButtonValue } from './context';
+export type {
+  TToggleButtonGroupOrientation,
+  TToggleButtonValue,
+} from './context';
 export { toggleButtonGroupClasses } from './classes';
-export { ToggleButtonGroupContext } from './context';
+export {
+  ToggleButtonGroupContext,
+  useToggleButtonGroupContext,
+} from './context';
 export { useToggleButton } from './use-toggle-button';
 export { ToggleButtonGroup };
 export default ToggleButtonGroup;

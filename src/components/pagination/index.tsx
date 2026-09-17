@@ -1,16 +1,16 @@
 import React, { forwardRef, MouseEvent, useState } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { paginationClasses } from './classes';
 import { ArrowRightIcon } from '../../icons';
-import { PaginationBase } from './pagination-base';
-import { PaginationList } from './pagination-list';
-import { PaginationEllipsis } from './pagination-ellipsis';
-import { PaginationItem } from './pagination-item';
+import { paginationClasses } from './classes';
 import {
   defaultGetItemAriaLabel,
   getPaginationItems,
 } from './get-items';
-import { TPaginationItemType, TPaginationProps } from './types';
+import { PaginationBase } from './pagination-base';
+import { PaginationEllipsis } from './pagination-ellipsis';
+import { PaginationItem } from './pagination-item';
+import { PaginationList } from './pagination-list';
+import { TPaginationItemType, TPaginationProps, PAGINATION_DEFAULT_VARIANTS } from './types';
 
 const FlipIcon = () => (
   <span
@@ -54,8 +54,8 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       page: pageProp,
       defaultPage = 1,
       onChange,
-      color = 'primary',
-      variant = 'solid',
+      color = 'default',
+      variant = PAGINATION_DEFAULT_VARIANTS,
       size = 'md',
       disabled = false,
       hidePrevButton = false,
@@ -100,11 +100,15 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       };
 
     return (
-      <PaginationBase ref={ref} {...props}
+      <PaginationBase
+        ref={ref}
+        {...props}
         className={mergeClasses(
           paginationClasses.root,
+          disabled && paginationClasses.disabled,
           className,
-        )}>
+        )}
+      >
         <PaginationList>
           {items.map((item, index) => {
             const key = `${item.type}-${item.page ?? index}`;
@@ -153,10 +157,23 @@ Pagination.displayName = 'Pagination';
 export type {
   TPaginationProps,
   TPaginationVariant,
+  TPaginationVariantProp,
   TPaginationSize,
   TPaginationItemType,
   TPaginationItemData,
 } from './types';
+export {
+  PAGINATION_DEFAULT_VARIANTS,
+  PAGINATION_INACTIVE_COLOR,
+} from './types';
 export { paginationClasses } from './classes';
+export { PaginationBase, paginationBaseClasses } from './pagination-base';
+export type { TPaginationBaseProps } from './pagination-base';
+export { PaginationList, paginationListClasses } from './pagination-list';
+export type { TPaginationListProps } from './pagination-list';
+export { PaginationItem, paginationItemClasses } from './pagination-item';
+export type { TPaginationItemProps } from './pagination-item';
+export { PaginationEllipsis, paginationEllipsisClasses } from './pagination-ellipsis';
+export type { TPaginationEllipsisProps } from './pagination-ellipsis';
 export { Pagination };
 export default Pagination;

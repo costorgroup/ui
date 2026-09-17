@@ -5,22 +5,21 @@ import { SCardContent } from './styles';
 import { TCardContentProps } from './types';
 
 const CardContent = forwardRef<HTMLDivElement, TCardContentProps>(
-  ({ children, className, ...props }, ref) => {
-    return (
-      <SCardContent
-        ref={ref}
-        {...props}
-        className={mergeClasses(cardContentClasses.root, className)}
-      >
-        {children}
-      </SCardContent>
-    );
-  },
+  ({ children, className, ...props }, ref) => (
+    <SCardContent
+      ref={ref}
+      data-slot="card-content"
+      {...props}
+      className={mergeClasses(cardContentClasses.root, className)}
+    >
+      {children}
+    </SCardContent>
+  ),
 );
 
 CardContent.displayName = 'CardContent';
 
-export type { TCardContentProps };
+export type { TCardContentProps } from './types';
 export { cardContentClasses } from './classes';
 export { CardContent };
 export default CardContent;

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
 import { CheckIcon } from '../../icons';
-import { Stepper } from './index';
+import { Stepper } from './';
 import {
   Step,
   StepBody,
@@ -18,7 +18,7 @@ import { StepStatus } from './step-status';
 import { StepTitle } from './step-title';
 
 const meta: Meta<typeof Stepper> = {
-  title: 'Components/Stepper/Parts',
+  title: 'Navigation/Stepper/Parts',
   component: Stepper,
   tags: ['autodocs'],
 };
@@ -143,7 +143,7 @@ export const VerticalParts: Story = {
         <StepBody>
           <StepLabels>
             <StepTitle>Done</StepTitle>
-            <StepDescription>You’re all set</StepDescription>
+            <StepDescription>You're all set</StepDescription>
           </StepLabels>
         </StepBody>
       </Step>

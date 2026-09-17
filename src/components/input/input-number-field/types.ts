@@ -15,4 +15,5 @@ export type TInputNumberFieldProps = Omit<
   step?: number;
   min?: number;
   max?: number;
+  actionBar?: ReactNode;
 };

@@ -1,28 +1,30 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { overlayState } from '../../../motion';
 import { menuBaseClasses } from './classes';
 import { SMenuBase } from './styles';
 import { TMenuBaseProps } from './types';
 
 const MenuBase = forwardRef<HTMLDivElement, TMenuBaseProps>(
-  ({ children, top, left, visible, role = 'menu', className, ...props }, ref) => {
-    return (
-      <SMenuBase
-        ref={ref}
-        top={top}
-        left={left}
-        visible={visible}
-        role={role}
-        {...props}
-        className={mergeClasses(
-          menuBaseClasses.root,
-          className,
-        )}
-      >
-        {children}
-      </SMenuBase>
-    );
-  },
+  (
+    { children, top, left, visible, role = 'menu', className, ...props },
+    ref,
+  ) => (
+    <SMenuBase
+      ref={ref}
+      top={top}
+      left={left}
+      elevation={2}
+      variant="surface"
+      radius="md"
+      role={role}
+      {...props}
+      {...overlayState(visible)}
+      className={mergeClasses(menuBaseClasses.root, className)}
+    >
+      {children}
+    </SMenuBase>
+  ),
 );
 
 MenuBase.displayName = 'MenuBase';

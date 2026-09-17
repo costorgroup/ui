@@ -1,49 +1,47 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { CheckIcon, Tab, Tabs } from '../../index';
 import type { TPaletteColor } from '../../theme/types';
+import { Tabs, Tab, Text, Flex } from '../..';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
 
 const meta: Meta<typeof Tabs> = {
   title: 'Data Display/Tabs',
   component: Tabs,
   tags: ['autodocs'],
+  args: {
+    appearance: 'opaque',
+    orientation: 'horizontal',
+    variant: 'subtle',
+    fullWidth: true,
+  },
   argTypes: {
+    orientation: {
+      control: 'select',
+      options: ['horizontal', 'vertical'],
+    },
+    appearance: {
+      control: 'select',
+      options: ['opaque', 'transparent'],
+    },
     variant: {
       control: 'select',
-      options: ['line', 'subtle', 'enclosed', 'outline', 'plain'],
+      options: ['subtle', 'surface', 'plain'],
     },
-    anchor: {
-      control: 'select',
-      options: ['top', 'bottom', 'left', 'right'],
-    },
-    justify: {
-      control: 'select',
-      options: ['start', 'center', 'end', 'stretch'],
-    },
-    textAlign: {
-      control: 'select',
-      options: ['start', 'center', 'end'],
-    },
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-        'default',
-        'inverted',
-] satisfies TPaletteColor[],
-    },
+    fullWidth: { control: 'boolean' },
+    color: { control: 'select', options: COLORS },
   },
 };
 
@@ -51,92 +49,154 @@ export default meta;
 
 type Story = StoryObj<typeof Tabs>;
 
-const TabsDemo = ({
-  variant = 'line',
-  anchor = 'bottom',
-  justify = 'stretch',
-  textAlign = 'center',
-  color = 'primary',
-  size = 'md',
-}: {
-  variant?: 'line' | 'subtle' | 'enclosed' | 'outline' | 'plain';
-  anchor?: 'top' | 'bottom' | 'left' | 'right';
-  justify?: 'start' | 'center' | 'end' | 'stretch';
-  textAlign?: 'start' | 'center' | 'end';
-  color?: TPaletteColor;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-}) => {
-  const [active, setActive] = useState('one');
+export const Horizontal: Story = {
+  render: function HorizontalStory(args) {
+    const [value, setValue] = useState('overview');
 
-  return (
-    <div style={{ width: anchor === 'left' || anchor === 'right' ? 200 : 420 }}>
-      <Tabs
-        variant={variant}
-        anchor={anchor}
-        justify={justify}
-        textAlign={textAlign}
-        color={color}
-        size={size}
-      >
-        <Tab
-          icon={<CheckIcon />}
-          active={active === 'one'}
-          onClick={() => setActive('one')}
-        >
-          Overview
-        </Tab>
-        <Tab active={active === 'two'} onClick={() => setActive('two')}>
-          Details
-        </Tab>
-        <Tab active={active === 'three'} onClick={() => setActive('three')}>
-          Settings
-        </Tab>
-      </Tabs>
-    </div>
-  );
-};
-
-export const Line: Story = {
-  render: (args) => (
-    <TabsDemo
-      variant={args.variant}
-      anchor={args.anchor}
-      justify={args.justify}
-      textAlign={args.textAlign}
-      color={args.color}
-      size={args.size}
-    />
-  ),
-  args: {
-    variant: 'line',
-    anchor: 'bottom',
-    justify: 'stretch',
-    textAlign: 'center',
-    color: 'primary',
-    size: 'md',
+    return (
+      <Flex direction="column" gap="md" style={{ width: 360 }}>
+        <Tabs {...args} value={value} onChange={setValue}>
+          <Tab value="overview">Overview</Tab>
+          <Tab value="details">Details</Tab>
+          <Tab value="billing">Billing</Tab>
+          <Tab value="members">Members</Tab>
+          <Tab value="integrations">Integrations</Tab>
+          <Tab value="notifications">Notifications</Tab>
+          <Tab value="security">Security</Tab>
+          <Tab value="audit">Audit log</Tab>
+        </Tabs>
+        <Text size="sm">Selected: {value}</Text>
+      </Flex>
+    );
   },
 };
 
-export const Subtle: Story = {
-  render: () => <TabsDemo variant="subtle" />,
+export const Vertical: Story = {
+  args: {
+    orientation: 'vertical',
+  },
+  render: function VerticalStory(args) {
+    const [value, setValue] = useState('overview');
+
+    return (
+      <Flex gap="lg" align="flex-start">
+        <Tabs
+          {...args}
+          value={value}
+          onChange={setValue}
+          style={{ width: 160 }}
+        >
+          <Tab value="overview">Overview</Tab>
+          <Tab value="details">Details</Tab>
+          <Tab value="settings">Settings</Tab>
+        </Tabs>
+        <Text size="sm">Panel: {value}</Text>
+      </Flex>
+    );
+  },
 };
 
-export const Enclosed: Story = {
-  render: () => <TabsDemo variant="enclosed" />,
+export const Compact: Story = {
+  args: {
+    fullWidth: false,
+  },
+  render: function CompactStory(args) {
+    const [value, setValue] = useState('a');
+
+    return (
+      <Tabs {...args} value={value} onChange={setValue}>
+        <Tab value="a">Day</Tab>
+        <Tab value="b">Week</Tab>
+        <Tab value="c">Month</Tab>
+      </Tabs>
+    );
+  },
 };
 
-export const Outline: Story = {
-  render: () => <TabsDemo variant="outline" />,
+export const Transparent: Story = {
+  args: {
+    appearance: 'transparent',
+  },
+  render: function TransparentStory(args) {
+    const [value, setValue] = useState('general');
+
+    return (
+      <Tabs {...args} value={value} onChange={setValue}>
+        <Tab value="general">General</Tab>
+        <Tab value="privacy">Privacy</Tab>
+        <Tab value="advanced">Advanced</Tab>
+      </Tabs>
+    );
+  },
+};
+
+export const Colored: Story = {
+  args: {
+    color: 'info',
+  },
+  render: function ColoredStory(args) {
+    const [value, setValue] = useState('one');
+
+    return (
+      <Tabs {...args} value={value} onChange={setValue} style={{ width: 360 }}>
+        <Tab value="one">Overview</Tab>
+        <Tab value="two">Details</Tab>
+        <Tab value="three">Billing</Tab>
+      </Tabs>
+    );
+  },
+};
+
+export const Surface: Story = {
+  args: {
+    variant: 'surface',
+  },
+  render: function SurfaceStory(args) {
+    const [value, setValue] = useState('overview');
+
+    return (
+      <Tabs {...args} value={value} onChange={setValue} style={{ width: 360 }}>
+        <Tab value="overview">Overview</Tab>
+        <Tab value="details">Details</Tab>
+        <Tab value="billing">Billing</Tab>
+      </Tabs>
+    );
+  },
 };
 
 export const Plain: Story = {
-  render: () => <TabsDemo variant="plain" />,
+  args: {
+    variant: 'plain',
+    fullWidth: false,
+    draggable: false,
+  },
+  render: function PlainStory(args) {
+    const [value, setValue] = useState('smileys');
+
+    return (
+      <div style={{ width: 220 }}>
+        <Tabs {...args} value={value} onChange={setValue}>
+          <Tab value="smileys">😀</Tab>
+          <Tab value="people">👋</Tab>
+          <Tab value="animals">🐻</Tab>
+          <Tab value="food">🍔</Tab>
+          <Tab value="travel">✈️</Tab>
+          <Tab value="activities">⚽</Tab>
+          <Tab value="objects">💡</Tab>
+          <Tab value="symbols">💜</Tab>
+          <Tab value="flags">🏳️</Tab>
+        </Tabs>
+      </div>
+    );
+  },
 };
 
-export const Vertical: Story = {
-  render: () => <TabsDemo variant="line" anchor="left" />,
-};
-
-export const Stretch: Story = {
-  render: () => <TabsDemo variant="line" justify="stretch" />,
+export const Uncontrolled: Story = {
+  render: (args) => (
+    <Tabs {...args} defaultValue="first" style={{ width: 320 }}>
+      <Tab value="first">First</Tab>
+      <Tab value="second">Second</Tab>
+      <Tab value="third">Third</Tab>
+    </Tabs>
+  ),
 };

@@ -1,65 +1,66 @@
-import React, { forwardRef, useContext, useState } from 'react';
+import React, { ElementType, forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { ButtonGroupContext } from '../button-group/context';
-import { InputGroupContext } from '../input-group/context';
+import type { TPolymorphicComponent } from '../../helpers/polymorphic';
+import { useButtonGroupContext } from '../button-group/context';
 import { buttonClasses } from './classes';
 import { SButton } from './styles';
-import { TButtonProps } from './types';
+import { TButtonOwnProps, TButtonProps } from './types';
 
-const Button = forwardRef<HTMLButtonElement, TButtonProps>(
-  (
-    {
-      children,
-      variant: variantProp,
-      size = 'md',
-      color: colorProp,
-      className,
-      disabled,
-      onFocus,
-      onBlur,
-      ...props
-    },
-    ref,
-  ) => {
-    const buttonGroup = useContext(ButtonGroupContext);
-    const inputGroup = useContext(InputGroupContext);
-    const group = buttonGroup ?? inputGroup;
+const Button = forwardRef(function Button<C extends ElementType = 'button'>(
+  {
+    as,
+    children,
+    variant: variantProp,
+    appearance: appearanceProp,
+    size: sizeProp,
+    color: colorProp,
+    radius = 'sm',
+    className,
+    disabled: disabledProp,
+    ...props
+  }: TButtonProps<C>,
+  ref: React.Ref<Element>,
+) {
+  const group = useButtonGroupContext();
+  const variant = variantProp ?? group?.variant ?? 'solid';
+  const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
+  const color = colorProp ?? group?.color ?? 'default';
+  const size = sizeProp ?? group?.size ?? 'md';
+  const disabled = disabledProp ?? group?.disabled ?? false;
+  const tag = as ?? 'button';
 
-    const variant = variantProp ?? group?.variant ?? 'solid';
-    const color = colorProp ?? group?.color ?? 'primary';
-    const [focusVisible, setFocusVisible] = useState(false);
-
-    return (
-      <SButton
-        ref={ref}
-        variant={variant}
-        size={size}
-        color={color}
-        disabled={disabled}
-        {...props}
-        className={mergeClasses(
-          buttonClasses.root,
-          disabled && buttonClasses.disabled,
-          className,
-        )}
-        onFocus={(event) => {
-          setFocusVisible(event.currentTarget.matches(':focus-visible'));
-          onFocus?.(event);
-        }}
-        onBlur={(event) => {
-          setFocusVisible(false);
-          onBlur?.(event);
-        }}
-      >
-        {children}
-      </SButton>
-    );
-  },
-);
+  return (
+    <SButton
+      as={tag}
+      ref={ref as React.Ref<HTMLButtonElement>}
+      variant={variant}
+      appearance={appearance}
+      size={size}
+      color={color}
+      radius={radius}
+      disabled={disabled}
+      {...props}
+      className={mergeClasses(
+        buttonClasses.root,
+        disabled && buttonClasses.disabled,
+        className,
+      )}
+    >
+      {children}
+    </SButton>
+  );
+}) as TPolymorphicComponent<'button', TButtonOwnProps>;
 
 Button.displayName = 'Button';
 
-export type { TButtonProps, TButtonVariant, TButtonSize } from './types';
+export type {
+  TButtonProps,
+  TButtonOwnProps,
+  TButtonVariant,
+  TButtonAppearance,
+  TButtonSize,
+  TButtonRadius,
+} from './types';
 export { buttonClasses } from './classes';
 export { Button };
 export default Button;

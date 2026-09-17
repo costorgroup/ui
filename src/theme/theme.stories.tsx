@@ -1,10 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { CSSProperties, useState } from 'react';
 import { ThemeSwitcher } from '../../.storybook/theme-switcher';
-import { Flex, Text } from '../components';
-import { Color, ColorPickerField, ThemePreview } from '../v2';
-import { Button } from '../v2/components/button';
-import { SettingsPreview, BlurBackdrop } from '../v2/components/window/settings-preview';
+import { Button, Color, ColorPickerField, Flex, Text } from '../components';
 import type { TThemeAppearance } from './appearance';
 import { ThemeProvider } from './provider';
 import { useTheme } from './use-theme';
@@ -110,7 +107,7 @@ const ModeAdjust = ({
             size="sm"
             format="hexa"
             value={draft[field.key]}
-            onChange={(value) =>
+            onChange={(value: string) =>
               setDraft((current) => ({ ...current, [field.key]: value }))
             }
           />
@@ -167,7 +164,7 @@ const Playground = () => {
 
       <Flex gap="lg" wrap="wrap" align="flex-end" justify="center">
         <Flex direction="column" gap="xs" align="center">
-          <ThemePreview
+          <Color
             colors={[base.main, primary.main]}
             aria-label="Resolved theme"
           />
@@ -226,16 +223,12 @@ const Playground = () => {
           </Button>
         </Flex>
       </Flex>
-
-      <BlurBackdrop>
-        <SettingsPreview />
-      </BlurBackdrop>
     </div>
   );
 };
 
 const meta: Meta = {
-  title: 'V2/Theme',
+  title: 'Foundations/Theme',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',

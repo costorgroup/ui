@@ -1,9 +1,9 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export type TInputSelectOptionProps = Omit<
+export type TInputSelectOptionProps<T = unknown> = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'children'
+  'children' | 'value'
 > & {
   children?: ReactNode;
-  value?: string | number;
+  value?: T;
 };

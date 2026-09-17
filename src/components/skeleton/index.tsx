@@ -17,7 +17,7 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
     {
       width,
       height,
-      radius = 'medium',
+      radius = 'md',
       animation = 'pulse',
       animationOffset = 0,
       className,
@@ -46,6 +46,11 @@ const Skeleton = forwardRef<HTMLSpanElement, TSkeletonProps>(
 
 Skeleton.displayName = 'Skeleton';
 
+export type {
+  TSkeletonProps,
+  TSkeletonRadius,
+  TSkeletonAnimation,
+} from './types';
 export { skeletonClasses } from './classes';
 export { Skeleton };
 export default Skeleton;

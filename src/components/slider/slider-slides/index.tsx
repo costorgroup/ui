@@ -12,6 +12,7 @@ import React, {
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { sliderSlidesClasses } from './classes';
 import { SliderContext } from '../slider-base/context';
+import { SliderSlide } from '../slider-slide';
 import { SSliderSlides } from './styles';
 import { TSliderSlidesProps } from './types';
 
@@ -20,7 +21,7 @@ const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
     const slider = useContext(SliderContext);
 
     if (!slider) {
-      throw new Error('SliderSlides must be used within SliderBase');
+      throw new Error('SliderSlides must be used within Slider');
     }
 
     const {
@@ -54,7 +55,23 @@ const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
 
     offsetRef.current = offset;
 
-    const items = useMemo(() => Children.toArray(children), [children]);
+    const items = useMemo(() => {
+      const next = Children.map(children, (child, index) => {
+        if (
+          isValidElement(child) &&
+          (child.type === SliderSlide ||
+            (typeof child.type !== 'string' &&
+              'displayName' in child.type &&
+              child.type.displayName === 'SliderSlide'))
+        ) {
+          return child;
+        }
+
+        return <SliderSlide key={index}>{child}</SliderSlide>;
+      });
+
+      return Children.toArray(next);
+    }, [children]);
 
     useEffect(() => {
       setSlideCount(items.length);
@@ -360,6 +377,7 @@ const SliderSlides = forwardRef<HTMLDivElement, TSliderSlidesProps>(
         dragging={dragging}
         onPointerDown={handlePointerDown}
         onTransitionEnd={handleTransitionEnd}
+        data-slot="slides"
         {...props}
         className={mergeClasses(
           sliderSlidesClasses.root,

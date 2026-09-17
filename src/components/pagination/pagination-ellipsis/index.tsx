@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
-import { paginationEllipsisClasses } from './classes';
 import { MoreHorizontalIcon } from '../../../icons';
+import { paginationEllipsisClasses } from './classes';
 import { SPaginationEllipsis } from './styles';
 import { TPaginationEllipsisProps } from './types';
 
@@ -15,10 +15,7 @@ const PaginationEllipsis = forwardRef<HTMLSpanElement, TPaginationEllipsisProps>
         role="presentation"
         aria-hidden="true"
         {...props}
-        className={mergeClasses(
-          paginationEllipsisClasses.root,
-          className,
-        )}
+        className={mergeClasses(paginationEllipsisClasses.root, className)}
       >
         <MoreHorizontalIcon aria-hidden="true" width="1em" height="1em" />
       </SPaginationEllipsis>

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { TableSectionContext } from '../table-root/context';
 import { tableBodyClasses } from './classes';
-import { TableSectionContext } from '../table-base/context';
 import { STableBody } from './styles';
 import { TTableBodyProps } from './types';
 
@@ -9,11 +9,12 @@ const TableBody = forwardRef<HTMLTableSectionElement, TTableBodyProps>(
   ({ children, className, ...props }, ref) => {
     return (
       <TableSectionContext.Provider value={{ isHead: false }}>
-        <STableBody ref={ref} {...props}
-        className={mergeClasses(
-          tableBodyClasses.root,
-          className,
-        )}>
+        <STableBody
+          ref={ref}
+          data-slot="table-body"
+          {...props}
+          className={mergeClasses(tableBodyClasses.root, className)}
+        >
           {children}
         </STableBody>
       </TableSectionContext.Provider>

@@ -1,15 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import React, { MouseEvent, useState } from "react";
-import {
-  Avatar,
-  Chip,
-  Flex,
-  IconButton,
-  Select,
-  SelectOption,
-  Text,
-} from "../../index";
-import { CloseIcon } from "../../icons";
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import React, { MouseEvent, useState } from 'react';
+import type { TPaletteColor } from '../../theme/types';
+import { CloseIcon } from '../../icons';
+import { Chip, IconButton, InputActions, InputButton, Select, Text, Flex, Avatar } from '../..';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 
 type TPerson = {
   name: string;
@@ -17,17 +11,35 @@ type TPerson = {
 };
 
 const people: TPerson[] = [
-  { name: "Remy Sharp", src: "https://i.pravatar.cc/150?img=1" },
-  { name: "Travis Howard", src: "https://i.pravatar.cc/150?img=2" },
-  { name: "Cindy Baker", src: "https://i.pravatar.cc/150?img=3" },
-  { name: "Agnes Walker", src: "https://i.pravatar.cc/150?img=4" },
-  { name: "Trevor Henderson", src: "https://i.pravatar.cc/150?img=5" },
+  { name: 'Remy Sharp', src: 'https://i.pravatar.cc/150?img=1' },
+  { name: 'Travis Howard', src: 'https://i.pravatar.cc/150?img=2' },
+  { name: 'Cindy Baker', src: 'https://i.pravatar.cc/150?img=3' },
+  { name: 'Agnes Walker', src: 'https://i.pravatar.cc/150?img=4' },
+  { name: 'Trevor Henderson', src: 'https://i.pravatar.cc/150?img=5' },
 ];
 
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const SIMPLE = ['one', 'two'];
+
 const meta: Meta<typeof Select> = {
-  title: 'Forms & Inputs/Select',
+  title: 'Forms/Select',
   component: Select,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
       <div style={{ width: 480 }}>
@@ -36,102 +48,121 @@ const meta: Meta<typeof Select> = {
     ),
   ],
   argTypes: {
-    size: {
-      control: "select",
-      options: ["xs", "sm", "md", "lg", "xl"],
-    },
-    variant: {
-      control: "select",
-      options: ["subtle", "surface", "outline"],
-    },
-    color: {
-      control: "select",
-      options: [
-        "base",
-        "primary",
-        "secondary",
-        "success",
-        "error",
-        "warning",
-        "info",
-        "dark",
-        "light",
-      ],
-    },
-    fullWidth: { control: "boolean" },
-    required: { control: "boolean" },
-    error: { control: "boolean" },
-    disabled: { control: "boolean" },
-    multiSelect: { control: "boolean" },
-    closeOnSelect: { control: "boolean" },
-    hideSelectedOptions: { control: "boolean" },
-    noOptionsText: { control: "text" },
-    label: { control: "text" },
-    description: { control: "text" },
-    helperText: { control: "text" },
-    placeholder: { control: "text" },
-  },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof Select>;
-
-export const Default: Story = {
-  render: (args) => {
-    const [value, setValue] = useState<TPerson>(people[0]);
-
-    return (
-      <Select
-        {...args}
-        renderValue={() => (
-          <Flex align="center" gap="sm">
-            <Avatar name={value.name} src={value.src} size="xs" />
-            <Text size="sm">{value.name}</Text>
-          </Flex>
-        )}
-      >
-        {people.map((person) => (
-          <SelectOption
-            key={person.name}
-            value={person.name}
-            onClick={() => setValue(person)}
-          >
-            <Avatar name={person.name} src={person.src} size="xs" />
-            <Text size="sm">{person.name}</Text>
-          </SelectOption>
-        ))}
-      </Select>
-    );
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
+    fullWidth: { control: 'boolean' },
+    required: { control: 'boolean' },
+    error: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+    multiSelect: { control: 'boolean' },
+    closeOnSelect: { control: 'boolean' },
+    hideSelectedOptions: { control: 'boolean' },
+    noOptionsText: { control: 'text' },
+    label: { control: 'text' },
+    description: { control: 'text' },
+    helperText: { control: 'text' },
+    placeholder: { control: 'text' },
   },
   args: {
-    label: "Assignee",
-    helperText: "Who owns this task.",
-    placeholder: "Select a person",
-    size: "md",
-    variant: "subtle",
-    color: "primary",
+    label: 'Assignee',
+    helperText: 'Who owns this task.',
+    placeholder: 'Select a person',
+    size: 'md',
+    variant: 'surface',
+    color: 'primary',
     fullWidth: true,
     multiSelect: false,
     error: false,
   },
 };
 
+export default meta;
+
+type Story = StoryObj<typeof Select<TPerson>>;
+
+const personLabel = (person: TPerson) => (
+  <Flex align="center" gap="sm">
+    <Avatar name={person.name} src={person.src} size="xs" />
+    <Text size="sm">{person.name}</Text>
+  </Flex>
+);
+
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => {
+    const [value, setValue] = useState<TPerson>(people[0]);
+
+    return (
+      <Select
+        {...args}
+        options={people}
+        value={value}
+        onChange={(_, next) => setValue(next as TPerson)}
+        isValueEqual={(a, b) => a.name === b.name}
+        getOptionLabel={(person) => person.name}
+        renderOption={(person) => personLabel(person)}
+        renderValue={(selected) =>
+          selected && !Array.isArray(selected) ? personLabel(selected) : null
+        }
+      />
+    );
+  },
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <Select
+          key={color}
+          color={color}
+          label={color}
+          options={SIMPLE}
+          defaultValue="one"
+        />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <Select
+            variant={variant}
+            label={variant}
+            options={SIMPLE}
+            defaultValue="one"
+          />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {SIZES.map((size) => (
+        <Select
+          key={size}
+          size={size}
+          label={size}
+          options={SIMPLE}
+          defaultValue="one"
+        />
+      ))}
+    </Flex>
+  ),
+};
+
 export const MultiSelect: Story = {
   render: (args) => {
     const [value, setValue] = useState<TPerson[]>([people[0], people[2]]);
-
-    const togglePerson = (person: TPerson) => {
-      setValue((current) => {
-        const exists = current.some((item) => item.name === person.name);
-
-        if (exists) {
-          return current.filter((item) => item.name !== person.name);
-        }
-
-        return [...current, person];
-      });
-    };
 
     const removePerson = (event: MouseEvent, person: TPerson) => {
       event.stopPropagation();
@@ -146,89 +177,80 @@ export const MultiSelect: Story = {
         {...args}
         multiSelect
         hideSelectedOptions
-        renderValue={() =>
-          value.length > 0 ? (
+        options={people}
+        value={value}
+        onChange={(_, next) => setValue(next as TPerson[])}
+        isValueEqual={(a, b) => a.name === b.name}
+        getOptionLabel={(person) => person.name}
+        renderOption={(person) => personLabel(person)}
+        renderValue={(selected) => {
+          const items = Array.isArray(selected) ? selected : [];
+
+          return items.length > 0 ? (
             <Flex align="center" gap="xs" wrap="wrap">
-              {value.map((person) => (
-                <Chip
+              {items.map((person) => (
+                <span
                   key={person.name}
-                  size="sm"
-                  variant="subtle"
-                  color="base"
-                  rounded
                   onMouseDown={(event) => event.stopPropagation()}
                   onClick={(event) => event.stopPropagation()}
                 >
-                  <Avatar name={person.name} src={person.src} size="xs" />
-                  <Text size="sm">{person.name}</Text>
-                  <IconButton
-                    size="xs"
-                    variant="ghost"
-                    color="base"
-                    aria-label={`Remove ${person.name}`}
-                    onMouseDown={(event) => event.stopPropagation()}
-                    onClick={(event) => removePerson(event, person)}
+                  <Chip
+                    size="sm"
+                    variant="solid"
+                    color="primary"
+                    radius="pill"
+                    onDelete={(event) => removePerson(event, person)}
                   >
-                    <CloseIcon />
-                  </IconButton>
-                </Chip>
+                    <Avatar name={person.name} src={person.src} size="xs" />
+                    {person.name}
+                  </Chip>
+                </span>
               ))}
             </Flex>
-          ) : null
-        }
-      >
-        {people.map((person) => {
-          const selected = value.some((item) => item.name === person.name);
-
-          return (
-            <SelectOption
-              key={person.name}
-              value={person.name}
-              aria-selected={selected}
-              onClick={() => togglePerson(person)}
-            >
-              <Avatar name={person.name} src={person.src} size="xs" />
-              <Text size="sm">{person.name}</Text>
-            </SelectOption>
-          );
-        })}
-      </Select>
+          ) : null;
+        }}
+      />
     );
   },
   args: {
-    label: "Assignees",
-    helperText: "Select one or more people.",
-    placeholder: "Select people",
-    size: "md",
-    variant: "subtle",
-    color: "primary",
-    fullWidth: true,
+    label: 'Assignees',
+    helperText: 'Select one or more people.',
+    placeholder: 'Select people',
     multiSelect: true,
     hideSelectedOptions: true,
-    error: false,
   },
 };
 
 export const Error: Story = {
-  render: (args) => (
-    <Select {...args}>
-      {people.map((person) => (
-        <SelectOption key={person.name} value={person.name}>
-          <Avatar name={person.name} src={person.src} size="xs" />
-          <Text size="sm">{person.name}</Text>
-        </SelectOption>
-      ))}
-    </Select>
-  ),
   args: {
-    label: "Assignee",
-    helperText: "Please select an assignee.",
-    placeholder: "Select a person",
-    size: "md",
-    variant: "subtle",
-    color: "primary",
-    fullWidth: true,
+    helperText: 'Please select an assignee.',
     error: true,
     required: true,
   },
+  render: (args) => (
+    <Select
+      {...args}
+      options={people}
+      getOptionLabel={(person) => person.name}
+      renderOption={(person) => personLabel(person)}
+    />
+  ),
+};
+
+export const ActionBar: Story = {
+  render: (args) => (
+    <Select
+      {...args}
+      options={people}
+      getOptionLabel={(person) => person.name}
+      renderOption={(person) => personLabel(person)}
+      actionBar={
+        <Flex align="center" justify="flex-end">
+          <InputActions>
+            <InputButton radius="sm">Clear value</InputButton>
+          </InputActions>
+        </Flex>
+      }
+    />
+  ),
 };

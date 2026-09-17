@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../../helpers/variant-styles/surface';
 
 const customProps = new Set(['hard', 'flipped', 'zIndex', 'isFlipping']);
 
@@ -32,8 +33,8 @@ export const SFlipbookPage = styled('div', {
   box-shadow: ${({ theme }) => {
     const black = theme.palette.common.black;
     return `
-      0 1px 2px ${black}12,
-      0 8px 24px ${black}14
+      0 1px 2px ${colorMix(black, 12)},
+      0 8px 24px ${colorMix(black, 14)}
     `;
   }};
 
@@ -43,6 +44,8 @@ export const SFlipbookPage = styled('div', {
   }
 `;
 
+/** Book pages read as physical paper, so the face/back colors stay fixed
+ * off-whites rather than following the app's light/dark surfaces. */
 export const SFlipbookPageFace = styled.div`
   position: absolute;
   inset: 0;

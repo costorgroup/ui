@@ -3,7 +3,7 @@ import { TCenterOwnProps } from './types';
 
 type TSCenterProps = Pick<TCenterOwnProps, 'absolute' | 'axis' | 'inline'>;
 
-const customProps = new Set(['absolute', 'axis', 'inline']);
+const customProps = new Set(['absolute', 'axis', 'inline', 'as']);
 
 export const SCenter = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),

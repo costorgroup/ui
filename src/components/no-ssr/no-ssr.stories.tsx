@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { NoSsr, Text } from '../../index';
+import { NoSsr, Text } from '../..';
 
 const meta: Meta<typeof NoSsr> = {
   title: 'Utilities/NoSsr',

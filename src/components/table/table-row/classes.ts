@@ -1,5 +1,3 @@
 import { generateUtilityClasses } from '../../../helpers/generate-utility-classes';
 
-export const tableRowClasses = generateUtilityClasses('TableRow', [
-  'root',
-]);
+export const tableRowClasses = generateUtilityClasses('V2TableRow', ['root']);

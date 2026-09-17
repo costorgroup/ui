@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
-import { TBadgeSize, TSBadgeProps } from './types';
+import { PALETTE_TINT } from '../../helpers/variant-styles';
+import { colorMixBase } from '../../helpers/variant-styles/surface';
+import { TSBadgeProps } from './types';
 
 const customProps = new Set([
   'color',
@@ -11,38 +13,6 @@ const customProps = new Set([
   'vertical',
   'horizontal',
 ]);
-
-const contentMinSize: Record<TBadgeSize, string> = {
-  xs: '0.875rem',
-  sm: '1rem',
-  md: '1.25rem',
-  lg: '1.5rem',
-  xl: '1.75rem',
-};
-
-const contentFont: Record<TBadgeSize, string> = {
-  xs: '9px',
-  sm: '10px',
-  md: '11px',
-  lg: '12px',
-  xl: '13px',
-};
-
-const contentPadX: Record<TBadgeSize, string> = {
-  xs: '0.25rem',
-  sm: '0.3rem',
-  md: '0.375rem',
-  lg: '0.45rem',
-  xl: '0.5rem',
-};
-
-const dotSize: Record<TBadgeSize, string> = {
-  xs: '0.3125rem',
-  sm: '0.375rem',
-  md: '0.5rem',
-  lg: '0.625rem',
-  xl: '0.75rem',
-};
 
 const overlapOffset: Record<
   TSBadgeProps['overlap'],
@@ -79,28 +49,37 @@ export const SBadgeContent = styled('span', {
   border: 1px solid;
   border-radius: ${({ theme }) => theme.radius.pill};
   font-family: inherit;
-  font-weight: 600;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: 1;
   white-space: nowrap;
   pointer-events: none;
   transform: scale(1);
   transform-origin: center;
+  box-shadow: 0 0 0 2px ${({ theme }) => theme.surfaces.background};
 
-  ${({ isDot, size }) =>
-    isDot
-      ? `
-        width: ${dotSize[size]};
-        height: ${dotSize[size]};
-        min-width: ${dotSize[size]};
+  ${({ theme, isDot, size }) => {
+    const step = theme.sizes[size];
+
+    if (isDot) {
+      const dot = `calc(${step.icon} * 0.4)`;
+
+      return `
+        width: ${dot};
+        height: ${dot};
+        min-width: ${dot};
         padding: 0;
         font-size: 0;
-      `
-      : `
-        min-width: ${contentMinSize[size]};
-        height: ${contentMinSize[size]};
-        padding: 0 ${contentPadX[size]};
-        font-size: ${contentFont[size]};
-      `}
+      `;
+    }
+
+    return `
+      font-size: calc(${step.fontSize} * 0.75);
+      line-height: 1;
+      padding: 0 0.35em;
+      min-width: calc(1em + 0.35em * 2 + 2px);
+      height: calc(1em + 0.35em * 2 + 2px);
+    `;
+  }}
 
   ${({ vertical, horizontal, overlap }) => {
     const offset = overlapOffset[overlap];
@@ -125,47 +104,32 @@ export const SBadgeContent = styled('span', {
 
   ${({ theme, variant, color }) => {
     const palette = theme.palette[color];
+    const tint = colorMixBase(
+      palette.main,
+      PALETTE_TINT,
+      theme.surfaces.background,
+    );
 
-    switch (variant) {
-      case 'subtle':
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 12%, transparent);
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
-          color: ${palette.darker};
-          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-        `;
-      case 'outline':
-        return `
-          background-color: ${theme.palette.common.white};
-          color: ${palette.main};
-          border-color: ${palette.main};
-        `;
-      case 'ghost':
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          color: ${palette.main};
-          border-color: transparent;
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-        `;
-      case 'solid':
-      default:
-        return `
-          background-color: ${palette.main};
-          color: ${palette.contrastText};
-          border-color: ${palette.main};
-        `;
+    if (variant === 'subtle') {
+      return `
+        background-color: ${tint};
+        color: ${palette.main};
+        border-color: transparent;
+      `;
     }
+
+    if (variant === 'surface') {
+      return `
+        background-color: ${tint};
+        color: ${palette.main};
+        border-color: ${palette.main};
+      `;
+    }
+
+    return `
+      background-color: ${palette.main};
+      color: ${palette.contrastText};
+      border-color: transparent;
+    `;
   }}
 `;

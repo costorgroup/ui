@@ -5,17 +5,15 @@ import { SModalActions } from './styles';
 import { TModalActionsProps } from './types';
 
 const ModalActions = forwardRef<HTMLDivElement, TModalActionsProps>(
-  ({ children, className, ...props }, ref) => {
-    return (
-      <SModalActions ref={ref} {...props}
-        className={mergeClasses(
-          modalActionsClasses.root,
-          className,
-        )}>
-        {children}
-      </SModalActions>
-    );
-  },
+  ({ children, className, ...props }, ref) => (
+    <SModalActions
+      ref={ref}
+      {...props}
+      className={mergeClasses(modalActionsClasses.root, className)}
+    >
+      {children}
+    </SModalActions>
+  ),
 );
 
 ModalActions.displayName = 'ModalActions';

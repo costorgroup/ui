@@ -69,28 +69,6 @@ export const collectPackageMap = (rootDir) => {
     bySubpath,
   );
 
-  collectComponentsFromDir(
-    rootDir,
-    join(rootDir, 'src', 'v2', 'components'),
-    bySubpath,
-    'v2',
-  );
-
-  collectComponentsFromDir(
-    rootDir,
-    join(rootDir, 'src', 'v2', 'animated'),
-    bySubpath,
-    'v2',
-  );
-
-  const v2Index = join(rootDir, 'src', 'v2', 'index.ts');
-  if (existsSync(v2Index)) {
-    bySubpath.set('v2', {
-      subpath: 'v2',
-      source: 'src/v2/index.ts',
-    });
-  }
-
   const adaptersDir = join(rootDir, 'src', 'adapters');
   bySubpath.set('adapters', {
     subpath: 'adapters',
@@ -147,7 +125,6 @@ export const syncPackageFiles = (rootDir, packageMap) => {
     JSON.stringify(
       {
         compilerOptions: {
-          baseUrl: '.',
           paths,
         },
       },

@@ -13,9 +13,10 @@ const ToggleIconButton = forwardRef<HTMLButtonElement, TToggleIconButtonProps>(
       active,
       defaultActive,
       variant: variantProp,
-      size = 'md',
+      appearance: appearanceProp,
+      size: sizeProp,
       color: colorProp,
-      rounded = false,
+      radius = 'sm',
       type = 'button',
       onMouseDown,
       className,
@@ -28,17 +29,26 @@ const ToggleIconButton = forwardRef<HTMLButtonElement, TToggleIconButtonProps>(
     },
     ref,
   ) => {
-    const { active: resolvedActive, variant, color, disabled: resolvedDisabled, handleClick } =
-      useToggleButton({
-        value,
-        active,
-        defaultActive,
-        disabled,
-        variant: variantProp,
-        color: colorProp,
-        onClick,
-        onChange,
-      });
+    const {
+      active: resolvedActive,
+      variant,
+      appearance,
+      size,
+      color,
+      disabled: resolvedDisabled,
+      handleClick,
+    } = useToggleButton({
+      value,
+      active,
+      defaultActive,
+      disabled,
+      variant: variantProp,
+      appearance: appearanceProp,
+      size: sizeProp,
+      color: colorProp,
+      onClick,
+      onChange,
+    });
     const [focusVisible, setFocusVisible] = useState(false);
 
     const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
@@ -50,11 +60,12 @@ const ToggleIconButton = forwardRef<HTMLButtonElement, TToggleIconButtonProps>(
       <SToggleIconButton
         ref={ref}
         type={type}
-        value={value}
+        value={value == null ? undefined : String(value)}
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
-        rounded={rounded}
+        radius={radius}
         disabled={resolvedDisabled}
         aria-pressed={resolvedActive}
         {...props}
@@ -84,7 +95,13 @@ const ToggleIconButton = forwardRef<HTMLButtonElement, TToggleIconButtonProps>(
 
 ToggleIconButton.displayName = 'ToggleIconButton';
 
-export type { TToggleIconButtonProps } from './types';
+export type {
+  TToggleIconButtonProps,
+  TToggleIconButtonVariant,
+  TToggleIconButtonAppearance,
+  TToggleIconButtonSize,
+  TToggleIconButtonRadius,
+} from './types';
 export { toggleIconButtonClasses } from './classes';
 export { ToggleIconButton };
 export default ToggleIconButton;

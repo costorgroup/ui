@@ -1,217 +1,100 @@
 import styled from '@emotion/styled';
-import { TChipProps, TChipSize } from './types';
+import { variantStyles } from '../button/variant-styles';
+import { IconButton } from '../icon-button';
+import { TChipProps } from './types';
 
-type TSChipProps = Pick<TChipProps, 'variant' | 'size' | 'color' | 'rounded'>;
-
-const customProps = new Set(['variant', 'size', 'color', 'rounded']);
-
-const sizeScale: Record<TChipSize, number> = {
-  xs: 0.65,
-  sm: 0.8,
-  md: 1,
-  lg: 1.2,
-  xl: 1.4,
+type TSChipProps = Pick<
+  TChipProps,
+  'variant' | 'appearance' | 'size' | 'color' | 'radius'
+> & {
+  clickable: boolean;
 };
 
-const sizeFont: Record<TChipSize, string> = {
-  xs: '11px',
-  sm: '12px',
-  md: '13px',
-  lg: '14px',
-  xl: '15px',
-};
+const customProps = new Set([
+  'variant',
+  'appearance',
+  'size',
+  'color',
+  'radius',
+  'clickable',
+]);
 
-export const SChip = styled('button', {
+export const SChip = styled('span', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSChipProps>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ size = 'md' }) => `calc(0.25rem * ${sizeScale[size]})`};
+  box-sizing: border-box;
+  min-height: 0;
+  vertical-align: middle;
   border: 1px solid;
-  border-radius: ${({ theme, rounded = false }) =>
-    rounded ? theme.radius.pill : theme.radius.medium};
+  border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
-  font-weight: 500;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: 1.2;
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  user-select: ${({ clickable }) => (clickable ? 'none' : 'auto')};
+  cursor: ${({ clickable }) => (clickable ? 'pointer' : 'default')};
+  transition:
+    background-color 0.12s ease,
+    background-image 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    color 0.12s ease,
+    opacity 0.12s ease;
 
-  ${({ theme, variant = 'solid', color = 'primary' }) => {
-    const palette = theme.palette[color];
+  gap: 0.35em;
+  padding: 0.1em 0.35em;
+  font-size: ${({ theme, size = 'md' }) => theme.sizes[size].fontSize};
 
-    switch (variant) {
-      case 'subtle':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
+  ${({
+    theme,
+    variant = 'solid',
+    appearance = 'opaque',
+    color = 'default',
+    clickable,
+  }) =>
+    variantStyles(
+      variant,
+      theme.palette[color],
+      theme,
+      appearance,
+      theme.surfaces.background,
+      clickable,
+    )}
 
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 36%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 48%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            border-color: ${palette.dark};
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            border-color: ${palette.darker};
-            color: ${palette.darker};
-          }
-        `;
-      case 'ghost':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            color: ${palette.darker};
-          }
-        `;
-      case 'solid':
-      default:
-        return `
-          background-color: ${palette.main};
-          color: ${palette.contrastText};
-          border-color: ${palette.main};
-
-          &:hover:not(:disabled) {
-            background-color: ${palette.dark};
-            border-color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: ${palette.darker};
-            border-color: ${palette.darker};
-          }
-        `;
-    }
-  }}
-
-  ${({ theme, size = 'md' }) => {
-    const scale = sizeScale[size];
-    const pad = `calc(${theme.spacing(theme.gap.xs)} * ${scale})`;
-
-    return `
-      padding: ${pad};
-      font-size: ${sizeFont[size]};
-    `;
-  }}
-
-  &:disabled {
-    opacity: 0.5;
+  &[aria-disabled='true'] {
+    opacity: 0.45;
     cursor: not-allowed;
+    pointer-events: none;
   }
 
-  &:focus-visible {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.palette[color].main};
-    outline-offset: 2px;
+  ${({ theme, color = 'default', clickable }) =>
+    clickable
+      ? `
+        &:focus-visible {
+          outline: 2px solid ${theme.palette[color].main};
+          outline-offset: 2px;
+        }
+      `
+      : ''}
+`;
+
+export const SChipDelete = styled(IconButton)`
+  && {
+    color: inherit;
+    border-color: transparent;
+    background-color: transparent;
+  }
+
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
+    && {
+      color: inherit;
+      border-color: transparent;
+      background-color: color-mix(in oklab, currentColor 12%, transparent);
+    }
   }
 `;

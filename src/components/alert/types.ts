@@ -1,8 +1,12 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import type { TAlertSize, TAlertVariant } from './alert-base/types';
+import type {
+  TAlertRadius,
+  TAlertSize,
+  TAlertVariant,
+} from './alert-base/types';
 
-export type { TAlertSize, TAlertVariant };
+export type { TAlertRadius, TAlertSize, TAlertVariant };
 
 export type TAlertProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -15,5 +19,6 @@ export type TAlertProps = Omit<
   color?: TPaletteColor;
   variant?: TAlertVariant;
   size?: TAlertSize;
+  radius?: TAlertRadius;
   onClose?: () => void;
 };

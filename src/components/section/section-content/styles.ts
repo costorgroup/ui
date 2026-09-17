@@ -12,7 +12,7 @@ export const SSectionContent = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSSectionContentProps>`
   box-sizing: border-box;
-  color: ${({ theme }) => theme.palette.base.main};
+  color: ${({ theme }) => theme.surfaces.muted};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   min-width: 0;
 

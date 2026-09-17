@@ -1,7 +1,17 @@
 import { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonSize, TButtonVariant } from '../button/types';
+import {
+  TButtonAppearance,
+  TButtonRadius,
+  TButtonSize,
+  TButtonVariant,
+} from '../button/types';
 import { TToggleButtonValue } from '../toggle-button-group/context';
+
+export type TToggleButtonVariant = TButtonVariant;
+export type TToggleButtonAppearance = TButtonAppearance;
+export type TToggleButtonSize = TButtonSize;
+export type TToggleButtonRadius = TButtonRadius;
 
 export type TToggleButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -11,8 +21,10 @@ export type TToggleButtonProps = Omit<
   value?: TToggleButtonValue;
   active?: boolean;
   defaultActive?: boolean;
-  variant?: TButtonVariant;
-  size?: TButtonSize;
+  variant?: TToggleButtonVariant;
+  appearance?: TToggleButtonAppearance;
+  size?: TToggleButtonSize;
   color?: TPaletteColor;
+  radius?: TToggleButtonRadius;
   onChange?: (event: MouseEvent<HTMLButtonElement>, active: boolean) => void;
 };

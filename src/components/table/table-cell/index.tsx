@@ -1,7 +1,7 @@
 import React, { forwardRef, useContext } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { TableSectionContext } from '../table-root/context';
 import { tableCellClasses } from './classes';
-import { TableSectionContext } from '../table-base/context';
 import { STableCell } from './styles';
 import { TTableCellProps } from './types';
 
@@ -17,11 +17,9 @@ const TableCell = forwardRef<HTMLTableCellElement, TTableCellProps>(
         as={as}
         align={align}
         scope={resolvedScope}
+        data-slot="table-cell"
         {...props}
-        className={mergeClasses(
-          tableCellClasses.root,
-          className,
-        )}
+        className={mergeClasses(tableCellClasses.root, className)}
       >
         {children}
       </STableCell>

@@ -1,11 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { pinFieldClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
-import { InputLabel } from '../input/input-label';
+import { FormControl } from '../form-control';
 import { InputPinField } from '../input/input-pin-field';
 import { TPinFieldProps } from './types';
 
@@ -19,60 +15,48 @@ const PinField = forwardRef<HTMLDivElement, TPinFieldProps>(
       error = false,
       fullWidth = true,
       size = 'md',
-      variant = 'subtle',
+      variant = 'surface',
       color = 'primary',
       id,
       className,
+      disabled,
+      value,
+      defaultValue,
       ...props
     },
     ref,
   ) => {
-    const tone = error ? 'error' : color;
-
     return (
-      <InputFieldLayout
+      <FormControl
+        ref={ref}
+        label={label}
+        description={description}
+        helperText={helperText}
+        required={required}
+        error={error}
         fullWidth={fullWidth}
-        label={
-          label != null ? (
-            <InputLabel
-              htmlFor={id ? `${id}-pin-0` : undefined}
-              required={required}
-              size={size}
-            >
-              {label}
-            </InputLabel>
-          ) : null
-        }
-        description={
-          description != null ? (
-            <Text size={inputDescriptionTextSize[size]} color="base">{description}</Text>
-          ) : null
-        }
-        helperText={
-          helperText != null ? (
-            <InputHelperText size={size} color={tone}>
-              {helperText}
-            </InputHelperText>
-          ) : null
-        }
-      >
-        <InputPinField
-          ref={ref}
-          id={id}
-          size={size}
-          variant={variant}
-          color={tone}
-          {...props}
-          aria-invalid={error || undefined}
-        
+        size={size}
+        variant={variant}
+        color={color}
+        disabled={disabled}
+        id={id}
+        value={value}
+        defaultValue={defaultValue}
         className={mergeClasses(
           pinFieldClasses.root,
+          disabled && pinFieldClasses.disabled,
           error && pinFieldClasses.error,
           required && pinFieldClasses.required,
           className,
         )}
-      />
-      </InputFieldLayout>
+      >
+        <InputPinField
+          disabled={disabled}
+          value={value}
+          defaultValue={defaultValue}
+          {...props}
+        />
+      </FormControl>
     );
   },
 );

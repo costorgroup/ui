@@ -4,7 +4,10 @@ import { TThemeRadius } from '../../theme/types';
 export type TAvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type TAvatarRadius = keyof TThemeRadius;
 
-export type TAvatarProps = Omit<HTMLAttributes<HTMLDivElement>, 'color' | 'children'> & {
+export type TAvatarProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'color' | 'children'
+> & {
   name?: string;
   src?: string | null;
   alt?: string;

@@ -35,7 +35,8 @@ export type TMenuContentContextValue = {
   submenuPlacement: TMenuPlacement;
 };
 
-export const MenuContentContext = createContext<TMenuContentContextValue | null>(null);
+export const MenuContentContext =
+  createContext<TMenuContentContextValue | null>(null);
 
 export type TMenuItemContextValue = {
   itemRef: RefObject<HTMLElement | null>;
@@ -46,4 +47,6 @@ export type TMenuItemContextValue = {
   cancelCloseSubmenu: () => void;
 };
 
-export const MenuItemContext = createContext<TMenuItemContextValue | null>(null);
+export const MenuItemContext = createContext<TMenuItemContextValue | null>(
+  null,
+);

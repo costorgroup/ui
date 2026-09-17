@@ -6,12 +6,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { tooltipClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { useTheme } from '@emotion/react';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { tooltipClasses } from './classes';
 import { getTooltipCoords } from './get-coords';
-import { STooltipContent, STooltipTrigger } from './styles';
+import { STooltipContent, STooltipPanel, STooltipTrigger } from './styles';
 import { TTooltipProps } from './types';
 
 const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T | null) => {
@@ -28,7 +28,18 @@ const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T | null) => {
 };
 
 const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
-  ({ children, render, placement = 'top', offset = 8, className, ...props }, ref) => {
+  (
+    {
+      children,
+      title,
+      render,
+      placement = 'top',
+      offset = 8,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const theme = useTheme();
     const [mounted, setMounted] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -108,6 +119,8 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
       );
     }, [getViewportPadding, offset, placement]);
 
+    const tooltipBody = render ? render({ placement }) : title;
+
     useLayoutEffect(() => {
       if (!mounted) {
         return;
@@ -126,7 +139,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
         cancelAnimationFrame(outer);
         cancelAnimationFrame(inner);
       };
-    }, [mounted, updatePosition, render]);
+    }, [mounted, updatePosition, tooltipBody]);
 
     useEffect(() => {
       if (!mounted) {
@@ -154,7 +167,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
     );
 
     const portal =
-      mounted && typeof document !== 'undefined'
+      mounted && tooltipBody != null && typeof document !== 'undefined'
         ? createPortal(
             <STooltipContent
               ref={contentRef}
@@ -179,7 +192,14 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
                 }
               }}
             >
-              {render({ placement })}
+              <STooltipPanel
+                elevation={2}
+                variant="surface"
+                radius="md"
+                className={tooltipClasses.panel}
+              >
+                {tooltipBody}
+              </STooltipPanel>
             </STooltipContent>,
             document.body,
           )
@@ -194,10 +214,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
           onFocus={openTooltip}
           onBlur={scheduleClose}
           {...props}
-        className={mergeClasses(
-          tooltipClasses.root,
-          className,
-        )}
+          className={mergeClasses(tooltipClasses.root, className)}
         >
           {children}
         </STooltipTrigger>
@@ -209,6 +226,12 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
 
 Tooltip.displayName = 'Tooltip';
 
+export type {
+  TTooltipProps,
+  TTooltipPlacement,
+  TTooltipRender,
+  TTooltipRenderProps,
+} from './types';
 export { tooltipClasses } from './classes';
 export { Tooltip };
 export default Tooltip;

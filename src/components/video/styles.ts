@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { CHROME_FILL } from '../../helpers/variant-styles';
+import { colorMix, colorMixBase } from '../../helpers/variant-styles/surface';
 import { videoClasses } from './classes';
 import { TSVideoProps } from './types';
 
@@ -28,17 +30,20 @@ export const SVideo = styled('div', {
   height: ${({ height }) => toCssSize(height) ?? 'auto'};
   max-width: 100%;
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
-  background-color: ${({ theme }) => theme.palette.common.black};
-  color: ${({ theme }) => theme.palette.common.white};
+  background-color: ${({ theme }) => theme.surfaces.background};
+  color: ${({ theme }) => theme.surfaces.ink};
   cursor: pointer;
   user-select: none;
+  container-type: inline-size;
+  container-name: cui-video;
 
   &[data-idle='true'] {
     cursor: none;
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color }) => theme.palette[color].main};
+    outline: 2px solid ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].main};
     outline-offset: 2px;
   }
 
@@ -47,7 +52,7 @@ export const SVideo = styled('div', {
     width: 100%;
     height: ${({ height }) => (height == null ? 'auto' : '100%')};
     object-fit: contain;
-    background-color: ${({ theme }) => theme.palette.common.black};
+    background-color: ${({ theme }) => theme.surfaces.background};
   }
 
   .${videoClasses.overlay} {
@@ -57,7 +62,6 @@ export const SVideo = styled('div', {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: ${({ theme }) => `${theme.palette.common.black}40`};
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -69,20 +73,12 @@ export const SVideo = styled('div', {
 
   .${videoClasses.controls} {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    right: ${({ theme }) => theme.spacing(theme.gap.md)};
+    bottom: ${({ theme }) => theme.spacing(theme.gap.md)};
+    left: ${({ theme }) => theme.spacing(theme.gap.md)};
     z-index: 2;
     display: flex;
-    flex-direction: column;
-    gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
-    padding: ${({ theme }) =>
-      `${theme.spacing(theme.gap.md)} ${theme.spacing(theme.gap.md)} ${theme.spacing(theme.gap.sm)}`};
-    background: linear-gradient(
-      to top,
-      ${({ theme }) => `${theme.palette.common.black}cc`} 0%,
-      ${({ theme }) => `${theme.palette.common.black}00`} 100%
-    );
+    justify-content: center;
     opacity: 1;
     pointer-events: auto;
     transition: opacity 0.2s ease;
@@ -93,20 +89,41 @@ export const SVideo = styled('div', {
     pointer-events: none;
   }
 
+  .${videoClasses.dock} {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
   .${videoClasses.progress},
   .${videoClasses.volumeTrack} {
     position: relative;
     display: block;
-    overflow: hidden;
-    width: 100%;
+    box-sizing: content-box;
     height: 4px;
-    padding: 0;
+    /* Padding grows the pointer-event hit area for touch without widening
+       the visible track — the color only paints the content box. */
+    padding: ${({ theme }) => theme.spacing(theme.gap.xs)} 0;
+    margin: -${({ theme }) => theme.spacing(theme.gap.xs)} 0;
     border: 0;
     border-radius: ${({ theme }) => theme.radius.pill};
-    background-color: ${({ theme }) => `${theme.palette.common.white}33`};
+    background-color: ${({ theme }) =>
+      colorMixBase(
+        theme.surfaces.mixer,
+        CHROME_FILL,
+        theme.surfaces.background,
+      )};
+    background-clip: content-box;
     cursor: pointer;
     appearance: none;
+    touch-action: none;
     transition: height 0.12s ease;
+  }
+
+  .${videoClasses.progress} {
+    flex: 1 1 auto;
+    min-width: 3rem;
   }
 
   .${videoClasses.progress}:hover,
@@ -118,29 +135,17 @@ export const SVideo = styled('div', {
   .${videoClasses.volumeFill} {
     display: block;
     height: 100%;
-    border-radius: inherit;
-    background-color: ${({ theme, color }) => theme.palette[color].main};
+    border-radius: ${({ theme }) => theme.radius.pill};
+    background-color: ${({ theme, color }) =>
+      color === 'default' ? theme.surfaces.ink : theme.palette[color].main};
     pointer-events: none;
   }
 
-  .${videoClasses.bar} {
-    display: flex;
-    align-items: center;
-    gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
-  }
-
-  .${videoClasses.bar} > :last-child {
-    margin-left: auto;
-  }
-
   .${videoClasses.time} {
-    margin: 0 ${({ theme }) => theme.spacing(theme.gap.xs)};
+    margin: 0;
     font-variant-numeric: tabular-nums;
-    font-size: ${({ theme }) => theme.typography.text.sm};
-    line-height: 1;
     white-space: nowrap;
-    color: ${({ theme }) => theme.palette.common.white};
-    opacity: 0.92;
+    flex-shrink: 0;
   }
 
   .${videoClasses.volume} {
@@ -148,10 +153,39 @@ export const SVideo = styled('div', {
     align-items: center;
     gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
     min-width: 0;
+    flex-shrink: 0;
   }
 
   .${videoClasses.volumeTrack} {
     width: 4.5rem;
     flex-shrink: 0;
+  }
+
+  /* Below this the dock no longer has room for the drag-to-seek volume
+     rail alongside every other control — drop it and lean on the mute
+     toggle alone rather than letting the dock wrap onto a second line
+     (which breaks its pill shape) or squeeze the seek bar to nothing. */
+  @container cui-video (max-width: 26rem) {
+    .${videoClasses.volumeTrack} {
+      display: none;
+    }
+  }
+
+  /* Too narrow for the timestamp alongside every control. */
+  @container cui-video (max-width: 18rem) {
+    .${videoClasses.time} {
+      display: none;
+    }
+  }
+
+  /* Bare minimum: play/pause, seek bar and fullscreen only. */
+  @container cui-video (max-width: 12rem) {
+    .${videoClasses.volume} {
+      display: none;
+    }
+
+    .${videoClasses.dock} [role='separator'] {
+      display: none;
+    }
   }
 `;

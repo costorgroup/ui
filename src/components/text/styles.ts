@@ -3,7 +3,7 @@ import { TTextOwnProps } from "./types";
 
 type TSTextProps = Pick<TTextOwnProps, "color" | "size">;
 
-const customProps = new Set(["color", "size"]);
+const customProps = new Set(["color", "size", "as"]);
 
 export const SText = styled("p", {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -13,5 +13,5 @@ export const SText = styled("p", {
   font-size: ${({ theme, size = "md" }) => theme.typography.text[size]};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme, color = "default" }) =>theme.palette[color].main};
+  color: ${({ theme, color = "default" }) => theme.palette[color].main};
 `;

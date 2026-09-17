@@ -7,11 +7,14 @@ import { TAlertActionsProps } from './types';
 const AlertActions = forwardRef<HTMLDivElement, TAlertActionsProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SAlertActions ref={ref} {...props}
+      <SAlertActions
+        ref={ref}
+        {...props}
         className={mergeClasses(
           alertActionsClasses.root,
           className,
-        )}>
+        )}
+      >
         {children}
       </SAlertActions>
     );

@@ -1,5 +1,3 @@
 import { generateUtilityClasses } from '../../../helpers/generate-utility-classes';
 
-export const cardTitleClasses = generateUtilityClasses('CardTitle', [
-  'root',
-]);
+export const cardTitleClasses = generateUtilityClasses('V2CardTitle', ['root']);

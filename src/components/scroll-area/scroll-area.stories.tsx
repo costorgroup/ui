@@ -1,42 +1,64 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Flex, ScrollArea, Text } from '../../index';
-import type { TPaletteColor } from '../../theme/types';
+import { Chip, List, ListItem, Panel, ScrollArea, Text, Flex } from '../..';
+import type {
+  TScrollAreaScrollbarDirection,
+  TScrollAreaScrollbarPosition,
+  TScrollAreaScrollbarVisibility,
+} from './types';
 
-const COLORS: TPaletteColor[] = [
-  'base',
-  'primary',
-  'secondary',
-  'success',
-  'error',
-  'warning',
-  'info',
-  'dark',
-  'light',
-  'default',
-  'inverted',
+const VISIBILITY: TScrollAreaScrollbarVisibility[] = [
+  'hover',
+  'always',
+  'never',
+  'hidden',
 ];
+const POSITIONS: TScrollAreaScrollbarPosition[] = [
+  'preferred',
+  'inverted',
+  'opposite',
+];
+const DIRECTIONS: TScrollAreaScrollbarDirection[] = ['vertical', 'horizontal'];
 
-const longContent = Array.from({ length: 12 }, (_, index) => (
-  <Text key={index} size="md" style={{ marginBottom: 12 }}>
-    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex
-    sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis
-    convallis.
-  </Text>
-));
+const items = Array.from({ length: 16 }, (_, index) => `Item ${index + 1}`);
+const tags = [
+  'Design',
+  'Engineering',
+  'Marketing',
+  'Product',
+  'Research',
+  'Sales',
+  'Support',
+  'Operations',
+  'Finance',
+  'Legal',
+  'People',
+  'Security',
+];
 
 const meta: Meta<typeof ScrollArea> = {
   title: 'Layout/ScrollArea',
   component: ScrollArea,
   tags: ['autodocs'],
+  args: {
+    fade: true,
+    scrollbarVisibility: 'hover',
+    scrollbarPosition: 'preferred',
+    scrollbarDirection: 'vertical',
+  },
   argTypes: {
-    mode: {
+    fade: { control: 'boolean' },
+    scrollbarVisibility: {
       control: 'select',
-      options: ['always', 'hover'],
+      options: VISIBILITY,
     },
-    color: {
+    scrollbarPosition: {
       control: 'select',
-      options: COLORS,
+      options: POSITIONS,
+    },
+    scrollbarDirection: {
+      control: 'select',
+      options: DIRECTIONS,
     },
   },
 };
@@ -45,72 +67,206 @@ export default meta;
 
 type Story = StoryObj<typeof ScrollArea>;
 
-export const Default: Story = {
-  args: {
-    mode: 'hover',
-    color: 'primary',
-    style: { height: 220, maxWidth: 360 },
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => {
+    const horizontal = args.scrollbarDirection === 'horizontal';
+
+    return (
+      <Panel
+        style={{
+          width: 320,
+          height: horizontal ? undefined : 260,
+          overflow: 'hidden',
+        }}
+        radius="xl"
+      >
+        <ScrollArea
+          {...args}
+          style={{ width: '100%', height: horizontal ? undefined : '100%' }}
+        >
+          {horizontal ? (
+            <Flex
+              gap="sm"
+              style={{ width: 'max-content', padding: 16, whiteSpace: 'nowrap' }}
+            >
+              {tags.map((tag) => (
+                <Chip key={tag} size="sm">
+                  {tag}
+                </Chip>
+              ))}
+            </Flex>
+          ) : (
+            <List variant="plain" style={{ padding: 16 }}>
+              {items.map((item) => (
+                <ListItem key={item}>{item}</ListItem>
+              ))}
+            </List>
+          )}
+        </ScrollArea>
+      </Panel>
+    );
   },
-  render: (args) => <ScrollArea {...args}>{longContent}</ScrollArea>,
 };
 
-export const Modes: Story = {
-  render: () => (
-    <Flex gap="md" wrap="wrap">
-      <Flex direction="column" gap="xs">
-        <Text size="sm">mode=&quot;hover&quot;</Text>
-        <ScrollArea mode="hover" style={{ height: 220, width: 280 }}>
-          {longContent}
-        </ScrollArea>
-      </Flex>
-      <Flex direction="column" gap="xs">
-        <Text size="sm">mode=&quot;always&quot;</Text>
-        <ScrollArea mode="always" style={{ height: 220, width: 280 }}>
-          {longContent}
-        </ScrollArea>
-      </Flex>
-    </Flex>
+export const Vertical: Story = {
+  render: (args) => (
+    <Panel style={{ width: 320, height: 260, overflow: 'hidden' }} radius="xl">
+      <ScrollArea {...args} style={{ height: '100%' }}>
+        <List variant="plain" style={{ padding: 16 }}>
+          {items.map((item) => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      </ScrollArea>
+    </Panel>
   ),
 };
 
-export const Colors: Story = {
+export const Horizontal: Story = {
+  args: {
+    fade: true,
+    scrollbarDirection: 'horizontal',
+  },
+  render: (args) => (
+    <Panel style={{ width: 360, overflow: 'hidden' }} radius="xl">
+      <ScrollArea {...args} style={{ width: '100%' }}>
+        <Flex
+          gap="sm"
+          style={{ width: 'max-content', padding: 16, whiteSpace: 'nowrap' }}
+        >
+          {tags.map((tag) => (
+            <Chip key={tag} size="sm">
+              {tag}
+            </Chip>
+          ))}
+        </Flex>
+      </ScrollArea>
+    </Panel>
+  ),
+};
+
+export const FadeOff: Story = {
+  args: {
+    fade: false,
+  },
+  render: (args) => (
+    <Panel style={{ width: 320, height: 260, overflow: 'hidden' }} radius="xl">
+      <ScrollArea {...args} style={{ height: '100%' }}>
+        <List variant="plain" style={{ padding: 16 }}>
+          {items.map((item) => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      </ScrollArea>
+    </Panel>
+  ),
+};
+
+export const ScrollbarPositions: Story = {
   render: () => (
-    <Flex gap="md" wrap="wrap">
-      {COLORS.map((color) => (
-        <Flex key={color} direction="column" gap="xs">
-          <Text size="sm">{color}</Text>
-          <ScrollArea
-            mode="always"
-            color={color}
-            style={{ height: 160, width: 180 }}
-          >
-            {longContent}
-          </ScrollArea>
+    <Flex direction="column" gap="lg">
+      {DIRECTIONS.map((direction) => (
+        <Flex key={direction} gap="md" wrap="wrap">
+          {POSITIONS.map((position) => (
+            <Flex key={`${direction}-${position}`} direction="column" gap="xs">
+              <Text size="sm">
+                {direction} · {position}
+              </Text>
+              <Panel
+                style={{
+                  width: 240,
+                  height: direction === 'vertical' ? 200 : undefined,
+                  overflow: 'hidden',
+                }}
+              >
+                <ScrollArea
+                  scrollbarDirection={direction}
+                  scrollbarPosition={position}
+                  scrollbarVisibility="always"
+                  style={{
+                    width: '100%',
+                    height: direction === 'vertical' ? '100%' : undefined,
+                  }}
+                >
+                  {direction === 'vertical' ? (
+                    <List variant="plain" style={{ padding: 12 }}>
+                      {items.map((item) => (
+                        <ListItem key={item}>{item}</ListItem>
+                      ))}
+                    </List>
+                  ) : (
+                    <Flex
+                      gap="sm"
+                      style={{
+                        width: 'max-content',
+                        padding: 12,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {tags.map((tag) => (
+                        <Chip key={tag} size="sm">
+                          {tag}
+                        </Chip>
+                      ))}
+                    </Flex>
+                  )}
+                </ScrollArea>
+              </Panel>
+            </Flex>
+          ))}
         </Flex>
       ))}
     </Flex>
   ),
 };
 
-export const Horizontal: Story = {
-  render: () => (
-    <ScrollArea mode="always" style={{ width: 360, whiteSpace: 'nowrap' }}>
-      <Flex gap="md" style={{ width: 'max-content', paddingBottom: 8 }}>
-        {Array.from({ length: 10 }, (_, index) => (
-          <Text
-            key={index}
-            size="md"
-            style={{
-              minWidth: 120,
-              padding: 16,
-              background: 'rgba(0,0,0,0.04)',
-              borderRadius: 8,
-            }}
-          >
-            Item {index + 1}
+export const AlwaysVisible: Story = {
+  args: {
+    scrollbarVisibility: 'always',
+    scrollbarPosition: 'preferred',
+  },
+  render: (args) => (
+    <Panel style={{ width: 320, height: 260, overflow: 'hidden' }}>
+      <ScrollArea {...args} style={{ height: '100%' }}>
+        <List variant="plain" style={{ padding: 16 }}>
+          {items.map((item) => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      </ScrollArea>
+    </Panel>
+  ),
+};
+
+export const Hidden: Story = {
+  args: {
+    scrollbarVisibility: 'never',
+  },
+  render: (args) => (
+    <Panel style={{ width: 320, height: 260, overflow: 'hidden' }}>
+      <ScrollArea {...args} style={{ height: '100%' }}>
+        <List variant="plain" style={{ padding: 16 }}>
+          {items.map((item) => (
+            <ListItem key={item}>{item}</ListItem>
+          ))}
+        </List>
+      </ScrollArea>
+    </Panel>
+  ),
+};
+
+export const NoOverflow: Story = {
+  render: (args) => (
+    <Panel style={{ width: 320, height: 160, overflow: 'hidden' }}>
+      <ScrollArea {...args} style={{ height: '100%' }}>
+        <div style={{ padding: 16 }}>
+          <Text size="sm">
+            Short content. Fade and overlay scrollbar stay off when nothing
+            overflows.
           </Text>
-        ))}
-      </Flex>
-    </ScrollArea>
+        </div>
+      </ScrollArea>
+    </Panel>
   ),
 };

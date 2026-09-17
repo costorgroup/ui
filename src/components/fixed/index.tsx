@@ -1,7 +1,7 @@
 import React, { ElementType, forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { fixedClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
+import { fixedClasses } from './classes';
 import { SFixed } from './styles';
 import { TFixedOwnProps, TFixedProps } from './types';
 
@@ -18,10 +18,7 @@ const Fixed = forwardRef(function Fixed<C extends ElementType = 'div'>(
       bottom={bottom}
       left={left}
       {...props}
-        className={mergeClasses(
-          fixedClasses.root,
-          className,
-        )}
+      className={mergeClasses(fixedClasses.root, className)}
     >
       {children}
     </SFixed>

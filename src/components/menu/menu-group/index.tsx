@@ -5,17 +5,16 @@ import { SMenuGroup } from './styles';
 import { TMenuGroupProps } from './types';
 
 const MenuGroup = forwardRef<HTMLDivElement, TMenuGroupProps>(
-  ({ children, className, ...props }, ref) => {
-    return (
-      <SMenuGroup ref={ref} role="group" {...props}
-        className={mergeClasses(
-          menuGroupClasses.root,
-          className,
-        )}>
-        {children}
-      </SMenuGroup>
-    );
-  },
+  ({ children, className, ...props }, ref) => (
+    <SMenuGroup
+      ref={ref}
+      role="group"
+      {...props}
+      className={mergeClasses(menuGroupClasses.root, className)}
+    >
+      {children}
+    </SMenuGroup>
+  ),
 );
 
 MenuGroup.displayName = 'MenuGroup';

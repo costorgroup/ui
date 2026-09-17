@@ -1,29 +1,37 @@
 import React, { ChangeEvent, forwardRef, useEffect, useMemo, useState } from 'react';
-import { TableBase } from '../table/table-base';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { SearchIcon } from '../../icons';
+import { Card } from '../card';
+import { CardAction } from '../card/card-action';
+import { CardContent } from '../card/card-content';
+import { CardDescription } from '../card/card-description';
+import { CardHeader } from '../card/card-header';
+import { CardTitle } from '../card/card-title';
+import type { TCardSize } from '../card/types';
+import { Pagination } from '../pagination';
+import { Table } from '../table/table-root';
 import { TableBody } from '../table/table-body';
 import { TableCell } from '../table/table-cell';
 import { TableHead } from '../table/table-head';
 import { TableRow } from '../table/table-row';
-import { Heading } from '../heading';
-import { Pagination } from '../pagination';
+import type { TTableSize } from '../table/table-root/context';
 import { Text } from '../text';
 import { TextField } from '../text-field';
-import {
-  SDataTable,
-  SDataTableEntries,
-  SDataTableFooter,
-  SDataTableHeader,
-  SDataTableScroll,
-  SDataTableSearch,
-  SDataTableToolbar,
-} from './styles';
 import { dataTableClasses } from './classes';
-import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { SDataTableBox, SDataTableFooter, SDataTableScroll } from './styles';
 import {
   TDataTableProps,
   TDataTableRenderCellParams,
   TDataTableRow,
 } from './types';
+
+const CARD_SIZE_BY_TABLE_SIZE: Record<TTableSize, TCardSize> = {
+  xs: 'sm',
+  sm: 'sm',
+  md: 'md',
+  lg: 'lg',
+  xl: 'lg',
+};
 
 const getCellValue = <T extends TDataTableRow>(row: T, key: string) => {
   if (Object.prototype.hasOwnProperty.call(row, key)) {
@@ -63,8 +71,10 @@ const DataTableInner = <T extends TDataTableRow>(
     data,
     title,
     description,
-    color = 'primary',
-    variant = 'subtle',
+    color = 'default',
+    variant = 'surface',
+    elevation = 1,
+    radius = 'xl',
     size = 'md',
     pageSize = 10,
     searchPlaceholder = 'Search…',
@@ -142,112 +152,104 @@ const DataTableInner = <T extends TDataTableRow>(
   };
 
   return (
-    <SDataTable
+    <Card
       ref={ref}
-      color={color}
       variant={variant}
+      elevation={elevation}
+      radius={radius}
+      size={CARD_SIZE_BY_TABLE_SIZE[size]}
       {...props}
       className={mergeClasses(dataTableClasses.root, className)}
     >
-      <SDataTableToolbar>
-        <SDataTableHeader>
-          {title != null ? (
-            <Heading as="h3" color={variant === 'solid' ? 'light' : 'base'}>
-              {title}
-            </Heading>
-          ) : null}
-          {description != null ? (
-            <Text
-              size="sm"
-              color={variant === 'solid' ? 'light' : 'base'}
-            >
-              {description}
-            </Text>
-          ) : null}
-        </SDataTableHeader>
-        <SDataTableSearch className={dataTableClasses.search}>
+      <CardHeader>
+        {title != null ? <CardTitle>{title}</CardTitle> : null}
+        {description != null ? (
+          <CardDescription>{description}</CardDescription>
+        ) : null}
+        <CardAction>
           <TextField
             fullWidth
             size="sm"
             color={color}
-            variant="outline"
+            variant="surface"
+            startIcon={<SearchIcon />}
             placeholder={searchPlaceholder}
             value={search}
             onChange={handleSearchChange}
             aria-label={searchPlaceholder}
+            className={dataTableClasses.search}
           />
-        </SDataTableSearch>
-      </SDataTableToolbar>
+        </CardAction>
+      </CardHeader>
 
-      <SDataTableScroll>
-        <TableBase size={size} color={color}>
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell key={column.id}>{column.name}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {pageRows.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={Math.max(columns.length, 1)}>
-                  No matching entries
-                </TableCell>
-              </TableRow>
-            ) : (
-              pageRows.map((row, rowIndex) => {
-                const absoluteIndex = startIndex + rowIndex;
-                const rowKey =
-                  getRowId?.(row, absoluteIndex) ??
-                  row.id ??
-                  absoluteIndex;
-
-                return (
-                  <TableRow key={rowKey}>
-                    {columns.map((column, columnIndex) => {
-                      const value = getCellValue(row, column.key);
-                      const params: TDataTableRenderCellParams<T> = {
-                        value,
-                        row,
-                        column,
-                        rowIndex: absoluteIndex,
-                        columnIndex,
-                        data,
-                      };
-
-                      return (
-                        <TableCell key={column.id}>
-                          {(column.renderCell ?? defaultRenderCell)(params)}
-                        </TableCell>
-                      );
-                    })}
+      <CardContent>
+        <SDataTableBox>
+          <SDataTableScroll>
+            <Table size={size} color={color}>
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell key={column.id}>{column.name}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pageRows.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={Math.max(columns.length, 1)}>
+                      No matching entries
+                    </TableCell>
                   </TableRow>
-                );
-              })
-            )}
-          </TableBody>
-        </TableBase>
-      </SDataTableScroll>
+                ) : (
+                  pageRows.map((row, rowIndex) => {
+                    const absoluteIndex = startIndex + rowIndex;
+                    const rowKey =
+                      getRowId?.(row, absoluteIndex) ?? row.id ?? absoluteIndex;
 
-      <SDataTableFooter>
-        <SDataTableEntries>
-          <Text size="sm" color={variant === 'solid' ? 'light' : 'base'}>
-            {filteredData.length === 0
-              ? '0 entries'
-              : `Showing ${from} to ${to} of ${filteredData.length} entries`}
-          </Text>
-        </SDataTableEntries>
+                    return (
+                      <TableRow key={rowKey}>
+                        {columns.map((column, columnIndex) => {
+                          const value = getCellValue(row, column.key);
+                          const params: TDataTableRenderCellParams<T> = {
+                            value,
+                            row,
+                            column,
+                            rowIndex: absoluteIndex,
+                            columnIndex,
+                            data,
+                          };
+
+                          return (
+                            <TableCell key={column.id}>
+                              {(column.renderCell ?? defaultRenderCell)(params)}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })
+                )}
+              </TableBody>
+            </Table>
+          </SDataTableScroll>
+        </SDataTableBox>
+      </CardContent>
+
+      <SDataTableFooter variant="muted">
+        <Text size="sm" color="default">
+          {filteredData.length === 0
+            ? '0 entries'
+            : `Showing ${from} to ${to} of ${filteredData.length} entries`}
+        </Text>
         <Pagination
           count={pageCount}
           page={currentPage}
           onChange={handlePageChange}
-          color={color}
-          variant={variant === 'solid' ? 'outline' : 'solid'}
+          color="default"
           size="sm"
         />
       </SDataTableFooter>
-    </SDataTable>
+    </Card>
   );
 };
 

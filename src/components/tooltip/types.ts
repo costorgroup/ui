@@ -20,12 +20,18 @@ export type TTooltipRenderProps = {
 
 export type TTooltipRender = (props: TTooltipRenderProps) => ReactNode;
 
-export type TTooltipProps = Omit<HTMLAttributes<HTMLSpanElement>, 'children'> & {
+type TTooltipPropsBase = Omit<
+  HTMLAttributes<HTMLSpanElement>,
+  'children' | 'color'
+> & {
   children: ReactElement;
-  render: TTooltipRender;
   placement?: TTooltipPlacement;
   offset?: number;
 };
+
+export type TTooltipProps =
+  | (TTooltipPropsBase & { title: ReactNode; render?: never })
+  | (TTooltipPropsBase & { title?: ReactNode; render: TTooltipRender });
 
 export type TSTooltipContentProps = {
   top: number;

@@ -1,14 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { Button, Menu, MenuGroup, MenuItem, Text, useMenu, Flex } from '../..';
 import type { TMenuPlacement } from './context';
-import {
-  Button,
-  Flex,
-  Menu,
-  MenuItem,
-  MenuGroup,
-  Text,
-} from '../../index';
+
 const PLACEMENTS: TMenuPlacement[] = [
   'top-start',
   'top',
@@ -29,67 +23,9 @@ const meta: Meta<typeof Menu> = {
   component: Menu,
   tags: ['autodocs'],
   argTypes: {
-    placement: {
-      control: 'select',
-      options: PLACEMENTS,
-    },
-    offset: {
-      control: 'number',
-    },
-  },
-};
-
-export default meta;
-
-type Story = StoryObj<typeof Menu>;
-
-export const Default: Story = {
-  render: function DefaultStory(args) {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const open = Boolean(anchorEl);
-    const handleClose = () => setAnchorEl(null);
-
-    return (
-      <Flex justify="center" align="center" style={{ minHeight: 280 }}>
-        <Button
-          onClick={(event) =>
-            setAnchorEl((current) => (current ? null : event.currentTarget))
-          }
-        >
-          Open menu
-        </Button>
-        <Menu
-          {...args}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuGroup>
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Duplicate</MenuItem>
-            <MenuItem>
-              Share
-              <Menu>
-                <MenuItem onClick={handleClose}>Copy link</MenuItem>
-                <MenuItem onClick={handleClose}>Email</MenuItem>
-                <MenuItem>
-                  Social
-                  <Menu>
-                    <MenuItem onClick={handleClose}>Twitter</MenuItem>
-                    <MenuItem onClick={handleClose}>LinkedIn</MenuItem>
-                  </Menu>
-                </MenuItem>
-              </Menu>
-            </MenuItem>
-          </MenuGroup>
-          <MenuGroup>
-            <MenuItem color="error" onClick={handleClose}>
-              Delete
-            </MenuItem>
-          </MenuGroup>
-        </Menu>
-      </Flex>
-    );
+    placement: { control: 'select', options: PLACEMENTS },
+    offset: { control: 'number' },
+    open: { control: 'boolean' },
   },
   args: {
     placement: 'bottom-start',
@@ -97,62 +33,130 @@ export const Default: Story = {
   },
 };
 
-export const Hover: Story = {
-  render: function HoverStory() {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const open = Boolean(anchorEl);
-    const handleClose = () => setAnchorEl(null);
+export default meta;
 
-    const clearCloseTimer = () => {
-      if (closeTimerRef.current) {
-        clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = null;
-      }
-    };
+type Story = StoryObj<typeof Menu>;
 
-    const scheduleClose = () => {
-      clearCloseTimer();
-      closeTimerRef.current = setTimeout(handleClose, 200);
-    };
+const MenuDemo = ({
+  placement = 'bottom-start',
+  offset = 4,
+}: {
+  placement?: TMenuPlacement;
+  offset?: number;
+}) => {
+  const menu = useMenu({ placement, offset });
+
+  return (
+    <>
+      <Button {...menu.triggerProps}>Open menu</Button>
+      <Menu {...menu.menuProps}>
+        <MenuGroup>
+          <MenuItem onClick={menu.close}>Edit</MenuItem>
+          <MenuItem onClick={menu.close}>Duplicate</MenuItem>
+          <MenuItem>
+            Share
+            <Menu>
+              <MenuItem onClick={menu.close}>Copy link</MenuItem>
+              <MenuItem onClick={menu.close}>Email</MenuItem>
+              <MenuItem>
+                Social
+                <Menu>
+                  <MenuItem onClick={menu.close}>Twitter</MenuItem>
+                  <MenuItem onClick={menu.close}>LinkedIn</MenuItem>
+                </Menu>
+              </MenuItem>
+            </Menu>
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem color="error" onClick={menu.close}>
+            Delete
+          </MenuItem>
+        </MenuGroup>
+      </Menu>
+    </>
+  );
+};
+
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => (
+    <MenuDemo placement={args.placement} offset={args.offset} />
+  ),
+};
+
+export const Default: Story = {
+  render: (args) => (
+    <MenuDemo placement={args.placement} offset={args.offset} />
+  ),
+};
+
+export const Context: Story = {
+  render: function ContextStory() {
+    const menu = useMenu({ trigger: 'context' });
 
     return (
-      <Flex justify="center" align="center" style={{ minHeight: 200 }}>
-        <Button
-          variant="outline"
-          onMouseEnter={(event) => {
-            clearCloseTimer();
-            setAnchorEl(event.currentTarget);
-          }}
-          onMouseLeave={scheduleClose}
-        >
-          Hover me
-        </Button>
-        <Menu
-          placement="bottom"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          onMouseEnter={clearCloseTimer}
-          onMouseLeave={scheduleClose}
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>Settings</MenuItem>
-          <MenuItem color="error" onClick={handleClose}>
-            Log out
-          </MenuItem>
+      <Flex
+        align="center"
+        justify="center"
+        style={{
+          width: 320,
+          height: 160,
+          borderRadius: 12,
+          border: '1px dashed currentColor',
+        }}
+        {...menu.triggerProps}
+      >
+        <Text size="sm">Right-click here</Text>
+        <Menu {...menu.menuProps}>
+          <MenuGroup>
+            <MenuItem onClick={menu.close}>Cut</MenuItem>
+            <MenuItem onClick={menu.close}>Copy</MenuItem>
+            <MenuItem onClick={menu.close}>Paste</MenuItem>
+          </MenuGroup>
+          <MenuGroup>
+            <MenuItem>
+              Share
+              <Menu>
+                <MenuItem onClick={menu.close}>Copy link</MenuItem>
+                <MenuItem onClick={menu.close}>Email</MenuItem>
+              </Menu>
+            </MenuItem>
+            <MenuItem color="error" onClick={menu.close}>
+              Delete
+            </MenuItem>
+          </MenuGroup>
         </Menu>
       </Flex>
     );
   },
 };
 
+export const Hover: Story = {
+  render: function HoverStory() {
+    const menu = useMenu({ trigger: 'hover', placement: 'bottom' });
+
+    return (
+      <>
+        <Button variant="outline" {...menu.triggerProps}>
+          Hover me
+        </Button>
+        <Menu {...menu.menuProps}>
+          <MenuItem onClick={menu.close}>Profile</MenuItem>
+          <MenuItem onClick={menu.close}>Settings</MenuItem>
+          <MenuItem color="error" onClick={menu.close}>
+            Log out
+          </MenuItem>
+        </Menu>
+      </>
+    );
+  },
+};
+
 export const Placements: Story = {
   render: function PlacementsStory() {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const [placement, setPlacement] = useState<TMenuPlacement>('bottom-start');
-    const open = Boolean(anchorEl);
-    const handleClose = () => setAnchorEl(null);
+    const menu = useMenu({ placement });
 
     return (
       <Flex gap="md" wrap="wrap" justify="center" style={{ padding: 48 }}>
@@ -161,27 +165,18 @@ export const Placements: Story = {
             key={value}
             variant="outline"
             size="sm"
+            {...menu.triggerProps}
             onClick={(event) => {
-              if (open && placement === value) {
-                setAnchorEl(null);
-                return;
-              }
-
               setPlacement(value);
-              setAnchorEl(event.currentTarget);
+              menu.triggerProps.onClick?.(event);
             }}
           >
             {value}
           </Button>
         ))}
-        <Menu
-          placement={placement}
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleClose}>Action one</MenuItem>
-          <MenuItem onClick={handleClose}>Action two</MenuItem>
+        <Menu {...menu.menuProps}>
+          <MenuItem onClick={menu.close}>Action one</MenuItem>
+          <MenuItem onClick={menu.close}>Action two</MenuItem>
         </Menu>
       </Flex>
     );
@@ -190,72 +185,33 @@ export const Placements: Story = {
 
 export const NestedFlip: Story = {
   render: function NestedFlipStory() {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const open = Boolean(anchorEl);
-    const handleClose = () => setAnchorEl(null);
+    const menu = useMenu({ placement: 'bottom-end' });
 
     return (
-      <Flex justify="flex-end" align="center" style={{ minHeight: 240, paddingRight: 16 }}>
+      <Flex
+        justify="flex-end"
+        align="center"
+        style={{ minHeight: 240, paddingRight: 16 }}
+      >
         <Flex direction="column" gap="sm">
-          <Text size="sm">Open near the right edge — submenu flips left when needed.</Text>
-          <Button
-            onClick={(event) =>
-              setAnchorEl((current) => (current ? null : event.currentTarget))
-            }
-          >
-            Near edge
-          </Button>
-          <Menu
-            placement="bottom-end"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
+          <Text size="sm">
+            Open near the right edge — submenu flips left when needed.
+          </Text>
+          <Button {...menu.triggerProps}>Near edge</Button>
+          <Menu {...menu.menuProps}>
             <MenuItem>
               Nested
               <Menu>
-                <MenuItem onClick={handleClose}>Child A</MenuItem>
-                <MenuItem onClick={handleClose}>Child B</MenuItem>
-                <MenuItem color="error" onClick={handleClose}>
+                <MenuItem onClick={menu.close}>Child A</MenuItem>
+                <MenuItem onClick={menu.close}>Child B</MenuItem>
+                <MenuItem color="error" onClick={menu.close}>
                   Child delete
                 </MenuItem>
               </Menu>
             </MenuItem>
-            <MenuItem onClick={handleClose}>Plain</MenuItem>
+            <MenuItem onClick={menu.close}>Plain</MenuItem>
           </Menu>
         </Flex>
-      </Flex>
-    );
-  },
-};
-
-export const Controlled: Story = {
-  render: function ControlledStory() {
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    const open = Boolean(anchorEl);
-    const handleClose = () => setAnchorEl(null);
-
-    return (
-      <Flex justify="center" align="center" style={{ minHeight: 240 }} gap="md">
-        <Button
-          onClick={(event) =>
-            setAnchorEl((current) => (current ? null : event.currentTarget))
-          }
-        >
-          Dashboard
-        </Button>
-        <Menu
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          placement="bottom-start"
-        >
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem color="error" onClick={handleClose}>
-            Logout
-          </MenuItem>
-        </Menu>
       </Flex>
     );
   },

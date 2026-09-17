@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import type { TDateAdapter } from '../../../helpers/date-adapter';
 import { TPaletteColor } from '../../../theme/types';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
@@ -30,13 +30,7 @@ export type TInputDateFieldProps = Omit<
   variant?: TInputVariant;
   size?: TInputSize;
   color?: TPaletteColor;
-};
-
-export type TSInputDateFieldTriggerProps = {
-  variant: TInputVariant;
-  size: TInputSize;
-  color: TPaletteColor;
-  open: boolean;
+  actionBar?: ReactNode;
 };
 
 export type TSInputDateFieldDropdownProps = {
@@ -45,6 +39,7 @@ export type TSInputDateFieldDropdownProps = {
   width: number;
   visible: boolean;
   placement: 'top' | 'bottom';
+  color: TPaletteColor;
 };
 
 export type TSInputDateFieldDayProps = {
@@ -53,19 +48,8 @@ export type TSInputDateFieldDayProps = {
   outside: boolean;
   disabled: boolean;
   color: TPaletteColor;
-  variant: TInputVariant;
-};
-
-export type TSInputDateFieldWeekdayProps = {
-  color: TPaletteColor;
-};
-
-export type TSInputDateFieldTimeWheelHighlightProps = {
-  color: TPaletteColor;
-  variant: TInputVariant;
 };
 
 export type TSInputDateFieldTimeWheelItemProps = {
   color: TPaletteColor;
-  variant: TInputVariant;
 };

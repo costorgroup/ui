@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, ClickAwayListener, Flex, Text } from '../../index';
+import { Button, ClickAwayListener, Text, Flex } from '../..';
+import { useTheme } from '../../hooks/use-theme';
 
 const meta: Meta<typeof ClickAwayListener> = {
   title: 'Utilities/ClickAwayListener',
@@ -14,6 +15,7 @@ type Story = StoryObj<typeof ClickAwayListener>;
 
 export const Default: Story = {
   render: function DefaultStory() {
+    const theme = useTheme();
     const [inside, setInside] = useState(true);
 
     return (
@@ -24,7 +26,10 @@ export const Default: Story = {
               display: 'inline-flex',
               padding: 16,
               borderRadius: 8,
-              background: inside ? '#e8f4ff' : '#f3f3f3',
+              background: inside
+                ? theme.palette.primary.light
+                : theme.surfaces.background,
+              border: `1px solid ${theme.surfaces.border}`,
             }}
           >
             <Button onClick={() => setInside(true)}>Inside</Button>

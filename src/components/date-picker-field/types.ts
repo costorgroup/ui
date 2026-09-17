@@ -39,5 +39,6 @@ export type TDatePickerFieldProps = {
   name?: string;
   id?: string;
   className?: string;
+  actionBar?: ReactNode;
 };
 

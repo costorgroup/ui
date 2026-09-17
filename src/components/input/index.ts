@@ -1,4 +1,12 @@
+export { inputDescriptionTextSize } from './input-description-text-size';
+export {
+  inputVariantStyles,
+  inputControlIdleStyles,
+  inputControlIdleHoverStyles,
+} from './variant-styles';
+
 export { InputBase, InputFieldLayout } from './input-base';
+
 export type {
   TInputBaseProps,
   TInputDirection,
@@ -8,6 +16,7 @@ export type {
 } from './input-base';
 
 export { InputWrapper } from './input-wrapper';
+export { INPUT_VARIANTS } from './input-wrapper/types';
 export type {
   TInputWrapperProps,
   TInputVariant,
@@ -19,6 +28,20 @@ export type { TInputLabelProps } from './input-label/types';
 
 export { InputIcon } from './input-icon';
 export type { TInputIconProps } from './input-icon/types';
+
+export { InputButton } from './input-button';
+export type { TInputButtonProps } from './input-button/types';
+export { inputButtonClasses } from './input-button/classes';
+
+export {
+  InputActions,
+  INPUT_ACTIONS_ORIENTATIONS,
+  inputActionsClasses,
+} from './input-actions';
+export type {
+  TInputActionsProps,
+  TInputActionsOrientation,
+} from './input-actions/types';
 
 export { InputTextField } from './input-text-field';
 export type { TInputTextFieldProps } from './input-text-field/types';
@@ -62,6 +85,18 @@ export type { TInputSelectOptionProps } from './input-select-option/types';
 export { InputAutoComplete } from './input-auto-complete';
 export type { TInputAutoCompleteProps } from './input-auto-complete/types';
 
+export {
+  defaultGetOptionLabel,
+  defaultGetOptionKey,
+  defaultFilterOptions,
+  labelsForValue,
+} from './list-options';
+export type {
+  TOptionRenderState,
+  TFilterOptionsState,
+  TFilterOptions,
+} from './list-options';
+
 export { InputPinField } from './input-pin-field';
 export type {
   TInputPinFieldProps,
@@ -82,6 +117,19 @@ export type {
 
 export { InputColorField } from './input-color-field';
 export type { TInputColorFieldProps } from './input-color-field/types';
+
+export {
+  InputEmojiField,
+  EMOJI_CATEGORIES,
+  EMOJIS,
+  filterEmojis,
+} from './input-emoji-field';
+export type {
+  TInputEmojiFieldProps,
+  TEmojiCategory,
+  TEmojiCategoryId,
+  TEmojiItem,
+} from './input-emoji-field/types';
 
 export { InputDateField } from './input-date-field';
 export type {

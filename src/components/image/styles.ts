@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { CHROME_FILL } from '../../helpers/variant-styles';
+import { colorMix } from '../../helpers/variant-styles/surface';
 import { TSImageMediaProps, TSImageProps } from './types';
 
 const customImageProps = new Set(['width', 'height', 'radius', 'showFallback']);
@@ -27,10 +29,12 @@ export const SImage = styled('span', {
   width: ${({ width }) => toCssSize(width) ?? 'auto'};
   height: ${({ height }) => toCssSize(height) ?? 'auto'};
   flex-shrink: 0;
-  border-radius: ${({ theme, radius = 'medium' }) => theme.radius[radius]};
+  border-radius: ${({ theme, radius = 'md' }) => theme.radius[radius]};
   background-color: ${({ theme, showFallback }) =>
-    showFallback ? theme.palette.common.grey[10] : 'transparent'};
-  color: ${({ theme }) => theme.palette.common.grey[16]};
+    showFallback
+      ? colorMix(theme.surfaces.mixer, CHROME_FILL)
+      : 'transparent'};
+  color: ${({ theme }) => theme.surfaces.muted};
 `;
 
 export const SImageMedia = styled('span', {

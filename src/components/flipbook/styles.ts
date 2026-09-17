@@ -1,4 +1,6 @@
 import styled from '@emotion/styled';
+import { CHROME_FILL } from '../../helpers/variant-styles';
+import { colorMix, colorMixBase } from '../../helpers/variant-styles/surface';
 import { FlipbookBase } from './flipbook-base';
 
 export const SFlipbook = styled(FlipbookBase)``;
@@ -25,13 +27,16 @@ export const SFlipbookMessage = styled.div`
   min-height: 12rem;
   padding: ${({ theme }) => theme.spacing(4)};
   border-radius: ${({ theme }) => theme.radius.medium};
-  border: 1px dashed ${({ theme }) => theme.palette.common.grey[6]};
-  background: ${({ theme }) => theme.palette.common.grey[1]};
-  color: ${({ theme }) => theme.palette.common.grey[12]};
+  border: 1px dashed ${({ theme }) => theme.surfaces.border};
+  background-color: ${({ theme }) =>
+    colorMixBase(theme.surfaces.mixer, CHROME_FILL, theme.surfaces.background)};
+  color: ${({ theme }) => colorMix(theme.surfaces.ink, 64)};
   text-align: center;
   font-size: ${({ theme }) => theme.typography.text.sm};
 `;
 
+/** The rendered PDF page is a raster of paper, so its letterboxing stays
+ * fixed white rather than following the app's light/dark surfaces. */
 export const SFlipbookPdfPage = styled.img`
   display: block;
   width: 100%;

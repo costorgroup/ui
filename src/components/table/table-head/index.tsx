@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { TableSectionContext } from '../table-root/context';
 import { tableHeadClasses } from './classes';
-import { TableSectionContext } from '../table-base/context';
 import { STableHead } from './styles';
 import { TTableHeadProps } from './types';
 
@@ -9,11 +9,12 @@ const TableHead = forwardRef<HTMLTableSectionElement, TTableHeadProps>(
   ({ children, className, ...props }, ref) => {
     return (
       <TableSectionContext.Provider value={{ isHead: true }}>
-        <STableHead ref={ref} {...props}
-        className={mergeClasses(
-          tableHeadClasses.root,
-          className,
-        )}>
+        <STableHead
+          ref={ref}
+          data-slot="table-head"
+          {...props}
+          className={mergeClasses(tableHeadClasses.root, className)}
+        >
           {children}
         </STableHead>
       </TableSectionContext.Provider>

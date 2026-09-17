@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Center, Spinner, Text } from '../../index';
+import { Center, CircularProgress, Panel, Text } from '../..';
 
 const meta: Meta<typeof Center> = {
   title: 'Layout/Center',
@@ -22,12 +22,11 @@ type Story = StoryObj<typeof Center>;
 
 export const Default: Story = {
   render: (args) => (
-    <Center
-      {...args}
-      style={{ height: 120, width: 320, background: '#f3f4f6' }}
-    >
-      <Text>Centered content</Text>
-    </Center>
+    <Panel variant="surface" style={{ height: 120, width: 320 }}>
+      <Center {...args} style={{ width: '100%', height: '100%' }}>
+        <Text>Centered content</Text>
+      </Center>
+    </Panel>
   ),
 };
 
@@ -42,7 +41,7 @@ export const Inline: Story = {
         href="https://example.com"
         style={{
           padding: '4px 10px',
-          background: '#e5e7eb',
+          border: '1px solid currentColor',
           borderRadius: 6,
           textDecoration: 'none',
         }}
@@ -56,12 +55,12 @@ export const Inline: Story = {
 export const Absolute: Story = {
   args: { absolute: true, axis: 'both' },
   render: (args) => (
-    <div style={{ position: 'relative', height: 160, background: '#f3f4f6' }}>
+    <Panel variant="surface" style={{ position: 'relative', height: 160 }}>
       <Text style={{ padding: 12 }}>Parent content</Text>
       <Center {...args}>
         <Text>Absolutely centered</Text>
       </Center>
-    </div>
+    </Panel>
   ),
 };
 
@@ -69,14 +68,11 @@ export const AbsoluteAxes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {(['horizontal', 'vertical', 'both'] as const).map((axis) => (
-        <div
-          key={axis}
-          style={{ position: 'relative', height: 100, background: '#f3f4f6' }}
-        >
+        <Panel key={axis} variant="surface" style={{ position: 'relative', height: 100 }}>
           <Center absolute axis={axis}>
             <Text>{axis}</Text>
           </Center>
-        </div>
+        </Panel>
       ))}
     </div>
   ),
@@ -84,11 +80,11 @@ export const AbsoluteAxes: Story = {
 
 export const Overlay: Story = {
   render: () => (
-    <div style={{ position: 'relative', height: 160, background: '#f3f4f6' }}>
+    <Panel variant="surface" style={{ position: 'relative', height: 160 }}>
       <Text style={{ padding: 16 }}>Some content that is being loaded…</Text>
       <Center absolute>
-        <Spinner />
+        <CircularProgress />
       </Center>
-    </div>
+    </Panel>
   ),
 };

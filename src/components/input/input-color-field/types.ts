@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
 import type { TColorFormat } from '../../../helpers/color';
@@ -22,13 +22,7 @@ export type TInputColorFieldProps = Omit<
   variant?: TInputVariant;
   size?: TInputSize;
   color?: TPaletteColor;
-};
-
-export type TSInputColorFieldTriggerProps = {
-  variant: TInputVariant;
-  size: TInputSize;
-  color: TPaletteColor;
-  open: boolean;
+  actionBar?: ReactNode;
 };
 
 export type TSInputColorFieldDropdownProps = {

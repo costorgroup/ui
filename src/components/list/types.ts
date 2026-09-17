@@ -1,30 +1,20 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import type { THeadingAs } from '../heading/types';
-import type { TPaletteColor } from '../../theme/types';
+import { TPaletteColor, TThemeRadius } from '../../theme/types';
+import { TListVariant } from './variant-styles';
 
-export type TListStyle = 'ordered' | 'unordered' | 'none';
 export type TListSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type TListRadius = keyof TThemeRadius;
 
-export type TListProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'children' | 'color' | 'title'
-> & {
+export type TListProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
-  title?: ReactNode;
-  description?: ReactNode;
-  titleAs?: THeadingAs;
-  listStyle?: TListStyle;
-  size?: TListSize;
   color?: TPaletteColor;
+  variant?: TListVariant;
+  size?: TListSize;
+  radius?: TListRadius;
 };
 
-export type TSListRootProps = {
-  size?: TListSize;
-  color?: TPaletteColor;
-};
-
-export type TSListItemsProps = {
-  listStyle: TListStyle;
-  size?: TListSize;
-  color?: TPaletteColor;
+export type TSListProps = {
+  color: TPaletteColor;
+  variant: TListVariant;
+  radius: TListRadius;
 };

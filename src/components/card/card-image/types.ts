@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
-import { TImageProps } from '../../image/types';
+import { HTMLAttributes, ReactNode } from 'react';
 
-export type TCardImageProps = TImageProps & {
+export type TCardImageProps = HTMLAttributes<HTMLDivElement> & {
   children?: ReactNode;
 };

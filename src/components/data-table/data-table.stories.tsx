@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, DataTable, Flex } from '../../index';
+import { Button, DataTable, Flex } from '../..';
 import type { TPaletteColor } from '../../theme/types';
 import type {
   TDataTableColumn,
@@ -16,7 +16,7 @@ type TDessert = TDataTableRow & {
 };
 
 const COLORS: TPaletteColor[] = [
-  'base',
+  'default',
   'primary',
   'secondary',
   'success',
@@ -25,18 +25,11 @@ const COLORS: TPaletteColor[] = [
   'info',
   'dark',
   'light',
-  'default',
+  'base',
   'inverted',
 ];
 
-const VARIANTS: TDataTableVariant[] = [
-  'solid',
-  'subtle',
-  'surface',
-  'outline',
-  'ghost',
-  'plain',
-];
+const VARIANTS: TDataTableVariant[] = ['subtle', 'surface', 'outline'];
 
 const BASE_COLUMNS: TDataTableColumn<TDessert>[] = [
   { id: 'name', key: 'name', name: 'Dessert' },
@@ -100,7 +93,7 @@ export const Default: Story = {
     columns: BASE_COLUMNS,
     data: INITIAL_ROWS,
     color: 'primary',
-    variant: 'subtle',
+    variant: 'surface',
     size: 'md',
     pageSize: 5,
   },
@@ -140,7 +133,7 @@ export const WithActions: Story = {
         columns={columns}
         data={rows}
         color="primary"
-        variant="subtle"
+        variant="surface"
         pageSize={5}
       />
     );

@@ -1,13 +1,7 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
 
-export type TBadgeVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'ghost'
-  | 'plain';
+export type TBadgeVariant = 'solid' | 'subtle' | 'surface';
 
 export type TBadgeSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
-import { TSectionAlign } from './section-group/context';
 import { TPaletteColor } from '../../theme/types';
+import { TSectionAlign } from './section-group/context';
 
 export type TSSectionProps = {
   align: TSectionAlign;

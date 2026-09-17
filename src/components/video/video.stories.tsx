@@ -1,32 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Flex, Video } from '../../index';
+import type { TPaletteColor } from '../../theme/types';
+import { Video, Flex } from '../..';
 
 const SAMPLE_SRC =
   'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+const RADIUS = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill', 'full'] as const;
 
 const meta: Meta<typeof Video> = {
   title: 'Data Display/Video',
   component: Video,
   tags: ['autodocs'],
+  args: {
+    src: SAMPLE_SRC,
+    radius: 'md',
+    color: 'default',
+    controls: true,
+    autoHide: true,
+    width: 480,
+  },
   argTypes: {
     radius: {
       control: 'select',
-      options: ['none', 'small', 'medium', 'large', 'pill', 'circle'],
+      options: RADIUS,
     },
     color: {
       control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
+      options: COLORS,
     },
     controls: {
       control: 'boolean',
@@ -41,22 +55,15 @@ export default meta;
 
 type Story = StoryObj<typeof Video>;
 
-export const Default: Story = {
-  args: {
-    src: SAMPLE_SRC,
-    radius: 'medium',
-    color: 'primary',
-    controls: true,
-    autoHide: true,
-    width: 480,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
 export const Accent: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap">
+      <Video src={SAMPLE_SRC} width={320} color="inverted" />
       <Video src={SAMPLE_SRC} width={320} color="primary" />
-      <Video src={SAMPLE_SRC} width={320} color="error" />
       <Video src={SAMPLE_SRC} width={320} color="success" />
     </Flex>
   ),

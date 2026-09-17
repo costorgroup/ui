@@ -1,12 +1,20 @@
-import { createContext, MouseEvent } from 'react';
+import { createContext, MouseEvent, useContext } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonVariant } from '../button/types';
+import {
+  TButtonAppearance,
+  TButtonSize,
+  TButtonVariant,
+} from '../button/types';
 
 export type TToggleButtonValue = string | number;
+
+export type TToggleButtonGroupOrientation = 'horizontal' | 'vertical';
 
 export type TToggleButtonGroupContextValue = {
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  appearance?: TButtonAppearance;
+  size?: TButtonSize;
   disabled?: boolean;
   exclusive: boolean;
   value: TToggleButtonValue | TToggleButtonValue[] | null;
@@ -18,3 +26,6 @@ export type TToggleButtonGroupContextValue = {
 
 export const ToggleButtonGroupContext =
   createContext<TToggleButtonGroupContextValue | null>(null);
+
+export const useToggleButtonGroupContext = () =>
+  useContext(ToggleButtonGroupContext);

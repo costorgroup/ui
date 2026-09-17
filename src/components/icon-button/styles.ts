@@ -1,33 +1,13 @@
 import styled from '@emotion/styled';
-import { TIconButtonProps, TIconButtonSize } from './types';
+import { variantStyles } from '../button/variant-styles';
+import { TIconButtonProps } from './types';
 
-type TSIconButtonProps = Pick<TIconButtonProps, 'variant' | 'size' | 'color' | 'rounded'>;
+type TSIconButtonProps = Pick<
+  TIconButtonProps,
+  'variant' | 'appearance' | 'size' | 'color' | 'radius'
+>;
 
-const customProps = new Set(['variant', 'size', 'color', 'rounded']);
-
-const sizeFont: Record<TIconButtonSize, number> = {
-  xs: 12,
-  sm: 13,
-  md: 14,
-  lg: 16,
-  xl: 20,
-};
-
-const sizePadding: Record<TIconButtonSize, number> = {
-  xs: 0.5,
-  sm: 1,
-  md: 1.5,
-  lg: 2,
-  xl: 2.5,
-};
-
-const sizeIcon: Record<TIconButtonSize, string> = {
-  xs: '1em',
-  sm: '1.1em',
-  md: '1.2em',
-  lg: '1.25em',
-  xl: '1.35em',
-};
+const customProps = new Set(['variant', 'appearance', 'size', 'color', 'radius']);
 
 export const SIconButton = styled('button', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -36,205 +16,56 @@ export const SIconButton = styled('button', {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-sizing: border-box;
+  min-height: 0;
   border: 1px solid;
-  border-radius: ${({ theme, rounded = false }) =>
-    rounded ? theme.radius.pill : theme.radius.medium};
+  border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
-  font-weight: 500;
-  line-height: 1.2;
+  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
+  line-height: 1;
+  letter-spacing: -0.01em;
   cursor: pointer;
-  pointer-events: auto;
-  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
-
-  ${({ theme, variant = 'solid', color = 'primary' }) => {
-    const palette = theme.palette[color];
-
-    switch (variant) {
-      case 'subtle':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 24%,
-            transparent
-          );
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 36%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 48%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            border-color: ${palette.dark};
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            border-color: ${palette.darker};
-            color: ${palette.darker};
-          }
-        `;
-      case 'ghost':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 14%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: transparent;
-
-          &:hover:not(:disabled) {
-            color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            color: ${palette.darker};
-          }
-        `;
-      case 'solid':
-      default:
-        return `
-          background-color: ${palette.main};
-          color: ${palette.contrastText};
-          border-color: ${palette.main};
-
-          &:hover:not(:disabled) {
-            background-color: ${palette.dark};
-            border-color: ${palette.dark};
-          }
-
-          &:active:not(:disabled) {
-            background-color: ${palette.darker};
-            border-color: ${palette.darker};
-          }
-        `;
-    }
-  }}
-
-  ${({ variant = 'solid' }) =>
-    variant === 'solid'
-      ? ''
-      : `
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-        `}
+  transition:
+    background-color 0.12s ease,
+    background-image 0.12s ease,
+    border-color 0.12s ease,
+    box-shadow 0.12s ease,
+    color 0.12s ease,
+    opacity 0.12s ease;
 
   ${({ theme, size = 'md' }) => {
-    const pad = theme.spacing(sizePadding[size]);
-    const icon = sizeIcon[size];
+    const step = theme.sizes[size];
 
     return `
-      padding: ${pad};
-      font-size: ${sizeFont[size]}px;
-      line-height: 1;
+      width: ${step.height};
+      height: ${step.height};
+      padding: 0;
+      font-size: ${step.fontSize};
 
       & svg {
-        width: ${icon};
-        height: ${icon};
+        width: ${step.icon};
+        height: ${step.icon};
       }
     `;
   }}
 
+  ${({ theme, variant = 'solid', appearance = 'opaque', color = 'default' }) =>
+    variantStyles(
+      variant,
+      theme.palette[color],
+      theme,
+      appearance,
+      theme.surfaces.background,
+    )}
+
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme, color = 'primary' }) => theme.palette[color].main};
+    outline: 2px solid
+      ${({ theme, color = 'default' }) => theme.palette[color].main};
     outline-offset: 2px;
   }
 `;

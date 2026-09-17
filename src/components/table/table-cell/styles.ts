@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { TSTableCellProps } from './types';
 
-const customProps = new Set(['align']);
+// 'as' must be excluded too: a custom shouldForwardProp otherwise makes
+// emotion treat `as` as a regular DOM attribute instead of a tag override,
+// which silently breaks the td/th switch.
+const customProps = new Set(['align', 'as']);
 
 export const STableCell = styled('td', {
   shouldForwardProp: (prop) => !customProps.has(prop),

@@ -1,7 +1,7 @@
 import React, { ElementType, forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { linkClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
+import { linkClasses } from './classes';
 import { SLink } from './styles';
 import { TLinkOwnProps, TLinkProps } from './types';
 
@@ -10,9 +10,10 @@ const Link = forwardRef(function Link<C extends ElementType = 'a'>(
     as,
     children,
     color = 'primary',
-    variant = 'hover',
+    variant = 'plain',
     size = 'md',
-    className, ...props
+    className,
+    ...props
   }: TLinkProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -24,10 +25,7 @@ const Link = forwardRef(function Link<C extends ElementType = 'a'>(
       variant={variant}
       size={size}
       {...props}
-        className={mergeClasses(
-          linkClasses.root,
-          className,
-        )}
+      className={mergeClasses(linkClasses.root, className)}
     >
       {children}
     </SLink>

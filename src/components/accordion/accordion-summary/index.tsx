@@ -1,8 +1,8 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
-import { accordionSummaryClasses } from './classes';
 import { ArrowBottomIcon } from '../../../icons';
-import { AccordionContext } from '../accordion-base/context';
+import { useAccordionContext } from '../accordion-base/context';
+import { accordionSummaryClasses } from './classes';
 import {
   SAccordionExpandIcon,
   SAccordionSummary,
@@ -22,13 +22,15 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
     },
     ref,
   ) => {
-    const context = useContext(AccordionContext);
-
-    if (!context) {
-      throw new Error('AccordionSummary must be used within AccordionBase');
-    }
-
-    const { expanded, toggle, variant, disabled } = context;
+    const {
+      expanded,
+      toggle,
+      color,
+      variant,
+      size,
+      disabled,
+      hasDetails,
+    } = useAccordionContext();
 
     return (
       <SAccordionSummary
@@ -36,9 +38,12 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
         type="button"
         aria-expanded={expanded}
         disabled={disabled}
-        expandIconPosition={expandIconPosition}
-        expanded={expanded}
+        paletteColor={color}
         variant={variant}
+        expanded={expanded}
+        expandIconPosition={expandIconPosition}
+        size={size}
+        hasDetails={hasDetails}
         onClick={(event) => {
           onClick?.(event);
 
@@ -55,8 +60,14 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
           className,
         )}
       >
-        <SAccordionSummaryContent>{children}</SAccordionSummaryContent>
-        <SAccordionExpandIcon expanded={expanded} variant={variant} aria-hidden>
+        <SAccordionSummaryContent className={accordionSummaryClasses.content}>
+          {children}
+        </SAccordionSummaryContent>
+        <SAccordionExpandIcon
+          expanded={expanded}
+          className={accordionSummaryClasses.expandIcon}
+          aria-hidden
+        >
           {expandIcon ?? <ArrowBottomIcon />}
         </SAccordionExpandIcon>
       </SAccordionSummary>
@@ -66,7 +77,10 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
 
 AccordionSummary.displayName = 'AccordionSummary';
 
-export type { TAccordionSummaryProps, TAccordionExpandIconPosition } from './types';
+export type {
+  TAccordionSummaryProps,
+  TAccordionExpandIconPosition,
+} from './types';
 export { accordionSummaryClasses } from './classes';
 export { AccordionSummary };
 export default AccordionSummary;

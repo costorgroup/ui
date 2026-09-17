@@ -1,13 +1,7 @@
 import styled from '@emotion/styled';
-import { accordionClasses } from '../classes';
-import { accordionBaseClasses } from '../accordion-base/classes';
 import { TSAccordionGroupProps } from './types';
 
 const customProps = new Set(['radius']);
-
-const itemSelector = `& > .${accordionBaseClasses.root}, & > .${accordionClasses.root}`;
-const nextItem = `+ .${accordionBaseClasses.root}, + .${accordionClasses.root}`;
-const itemClass = `.${accordionBaseClasses.root}, .${accordionClasses.root}`;
 
 export const SAccordionGroup = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -15,26 +9,22 @@ export const SAccordionGroup = styled('div', {
   display: flex;
   flex-direction: column;
   width: 100%;
-  --accordion-group-radius: ${({ theme, radius }) => theme.radius[radius]};
 
-  ${itemSelector} {
+  & > [data-accordion-grouped] {
     border-radius: 0;
   }
 
-  ${itemSelector}:nth-child(1 of ${itemClass}) {
-    border-top-left-radius: var(--accordion-group-radius);
-    border-top-right-radius: var(--accordion-group-radius);
+  & > [data-accordion-grouped]:first-child {
+    border-top-left-radius: ${({ theme, radius }) => theme.radius[radius]};
+    border-top-right-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 
-  ${itemSelector}:not(:has(${nextItem})) {
-    border-bottom-left-radius: var(--accordion-group-radius);
-    border-bottom-right-radius: var(--accordion-group-radius);
+  & > [data-accordion-grouped]:last-child {
+    border-bottom-left-radius: ${({ theme, radius }) => theme.radius[radius]};
+    border-bottom-right-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 
-  ${itemSelector} {
-    & + .${accordionBaseClasses.root},
-    & + .${accordionClasses.root} {
-      margin-top: -1px;
-    }
+  & > [data-accordion-grouped]:only-child {
+    border-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 `;

@@ -1,5 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Text } from '../../index';
+import React from 'react';
+import type { TPaletteColor } from '../../theme/types';
+import { Text, Flex } from '../..';
+import type { TTextSize } from './types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const SIZES: TTextSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+
 const meta: Meta<typeof Text> = {
   title: 'Typography/Text',
   component: Text,
@@ -7,22 +27,17 @@ const meta: Meta<typeof Text> = {
   argTypes: {
     color: {
       control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
+      options: COLORS,
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: SIZES,
     },
+  },
+  args: {
+    children: 'Readable body text using the default color.',
+    size: 'md',
+    color: 'default',
   },
 };
 
@@ -30,30 +45,30 @@ export default meta;
 
 type Story = StoryObj<typeof Text>;
 
-export const Default: Story = {
-  args: {
-    children: 'Readable body text using the default gray color.',
-    size: 'md',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
-export const Small: Story = {
-  args: {
-    children: 'Small text at 14px.',
-    size: 'sm',
-  },
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <Text key={color} color={color}>
+          This text will be in '{color}' color.
+        </Text>
+      ))}
+    </Flex>
+  ),
 };
 
-export const Large: Story = {
-  args: {
-    children: 'Large text at 18px.',
-    size: 'lg',
-  },
-};
-
-export const Primary: Story = {
-  args: {
-    children: 'Text with primary color.',
-    color: 'primary',
-  },
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {SIZES.map((size) => (
+        <Text key={size} size={size} color="default">
+          This text will be in '{size}' size.
+        </Text>
+      ))}
+    </Flex>
+  ),
 };

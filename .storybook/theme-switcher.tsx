@@ -1,10 +1,10 @@
 import React from 'react';
+import { Color } from '../src/components/color';
 import { Flex } from '../src/components/flex';
 import { Text } from '../src/components/text';
-import { Color } from '../src/v2/components/color';
 import { accentSwatch } from '../src/theme/palettes';
 import { useTheme } from '../src/theme/use-theme';
-import type { TColorSize } from '../src/v2/components/color/types';
+import type { TColorSize } from '../src/components/color/types';
 
 type TThemeSwitcherProps = {
   size?: TColorSize;

@@ -10,4 +10,8 @@ export const SSliderControls = styled.div`
   justify-content: flex-end;
   align-items: stretch;
   padding: ${({ theme }) => theme.spacing(theme.gap.md)};
+
+  & > * {
+    pointer-events: auto;
+  }
 `;

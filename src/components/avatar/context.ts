@@ -1,9 +1,12 @@
 import { createContext, HTMLAttributes, ReactNode } from 'react';
 import { TAvatarRadius, TAvatarSize } from './types';
 
-export type TAvatarGroupSpacing = 'small' | 'medium' | number;
+export type TAvatarGroupSpacing = 'sm' | 'md' | number;
 
-export type TAvatarGroupProps = Omit<HTMLAttributes<HTMLDivElement>, 'children'> & {
+export type TAvatarGroupProps = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children'
+> & {
   children?: ReactNode;
   max?: number;
   total?: number;
@@ -18,7 +21,8 @@ export type TAvatarGroupContextValue = {
   radius: TAvatarRadius;
 };
 
-export const AvatarGroupContext = createContext<TAvatarGroupContextValue | null>(null);
+export const AvatarGroupContext =
+  createContext<TAvatarGroupContextValue | null>(null);
 
 export type TSAvatarGroupProps = {
   spacing: TAvatarGroupSpacing;

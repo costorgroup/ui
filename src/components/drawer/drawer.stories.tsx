@@ -1,23 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, Drawer, Heading, Text } from '../../index';
+import { CloseIcon } from '../../icons';
+import { Button, CheckBox, Drawer, DrawerTitle, IconButton, TextArea, TextField, Flex } from '../..';
+import type { TDrawerAnchor, TDrawerSize, TDrawerVariant } from './types';
+
+const SIZES: TDrawerSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const ANCHORS: TDrawerAnchor[] = ['left', 'right', 'top', 'bottom'];
+const VARIANTS: TDrawerVariant[] = ['subtle', 'surface'];
 
 const meta: Meta<typeof Drawer> = {
   title: 'Overlays/Drawer',
   component: Drawer,
   tags: ['autodocs'],
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    anchor: {
-      control: 'select',
-      options: ['left', 'right', 'top', 'bottom'],
-    },
-    scrollable: {
-      control: 'boolean',
-    },
+    size: { control: 'select', options: SIZES },
+    anchor: { control: 'select', options: ANCHORS },
+    variant: { control: 'select', options: VARIANTS },
+    scrollable: { control: 'boolean' },
+    open: { control: 'boolean' },
+  },
+  args: {
+    size: 'md',
+    anchor: 'left',
+    variant: 'surface',
+    scrollable: true,
   },
 };
 
@@ -28,69 +34,138 @@ type Story = StoryObj<typeof Drawer>;
 const DrawerDemo = ({
   size = 'md',
   anchor = 'left',
+  variant = 'surface',
   scrollable = true,
+  title = 'Drawer title',
 }: {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  anchor?: 'left' | 'right' | 'top' | 'bottom';
+  size?: TDrawerSize;
+  anchor?: TDrawerAnchor;
+  variant?: TDrawerVariant;
   scrollable?: boolean;
+  title?: React.ReactNode;
 }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open drawer</Button>
-      {open ? (
-        <Drawer
-          size={size}
-          anchor={anchor}
-          scrollable={scrollable}
-          onClose={() => setOpen(false)}
-          title={<Heading as="h4">Drawer title</Heading>}
-          actions={
-            <>
-              <Button variant="outline" onClick={() => setOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={() => setOpen(false)}>Confirm</Button>
-            </>
-          }
-        >
-          <Text>
-            Drawer body content stays scrollable when needed, while head and actions remain
-            visible.
-          </Text>
-          {Array.from({ length: 12 }).map((_, index) => (
-            <Text key={index} style={{ marginTop: 12 }}>
-              Extra content line {index + 1} to demonstrate scrolling behavior.
-            </Text>
-          ))}
-        </Drawer>
-      ) : null}
+      <Button onClick={() => setOpen(true)}>
+        {`Open ${typeof title === 'string' ? title : 'drawer'}`}
+      </Button>
+      <Drawer
+        open={open}
+        size={size}
+        anchor={anchor}
+        variant={variant}
+        scrollable={scrollable}
+        onClose={() => setOpen(false)}
+        title={title}
+        description="A few details to get started."
+        headerActions={
+          <IconButton
+            variant="ghost"
+            color="default"
+            radius="pill"
+            aria-label="Close"
+            onClick={() => setOpen(false)}
+          >
+            <CloseIcon />
+          </IconButton>
+        }
+        actions={
+          <>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => setOpen(false)}>Confirm</Button>
+          </>
+        }
+      >
+        <Flex direction="column" gap="md">
+          <TextField
+            label="Name"
+            placeholder="Acme Inc."
+            variant="subtle"
+          />
+          <TextField
+            label="Email"
+            placeholder="you@example.com"
+            variant="subtle"
+          />
+          <TextArea
+            label="Notes"
+            placeholder="Anything we should know?"
+            rows={3}
+            variant="subtle"
+          />
+          <CheckBox
+            label="Subscribe"
+            description="Product emails and occasional updates."
+            variant="subtle"
+            defaultChecked
+          />
+        </Flex>
+      </Drawer>
     </>
   );
 };
 
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => (
+    <DrawerDemo
+      size={args.size}
+      anchor={args.anchor}
+      variant={args.variant}
+      scrollable={args.scrollable}
+    />
+  ),
+};
+
 export const Default: Story = {
   render: (args) => (
-    <DrawerDemo size={args.size} anchor={args.anchor} scrollable={args.scrollable} />
+    <DrawerDemo
+      size={args.size}
+      anchor={args.anchor}
+      variant={args.variant}
+      scrollable={args.scrollable}
+    />
   ),
-  args: {
-    size: 'md',
-    anchor: 'left',
-    scrollable: true,
-  },
 };
 
-export const Right: Story = {
-  render: () => <DrawerDemo anchor="right" />,
+export const Variants: Story = {
+  render: () => (
+    <Flex gap="sm">
+      {VARIANTS.map((variant) => (
+        <DrawerDemo key={variant} variant={variant} title={variant} />
+      ))}
+    </Flex>
+  ),
 };
 
-export const Top: Story = {
-  render: () => <DrawerDemo anchor="top" />,
+export const Anchors: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap">
+      {ANCHORS.map((anchor) => (
+        <DrawerDemo key={anchor} anchor={anchor} title={anchor} />
+      ))}
+    </Flex>
+  ),
 };
 
-export const Bottom: Story = {
-  render: () => <DrawerDemo anchor="bottom" />,
+export const Sizes: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap">
+      {SIZES.map((size) => (
+        <DrawerDemo key={size} size={size} title={size} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const TitleAs: Story = {
+  render: () => (
+    <DrawerDemo title={<DrawerTitle as="h1">Page-level title</DrawerTitle>} />
+  ),
 };
 
 export const BackdropScroll: Story = {

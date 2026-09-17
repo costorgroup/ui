@@ -1,6 +1,9 @@
 import { TMenuPlacement } from './context';
 
-type TRect = Pick<DOMRect, 'top' | 'left' | 'right' | 'bottom' | 'width' | 'height'>;
+type TRect = Pick<
+  DOMRect,
+  'top' | 'left' | 'right' | 'bottom' | 'width' | 'height'
+>;
 
 type TViewport = {
   width: number;
@@ -37,6 +40,7 @@ const computeCoords = (
   tip: TRect,
   placement: TMenuPlacement,
   offset: number,
+  crossOffset = 0,
 ): TCoords => {
   const [side, align = 'center'] = placement.includes('-')
     ? (placement.split('-') as [string, string])
@@ -46,22 +50,28 @@ const computeCoords = (
   let left = 0;
 
   if (side === 'top' || side === 'bottom') {
-    top = side === 'top' ? trigger.top - tip.height - offset : trigger.bottom + offset;
+    top =
+      side === 'top'
+        ? trigger.top - tip.height - offset
+        : trigger.bottom + offset;
 
     if (align === 'start') {
-      left = trigger.left;
+      left = trigger.left + crossOffset;
     } else if (align === 'end') {
-      left = trigger.right - tip.width;
+      left = trigger.right - tip.width - crossOffset;
     } else {
       left = trigger.left + trigger.width / 2 - tip.width / 2;
     }
   } else {
-    left = side === 'left' ? trigger.left - tip.width - offset : trigger.right + offset;
+    left =
+      side === 'left'
+        ? trigger.left - tip.width - offset
+        : trigger.right + offset;
 
     if (align === 'start') {
-      top = trigger.top;
+      top = trigger.top + crossOffset;
     } else if (align === 'end') {
-      top = trigger.bottom - tip.height;
+      top = trigger.bottom - tip.height - crossOffset;
     } else {
       top = trigger.top + trigger.height / 2 - tip.height / 2;
     }
@@ -95,8 +105,14 @@ const overflowScore = (
 ) => {
   const leftOverflow = Math.max(0, padding - coords.left);
   const topOverflow = Math.max(0, padding - coords.top);
-  const rightOverflow = Math.max(0, coords.left + tip.width - (viewport.width - padding));
-  const bottomOverflow = Math.max(0, coords.top + tip.height - (viewport.height - padding));
+  const rightOverflow = Math.max(
+    0,
+    coords.left + tip.width - (viewport.width - padding),
+  );
+  const bottomOverflow = Math.max(
+    0,
+    coords.top + tip.height - (viewport.height - padding),
+  );
 
   return leftOverflow + topOverflow + rightOverflow + bottomOverflow;
 };
@@ -108,17 +124,40 @@ export const getMenuPosition = (
   offset: number,
   viewportPadding: number,
   viewport: TViewport,
+  crossOffset = 0,
 ): TMenuPosition => {
-  const preferredCoords = computeCoords(trigger, tip, preferred, offset);
-  const preferredScore = overflowScore(preferredCoords, tip, viewport, viewportPadding);
+  const preferredCoords = computeCoords(
+    trigger,
+    tip,
+    preferred,
+    offset,
+    crossOffset,
+  );
+  const preferredScore = overflowScore(
+    preferredCoords,
+    tip,
+    viewport,
+    viewportPadding,
+  );
 
   let placement = preferred;
   let coords = preferredCoords;
 
   if (preferredScore > 0) {
     const flipped = flipSide(preferred);
-    const flippedCoords = computeCoords(trigger, tip, flipped, offset);
-    const flippedScore = overflowScore(flippedCoords, tip, viewport, viewportPadding);
+    const flippedCoords = computeCoords(
+      trigger,
+      tip,
+      flipped,
+      offset,
+      crossOffset,
+    );
+    const flippedScore = overflowScore(
+      flippedCoords,
+      tip,
+      viewport,
+      viewportPadding,
+    );
 
     if (flippedScore < preferredScore) {
       placement = flipped;

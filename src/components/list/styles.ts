@@ -1,88 +1,21 @@
 import styled from '@emotion/styled';
-import { TListSize, TSListItemsProps, TSListRootProps } from './types';
+import { listShellVariantStyles } from './variant-styles';
+import { TSListProps } from './types';
 
-const rootCustomProps = new Set(['size', 'color']);
-const itemsCustomProps = new Set(['listStyle', 'size', 'color']);
-
-const itemFontSize: Record<TListSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
+const customProps = new Set(['color', 'variant', 'radius']);
 
 export const SList = styled('div', {
-  shouldForwardProp: (prop) => !rootCustomProps.has(prop),
-})<TSListRootProps>`
+  shouldForwardProp: (prop) => !customProps.has(prop),
+})<TSListProps>`
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  gap: ${({ theme, size = 'md' }) =>
-    `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`};
-  font-family: inherit;
-`;
-
-export const SListHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-`;
-
-export const SListItems = styled('ul', {
-  shouldForwardProp: (prop) => !itemsCustomProps.has(prop),
-})<TSListItemsProps>`
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: inherit;
-  font-size: ${({ size = 'md' }) => itemFontSize[size]};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.palette.base.main};
-
-  & > li::marker {
-    color: ${({ theme, color = 'primary' }) => theme.palette[color].main};
-  }
-
-  ${({ theme, listStyle, size = 'md' }) => {
-    const scale = theme.sizeScale[size];
-    const gap = `calc(${theme.spacing(theme.gap.xs)} * ${scale})`;
-    const indent = `calc(${theme.spacing(theme.gap.lg)} * ${scale})`;
-
-    switch (listStyle) {
-      case 'ordered':
-        return `
-          list-style-type: decimal;
-          list-style-position: outside;
-          padding-left: ${indent};
-
-          & > li + li {
-            margin-top: ${gap};
-          }
-        `;
-      case 'unordered':
-        return `
-          list-style-type: circle;
-          list-style-position: outside;
-          padding-left: ${indent};
-
-          & > li + li {
-            margin-top: ${gap};
-          }
-        `;
-      case 'none':
-      default:
-        return `
-          list-style-type: none;
-          padding-left: 0;
-
-          & > li + li {
-            margin-top: ${gap};
-          }
-        `;
-    }
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: ${({ theme, radius }) => theme.radius[radius]};
+  ${({ theme, color, variant }) => {
+    const palette = theme.palette[color];
+    return listShellVariantStyles(variant, palette, theme);
   }}
 `;

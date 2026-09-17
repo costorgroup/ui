@@ -1,7 +1,7 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { useAccordionContext } from '../accordion-base/context';
 import { accordionDetailsClasses } from './classes';
-import { AccordionContext } from '../accordion-base/context';
 import {
   SAccordionDetails,
   SAccordionDetailsClip,
@@ -11,13 +11,7 @@ import { TAccordionDetailsProps } from './types';
 
 const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
   ({ children, className, ...props }, ref) => {
-    const context = useContext(AccordionContext);
-
-    if (!context) {
-      throw new Error('AccordionDetails must be used within AccordionBase');
-    }
-
-    const { expanded } = context;
+    const { expanded, color, variant, size } = useAccordionContext();
 
     return (
       <SAccordionDetails
@@ -25,13 +19,12 @@ const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
         expanded={expanded}
         aria-hidden={!expanded}
         {...props}
-        className={mergeClasses(
-          accordionDetailsClasses.root,
-          className,
-        )}
+        className={mergeClasses(accordionDetailsClasses.root, className)}
       >
         <SAccordionDetailsClip>
-          <SAccordionDetailsInner>{children}</SAccordionDetailsInner>
+          <SAccordionDetailsInner size={size} variant={variant} color={color}>
+            {children}
+          </SAccordionDetailsInner>
         </SAccordionDetailsClip>
       </SAccordionDetails>
     );

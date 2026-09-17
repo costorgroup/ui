@@ -1,15 +1,46 @@
-import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
+import {
+  ChangeEventHandler,
+  HTMLAttributes,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+  SyntheticEvent,
+} from 'react';
 
-export type TEditableMode = 'click' | 'doubleclick';
+export type TEditableMode = 'click' | 'double-click';
+
+export type TEditableChangeEventHandler = ChangeEventHandler<
+  HTMLInputElement | HTMLTextAreaElement
+>;
+
+/** Spread onto whichever element in the "view" branch should open the editor. */
+export type TEditableHandlers = {
+  onClick?: MouseEventHandler<HTMLElement>;
+  onDoubleClick?: MouseEventHandler<HTMLElement>;
+  onKeyDown: KeyboardEventHandler<HTMLElement>;
+  tabIndex: number;
+  role: string;
+  'aria-disabled'?: boolean;
+};
+
+export type TEditableRenderProps = {
+  editable: boolean;
+  value: string;
+  onChange: TEditableChangeEventHandler;
+  handlers: TEditableHandlers;
+};
 
 export type TEditableProps = Omit<
-  HTMLAttributes<HTMLDivElement>,
-  'children' | 'onChange'
+  HTMLAttributes<HTMLSpanElement>,
+  'onChange' | 'defaultValue' | 'children'
 > & {
-  render: (editable: boolean) => ReactNode;
+  render: (props: TEditableRenderProps) => ReactNode;
   mode?: TEditableMode;
+  value?: string;
+  defaultValue?: string;
+  onChange?: TEditableChangeEventHandler;
   editable?: boolean;
   defaultEditable?: boolean;
   disabled?: boolean;
-  onChange?: (event: SyntheticEvent | Event, editable: boolean) => void;
+  onEditableChange?: (event: SyntheticEvent | Event, editable: boolean) => void;
 };

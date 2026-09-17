@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React from 'react';
-import { Button, Flex, Text } from '../../index';
+import React, { useRef } from 'react';
+import { Text } from '../..';
 import { CheckIcon } from '../../icons';
-import type { TAlertVariant } from '../../components/alert/types';
 import type { TPaletteColor } from '../../theme/types';
+import type { TAlertVariant } from '../../components/alert/types';
 import type { TSnackbarPosition } from './shared-types';
 import type { TSnackbarProviderProps } from './types';
-import SnackbarProvider from './index';
+import SnackbarProvider from './';
 import { useSnackbar } from '../../hooks/use-snackbar';
+import { Button, Flex } from '../..';
 
 const SNACKBAR_COLORS: TPaletteColor[] = [
   'base',
@@ -23,29 +24,35 @@ const SNACKBAR_COLORS: TPaletteColor[] = [
   'inverted',
 ];
 
-const SNACKBAR_VARIANTS: TAlertVariant[] = [
+const VARIANTS: TAlertVariant[] = [
   'solid',
   'subtle',
   'surface',
-  'outline',
-  'ghost',
-  'plain',
 ];
 
 type TSnackbarStoryArgs = TSnackbarProviderProps & {
   title: string;
   description: string;
+  color?: TPaletteColor;
+  variant?: TAlertVariant;
 };
 
-const BasicDemo = () => {
+const EnqueueDemo = ({
+  title,
+  description,
+  color,
+  variant,
+}: Pick<TSnackbarStoryArgs, 'title' | 'description' | 'color' | 'variant'>) => {
   const { enqueue } = useSnackbar();
 
   return (
     <Button
       onClick={() =>
         enqueue({
-          title: 'Snackbar',
-          description: 'Something happened.',
+          title,
+          description,
+          color,
+          variant,
         })
       }
     >
@@ -54,7 +61,7 @@ const BasicDemo = () => {
   );
 };
 
-const ColorsDemo = () => {
+const ColorsDemo = ({ variant }: Pick<TSnackbarStoryArgs, 'variant'>) => {
   const { enqueue } = useSnackbar();
 
   return (
@@ -66,12 +73,76 @@ const ColorsDemo = () => {
           onClick={() =>
             enqueue({
               title: `${color[0].toUpperCase()}${color.slice(1)}`,
-              description: `Snackbar with color="${color}".`,
+              description: `Snackbar with color="${color}" and variant="${variant ?? 'solid'}".`,
               color,
+              variant,
             })
           }
         >
           {color}
+        </Button>
+      ))}
+    </Flex>
+  );
+};
+
+const WithIconDemo = () => {
+  const { enqueue } = useSnackbar();
+
+  return (
+    <Button
+      onClick={() =>
+        enqueue({
+          title: 'Saved',
+          description: 'Your changes were stored.',
+          color: 'success',
+          icon: <CheckIcon />,
+        })
+      }
+    >
+      Show with icon
+    </Button>
+  );
+};
+
+const WithoutIconDemo = () => {
+  const { enqueue } = useSnackbar();
+
+  return (
+    <Button
+      variant="outline"
+      onClick={() =>
+        enqueue({
+          title: 'Notice',
+          description: 'No icon is shown unless you pass one.',
+          color: 'info',
+        })
+      }
+    >
+      Show without icon
+    </Button>
+  );
+};
+
+const VariantsDemo = () => {
+  const { enqueue } = useSnackbar();
+
+  return (
+    <Flex gap="sm" wrap="wrap">
+      {VARIANTS.map((variant) => (
+        <Button
+          key={variant}
+          variant="outline"
+          onClick={() =>
+            enqueue({
+              title: variant,
+              description: `Snackbar with variant="${variant}".`,
+              color: 'primary',
+              variant,
+            })
+          }
+        >
+          {variant}
         </Button>
       ))}
     </Flex>
@@ -113,8 +184,60 @@ const CustomDemo = () => {
   );
 };
 
+const StackedDemo = () => {
+  const { enqueue } = useSnackbar();
+  const countRef = useRef(0);
+
+  return (
+    <Button
+      onClick={() => {
+        countRef.current += 1;
+        enqueue({
+          title: `Update ${countRef.current}`,
+          description: 'Stacked snackbars share size="md". Hover to expand.',
+          color: countRef.current % 2 === 0 ? 'success' : 'info',
+        });
+      }}
+    >
+      Enqueue snackbar
+    </Button>
+  );
+};
+
+const StretchDemo = () => {
+  const { enqueue } = useSnackbar();
+
+  return (
+    <Flex gap="sm" wrap="wrap">
+      <Button
+        onClick={() =>
+          enqueue({
+            title: 'Short',
+            description: 'Brief.',
+            color: 'primary',
+          })
+        }
+      >
+        Short
+      </Button>
+      <Button
+        onClick={() =>
+          enqueue({
+            title: 'Much longer notification',
+            description:
+              'All snackbars share the same width when stretch is enabled on the provider.',
+            color: 'success',
+          })
+        }
+      >
+        Long
+      </Button>
+    </Flex>
+  );
+};
+
 const meta: Meta<TSnackbarStoryArgs> = {
-  title: 'Feedbacks/Snackbar',
+  title: 'Feedback/Snackbar',
   component: SnackbarProvider,
   tags: ['autodocs'],
   argTypes: {
@@ -136,6 +259,17 @@ const meta: Meta<TSnackbarStoryArgs> = {
     description: {
       control: 'text',
     },
+    color: {
+      control: 'select',
+      options: SNACKBAR_COLORS,
+    },
+    variant: {
+      control: 'select',
+      options: VARIANTS,
+    },
+    stretch: {
+      control: 'boolean',
+    },
   },
 };
 
@@ -149,53 +283,116 @@ export const Default: Story = {
     duration: 4000,
     title: 'Snackbar',
     description: 'Something happened.',
+    color: 'primary',
+    variant: 'solid',
   },
-  render: (providerArgs) => (
+  render: ({ title, description, color, variant, ...providerArgs }) => (
     <SnackbarProvider {...providerArgs}>
-      <BasicDemo />
+      <EnqueueDemo
+        title={title}
+        description={description}
+        color={color}
+        variant={variant}
+      />
     </SnackbarProvider>
   ),
 };
 
 export const Colors: Story = {
+  args: {
+    position: 'bottom-right',
+    duration: 4000,
+    variant: 'solid',
+  },
+  render: ({ variant, ...providerArgs }) => (
+    <SnackbarProvider {...providerArgs}>
+      <Flex direction="column" gap="md">
+        <Text>
+          Pick a variant in controls, then click a color to preview every palette.
+        </Text>
+        <ColorsDemo variant={variant} />
+      </Flex>
+    </SnackbarProvider>
+  ),
+};
+
+export const Variants: Story = {
   render: () => (
     <SnackbarProvider position="bottom-right" duration={4000}>
       <Flex direction="column" gap="md">
-        <Text>All palette colors.</Text>
-        <ColorsDemo />
+        <Text>Pass variant to match alert styles.</Text>
+        <VariantsDemo />
+      </Flex>
+    </SnackbarProvider>
+  ),
+};
+
+export const WithIcon: Story = {
+  render: () => (
+    <SnackbarProvider position="bottom-right" duration={4000}>
+      <Flex direction="column" gap="md">
+        <Text>Icon is only shown when explicitly passed.</Text>
+        <Flex gap="sm">
+          <WithIconDemo />
+          <WithoutIconDemo />
+        </Flex>
       </Flex>
     </SnackbarProvider>
   ),
 };
 
 export const TopLeft: Story = {
-  render: () => (
-    <SnackbarProvider position="top-left" duration={4000}>
-      <BasicDemo />
+  args: Default.args,
+  render: ({ title, description, color, variant, ...providerArgs }) => (
+    <SnackbarProvider {...providerArgs} position="top-left">
+      <EnqueueDemo
+        title={title}
+        description={description}
+        color={color}
+        variant={variant}
+      />
     </SnackbarProvider>
   ),
 };
 
 export const TopRight: Story = {
-  render: () => (
-    <SnackbarProvider position="top-right" duration={4000}>
-      <BasicDemo />
+  args: Default.args,
+  render: ({ title, description, color, variant, ...providerArgs }) => (
+    <SnackbarProvider {...providerArgs} position="top-right">
+      <EnqueueDemo
+        title={title}
+        description={description}
+        color={color}
+        variant={variant}
+      />
     </SnackbarProvider>
   ),
 };
 
 export const BottomLeft: Story = {
-  render: () => (
-    <SnackbarProvider position="bottom-left" duration={4000}>
-      <BasicDemo />
+  args: Default.args,
+  render: ({ title, description, color, variant, ...providerArgs }) => (
+    <SnackbarProvider {...providerArgs} position="bottom-left">
+      <EnqueueDemo
+        title={title}
+        description={description}
+        color={color}
+        variant={variant}
+      />
     </SnackbarProvider>
   ),
 };
 
 export const BottomRight: Story = {
-  render: () => (
-    <SnackbarProvider position="bottom-right" duration={4000}>
-      <BasicDemo />
+  args: Default.args,
+  render: ({ title, description, color, variant, ...providerArgs }) => (
+    <SnackbarProvider {...providerArgs} position="bottom-right">
+      <EnqueueDemo
+        title={title}
+        description={description}
+        color={color}
+        variant={variant}
+      />
     </SnackbarProvider>
   ),
 };
@@ -211,36 +408,34 @@ export const CustomRender: Story = {
   ),
 };
 
-export const WithIcon: Story = {
+export const Stacked: Story = {
   render: () => (
-    <SnackbarProvider position="bottom-right" duration={4000}>
-      <Button
-        onClick={() => {
-          /* rendered via nested component below */
-        }}
-      >
-        unused
-      </Button>
-      <WithIconDemo />
+    <SnackbarProvider
+      stacked
+      size="md"
+      maxVisible={3}
+      position="bottom-right"
+      duration={8000}
+    >
+      <Flex direction="column" gap="md">
+        <Text>
+          Enqueue several snackbars. Only 3 are visible in a stack; hover to
+          expand. Closing one brings the next from the queue. stacked requires
+          a shared size.
+        </Text>
+        <StackedDemo />
+      </Flex>
     </SnackbarProvider>
   ),
 };
 
-const WithIconDemo = () => {
-  const { enqueue } = useSnackbar();
-  return (
-    <Button
-      onClick={() =>
-        enqueue({
-          title: 'Saved',
-          description: 'Your changes were stored.',
-          color: 'success',
-          icon: <CheckIcon />,
-          variant: SNACKBAR_VARIANTS[1],
-        })
-      }
-    >
-      Show with icon
-    </Button>
-  );
+export const Stretch: Story = {
+  render: () => (
+    <SnackbarProvider position="bottom-right" duration={6000} stretch>
+      <Flex direction="column" gap="md">
+        <Text>All snackbars match the width of the widest one.</Text>
+        <StretchDemo />
+      </Flex>
+    </SnackbarProvider>
+  ),
 };

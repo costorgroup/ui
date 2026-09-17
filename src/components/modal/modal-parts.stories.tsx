@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Backdrop, Button, Text } from '../../index';
-import { ModalBase } from './modal-base';
-import { ModalHead } from './modal-head';
-import { ModalBody } from './modal-body';
+import { Portal } from '../portal';
+import { CloseIcon } from '../../icons';
+import { Backdrop, Button, IconButton, Text } from '../..';
 import { ModalActions } from './modal-actions';
+import { ModalBase } from './modal-base';
+import { ModalBody } from './modal-body';
+import { ModalDescription } from './modal-description';
+import { ModalHeader } from './modal-header';
+import { ModalHeaderActions } from './modal-header-actions';
+import { ModalTitle } from './modal-title';
 
 const meta: Meta<typeof ModalBase> = {
-  title: 'Components/Modal/Parts',
+  title: 'Overlays/Modal/Parts',
   component: ModalBase,
   tags: ['autodocs'],
 };
@@ -16,25 +21,41 @@ export default meta;
 
 type Story = StoryObj<typeof ModalBase>;
 
-export const Default: Story = {
-  render: function DefaultStory() {
+export const AllParts: Story = {
+  render: function AllPartsStory() {
     const [open, setOpen] = useState(false);
 
     return (
       <>
         <Button onClick={() => setOpen(true)}>Open composed modal</Button>
-        {open ? (
+        <Portal>
           <Backdrop
+            open={open}
             scrollable
-            align="start"
+            align="center"
             justify="center"
-            padding
             layer="modal"
             lockScroll
             onClose={() => setOpen(false)}
           >
             <ModalBase size="md" scrollable>
-              <ModalHead>Custom modal</ModalHead>
+              <ModalHeader>
+                <ModalTitle>Custom modal</ModalTitle>
+                <ModalDescription>
+                  Built from Backdrop + ModalBase parts.
+                </ModalDescription>
+                <ModalHeaderActions>
+                  <IconButton
+                    variant="ghost"
+                    color="default"
+                    radius="pill"
+                    aria-label="Close"
+                    onClick={() => setOpen(false)}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </ModalHeaderActions>
+              </ModalHeader>
               <ModalBody>
                 <Text>Built from Backdrop + ModalBase parts.</Text>
               </ModalBody>
@@ -48,7 +69,7 @@ export const Default: Story = {
               </ModalActions>
             </ModalBase>
           </Backdrop>
-        ) : null}
+        </Portal>
       </>
     );
   },

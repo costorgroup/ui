@@ -1,10 +1,18 @@
 import styled from '@emotion/styled';
-import { TSAccordionDetailsProps } from './types';
+import {
+  accordionDetailsBackground,
+  accordionDetailsColor,
+} from '../variant-styles';
+import {
+  TSAccordionDetailsInnerProps,
+  TSAccordionDetailsProps,
+} from './types';
 
-const customProps = new Set(['expanded']);
+const detailsCustomProps = new Set(['expanded']);
+const detailsInnerCustomProps = new Set(['size', 'variant', 'color']);
 
 export const SAccordionDetails = styled('div', {
-  shouldForwardProp: (prop) => !customProps.has(prop),
+  shouldForwardProp: (prop) => !detailsCustomProps.has(prop),
 })<TSAccordionDetailsProps>`
   display: grid;
   grid-template-rows: ${({ expanded }) => (expanded ? '1fr' : '0fr')};
@@ -21,8 +29,12 @@ export const SAccordionDetailsClip = styled.div`
   overflow: hidden;
 `;
 
-export const SAccordionDetailsInner = styled.div`
-  padding: 0 var(--accordion-pad-x) var(--accordion-pad-y);
-  color: inherit;
-  opacity: 0.92;
+export const SAccordionDetailsInner = styled('div', {
+  shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
+})<TSAccordionDetailsInnerProps>`
+  padding: ${({ theme, size }) => theme.sizes[size].padX};
+  background-color: ${({ theme, variant, color }) =>
+    accordionDetailsBackground(variant, theme.palette[color])};
+  color: ${({ theme, variant, color }) =>
+    accordionDetailsColor(variant, theme.palette[color], theme)};
 `;

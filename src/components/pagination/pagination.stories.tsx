@@ -1,14 +1,42 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Flex, Pagination, Text } from '../../index';
+import type { TPaletteColor } from '../../theme/types';
+import { Pagination, PAGINATION_DEFAULT_VARIANTS, Flex, Text, useTheme } from '../..';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
 const meta: Meta<typeof Pagination> = {
-  title: 'Data Display/Pagination',
+  title: 'Navigation/Pagination',
   component: Pagination,
   tags: ['autodocs'],
+  args: {
+    count: 10,
+    color: 'default',
+    size: 'md',
+  },
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'subtle', 'surface', 'outline', 'ghost', 'plain'],
+      options: [
+        'solid',
+        'subtle',
+        'surface',
+        'outline',
+        'ghost',
+        'plain',
+      ],
     },
     size: {
       control: 'select',
@@ -16,17 +44,7 @@ const meta: Meta<typeof Pagination> = {
     },
     color: {
       control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
+      options: COLORS,
     },
   },
 };
@@ -35,22 +53,16 @@ export default meta;
 
 type Story = StoryObj<typeof Pagination>;
 
-export const Basic: Story = {
-  args: {
-    count: 10,
-    color: 'primary',
-    variant: 'solid',
-    size: 'md',
-  },
-};
+export const Basic: Story = {};
 
 export const Colors: Story = {
   render: () => (
     <Flex direction="column" gap="md" align="center">
-      <Pagination count={10} color="primary" />
-      <Pagination count={10} color="secondary" />
-      <Pagination count={10} color="success" />
-      <Pagination count={10} disabled />
+      <Pagination count={10} color="default" defaultPage={3} />
+      <Pagination count={10} color="primary" defaultPage={3} />
+      <Pagination count={10} color="secondary" defaultPage={3} />
+      <Pagination count={10} color="success" defaultPage={3} />
+      <Pagination count={10} disabled defaultPage={3} />
     </Flex>
   ),
 };
@@ -58,11 +70,14 @@ export const Colors: Story = {
 export const Variants: Story = {
   render: () => (
     <Flex direction="column" gap="md" align="center">
-      <Pagination count={10} variant="solid" />
-      <Pagination count={10} variant="subtle" />
-      <Pagination count={10} variant="surface" />
-      <Pagination count={10} variant="outline" />
-      <Pagination count={10} variant="ghost" />
+      <Pagination count={10} defaultPage={3} />
+      <Pagination count={10} variant="outline" defaultPage={3} />
+      <Pagination count={10} variant={['solid', 'plain']} defaultPage={3} />
+      <Pagination
+        count={10}
+        variant={PAGINATION_DEFAULT_VARIANTS}
+        defaultPage={3}
+      />
     </Flex>
   ),
 };
@@ -70,9 +85,9 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: () => (
     <Flex direction="column" gap="md" align="center">
-      <Pagination count={10} size="sm" />
-      <Pagination count={10} size="md" />
-      <Pagination count={10} size="lg" />
+      <Pagination count={10} size="sm" defaultPage={3} />
+      <Pagination count={10} size="md" defaultPage={3} />
+      <Pagination count={10} size="lg" defaultPage={3} />
     </Flex>
   ),
 };
@@ -80,8 +95,8 @@ export const Sizes: Story = {
 export const Buttons: Story = {
   render: () => (
     <Flex direction="column" gap="md" align="center">
-      <Pagination count={10} showFirstButton showLastButton />
-      <Pagination count={10} hidePrevButton hideNextButton />
+      <Pagination count={10} showFirstButton showLastButton defaultPage={5} />
+      <Pagination count={10} hidePrevButton hideNextButton defaultPage={5} />
     </Flex>
   ),
 };
@@ -110,6 +125,25 @@ export const Controlled: Story = {
           onChange={(_event, next) => setPage(next)}
         />
       </Flex>
+    );
+  },
+};
+
+export const OnSurface: Story = {
+  render: function OnSurfaceStory() {
+    const theme = useTheme();
+
+    return (
+      <div
+        style={{
+          padding: 32,
+          borderRadius: theme.radius.md,
+          background: theme.surfaces.background,
+          border: `1px solid ${theme.surfaces.border}`,
+        }}
+      >
+        <Pagination count={20} defaultPage={8} color="default" variant="solid" />
+      </div>
     );
   },
 };

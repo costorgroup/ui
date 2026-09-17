@@ -4,13 +4,19 @@ import { TBreakpoint, TGap } from '../../theme/types';
 
 export type TGridGap = TGap | number | (string & {});
 export type TGridTrack = number | 'auto';
+export type TGridTemplateTrack = string | number;
+export type TGridTemplate =
+  | CSSProperties['gridTemplateColumns']
+  | readonly TGridTemplateTrack[];
 
 export type TGridOwnProps = {
   children?: ReactNode;
   columns?: TGridTrack;
   rows?: TGridTrack;
-  templateColumns?: CSSProperties['gridTemplateColumns'];
-  templateRows?: CSSProperties['gridTemplateRows'];
+  /** CSS template or track list. Overrides `columns` when set. */
+  templateColumns?: TGridTemplate;
+  /** CSS template or track list. Overrides `rows` when set. */
+  templateRows?: TGridTemplate;
   gap?: TGridGap;
   alignItems?: CSSProperties['alignItems'];
   justifyItems?: CSSProperties['justifyItems'];

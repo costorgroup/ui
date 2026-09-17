@@ -6,7 +6,10 @@ type TSAspectRatioProps = Pick<
   'ratio' | 'maxWidth' | 'maxHeight'
 >;
 
-const customProps = new Set(['ratio', 'maxWidth', 'maxHeight']);
+// 'as' must be excluded too: a custom shouldForwardProp otherwise makes
+// emotion treat `as` as a regular DOM attribute instead of a tag override,
+// which silently breaks polymorphic tag switching.
+const customProps = new Set(['ratio', 'maxWidth', 'maxHeight', 'as']);
 
 const toCssSize = (value?: number | string) => {
   if (value === undefined) {

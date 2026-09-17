@@ -2,5 +2,4 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const accordionDetailsClasses = generateUtilityClasses('AccordionDetails', [
   'root',
-  'expanded',
 ]);

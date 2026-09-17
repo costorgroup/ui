@@ -1,9 +1,9 @@
-import { css } from "@emotion/react";
-import { CUI_CANVAS_VAR } from "../../helpers/color/create-color-scale";
-import { TTheme } from "../../theme/types";
+import { css } from '@emotion/react';
+import { CUI_CANVAS_VAR } from '../../helpers/color/create-color-scale';
+import { TTheme } from '../../theme/types';
 
 export const createBaselineStyles = (theme: TTheme) => css`
-  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
   html {
     box-sizing: border-box;
@@ -27,4 +27,3 @@ export const createBaselineStyles = (theme: TTheme) => css`
     font-size: ${theme.typography.text.md};
   }
 `;
-

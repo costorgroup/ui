@@ -1,16 +1,40 @@
-import { ElementType, ReactNode } from 'react';
-import type { TPolymorphicProps } from '../../helpers/polymorphic';
-import { TPaletteColor } from '../../theme/types';
+import { HTMLAttributes, ReactNode } from 'react';
 
-export type TScrollAreaMode = 'always' | 'hover';
+export type TScrollAreaScrollbarVisibility =
+  | 'hover'
+  | 'always'
+  | 'never'
+  | 'hidden';
 
-export type TScrollAreaOwnProps = {
+export type TScrollAreaScrollbarPosition =
+  | 'preferred'
+  | 'inverted'
+  | 'opposite';
+
+export type TScrollAreaScrollbarDirection = 'vertical' | 'horizontal';
+
+export type TScrollAreaScrollbarY = 'left' | 'right';
+export type TScrollAreaScrollbarX = 'top' | 'bottom';
+
+export type TScrollAreaProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
-  mode?: TScrollAreaMode;
-  color?: TPaletteColor;
+  fade?: boolean;
+  fadeSize?: number | string;
+  fadeReveal?: number | string;
+  scrollbarVisibility?: TScrollAreaScrollbarVisibility;
+  scrollbarPosition?: TScrollAreaScrollbarPosition;
+  scrollbarDirection?: TScrollAreaScrollbarDirection;
 };
 
-export type TScrollAreaProps<C extends ElementType = 'div'> = TPolymorphicProps<
-  C,
-  TScrollAreaOwnProps
->;
+export type TSScrollAreaFadeProps = {
+  fade: boolean;
+};
+
+export type TSScrollAreaViewportProps = {
+  axis: TScrollAreaScrollbarDirection;
+};
+
+export type TSScrollAreaScrollbarProps = {
+  origin: TScrollAreaScrollbarY | TScrollAreaScrollbarX;
+  axis: 'y' | 'x';
+};

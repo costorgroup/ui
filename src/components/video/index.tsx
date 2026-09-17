@@ -16,13 +16,19 @@ import {
   VolumeIcon,
   VolumeOffIcon,
 } from '../../icons';
-import { IconButton } from '../icon-button';
+import { Dock, DockItem, DockSeparator } from '../dock';
+import { Text } from '../text';
 import { videoClasses } from './classes';
 import { SVideo } from './styles';
 import { TVideoProps } from './types';
 
 const HIDE_MS = 3000;
 const SEEK_STEP = 5;
+
+const TOOL_ITEM = {
+  radius: 'full' as const,
+  color: 'inverted' as const,
+};
 
 const formatTime = (value: number) => {
   if (!Number.isFinite(value) || value < 0) {
@@ -79,8 +85,8 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
       className,
       width,
       height,
-      radius = 'medium',
-      color = 'primary',
+      radius = 'md',
+      color = 'default',
       controls = true,
       autoHide = true,
       onClick,
@@ -229,7 +235,10 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
           break;
         case 'ArrowRight':
           event.preventDefault();
-          video.currentTime = Math.min(video.duration || 0, video.currentTime + SEEK_STEP);
+          video.currentTime = Math.min(
+            video.duration || 0,
+            video.currentTime + SEEK_STEP,
+          );
           break;
         case 'ArrowLeft':
           event.preventDefault();
@@ -273,6 +282,26 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
     const playedRatio = duration > 0 ? currentTime / duration : 0;
     const volumeRatio = muted ? 0 : volume;
 
+    const seekFromPointer = (event: PointerEvent<HTMLElement>) => {
+      const video = videoRef.current;
+
+      if (video) {
+        video.currentTime = ratioFromPointer(event, duration);
+      }
+    };
+
+    const volumeFromPointer = (event: PointerEvent<HTMLElement>) => {
+      const video = videoRef.current;
+
+      if (!video) {
+        return;
+      }
+
+      const next = ratioFromPointer(event, 1);
+      video.muted = next === 0;
+      video.volume = next;
+    };
+
     return (
       <SVideo
         ref={rootRef}
@@ -281,6 +310,7 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
         radius={radius}
         color={color}
         tabIndex={0}
+        data-slot="video"
         data-paused={paused ? 'true' : undefined}
         data-idle={controlsHidden ? 'true' : undefined}
         className={mergeClasses(videoClasses.root, className)}
@@ -352,22 +382,21 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
         {controls ? (
           <>
             <div className={videoClasses.overlay} aria-hidden={!paused}>
-              <IconButton
-                type="button"
-                size="lg"
-                color="light"
-                variant="solid"
-                rounded
-                tabIndex={-1}
-                aria-label={paused ? 'Play' : 'Pause'}
-                style={{ pointerEvents: paused ? 'auto' : 'none' }}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  togglePlay();
-                }}
-              >
-                <PlayIcon />
-              </IconButton>
+              <Dock size="lg" variant="surface" appearance="opaque">
+                <DockItem
+                  {...TOOL_ITEM}
+                  type="button"
+                  tabIndex={-1}
+                  aria-label={paused ? 'Play' : 'Pause'}
+                  style={{ pointerEvents: paused ? 'auto' : 'none' }}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    togglePlay();
+                  }}
+                >
+                  <PlayIcon />
+                </DockItem>
+              </Dock>
             </div>
             <div
               className={videoClasses.controls}
@@ -376,67 +405,64 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
               onClick={(event) => event.stopPropagation()}
               onDoubleClick={(event) => event.stopPropagation()}
             >
-              <div
-                className={videoClasses.progress}
-                role="slider"
-                tabIndex={0}
-                aria-label="Seek"
-                aria-valuemin={0}
-                aria-valuemax={duration || 0}
-                aria-valuenow={currentTime}
-                aria-valuetext={formatTime(currentTime)}
-                onPointerDown={(event) => {
-                  event.currentTarget.setPointerCapture(event.pointerId);
-                  const video = videoRef.current;
-
-                  if (video) {
-                    video.currentTime = ratioFromPointer(event, duration);
-                  }
-                }}
-                onPointerMove={(event) => {
-                  if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
-                    return;
-                  }
-
-                  const video = videoRef.current;
-
-                  if (video) {
-                    video.currentTime = ratioFromPointer(event, duration);
-                  }
-                }}
+              <Dock
+                size="xs"
+                variant="surface"
+                appearance="opaque"
+                className={videoClasses.dock}
               >
-                <span
-                  className={videoClasses.played}
-                  style={{ width: `${playedRatio * 100}%` }}
-                />
-              </div>
-              <div className={videoClasses.bar}>
-                <IconButton
+                <DockItem
+                  {...TOOL_ITEM}
                   type="button"
-                  size="sm"
-                  color="light"
-                  variant="ghost"
-                  rounded
                   aria-label={paused ? 'Play' : 'Pause'}
                   onClick={togglePlay}
                 >
                   {paused ? <PlayIcon /> : <PauseIcon />}
-                </IconButton>
-                <span className={videoClasses.time}>
+                </DockItem>
+                <Text
+                  as="span"
+                  size="sm"
+                  color="default"
+                  className={videoClasses.time}
+                >
                   {formatTime(currentTime)} / {formatTime(duration)}
-                </span>
+                </Text>
+                <div
+                  className={videoClasses.progress}
+                  role="slider"
+                  tabIndex={0}
+                  aria-label="Seek"
+                  aria-valuemin={0}
+                  aria-valuemax={duration || 0}
+                  aria-valuenow={currentTime}
+                  aria-valuetext={formatTime(currentTime)}
+                  onPointerDown={(event) => {
+                    event.currentTarget.setPointerCapture(event.pointerId);
+                    seekFromPointer(event);
+                  }}
+                  onPointerMove={(event) => {
+                    if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+                      return;
+                    }
+
+                    seekFromPointer(event);
+                  }}
+                >
+                  <span
+                    className={videoClasses.played}
+                    style={{ width: `${playedRatio * 100}%` }}
+                  />
+                </div>
+                <DockSeparator />
                 <div className={videoClasses.volume}>
-                  <IconButton
+                  <DockItem
+                    {...TOOL_ITEM}
                     type="button"
-                    size="sm"
-                    color="light"
-                    variant="ghost"
-                    rounded
                     aria-label={muted || volume === 0 ? 'Unmute' : 'Mute'}
                     onClick={toggleMute}
                   >
                     {muted || volume === 0 ? <VolumeOffIcon /> : <VolumeIcon />}
-                  </IconButton>
+                  </DockItem>
                   <div
                     className={videoClasses.volumeTrack}
                     role="slider"
@@ -447,30 +473,14 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
                     aria-valuenow={volumeRatio}
                     onPointerDown={(event) => {
                       event.currentTarget.setPointerCapture(event.pointerId);
-                      const video = videoRef.current;
-
-                      if (!video) {
-                        return;
-                      }
-
-                      const next = ratioFromPointer(event, 1);
-                      video.muted = next === 0;
-                      video.volume = next;
+                      volumeFromPointer(event);
                     }}
                     onPointerMove={(event) => {
                       if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
                         return;
                       }
 
-                      const video = videoRef.current;
-
-                      if (!video) {
-                        return;
-                      }
-
-                      const next = ratioFromPointer(event, 1);
-                      video.muted = next === 0;
-                      video.volume = next;
+                      volumeFromPointer(event);
                     }}
                   >
                     <span
@@ -479,18 +489,15 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
                     />
                   </div>
                 </div>
-                <IconButton
+                <DockItem
+                  {...TOOL_ITEM}
                   type="button"
-                  size="sm"
-                  color="light"
-                  variant="ghost"
-                  rounded
                   aria-label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
                   onClick={toggleFullscreen}
                 >
                   {fullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
-                </IconButton>
-              </div>
+                </DockItem>
+              </Dock>
             </div>
           </>
         ) : null}

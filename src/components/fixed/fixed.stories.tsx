@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { CSSProperties } from 'react';
-import { Button, Fixed, Text } from '../../index';
+import { Button, Fixed, Panel, Text } from '../..';
 
 const screen: CSSProperties = {
   position: 'relative',
@@ -8,8 +8,6 @@ const screen: CSSProperties = {
   height: 400,
   overflow: 'hidden',
   transform: 'translateZ(0)',
-  border: '1px solid #e5e7eb',
-  background: '#f8fafc',
 };
 
 const meta: Meta<typeof Fixed> = {
@@ -18,9 +16,9 @@ const meta: Meta<typeof Fixed> = {
   tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <div style={screen}>
+      <Panel variant="surface" style={screen}>
         <Story />
-      </div>
+      </Panel>
     ),
   ],
   argTypes: {
@@ -38,7 +36,7 @@ type Story = StoryObj<typeof Fixed>;
 export const Default: Story = {
   render: (args) => (
     <>
-      <Text>Pinned inside this 600×400 frame.</Text>
+      <Text style={{ padding: 12 }}>Pinned inside this 600×400 frame.</Text>
       <Fixed {...args}>
         <Button>Fixed</Button>
       </Fixed>

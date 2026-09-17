@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputHelperTextClasses } from './classes';
 import { SInputHelperText } from './styles';
 import { TInputHelperTextProps } from './types';
@@ -8,19 +9,27 @@ const InputHelperText = forwardRef<HTMLParagraphElement, TInputHelperTextProps>(
   (
     {
       children,
-      color = 'base',
-      size = 'sm',
-      error = false,
+      color,
+      size: sizeProp,
+      error: errorProp,
+      id,
       className,
       ...props
     },
     ref,
   ) => {
+    const form = useFormControlState({
+      error: errorProp,
+      size: sizeProp,
+    });
+    const error = form.error || color === 'error';
+
     return (
       <SInputHelperText
         ref={ref}
-        color={error ? 'error' : color}
-        size={size}
+        id={id ?? form.helperId}
+        error={error}
+        size={form.size}
         {...props}
         className={mergeClasses(
           inputHelperTextClasses.root,

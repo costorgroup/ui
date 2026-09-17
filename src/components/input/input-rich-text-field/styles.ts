@@ -1,15 +1,7 @@
 import styled from '@emotion/styled';
-import type { TInputSize, TInputVariant } from '../input-wrapper/types';
-import type { TPaletteColor } from '../../../theme/types';
-
-type TSInputRichTextFieldProps = {
-  variant: TInputVariant;
-  size: TInputSize;
-  color: TPaletteColor;
-  disabled: boolean;
-};
-
-const customProps = new Set(['variant', 'size', 'color', 'disabled']);
+import { SURFACE_BORDER_IDLE } from '../../../helpers/variant-styles';
+import { chromeOpaqueFill } from '../../../helpers/variant-styles/surface';
+import type { TInputSize } from '../input-wrapper/types';
 
 const sizeFont: Record<TInputSize, string> = {
   xs: '12px',
@@ -20,21 +12,15 @@ const sizeFont: Record<TInputSize, string> = {
 };
 
 export const SInputRichTextField = styled('div', {
-  shouldForwardProp: (prop) => !customProps.has(prop),
-})<TSInputRichTextFieldProps>`
+  shouldForwardProp: (prop) => prop !== 'size',
+})<{ size: TInputSize }>`
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid;
-  border-radius: ${({ theme }) => theme.radius.medium};
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'text')};
-  opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
-  transition: background-color 0.15s ease, border-color 0.15s ease;
-  overflow: hidden;
 
   ${({ theme, size }) => {
     const scale = theme.sizeScale[size];
@@ -48,118 +34,6 @@ export const SInputRichTextField = styled('div', {
       --rtf-pad-y: calc(${padY} * ${scale});
     `;
   }}
-
-  ${({ theme, variant, color }) => {
-    const palette = theme.palette[color];
-
-    switch (variant) {
-      case 'surface':
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 8%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 14%,
-            transparent
-          );
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 20%,
-              transparent
-            );
-          }
-
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 28%,
-              transparent
-            );
-          }
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: color-mix(
-            in srgb,
-            ${palette.main} 36%,
-            transparent
-          );
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 52%,
-              transparent
-            );
-            color: ${palette.dark};
-          }
-
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 4%,
-              transparent
-            );
-            border-color: color-mix(
-              in srgb,
-              ${palette.main} 68%,
-              transparent
-            );
-            color: ${palette.darker};
-          }
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(
-            in srgb,
-            ${palette.main} 4%,
-            transparent
-          );
-          color: ${palette.darker};
-          border-color: transparent;
-
-          &:hover {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 8%,
-              transparent
-            );
-          }
-
-          &:focus-within {
-            background-color: color-mix(
-              in srgb,
-              ${palette.main} 10%,
-              transparent
-            );
-          }
-        `;
-    }
-  }}
 `;
 
 export const SInputRichTextToolbar = styled('div')`
@@ -169,8 +43,7 @@ export const SInputRichTextToolbar = styled('div')`
   gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
   padding: var(--rtf-pad-y) var(--rtf-pad-x);
   border-bottom: 1px solid
-    ${({ theme }) =>
-      `color-mix(in oklab, ${theme.palette.base.main} 12%, transparent)`};
+    ${({ theme }) => chromeOpaqueFill(theme, SURFACE_BORDER_IDLE)};
 `;
 
 export const SInputRichTextToolbarGroup = styled('div')`

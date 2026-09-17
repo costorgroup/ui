@@ -1,32 +1,153 @@
 import styled from '@emotion/styled';
-import { TTreeViewSize } from './context';
-import { TSTreeViewProps } from './types';
+import type { TTheme, TPaletteColor } from '../../theme/types';
+import { interactiveRowStyles, treeSizeStyles } from './slot-styles';
+import type { TTreeViewSize, TTreeViewVariant } from './types';
 
-const customProps = new Set(['size']);
-
-const fontSize: Record<TTreeViewSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
+type TStyledRowProps = {
+  variant: TTreeViewVariant;
+  color: TPaletteColor;
 };
 
-export const STreeView = styled('ul', {
-  shouldForwardProp: (prop) => !customProps.has(prop),
-})<TSTreeViewProps>`
-  --tree-view-pad: ${({ theme }) => theme.spacing(theme.gap.sm)};
-  --tree-view-indent: ${({ theme }) => theme.spacing(theme.gap.lg)};
-  --tree-view-icon: 1.15em;
+const appearanceProps = new Set(['variant', 'color', 'size']);
+
+const paletteAt = (theme: TTheme, color: TPaletteColor) => theme.palette[color];
+
+export const STreeViewRoot = styled.div`
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
+  width: 100%;
+  color: ${({ theme }) => theme.surfaces.ink};
+  font-family: inherit;
+  line-height: ${({ theme }) => theme.typography.lineHeight.text};
+`;
+
+export const STreeViewTree = styled('div', {
+  shouldForwardProp: (prop) => !appearanceProps.has(prop),
+})<{ size: TTreeViewSize }>`
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
-  list-style: none;
-  font-family: inherit;
-  font-size: ${({ size }) => fontSize[size]};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.palette.base.main};
-  user-select: none;
-  -webkit-user-select: none;
+  ${({ theme, size }) => treeSizeStyles(size, theme)}
+
+  svg {
+    width: var(--tree-icon-size);
+    height: var(--tree-icon-size);
+  }
+`;
+
+export const STreeViewLabel = styled.div`
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-size: inherit;
+`;
+
+export const STreeViewBranch = styled.div`
+  position: relative;
+  margin: 0;
+  padding: 0;
+`;
+
+export const STreeViewBranchContent = styled.div`
+  position: relative;
+
+  &[hidden] {
+    display: none;
+  }
+`;
+
+export const STreeViewBranchIndentGuide = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: ${({ theme }) => theme.surfaces.divider};
+  pointer-events: none;
+  inset-inline-start: calc(
+    var(--tree-padding-inline) + var(--tree-indentation) * (var(--depth, 1) - 1) +
+      var(--tree-icon-size) * 0.5
+  );
+  z-index: 1;
+`;
+
+export const STreeViewBranchControl = styled('div', {
+  shouldForwardProp: (prop) => !appearanceProps.has(prop),
+})<TStyledRowProps>`
+  ${({ theme, variant, color }) =>
+    interactiveRowStyles(variant, paletteAt(theme, color), theme)}
+`;
+
+export const STreeViewItem = styled('div', {
+  shouldForwardProp: (prop) => !appearanceProps.has(prop),
+})<TStyledRowProps>`
+  ${({ theme, variant, color }) =>
+    interactiveRowStyles(variant, paletteAt(theme, color), theme)}
+`;
+
+export const STreeViewBranchText = styled.span`
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const STreeViewItemText = styled.span`
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const STreeViewBranchIndicator = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+  transform-origin: center;
+  transition: transform 0.2s ease;
+
+  &[data-state='open'] {
+    transform: rotate(90deg);
+  }
+`;
+
+export const STreeViewBranchTrigger = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+`;
+
+export const STreeViewItemIndicator = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: inherit;
+`;
+
+export const STreeViewNodeCheckbox = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+`;
+
+export const STreeViewNodeRenameInput = styled.input`
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  outline: none;
 `;

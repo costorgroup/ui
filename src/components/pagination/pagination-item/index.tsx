@@ -1,23 +1,10 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { PAGINATION_DEFAULT_VARIANTS } from '../types';
 import { paginationItemClasses } from './classes';
+import { resolvePaginationItemAppearance } from './resolve-appearance';
 import { SPaginationItem } from './styles';
 import { TPaginationItemProps } from './types';
-
-const resolveVariant = (
-  selected: boolean,
-  variant: TPaginationItemProps['variant'],
-) => {
-  if (selected) {
-    if (variant === 'ghost' || variant === 'plain') {
-      return 'subtle';
-    }
-
-    return variant ?? 'solid';
-  }
-
-  return 'ghost';
-};
 
 const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
   (
@@ -26,23 +13,24 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
       type = 'page',
       page,
       selected = false,
-      variant = 'solid',
+      variant = PAGINATION_DEFAULT_VARIANTS,
       size = 'md',
-      color = 'primary',
+      color = 'default',
       disabled = false,
       className,
       ...props
     },
     ref,
   ) => {
+    const appearance = resolvePaginationItemAppearance(selected, variant, color);
+
     return (
       <SPaginationItem
         ref={ref}
         type="button"
-        variant={resolveVariant(selected, variant)}
+        variant={appearance.variant}
         size={size}
-        color={color}
-        selected={selected}
+        color={appearance.color}
         disabled={disabled}
         aria-current={selected ? 'page' : undefined}
         data-type={type}
@@ -50,6 +38,8 @@ const PaginationItem = forwardRef<HTMLButtonElement, TPaginationItemProps>(
         {...props}
         className={mergeClasses(
           paginationItemClasses.root,
+          selected && paginationItemClasses.selected,
+          disabled && paginationItemClasses.disabled,
           className,
         )}
       >

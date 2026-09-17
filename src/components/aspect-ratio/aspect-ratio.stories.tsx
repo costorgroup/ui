@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { AspectRatio, Flex, Text } from '../../index';
+import { AspectRatio, Center, Panel, Text } from '../..';
 
 const meta: Meta<typeof AspectRatio> = {
   title: 'Layout/AspectRatio',
@@ -24,17 +24,19 @@ export default meta;
 
 type Story = StoryObj<typeof AspectRatio>;
 
+const Placeholder = ({ children }: { children: React.ReactNode }) => (
+  <Panel variant="surface" style={{ width: '100%', height: '100%' }}>
+    <Center style={{ width: '100%', height: '100%' }}>
+      <Text>{children}</Text>
+    </Center>
+  </Panel>
+);
+
 export const Default: Story = {
   args: { ratio: 16 / 9, maxWidth: 480 },
   render: (args) => (
     <AspectRatio {...args}>
-      <Flex
-        align="center"
-        justify="center"
-        style={{ background: '#e5e7eb' }}
-      >
-        <Text>16 / 9</Text>
-      </Flex>
+      <Placeholder>16 / 9</Placeholder>
     </AspectRatio>
   ),
 };
@@ -47,15 +49,9 @@ export const Constrained: Story = {
   },
   render: (args) => (
     <AspectRatio {...args}>
-      <Flex
-        align="center"
-        justify="center"
-        style={{ background: '#e5e7eb' }}
-      >
-        <Text>
-          maxWidth={String(args.maxWidth)} · maxHeight={String(args.maxHeight)}
-        </Text>
-      </Flex>
+      <Placeholder>
+        maxWidth={String(args.maxWidth)} · maxHeight={String(args.maxHeight)}
+      </Placeholder>
     </AspectRatio>
   ),
 };
@@ -81,21 +77,6 @@ export const Video: Story = {
         src="https://www.youtube.com/embed/QhBnZ6NPOY0"
         allowFullScreen
         style={{ border: 0 }}
-      />
-    </AspectRatio>
-  ),
-};
-
-export const Map: Story = {
-  args: { ratio: 16 / 9 },
-  render: (args) => (
-    <AspectRatio {...args}>
-      <iframe
-        title="Map"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.184133698489!2d-73.98811708459418!3d40.75889597932681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1"
-        style={{ border: 0 }}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
       />
     </AspectRatio>
   ),

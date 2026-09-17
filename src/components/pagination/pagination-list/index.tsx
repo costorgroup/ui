@@ -7,11 +7,11 @@ import { TPaginationListProps } from './types';
 const PaginationList = forwardRef<HTMLUListElement, TPaginationListProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SPaginationList ref={ref} {...props}
-        className={mergeClasses(
-          paginationListClasses.root,
-          className,
-        )}>
+      <SPaginationList
+        ref={ref}
+        {...props}
+        className={mergeClasses(paginationListClasses.root, className)}
+      >
         {children}
       </SPaginationList>
     );

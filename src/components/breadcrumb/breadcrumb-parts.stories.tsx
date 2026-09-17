@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { CheckIcon } from '../../index';
+import { CheckIcon } from '../../icons';
 import { BreadcrumbBase, BreadcrumbList } from './breadcrumb-base';
-import { BreadcrumbItem } from './breadcrumb-item';
-import { BreadcrumbSeparator } from './breadcrumb-separator';
-import { BreadcrumbLink } from './breadcrumb-link';
+import { BreadcrumbEllipsis } from './breadcrumb-ellipsis';
 import { BreadcrumbIcon } from './breadcrumb-icon';
+import { BreadcrumbItem } from './breadcrumb-item';
+import { BreadcrumbLink } from './breadcrumb-link';
+import { BreadcrumbSeparator } from './breadcrumb-separator';
 
 const meta: Meta<typeof BreadcrumbBase> = {
-  title: 'Components/Breadcrumb/Parts',
+  title: 'Data Display/Breadcrumb/Parts',
   component: BreadcrumbBase,
   tags: ['autodocs'],
 };
@@ -20,7 +21,7 @@ type Story = StoryObj<typeof BreadcrumbBase>;
 export const Default: Story = {
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'default',
   },
   render: (args) => (
     <BreadcrumbBase {...args}>
@@ -34,6 +35,10 @@ export const Default: Story = {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink href="#">Library</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbEllipsis />
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

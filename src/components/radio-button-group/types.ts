@@ -1,9 +1,10 @@
-import { ChangeEvent, HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import type { TInputSize } from '../input/input-wrapper/types';
 import type { TInputRadioButtonVariant } from '../input/input-radio-button/types';
 import type { TPaletteColor } from '../../theme/types';
+import type { TFormControlChangeHandler } from '../form-control/types';
 
-export type TRadioButtonGroupProps = Omit<
+export type TRadioButtonGroupProps<T = unknown> = Omit<
   HTMLAttributes<HTMLDivElement>,
   'color' | 'onChange' | 'defaultValue'
 > & {
@@ -12,9 +13,10 @@ export type TRadioButtonGroupProps = Omit<
   description?: ReactNode;
   helperText?: ReactNode;
   name?: string;
-  value?: string;
-  defaultValue?: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  value?: T;
+  defaultValue?: T;
+  onChange?: TFormControlChangeHandler<T>;
+  isValueEqual?: (a: T, b: T) => boolean;
   error?: boolean;
   fullWidth?: boolean;
   direction?: 'vertical' | 'horizontal';

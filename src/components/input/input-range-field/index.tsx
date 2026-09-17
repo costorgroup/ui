@@ -1,6 +1,7 @@
 import React, {
   ChangeEvent,
   CSSProperties,
+  FocusEvent,
   PointerEvent as ReactPointerEvent,
   forwardRef,
   useCallback,
@@ -9,6 +10,7 @@ import React, {
   useState,
 } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputRangeFieldClasses } from './classes';
 import {
   SInputRangeField,
@@ -166,9 +168,9 @@ type TDragState = {
 const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
   (
     {
-      size = 'md',
-      variant = 'subtle',
-      color = 'primary',
+      size: sizeProp,
+      variant: variantProp,
+      color: colorProp,
       multi = false,
       direction = 'horizontal',
       valuePosition: valuePositionProp,
@@ -179,17 +181,32 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
       step = 1,
       value,
       defaultValue,
-      disabled,
+      disabled: disabledProp,
       name,
       id,
       onChange,
+      onFocus,
+      onBlur,
       onPointerDown,
       onPointerUp,
       className,
+      required: requiredProp,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     ref,
   ) => {
+    const form = useFormControlState({
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      disabled: disabledProp,
+      required: requiredProp,
+      id,
+    });
+    const { size, variant, color, disabled, required } = form;
+    const fieldId = id ?? form.id;
     const rootRef = useRef<HTMLSpanElement>(null);
     const inputRefs = useRef<Partial<Record<TRangeThumb, HTMLInputElement | null>>>(
       {},
@@ -305,6 +322,20 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
       }
 
       onChange?.(event, next);
+      form.onChange?.(event, next);
+    };
+
+    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      form.setFocused?.(true);
+      onFocus?.(event);
+    };
+
+    const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+      if (!rootRef.current?.contains(event.relatedTarget as Node | null)) {
+        form.setFocused?.(false);
+      }
+
+      onBlur?.(event);
     };
 
     const emitFromPointer = (
@@ -425,6 +456,7 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
         setActiveThumb(key);
       }
 
+      form.setFocused?.(true);
       inputRefs.current[key]?.focus();
       root.setPointerCapture(event.pointerId);
 
@@ -435,22 +467,32 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
       onPointerDown?.(event as unknown as ReactPointerEvent<HTMLInputElement>);
     };
 
+    const handlePointerUp = (event: ReactPointerEvent<HTMLSpanElement>) => {
+      if (dragRef.current == null) {
+        setHoveredThumb(hitThumb(event.clientX, event.clientY));
+        return;
+      }
+
+      dragRef.current = null;
+      setDraggingThumb(null);
+      setHoveredThumb(hitThumb(event.clientX, event.clientY));
+      onPointerUp?.(event as unknown as ReactPointerEvent<HTMLInputElement>);
+    };
+
     const handlePointerMove = (event: ReactPointerEvent<HTMLSpanElement>) => {
       const drag = dragRef.current;
 
       if (drag) {
+        if (event.buttons === 0) {
+          handlePointerUp(event);
+          return;
+        }
+
         applyDrag(event, drag.key, drag.grabX, drag.grabY);
         return;
       }
 
       setHoveredThumb(hitThumb(event.clientX, event.clientY));
-    };
-
-    const handlePointerUp = (event: ReactPointerEvent<HTMLSpanElement>) => {
-      dragRef.current = null;
-      setDraggingThumb(null);
-      setHoveredThumb(hitThumb(event.clientX, event.clientY));
-      onPointerUp?.(event as unknown as ReactPointerEvent<HTMLInputElement>);
     };
 
     const fillSpan = (
@@ -491,7 +533,7 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
         key={`input-${thumb.key}`}
         ref={(node) => bindInput(thumb, node)}
         {...props}
-        id={thumb.key === 'to' && id ? `${id}-to` : id}
+        id={thumb.key === 'to' && fieldId ? `${fieldId}-to` : fieldId}
         name={name && thumb.key !== 'single' ? `${name}-${thumb.key}` : name}
         type="range"
         min={minAmount}
@@ -499,6 +541,9 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
         step={stepAmount}
         value={inputValue}
         disabled={disabled}
+        required={required}
+        aria-invalid={ariaInvalid ?? (form.error || undefined)}
+        aria-describedby={ariaDescribedBy ?? form.helperId}
         aria-label={
           thumb.key === 'single'
             ? undefined
@@ -506,6 +551,8 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
               ? 'From'
               : 'To'
         }
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         onChange={(event) => {
           const next = toNumber(event.target.value, inputValue);
 
@@ -532,22 +579,24 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
         color={color}
         direction={direction}
         track={track}
+        className={mergeClasses(
+          inputRangeFieldClasses.root,
+          disabled && inputRangeFieldClasses.disabled,
+          form.error && inputRangeFieldClasses.error,
+          className,
+        )}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
+        onLostPointerCapture={handlePointerUp}
         onPointerLeave={() => {
           if (!dragRef.current) {
             setHoveredThumb(null);
           }
         }}
       >
-        <SInputRangeFieldRail direction={direction} 
-        className={mergeClasses(
-          inputRangeFieldClasses.root,
-          className,
-        )}
-      />
+        <SInputRangeFieldRail direction={direction} />
         {fillStyles.map((style, index) => (
           <SInputRangeFieldTrack
             key={index}

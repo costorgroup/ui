@@ -1,5 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Heading } from '../../index';
+import React from 'react';
+import type { TPaletteColor } from '../../theme/types';
+import { Heading, Flex } from '../..';
+import type { THeadingAs } from './types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const LEVELS: THeadingAs[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+
 const meta: Meta<typeof Heading> = {
   title: 'Typography/Heading',
   component: Heading,
@@ -7,24 +27,17 @@ const meta: Meta<typeof Heading> = {
   argTypes: {
     as: {
       control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+      options: LEVELS,
     },
     color: {
       control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-        'default',
-        'inverted',
-      ],
+      options: COLORS,
     },
+  },
+  args: {
+    children: 'Heading',
+    as: 'h3',
+    color: 'default',
   },
 };
 
@@ -32,24 +45,30 @@ export default meta;
 
 type Story = StoryObj<typeof Heading>;
 
-export const H1: Story = {
-  args: {
-    children: 'Heading 1',
-    as: 'h1',
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
 };
 
-export const H2: Story = {
-  args: {
-    children: 'Heading 2',
-    as: 'h2',
-  },
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {COLORS.map((color) => (
+        <Heading key={color} as="h3" color={color}>
+          This text will be in '{color}' color.
+        </Heading>
+      ))}
+    </Flex>
+  ),
 };
 
-export const Primary: Story = {
-  args: {
-    children: 'Primary heading',
-    as: 'h3',
-    color: 'primary',
-  },
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="sm">
+      {LEVELS.map((level) => (
+        <Heading key={level} as={level} color="default">
+          This text will be in '{level}' size.
+        </Heading>
+      ))}
+    </Flex>
+  ),
 };

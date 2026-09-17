@@ -7,11 +7,12 @@ import { TTableRowProps } from './types';
 const TableRow = forwardRef<HTMLTableRowElement, TTableRowProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <STableRow ref={ref} {...props}
-        className={mergeClasses(
-          tableRowClasses.root,
-          className,
-        )}>
+      <STableRow
+        ref={ref}
+        data-slot="table-row"
+        {...props}
+        className={mergeClasses(tableRowClasses.root, className)}
+      >
         {children}
       </STableRow>
     );

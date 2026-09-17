@@ -7,11 +7,11 @@ import { TBreadcrumbLinkProps } from './types';
 const BreadcrumbLink = forwardRef<HTMLAnchorElement, TBreadcrumbLinkProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SBreadcrumbLink ref={ref} {...props}
-        className={mergeClasses(
-          breadcrumbLinkClasses.root,
-          className,
-        )}>
+      <SBreadcrumbLink
+        ref={ref}
+        {...props}
+        className={mergeClasses(breadcrumbLinkClasses.root, className)}
+      >
         {children}
       </SBreadcrumbLink>
     );

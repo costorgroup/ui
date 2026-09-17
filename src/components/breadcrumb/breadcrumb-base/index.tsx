@@ -9,7 +9,7 @@ const BreadcrumbBase = forwardRef<HTMLElement, TBreadcrumbBaseProps>(
     {
       children,
       size = 'md',
-      color = 'primary',
+      color = 'default',
       'aria-label': ariaLabel = 'Breadcrumb',
       className,
       ...props
@@ -23,10 +23,7 @@ const BreadcrumbBase = forwardRef<HTMLElement, TBreadcrumbBaseProps>(
         color={color}
         aria-label={ariaLabel}
         {...props}
-        className={mergeClasses(
-          breadcrumbBaseClasses.root,
-          className,
-        )}
+        className={mergeClasses(breadcrumbBaseClasses.root, className)}
       >
         {children}
       </SBreadcrumbBase>

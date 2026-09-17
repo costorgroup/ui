@@ -9,9 +9,10 @@ import React, {
 } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { InputGroupContext } from '../../input-group/context';
+import { useFormControlState } from '../../form-control/context';
 import { inputWrapperClasses } from './classes';
-import { SInputWrapper } from './styles';
-import { TInputWrapperProps, TInputVariant } from './types';
+import { SInputWrapper, SInputWrapperActionBar, SInputWrapperBody } from './styles';
+import { INPUT_VARIANTS, TInputWrapperProps, TInputVariant } from './types';
 
 const isInteractiveTarget = (target: EventTarget | null) => {
   if (!(target instanceof Element)) {
@@ -26,18 +27,22 @@ const isInteractiveTarget = (target: EventTarget | null) => {
 };
 
 const isInputVariant = (value: string): value is TInputVariant =>
-  value === 'subtle' || value === 'surface' || value === 'outline';
+  INPUT_VARIANTS.includes(value as TInputVariant);
 
 const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
   (
     {
       children,
       variant: variantProp,
-      size = 'md',
+      size: sizeProp,
       color: colorProp,
-      error = false,
-      disabled = false,
+      error: errorProp,
+      disabled: disabledProp,
       readOnly = false,
+      open = false,
+      trigger = false,
+      stacked = false,
+      actionBar,
       onMouseDown,
       onFocus,
       onBlur,
@@ -47,6 +52,13 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
     forwardedRef,
   ) => {
     const group = useContext(InputGroupContext);
+    const form = useFormControlState({
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      error: errorProp,
+      disabled: disabledProp,
+    });
     const localRef = useRef<HTMLDivElement>(null);
     const [focused, setFocused] = useState(false);
 
@@ -68,8 +80,13 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
       (group?.variant && isInputVariant(group.variant)
         ? group.variant
         : undefined) ??
-      'subtle';
-    const color = colorProp ?? group?.color ?? 'primary';
+      form.variant;
+    const color = colorProp ?? group?.color ?? form.color;
+    const error = errorProp ?? form.error;
+    const disabled = disabledProp ?? form.disabled;
+    const size = sizeProp ?? form.size;
+    const hasActionBar = actionBar != null;
+    const isStacked = stacked || hasActionBar;
 
     const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       onMouseDown?.(event);
@@ -82,8 +99,12 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
         return;
       }
 
-      const field = localRef.current?.querySelector<HTMLElement>(
-        'input, textarea',
+      const root = localRef.current;
+      const scope =
+        root?.querySelector<HTMLElement>(`.${inputWrapperClasses.body}`) ??
+        root;
+      const field = scope?.querySelector<HTMLElement>(
+        'input:not([type="hidden"]), textarea, select, button[aria-haspopup="listbox"], button[aria-haspopup="dialog"], [contenteditable="true"]',
       );
 
       field?.focus();
@@ -91,12 +112,14 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
 
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
       setFocused(true);
+      form.setFocused?.(true);
       onFocus?.(event);
     };
 
     const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
       if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
         setFocused(false);
+        form.setFocused?.(false);
       }
 
       onBlur?.(event);
@@ -108,16 +131,38 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
         variant={variant}
         size={size}
         color={color}
+        error={error}
+        disabled={disabled}
+        open={open}
+        trigger={trigger}
+        stacked={isStacked}
+        data-open={open ? 'true' : undefined}
+        data-focused={focused ? 'true' : undefined}
         {...props}
         className={mergeClasses(
           inputWrapperClasses.root,
+          error && inputWrapperClasses.error,
           className,
         )}
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
         onBlur={handleBlur}
       >
-        {children}
+        {hasActionBar ? (
+          <SInputWrapperBody className={inputWrapperClasses.body}>
+            {children}
+          </SInputWrapperBody>
+        ) : (
+          children
+        )}
+        {hasActionBar ? (
+          <SInputWrapperActionBar
+            size={size}
+            className={inputWrapperClasses.actionBar}
+          >
+            {actionBar}
+          </SInputWrapperActionBar>
+        ) : null}
       </SInputWrapper>
     );
   },

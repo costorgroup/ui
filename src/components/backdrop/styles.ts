@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { overlayFade } from '../../motion';
 import { TSBackdropProps } from './types';
 
 const customProps = new Set([
@@ -32,13 +33,15 @@ export const SBackdrop = styled('div', {
   display: flex;
   align-items: ${({ align }) => alignMap[align]};
   justify-content: ${({ justify }) => justifyMap[justify]};
-  padding: ${({ theme, padding }) => (padding ? theme.spacing(10) : 0)};
+  padding: ${({ theme, padding }) =>
+    padding ? theme.spacing(5) : 0};
   overflow: ${({ scrollable }) => (scrollable ? 'hidden' : 'auto')};
-  background-color: color-mix(
-    in srgb,
-    ${({ theme }) => theme.palette.common.black} 48%,
-    transparent
-  );
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: ${({ theme }) => theme.surfaces.backdrop};
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  ${overlayFade}
+
+  &[hidden] {
+    display: none;
+  }
 `;

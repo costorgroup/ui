@@ -1,107 +1,148 @@
-import React, { SyntheticEvent, forwardRef, useCallback, useMemo, useState } from 'react';
-import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { ClickAwayListener } from '../click-away-listener';
+import {
+  createFileTreeCollection,
+  createTreeCollection,
+  TreeCollection,
+  type FilePathTreeNode,
+  type TreeCollectionOptions,
+  type TreeNode,
+} from './collection';
 import { treeViewClasses } from './classes';
-import { TreeViewContext } from './context';
-import { STreeView } from './styles';
-import { TTreeViewProps } from './types';
+import { useTreeViewContext, useTreeViewNodeContext } from './context';
+import {
+  TreeViewBranch,
+  TreeViewBranchContent,
+  TreeViewBranchControl,
+  TreeViewBranchIndentGuide,
+  TreeViewBranchIndicator,
+  TreeViewBranchText,
+  TreeViewBranchTrigger,
+  TreeViewContextRender,
+  TreeViewItem,
+  TreeViewItemIndicator,
+  TreeViewItemText,
+  TreeViewLabel,
+  TreeViewNodeCheckbox,
+  TreeViewNodeContextRender,
+  TreeViewNodeProvider,
+  TreeViewNodeRenameInput,
+  TreeViewRoot,
+  TreeViewRootProvider,
+  TreeViewTree,
+} from './parts';
+import { TreeViewNode } from './tree-view-node';
+import type {
+  TTreeViewBranchContentProps,
+  TTreeViewBranchControlProps,
+  TTreeViewBranchIndicatorProps,
+  TTreeViewBranchProps,
+  TTreeViewBranchTextProps,
+  TTreeViewBranchTriggerProps,
+  TTreeViewExpandedChangeDetails,
+  TTreeViewFocusChangeDetails,
+  TTreeViewItemIndicatorProps,
+  TTreeViewItemProps,
+  TTreeViewItemTextProps,
+  TTreeViewLabelProps,
+  TTreeViewNodeProps,
+  TTreeViewNodeProviderProps,
+  TTreeViewNodeRenderProps,
+  TTreeViewNodeState,
+  TTreeViewRootProps,
+  TTreeViewRootProviderProps,
+  TTreeViewSelectionChangeDetails,
+  TTreeViewSize,
+  TTreeViewTreeProps,
+  TTreeViewVariant,
+  TUseTreeViewProps,
+  TUseTreeViewReturn,
+} from './types';
+import { useTreeView } from './use-tree-view';
 
-const TreeView = forwardRef<HTMLUListElement, TTreeViewProps>(
-  (
-    {
-      children,
-      selected: selectedProp,
-      defaultSelected = null,
-      onSelect,
-      unfocusOnClickAway = false,
-      size = 'md',
-      color = 'primary',
-      className,
-      onClick,
-      ...props
-    },
-    ref,
-  ) => {
-    const isControlled = selectedProp !== undefined;
-    const [uncontrolledSelected, setUncontrolledSelected] =
-      useState(defaultSelected);
-    const selected = isControlled ? selectedProp : uncontrolledSelected;
+export const TreeView = {
+  Root: TreeViewRoot,
+  RootProvider: TreeViewRootProvider,
+  Tree: TreeViewTree,
+  Label: TreeViewLabel,
+  Branch: TreeViewBranch,
+  BranchContent: TreeViewBranchContent,
+  BranchControl: TreeViewBranchControl,
+  BranchIndentGuide: TreeViewBranchIndentGuide,
+  BranchIndicator: TreeViewBranchIndicator,
+  BranchText: TreeViewBranchText,
+  BranchTrigger: TreeViewBranchTrigger,
+  Item: TreeViewItem,
+  ItemText: TreeViewItemText,
+  ItemIndicator: TreeViewItemIndicator,
+  NodeProvider: TreeViewNodeProvider,
+  NodeContext: TreeViewNodeContextRender,
+  Node: TreeViewNode,
+  NodeCheckbox: TreeViewNodeCheckbox,
+  NodeRenameInput: TreeViewNodeRenameInput,
+  Context: TreeViewContextRender,
+};
 
-    const select = useCallback(
-      (event: SyntheticEvent | Event, value?: string | number | null) => {
-        const next = value ?? null;
+export type {
+  TTreeViewRootProps,
+  TTreeViewRootProviderProps,
+  TTreeViewNodeProps,
+  TTreeViewNodeRenderProps,
+  TTreeViewNodeProviderProps,
+  TTreeViewSize,
+  TTreeViewVariant,
+  TTreeViewNodeState,
+  TTreeViewSelectionChangeDetails,
+  TTreeViewExpandedChangeDetails,
+  TTreeViewFocusChangeDetails,
+  TTreeViewBranchProps,
+  TTreeViewBranchContentProps,
+  TTreeViewBranchControlProps,
+  TTreeViewBranchIndicatorProps,
+  TTreeViewBranchTextProps,
+  TTreeViewBranchTriggerProps,
+  TTreeViewItemProps,
+  TTreeViewItemTextProps,
+  TTreeViewItemIndicatorProps,
+  TTreeViewLabelProps,
+  TTreeViewTreeProps,
+  TUseTreeViewProps,
+  TUseTreeViewReturn,
+  TreeCollection,
+  TreeCollectionOptions,
+  TreeNode,
+  FilePathTreeNode,
+};
 
-        if (next === selected) {
-          return;
-        }
+export type UseTreeViewProps<T extends TreeNode = TreeNode> = TUseTreeViewProps<T>;
+export type UseTreeViewReturn<T extends TreeNode = TreeNode> = TUseTreeViewReturn<T>;
+export type TreeViewSelectionChangeDetails = TTreeViewSelectionChangeDetails;
+export type TreeViewExpandedChangeDetails = TTreeViewExpandedChangeDetails;
+export type TreeViewNodeState = TTreeViewNodeState;
 
-        if (!isControlled) {
-          setUncontrolledSelected(next);
-        }
+export {
+  TreeViewRoot,
+  TreeViewRootProvider,
+  TreeViewTree,
+  TreeViewLabel,
+  TreeViewBranch,
+  TreeViewBranchContent,
+  TreeViewBranchControl,
+  TreeViewBranchIndentGuide,
+  TreeViewBranchIndicator,
+  TreeViewBranchText,
+  TreeViewBranchTrigger,
+  TreeViewItem,
+  TreeViewItemText,
+  TreeViewItemIndicator,
+  TreeViewNode,
+  TreeViewNodeCheckbox,
+  TreeViewNodeRenameInput,
+  TreeViewNodeProvider,
+  createTreeCollection,
+  createFileTreeCollection,
+  useTreeView,
+  useTreeViewContext,
+  useTreeViewNodeContext,
+  treeViewClasses,
+};
 
-        onSelect?.(event, next);
-      },
-      [isControlled, onSelect, selected],
-    );
-
-    const context = useMemo(
-      () => ({
-        level: 0,
-        selected,
-        select,
-        size,
-        color,
-      }),
-      [color, select, selected, size],
-    );
-
-    const tree = (
-      <STreeView
-        ref={ref}
-        role="tree"
-        size={size}
-        {...props}
-        className={mergeClasses(treeViewClasses.root, className)}
-        onClick={(event) => {
-          onClick?.(event);
-
-          if (event.defaultPrevented || !unfocusOnClickAway) {
-            return;
-          }
-
-          const target = event.target as HTMLElement | null;
-          if (!target?.closest('[role="treeitem"]')) {
-            select(event, null);
-          }
-        }}
-      >
-        {children}
-      </STreeView>
-    );
-
-    return (
-      <TreeViewContext.Provider value={context}>
-        {unfocusOnClickAway ? (
-          <ClickAwayListener
-            onClickAway={(event) => {
-              if (selected != null) {
-                select(event, null);
-              }
-            }}
-          >
-            {tree}
-          </ClickAwayListener>
-        ) : (
-          tree
-        )}
-      </TreeViewContext.Provider>
-    );
-  },
-);
-
-TreeView.displayName = 'TreeView';
-
-export type { TTreeViewProps, TTreeViewSize, TTreeViewValue } from './types';
-export { treeViewClasses } from './classes';
-export { TreeView };
 export default TreeView;

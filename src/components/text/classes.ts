@@ -1,5 +1,5 @@
 import { generateUtilityClasses } from '../../helpers/generate-utility-classes';
 
-export const textClasses = generateUtilityClasses('Text', [
+export const textClasses = generateUtilityClasses('V2Text', [
   'root',
 ]);

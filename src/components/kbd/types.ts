@@ -1,13 +1,9 @@
 import { ElementType, ReactNode } from 'react';
 import type { TPolymorphicProps } from '../../helpers/polymorphic';
 import { TPaletteColor } from '../../theme/types';
+import type { TStaticVariant } from '../../helpers/variant-styles/types';
 
-export type TKbdVariant =
-  | 'raised'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'plain';
+export type TKbdVariant = 'raised' | TStaticVariant;
 
 export type TKbdSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 

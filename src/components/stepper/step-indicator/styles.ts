@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
+import { stepIndicatorAppearance } from './variant-styles';
 import { TSStepIndicatorProps } from './types';
 
-const customProps = new Set(['status', 'variant', 'error']);
+const customProps = new Set(['status', 'variant', 'color', 'error']);
 
 export const SStepIndicator = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -25,119 +26,21 @@ export const SStepIndicator = styled('div', {
     color 0.15s ease,
     box-shadow 0.15s ease;
 
-  ${({ status, variant, error }) => {
-    if (error) {
-      return `
-        background-color: var(--stepper-error);
-        border-color: var(--stepper-error);
-        color: #fff;
-      `;
-    }
+  ${({ theme, status, variant, color, error }) => {
+    const palette = theme.palette[color];
+    const appearance = stepIndicatorAppearance(
+      status,
+      variant,
+      palette,
+      theme,
+      error,
+    );
 
-    if (status === 'incomplete') {
-      switch (variant) {
-        case 'subtle':
-          return `
-            background-color: color-mix(in oklab, var(--stepper-main) 8%, transparent);
-            border-color: transparent;
-            color: var(--stepper-darker);
-          `;
-        case 'surface':
-          return `
-            background-color: color-mix(in oklab, var(--stepper-main) 8%, transparent);
-            border-color: color-mix(in oklab, var(--stepper-main) 24%, transparent);
-            color: var(--stepper-darker);
-          `;
-        case 'outline':
-          return `
-            background-color: transparent;
-            border-color: color-mix(in oklab, var(--stepper-main) 36%, transparent);
-            color: var(--stepper-darker);
-          `;
-        case 'plain':
-          return `
-            background-color: transparent;
-            border-color: transparent;
-            color: color-mix(in oklab, var(--stepper-darker) 56%, transparent);
-          `;
-        default:
-          return `
-            background-color: transparent;
-            border-color: var(--stepper-track);
-            color: color-mix(in oklab, var(--stepper-darker) 64%, transparent);
-          `;
-      }
-    }
-
-    if (status === 'active') {
-      switch (variant) {
-        case 'subtle':
-          return `
-            background-color: color-mix(in oklab, var(--stepper-main) 16%, transparent);
-            border-color: transparent;
-            color: var(--stepper-darker);
-            box-shadow: 0 0 0 3px color-mix(in oklab, var(--stepper-main) 16%, transparent);
-          `;
-        case 'surface':
-          return `
-            background-color: color-mix(in oklab, var(--stepper-main) 14%, transparent);
-            border-color: var(--stepper-main);
-            color: var(--stepper-darker);
-          `;
-        case 'outline':
-          return `
-            background-color: transparent;
-            border-color: var(--stepper-main);
-            color: var(--stepper-main);
-            box-shadow: 0 0 0 3px color-mix(in oklab, var(--stepper-main) 16%, transparent);
-          `;
-        case 'plain':
-          return `
-            background-color: transparent;
-            border-color: transparent;
-            color: var(--stepper-main);
-          `;
-        default:
-          return `
-            background-color: var(--stepper-main);
-            border-color: var(--stepper-main);
-            color: var(--stepper-contrast);
-          `;
-      }
-    }
-
-    // complete
-    switch (variant) {
-      case 'subtle':
-        return `
-          background-color: color-mix(in oklab, var(--stepper-main) 16%, transparent);
-          border-color: transparent;
-          color: var(--stepper-darker);
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(in oklab, var(--stepper-main) 14%, transparent);
-          border-color: var(--stepper-main);
-          color: var(--stepper-darker);
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          border-color: var(--stepper-main);
-          color: var(--stepper-main);
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          border-color: transparent;
-          color: var(--stepper-main);
-        `;
-      default:
-        return `
-          background-color: var(--stepper-main);
-          border-color: var(--stepper-main);
-          color: var(--stepper-contrast);
-        `;
-    }
+    return `
+      background-color: ${appearance.backgroundColor};
+      border-color: ${appearance.borderColor};
+      color: ${appearance.color};
+      box-shadow: ${appearance.boxShadow ?? 'none'};
+    `;
   }}
 `;

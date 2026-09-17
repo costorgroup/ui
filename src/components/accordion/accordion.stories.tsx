@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Accordion, Flex, Text } from '../../index';
-import { ArrowTopIcon } from '../../icons';
 import type { TPaletteColor } from '../../theme/types';
-import type { TAccordionVariant } from './accordion-base/context';
+import { Accordion, AccordionGroup, Text, Flex } from '../..';
+import type { TAccordionRadius, TAccordionSize } from './types';
+import type { TAccordionVariant } from './variant-styles';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -28,10 +28,28 @@ const VARIANTS: TAccordionVariant[] = [
   'plain',
 ];
 
+const SIZES: TAccordionSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TAccordionRadius[] = [
+  'none',
+  'xs',
+  'sm',
+  'md',
+  'lg',
+  'xl',
+  'pill',
+  'full',
+];
+
 const meta: Meta<typeof Accordion> = {
   title: 'Data Display/Accordion',
   component: Accordion,
   tags: ['autodocs'],
+  args: {
+    color: 'default',
+    variant: 'subtle',
+    size: 'md',
+    radius: 'md',
+  },
   argTypes: {
     expanded: {
       control: 'boolean',
@@ -49,11 +67,15 @@ const meta: Meta<typeof Accordion> = {
     },
     size: {
       control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      options: SIZES,
     },
     expandIconPosition: {
       control: 'inline-radio',
       options: ['left', 'right'],
+    },
+    radius: {
+      control: 'select',
+      options: RADIUS,
     },
   },
 };
@@ -65,21 +87,86 @@ type Story = StoryObj<typeof Accordion>;
 export const Default: Story = {
   args: {
     summary: 'Summary',
-    children: 'Hello',
-    color: 'primary',
-    variant: 'subtle',
-    size: 'md',
+    children: 'Details content goes here.',
+    defaultExpanded: false,
   },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 420 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const Expanded: Story = {
+  args: {
+    summary: 'Account settings',
+    children: (
+      <Text size="sm">
+        Manage your profile, security preferences, and notification settings.
+      </Text>
+    ),
+    defaultExpanded: true,
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ width: 420 }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
+
+export const Variants: Story = {
+  render: (args) => (
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {VARIANTS.map((variant) => (
+        <Accordion
+          key={variant}
+          summary={variant}
+          variant={variant}
+          color={args.color}
+          size={args.size}
+          radius={args.radius}
+          defaultExpanded
+        >
+          {variant} variant details use idle chrome fill.
+        </Accordion>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: (args) => (
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {SIZES.map((size) => (
+        <Accordion
+          key={size}
+          summary={size}
+          size={size}
+          color={args.color}
+          variant={args.variant}
+          radius={args.radius}
+          defaultExpanded
+        >
+          {size} size accordion details.
+        </Accordion>
+      ))}
+    </Flex>
+  ),
 };
 
 export const Controlled: Story = {
-  render: () => {
+  render: function ControlledStory(args) {
     const [expanded, setExpanded] = useState(false);
 
     return (
       <Flex direction="column" gap="sm" style={{ width: 420 }}>
         <Text size="sm">expanded: {String(expanded)}</Text>
         <Accordion
+          {...args}
           summary="Controlled accordion"
           expanded={expanded}
           onChange={(_, next) => setExpanded(next)}
@@ -91,36 +178,40 @@ export const Controlled: Story = {
   },
 };
 
-export const Variants: Story = {
-  render: () => (
+export const IconPosition: Story = {
+  render: (args) => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
-      {VARIANTS.map((variant) => (
-        <Accordion
-          key={variant}
-          summary={variant}
-          variant={variant}
-          color="primary"
-          defaultExpanded
-        >
-          {variant} variant accordion content.
-        </Accordion>
-      ))}
+      <Accordion {...args} summary="Icon on the right" defaultExpanded>
+        Default expand icon position.
+      </Accordion>
+      <Accordion {...args} summary="Icon on the left" expandIconPosition="left">
+        Expand icon rendered before the summary content.
+      </Accordion>
     </Flex>
   ),
 };
 
-export const IconPosition: Story = {
-  render: () => (
-    <Flex direction="column" gap="md" style={{ width: 420 }}>
-      <Accordion summary="Icon on the right" defaultExpanded>
-        Default expand icon position.
+export const Grouped: Story = {
+  args: {
+    variant: 'surface',
+  },
+  render: (args) => (
+    <AccordionGroup
+      color={args.color}
+      variant={args.variant}
+      size={args.size}
+      radius={args.radius}
+      style={{ width: 420 }}
+    >
+      <Accordion summary="General">
+        General settings content.
       </Accordion>
-      <Accordion summary="Icon on the left" expandIconPosition="left">
-        Expand icon rendered before the summary content.
+      <Accordion summary="Privacy" defaultExpanded>
+        Privacy settings content.
       </Accordion>
-      <Accordion summary="Custom icon" icon={<ArrowTopIcon />}>
-        Uses ArrowTopIcon and still rotates 180° when expanded.
+      <Accordion summary="Advanced">
+        Advanced settings content.
       </Accordion>
-    </Flex>
+    </AccordionGroup>
   ),
 };

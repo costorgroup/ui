@@ -8,7 +8,6 @@ import React, {
   useRef,
 } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
-import type { TInputVariant } from '../input-wrapper/types';
 import {
   SInputDateFieldTimeWheel,
   SInputDateFieldTimeWheelHighlight,
@@ -37,7 +36,6 @@ type TTimeWheelProps = {
   value: string | number;
   onChange: (value: string | number) => void;
   color?: TPaletteColor;
-  variant?: TInputVariant;
   infinite?: boolean;
   'aria-label'?: string;
   disabled?: boolean;
@@ -50,7 +48,6 @@ const TimeWheelComponent = ({
   value,
   onChange,
   color = 'primary',
-  variant = 'subtle',
   infinite = true,
   'aria-label': ariaLabel,
   disabled = false,
@@ -337,26 +334,6 @@ const TimeWheelComponent = ({
     window.clearTimeout(commitTimerRef.current);
   };
 
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!draggingRef.current) {
-      return;
-    }
-
-    const pointerDelta = dragStartYRef.current - event.clientY;
-    if (Math.abs(pointerDelta) > 6) {
-      dragMovedRef.current = true;
-      pendingClickIndexRef.current = null;
-    }
-
-    let nextTop = dragStartScrollRef.current + pointerDelta / SCROLL_RESISTANCE;
-    if (!loop) {
-      const maxScroll = Math.max(0, (items.length - 1) * TIME_WHEEL_ITEM_HEIGHT);
-      nextTop = Math.min(Math.max(nextTop, 0), maxScroll);
-    }
-
-    scheduleScrollTop(nextTop);
-  };
-
   const handlePointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!draggingRef.current) {
       return;
@@ -385,13 +362,34 @@ const TimeWheelComponent = ({
     scheduleFinalize();
   };
 
+  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!draggingRef.current) {
+      return;
+    }
+
+    if (event.buttons === 0) {
+      handlePointerUp(event);
+      return;
+    }
+
+    const pointerDelta = dragStartYRef.current - event.clientY;
+    if (Math.abs(pointerDelta) > 6) {
+      dragMovedRef.current = true;
+      pendingClickIndexRef.current = null;
+    }
+
+    let nextTop = dragStartScrollRef.current + pointerDelta / SCROLL_RESISTANCE;
+    if (!loop) {
+      const maxScroll = Math.max(0, (items.length - 1) * TIME_WHEEL_ITEM_HEIGHT);
+      nextTop = Math.min(Math.max(nextTop, 0), maxScroll);
+    }
+
+    scheduleScrollTop(nextTop);
+  };
+
   return (
     <SInputDateFieldTimeWheel aria-label={ariaLabel} aria-disabled={disabled}>
-      <SInputDateFieldTimeWheelHighlight
-        color={color}
-        variant={variant}
-        aria-hidden
-      />
+      <SInputDateFieldTimeWheelHighlight aria-hidden />
       <SInputDateFieldTimeWheelList
         ref={listRef}
         onScroll={handleScroll}
@@ -399,6 +397,7 @@ const TimeWheelComponent = ({
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
+        onLostPointerCapture={handlePointerUp}
       >
         <SInputDateFieldTimeWheelSpacer style={{ height: PAD }} aria-hidden />
         {rendered.map((item) => (
@@ -408,7 +407,6 @@ const TimeWheelComponent = ({
             tabIndex={-1}
             disabled={disabled}
             color={color}
-            variant={variant}
             data-flat-index={item.flatIndex}
           >
             {item.label}
@@ -424,7 +422,6 @@ export const TimeWheel = memo(TimeWheelComponent, (prev, next) => (
   prev.items === next.items &&
   prev.value === next.value &&
   prev.color === next.color &&
-  prev.variant === next.variant &&
   prev.infinite === next.infinite &&
   prev.disabled === next.disabled &&
   prev['aria-label'] === next['aria-label']

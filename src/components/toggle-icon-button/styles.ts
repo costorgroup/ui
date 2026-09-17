@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
+import { pressedVariantStyles } from '../button/variant-styles';
 import { SIconButton } from '../icon-button/styles';
-import { toggleInteractionStyles } from '../toggle-button/variant-styles';
 
 export const SToggleIconButton = styled(SIconButton)`
-  ${({ theme, variant = 'outline', color = 'primary' }) =>
-    toggleInteractionStyles(theme, variant, color)}
+  ${({ theme, variant = 'outline', appearance = 'opaque', color = 'default' }) =>
+    pressedVariantStyles(
+      variant,
+      theme.palette[color],
+      theme,
+      appearance,
+      theme.surfaces.background,
+    )}
 `;

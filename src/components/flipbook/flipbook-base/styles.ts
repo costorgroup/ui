@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../../helpers/variant-styles/surface';
 
 const customProps = new Set([
   'bookWidth',
@@ -78,5 +79,5 @@ export const SFlipbookStatus = styled.span`
   text-align: center;
   font-size: ${({ theme }) => theme.typography.text.sm};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme }) => theme.palette.common.grey[12]};
+  color: ${({ theme }) => colorMix(theme.surfaces.ink, 64)};
 `;

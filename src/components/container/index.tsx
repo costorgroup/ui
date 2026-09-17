@@ -1,7 +1,7 @@
 import React, { ElementType, forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { containerClasses } from './classes';
 import type { TPolymorphicComponent } from '../../helpers/polymorphic';
+import { containerClasses } from './classes';
 import { SContainer } from './styles';
 import { TContainerOwnProps, TContainerProps } from './types';
 
@@ -12,7 +12,8 @@ const Container = forwardRef(function Container<C extends ElementType = 'div'>(
     maxWidth = 'lg',
     fixed = false,
     disableGutters = false,
-    className, ...props
+    className,
+    ...props
   }: TContainerProps<C>,
   ref: React.Ref<Element>,
 ) {
@@ -24,10 +25,7 @@ const Container = forwardRef(function Container<C extends ElementType = 'div'>(
       fixed={fixed}
       disableGutters={disableGutters}
       {...props}
-        className={mergeClasses(
-          containerClasses.root,
-          className,
-        )}
+      className={mergeClasses(containerClasses.root, className)}
     >
       {children}
     </SContainer>

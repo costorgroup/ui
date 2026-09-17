@@ -20,6 +20,7 @@ const StepIndicator = forwardRef<HTMLDivElement, TStepIndicatorProps>(
         ref={ref}
         status={status}
         variant={stepper.variant}
+        color={stepper.color}
         error={error}
         {...props}
         className={mergeClasses(

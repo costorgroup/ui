@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Section } from './index';
+import { Section } from './';
 import { SectionGroup } from './section-group';
 import type { TSectionAlign, TSectionVariant } from './section-group';
 
@@ -26,7 +26,7 @@ const meta: Meta<typeof SectionGroup> = {
     color: {
       control: 'select',
       options: [
-        'base',
+        'default',
         'primary',
         'secondary',
         'success',
@@ -35,6 +35,7 @@ const meta: Meta<typeof SectionGroup> = {
         'info',
         'dark',
         'light',
+        'base',
       ],
     },
   },
@@ -146,7 +147,7 @@ export const Gaps: Story = {
 export const Colors: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 40, maxWidth: 480 }}>
-      {(['primary', 'secondary', 'success', 'info'] as const).map((color) => (
+      {(['default', 'primary', 'success', 'info'] as const).map((color) => (
         <SectionGroup key={color} align="left" color={color} variant="halo">
           <Section title={`${color} path`}>
             Path color follows the group palette token.

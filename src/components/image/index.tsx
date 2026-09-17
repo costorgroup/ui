@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { imageClasses } from './classes';
 import { ImageIcon } from '../../icons';
+import { imageClasses } from './classes';
 import { SImage, SImageMedia } from './styles';
 import { TImageProps } from './types';
 
@@ -11,7 +11,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
       src,
       width,
       height,
-      radius = 'medium',
+      radius = 'md',
       animation,
       alt = '',
       onLoad,
@@ -37,12 +37,10 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
       if (image?.complete && image.naturalWidth > 0) {
         setLoaded(true);
       }
-    }, [src]);
+    }, [src, animation]);
 
     const isFallback = !hasSrc || failed;
     const showImage = hasSrc && !failed && loaded;
-    const showFallback = isFallback || (hasSrc && !failed && !loaded);
-    const readyToReveal = isFallback || loaded;
 
     useEffect(() => {
       if (!animation) {
@@ -50,7 +48,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
         return;
       }
 
-      if (!readyToReveal) {
+      if (!isFallback && !loaded) {
         setVisible(false);
         return;
       }
@@ -68,7 +66,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
         cancelAnimationFrame(outer);
         cancelAnimationFrame(inner);
       };
-    }, [animation, readyToReveal]);
+    }, [animation, isFallback, loaded]);
 
     return (
       <SImage
@@ -76,23 +74,27 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
         width={width}
         height={height}
         radius={radius}
-        showFallback={showFallback && !showImage}
-        className={mergeClasses(
-          imageClasses.root,
-          className,
-        )}
+        showFallback={isFallback}
+        data-slot="image"
+        className={mergeClasses(imageClasses.root, className)}
       >
-        {showFallback && !showImage ? (
+        {isFallback ? (
           <SImageMedia
-            animation={isFallback ? animation : undefined}
-            visible={isFallback ? visible : true}
-            aria-hidden={!isFallback}
+            animation={animation}
+            visible={visible}
+            data-slot="fallback"
+            className={imageClasses.fallback}
           >
             <ImageIcon />
           </SImageMedia>
         ) : null}
         {hasSrc && !failed ? (
-          <SImageMedia animation={animation} visible={showImage ? visible : false}>
+          <SImageMedia
+            animation={animation}
+            visible={showImage ? visible : false}
+            data-slot="media"
+            className={imageClasses.media}
+          >
             <img
               {...props}
               ref={imgRef}
@@ -117,6 +119,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
 
 Image.displayName = 'Image';
 
+export type { TImageProps, TImageRadius, TImageAnimation } from './types';
 export { imageClasses } from './classes';
 export { Image };
 export default Image;

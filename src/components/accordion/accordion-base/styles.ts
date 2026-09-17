@@ -1,89 +1,40 @@
 import styled from '@emotion/styled';
-import { TAccordionSize } from './context';
+import { accordionShellVariantStyles } from '../variant-styles';
 import { TSAccordionBaseProps } from './types';
 
-const customProps = new Set(['expanded', 'disabled', 'color', 'variant', 'size']);
-
-const sizeFont: Record<TAccordionSize, string> = {
-  xs: '12px',
-  sm: '13px',
-  md: '14px',
-  lg: '16px',
-  xl: '18px',
-};
+const rootCustomProps = new Set([
+  'radius',
+  'size',
+  'expanded',
+  'disabled',
+  'color',
+  'variant',
+  'grouped',
+]);
 
 export const SAccordionBase = styled('div', {
-  shouldForwardProp: (prop) => !customProps.has(prop),
+  shouldForwardProp: (prop) => !rootCustomProps.has(prop),
 })<TSAccordionBaseProps>`
+  display: flex;
+  flex-direction: column;
   box-sizing: border-box;
   width: 100%;
-  border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.radius.medium};
+  min-width: 0;
   overflow: hidden;
+  ${({ theme, radius, grouped }) =>
+    grouped ? '' : `border-radius: ${theme.radius[radius]};`}
+  ${({ theme, color, variant, expanded, grouped }) => {
+    const palette = theme.palette[color];
+    return accordionShellVariantStyles(variant, palette, theme, {
+      expanded,
+      grouped,
+    });
+  }}
   font-family: inherit;
-  font-size: ${({ size }) => sizeFont[size]};
+  font-size: ${({ theme, size }) => theme.sizes[size].fontSize};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
+  transition: background-color 0.12s ease, border-color 0.12s ease;
   opacity: ${({ disabled }) => (disabled ? 0.55 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-  transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
-
-  ${({ theme, size }) => {
-    const scale = theme.sizeScale[size];
-
-    return `
-      --accordion-pad-y: calc(${theme.spacing(theme.gap.sm)} * ${scale});
-      --accordion-pad-x: calc(${theme.spacing(theme.gap.md)} * ${scale});
-      --accordion-gap: calc(${theme.spacing(theme.gap.sm)} * ${scale});
-    `;
-  }}
-
-  ${({ theme, variant, color }) => {
-    const palette = theme.palette[color];
-
-    switch (variant) {
-      case 'solid':
-        return `
-          background-color: ${palette.main};
-          color: ${palette.contrastText};
-          border-color: ${palette.main};
-        `;
-      case 'surface':
-        return `
-          background-color: color-mix(in oklab, ${palette.lighter} 88%, transparent);
-          color: ${palette.darker};
-          border-color: color-mix(in oklab, ${palette.main} 24%, transparent);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-        `;
-      case 'outline':
-        return `
-          background-color: transparent;
-          color: ${palette.main};
-          border-color: ${palette.main};
-        `;
-      case 'ghost':
-        return `
-          background-color: transparent;
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-      case 'plain':
-        return `
-          background-color: transparent;
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-      case 'subtle':
-      default:
-        return `
-          background-color: color-mix(in oklab, ${palette.main} 8%, transparent);
-          color: ${palette.darker};
-          border-color: transparent;
-        `;
-    }
-  }}
 `;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useRef, useState } from 'react';
-import { Button, Flex, Flipbook, FlipbookPage, Heading, Text } from '../../index';
+import { Button, Flex, Flipbook, FlipbookPage, Heading, Text } from '../..';
 import type { TFlipbookHandle } from './types';
 
 const PagePanel = ({
@@ -33,7 +33,7 @@ const PagePanel = ({
 );
 
 const meta: Meta<typeof Flipbook> = {
-  title: 'Data Display/Flipbook',
+  title: 'Experimental/Flipbook',
   component: Flipbook,
   tags: ['autodocs'],
   argTypes: {

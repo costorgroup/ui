@@ -13,8 +13,10 @@ const ToggleButton = forwardRef<HTMLButtonElement, TToggleButtonProps>(
       active,
       defaultActive,
       variant: variantProp,
-      size = 'md',
+      appearance: appearanceProp,
+      size: sizeProp,
       color: colorProp,
+      radius = 'sm',
       className,
       disabled,
       type = 'button',
@@ -26,27 +28,38 @@ const ToggleButton = forwardRef<HTMLButtonElement, TToggleButtonProps>(
     },
     ref,
   ) => {
-    const { active: resolvedActive, variant, color, disabled: resolvedDisabled, handleClick } =
-      useToggleButton({
-        value,
-        active,
-        defaultActive,
-        disabled,
-        variant: variantProp,
-        color: colorProp,
-        onClick,
-        onChange,
-      });
+    const {
+      active: resolvedActive,
+      variant,
+      appearance,
+      size,
+      color,
+      disabled: resolvedDisabled,
+      handleClick,
+    } = useToggleButton({
+      value,
+      active,
+      defaultActive,
+      disabled,
+      variant: variantProp,
+      appearance: appearanceProp,
+      size: sizeProp,
+      color: colorProp,
+      onClick,
+      onChange,
+    });
     const [focusVisible, setFocusVisible] = useState(false);
 
     return (
       <SToggleButton
         ref={ref}
         type={type}
-        value={value}
+        value={value == null ? undefined : String(value)}
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
+        radius={radius}
         disabled={resolvedDisabled}
         aria-pressed={resolvedActive}
         {...props}
@@ -75,7 +88,13 @@ const ToggleButton = forwardRef<HTMLButtonElement, TToggleButtonProps>(
 
 ToggleButton.displayName = 'ToggleButton';
 
-export type { TToggleButtonProps } from './types';
+export type {
+  TToggleButtonProps,
+  TToggleButtonVariant,
+  TToggleButtonAppearance,
+  TToggleButtonSize,
+  TToggleButtonRadius,
+} from './types';
 export { toggleButtonClasses } from './classes';
 export { ToggleButton };
 export default ToggleButton;

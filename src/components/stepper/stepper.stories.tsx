@@ -1,11 +1,33 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Button } from '../button';
-import { Flex } from '../flex';
 import { useSteps } from '../../hooks/use-steps';
-import { Stepper } from './index';
+import type { TPaletteColor } from '../../theme/types';
+import { Button, Flex } from '../..';
+import { Stepper } from './';
 import { Step } from './step';
 import type { TStepperSize, TStepperVariant } from './types';
+
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+];
+
+const VARIANTS: TStepperVariant[] = [
+  'solid',
+  'subtle',
+  'surface',
+  'outline',
+  'plain',
+];
+
+const SIZES: TStepperSize[] = ['sm', 'md', 'lg'];
 
 const steps = [
   { title: 'Details', description: 'Account info' },
@@ -22,28 +44,9 @@ const meta: Meta<typeof Stepper> = {
       control: 'select',
       options: ['horizontal', 'vertical'],
     },
-    variant: {
-      control: 'select',
-      options: ['solid', 'subtle', 'surface', 'outline', 'plain'] satisfies TStepperVariant[],
-    },
-    size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg'] satisfies TStepperSize[],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
+    variant: { control: 'select', options: VARIANTS },
+    size: { control: 'select', options: SIZES },
+    color: { control: 'select', options: COLORS },
     alternativeLabel: { control: 'boolean' },
   },
   args: {
@@ -110,7 +113,7 @@ export const AlternativeLabel: Story = {
 export const Variants: Story = {
   render: () => (
     <Flex direction="column" gap={32}>
-      {(['solid', 'subtle', 'surface', 'outline', 'plain'] as const).map((variant) => (
+      {VARIANTS.map((variant) => (
         <div key={variant}>
           <p style={{ margin: '0 0 8px', fontWeight: 600 }}>{variant}</p>
           <Stepper variant={variant} color="primary" defaultActiveStep={1}>
@@ -131,7 +134,7 @@ export const Variants: Story = {
 export const Colors: Story = {
   render: () => (
     <Flex direction="column" gap={24}>
-      {(['primary', 'secondary', 'success', 'info'] as const).map((color) => (
+      {COLORS.map((color) => (
         <Stepper key={color} color={color} defaultActiveStep={1}>
           {steps.map((step) => (
             <Step key={step.title} title={step.title} />

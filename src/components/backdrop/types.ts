@@ -16,6 +16,7 @@ export type TBackdropProps = Omit<
   padding?: boolean;
   layer?: TBackdropLayer;
   lockScroll?: boolean;
+  open?: boolean;
   onClose?: () => void;
 };
 

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Button, CheckIcon } from '../../index';
+import { CheckIcon } from '../../icons';
+import { Button } from '../..';
 import { AlertBase, AlertBody } from './alert-base';
 import { AlertIcon } from './alert-icon';
 import { AlertTitle } from './alert-title';
@@ -8,7 +9,7 @@ import { AlertContent } from './alert-content';
 import { AlertActions } from './alert-actions';
 
 const meta: Meta<typeof AlertBase> = {
-  title: 'Components/Alert/Parts',
+  title: 'Feedback/Alert/Parts',
   component: AlertBase,
   tags: ['autodocs'],
 };
@@ -22,6 +23,7 @@ export const Default: Story = {
     color: 'primary',
     variant: 'subtle',
     size: 'md',
+    radius: 'md',
   },
   render: (args) => (
     <AlertBase {...args}>
@@ -37,6 +39,25 @@ export const Default: Story = {
           </Button>
           <Button size="sm">Review</Button>
         </AlertActions>
+      </AlertBody>
+    </AlertBase>
+  ),
+};
+
+export const Solid: Story = {
+  args: {
+    color: 'success',
+    variant: 'solid',
+    size: 'md',
+  },
+  render: (args) => (
+    <AlertBase {...args}>
+      <AlertIcon>
+        <CheckIcon />
+      </AlertIcon>
+      <AlertBody>
+        <AlertTitle>Saved</AlertTitle>
+        <AlertContent>Content inherits text color from the alert.</AlertContent>
       </AlertBody>
     </AlertBase>
   ),

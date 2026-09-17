@@ -7,14 +7,19 @@ export const SBreadcrumbBase = styled('nav', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSBreadcrumbBaseProps>`
   font-family: inherit;
-  font-size: ${({ theme, size }) =>
-    `calc(${theme.typography.text[size]} * ${theme.sizeScale[size]})`};
+  font-size: ${({ theme, size }) => theme.sizes[size].fontSize};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
-  color: ${({ theme, color }) => theme.palette[color].main};
+  color: ${({ theme }) => theme.surfaces.ink};
 
-  --breadcrumb-accent: ${({ theme, color }) => theme.palette[color].main};
-  --breadcrumb-accent-dark: ${({ theme, color }) => theme.palette[color].dark};
-  --breadcrumb-muted: ${({ theme }) => theme.palette.base.light};
+  --breadcrumb-accent: ${({ theme, color }) =>
+    color === 'default'
+      ? theme.surfaces.ink
+      : theme.palette[color].main};
+  --breadcrumb-accent-dark: ${({ theme, color }) =>
+    color === 'default'
+      ? theme.surfaces.ink
+      : theme.palette[color].dark};
+  --breadcrumb-muted: ${({ theme }) => theme.surfaces.muted};
 `;
 
 export const SBreadcrumbList = styled.ol`

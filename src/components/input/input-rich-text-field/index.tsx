@@ -6,12 +6,17 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputRichTextFieldClasses } from './classes';
 import Placeholder from '@tiptap/extension-placeholder';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
+import { InputWrapper } from '../input-wrapper';
 import {
   SInputRichTextContent,
   SInputRichTextField,
@@ -42,24 +47,38 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
       onChange,
       onEditorReady,
       placeholder,
-      disabled = false,
+      disabled: disabledProp,
       editable,
       showToolbar = true,
       toolbar,
       extensions: extensionsProp,
       rows = 4,
       minHeight,
-      variant = 'subtle',
-      size = 'md',
-      color = 'primary',
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
       id,
       name,
       'aria-invalid': ariaInvalid,
       'aria-label': ariaLabel,
       className,
+      actionBar,
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const isEditable = editable ?? !disabled;
     const isControlled = value !== undefined;
     const lastEmittedHtml = useRef<string | null>(null);
@@ -94,11 +113,10 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
         shouldRerenderOnTransaction: true,
         editorProps: {
           attributes: {
-            ...(id ? { id } : {}),
+            ...(fieldId ? { id: fieldId } : {}),
             ...(ariaLabel ? { 'aria-label': ariaLabel } : {}),
-            ...(ariaInvalid != null
-              ? { 'aria-invalid': String(ariaInvalid) }
-              : {}),
+            ...(error ? { 'aria-invalid': 'true' } : {}),
+            ...(form.helperId ? { 'aria-describedby': form.helperId } : {}),
             role: 'textbox',
             'aria-multiline': 'true',
           },
@@ -171,40 +189,46 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
     );
 
     return (
-      <SInputRichTextField
+      <div
         ref={forwardedRef}
-        className={className}
-        variant={variant}
-        size={size}
-        color={color}
-        disabled={disabled}
+        className={mergeClasses(inputRichTextFieldClasses.root, className)}
         onMouseDown={handleMouseDown}
       >
-        {name != null ? (
-          <input type="hidden" name={name} value={editor?.getHTML() ?? ''} 
-        className={mergeClasses(
-          inputRichTextFieldClasses.root,
-          className,
-        )}
-      />
-        ) : null}
-
-        {showToolbar
-          ? (toolbar ??
-            (editor ? (
-              <RichTextToolbar
-                editor={editor}
-                size={size}
-                color={color}
-                disabled={disabled || !isEditable}
+        <InputWrapper
+          variant={variant}
+          size={size}
+          color={color}
+          disabled={disabled}
+          stacked
+          actionBar={actionBar}
+        >
+          <SInputRichTextField size={size}>
+            {name != null ? (
+              <input
+                type="hidden"
+                name={name}
+                value={editor?.getHTML() ?? ''}
               />
-            ) : null))
-          : null}
+            ) : null}
 
-        <SInputRichTextContent minHeight={contentMinHeight}>
-          <EditorContent editor={editor} />
-        </SInputRichTextContent>
-      </SInputRichTextField>
+            {showToolbar
+              ? (toolbar ??
+                (editor ? (
+                  <RichTextToolbar
+                    editor={editor}
+                    size={size}
+                    color={color}
+                    disabled={disabled || !isEditable}
+                  />
+                ) : null))
+              : null}
+
+            <SInputRichTextContent minHeight={contentMinHeight}>
+              <EditorContent editor={editor} />
+            </SInputRichTextContent>
+          </SInputRichTextField>
+        </InputWrapper>
+      </div>
     );
   },
 );

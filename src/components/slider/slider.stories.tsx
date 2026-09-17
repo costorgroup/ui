@@ -1,64 +1,96 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import React, { useRef, useState } from 'react';
-import {
-  Button,
-  Heading,
-  Slider,
-  Text,
-  type TSliderHandle,
-} from '../../index';
+import React, { useState } from 'react';
+import type { TPaletteColor } from '../../theme/types';
+import { Button, Heading, Image, SlidePermanentContent, Slider, SliderControl, SliderControls, SliderPagination, SliderSlide, SliderSlides, Text, useSlider, type TUseSliderReturn, Flex } from '../..';
 
-const SlidePanel = ({
-  label,
-  color,
-}: {
-  label?: string;
-  color: string;
-}) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '100%',
-      height: 280,
-      background: color,
-      color: '#fff',
-    }}
-  >
-    {label != null ? (
-      <Heading as="h3" style={{ color: 'inherit', margin: 0 }}>
-        {label}
-      </Heading>
-    ) : null}
-  </div>
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
+];
+
+const Frame = ({ children }: { children: React.ReactNode }) => (
+  <div style={{ width: '100%', maxWidth: 600 }}>{children}</div>
+);
+
+const images = [
+  'https://picsum.photos/seed/slide-1/960/560',
+  'https://picsum.photos/seed/slide-2/960/560',
+  'https://picsum.photos/seed/slide-3/960/560',
+  'https://picsum.photos/seed/slide-4/960/560',
+];
+
+const Slides = () => (
+  <SliderSlides>
+    {images.map((src, index) => (
+      <SliderSlide key={src}>
+        <Image
+          src={src}
+          width="100%"
+          height={280}
+          radius="none"
+          alt={`Slide ${index + 1}`}
+        />
+      </SliderSlide>
+    ))}
+  </SliderSlides>
+);
+
+const Chrome = () => (
+  <SliderControls>
+    <SliderControl direction="prev" />
+    <SliderControl direction="next" />
+    <SliderPagination />
+  </SliderControls>
+);
+
+const HookBar = ({ slider }: { slider: TUseSliderReturn }) => (
+  <Flex gap="sm" align="center">
+    <Button
+      size="sm"
+      disabled={!slider.canPreviousPage}
+      onClick={slider.previousPage}
+    >
+      Prev
+    </Button>
+    <Button size="sm" disabled={!slider.canNextPage} onClick={slider.nextPage}>
+      Next
+    </Button>
+    <Button size="sm" onClick={() => slider.changePage(3)}>
+      Set 4
+    </Button>
+    <Text>
+      {slider.page + 1} / {slider.pageCount}
+    </Text>
+  </Flex>
 );
 
 const meta: Meta<typeof Slider> = {
   title: 'Data Display/Slider',
   component: Slider,
   tags: ['autodocs'],
+  args: {
+    loop: true,
+    draggable: true,
+    color: 'inverted',
+  },
   argTypes: {
     autoPlay: { control: 'boolean' },
     loop: { control: 'boolean' },
     draggable: { control: 'boolean' },
-    showActions: { control: 'boolean' },
-    showPagination: { control: 'boolean' },
     autoPlayInterval: { control: 'number' },
     transitionMs: { control: 'number' },
     color: {
       control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
+      options: COLORS,
     },
   },
 };
@@ -67,28 +99,16 @@ export default meta;
 
 type Story = StoryObj<typeof Slider>;
 
-const slides = [
-  <SlidePanel key="1" label="Slide 1" color="#1f6feb" />,
-  <SlidePanel key="2" label="Slide 2" color="#238636" />,
-  <SlidePanel key="3" label="Slide 3" color="#9a6700" />,
-  <SlidePanel key="4" label="Slide 4" color="#bf3989" />,
-];
-
-const colorSlides = [
-  <SlidePanel key="1" color="#1f6feb" />,
-  <SlidePanel key="2" color="#238636" />,
-  <SlidePanel key="3" color="#9a6700" />,
-  <SlidePanel key="4" color="#bf3989" />,
-];
-
-export const Default: Story = {
-  args: {
-    loop: true,
-    draggable: true,
-    showActions: true,
-    showPagination: true,
-  },
-  render: (args) => <Slider {...args}>{slides}</Slider>,
+export const Playground: Story = {
+  tags: ['!dev'],
+  render: (args) => (
+    <Frame>
+      <Slider {...args}>
+        <Slides />
+        <Chrome />
+      </Slider>
+    </Frame>
+  ),
 };
 
 export const AutoPlay: Story = {
@@ -98,56 +118,106 @@ export const AutoPlay: Story = {
     loop: true,
     draggable: true,
   },
-  render: (args) => <Slider {...args}>{slides}</Slider>,
+  render: (args) => (
+    <Frame>
+      <Slider {...args}>
+        <Slides />
+        <Chrome />
+      </Slider>
+    </Frame>
+  ),
 };
 
-export const WithContent: Story = {
+export const PermanentContent: Story = {
   render: () => (
-    <Slider
-      loop
-      draggable
-      content={
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 24,
-          }}
-        >
+    <Frame>
+      <Slider loop draggable>
+        <Slides />
+        <SlidePermanentContent>
           <div
-            data-slider-content-interactive
             style={{
+              position: 'absolute',
+              inset: 0,
               display: 'flex',
-              flexDirection: 'column',
               alignItems: 'center',
-              gap: 12,
-              textAlign: 'center',
-              maxWidth: 280,
+              justifyContent: 'center',
+              padding: 24,
             }}
           >
-            <Heading as="h3" style={{ margin: 0, color: '#fff' }}>
-              Permanent content
-            </Heading>
-            <Text style={{ margin: 0, color: '#fff', opacity: 0.9 }}>
-              Stays in front of slides and behind actions/pagination.
-            </Text>
-            <Button
-              onClick={() => {
-                window.alert('CTA clicked');
+            <div
+              data-slide-permanent-interactive
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 12,
+                textAlign: 'center',
+                maxWidth: 280,
               }}
             >
-              Get started
-            </Button>
+              <Heading as="h3" style={{ margin: 0, color: '#fff' }}>
+                Permanent content
+              </Heading>
+              <Text style={{ margin: 0, color: '#fff' }}>
+                Stays in front of slides and behind controls.
+              </Text>
+              <Button
+                onClick={() => {
+                  window.alert('CTA clicked');
+                }}
+              >
+                Get started
+              </Button>
+            </div>
           </div>
-        </div>
-      }
-    >
-      {colorSlides}
-    </Slider>
+        </SlidePermanentContent>
+        <Chrome />
+      </Slider>
+    </Frame>
   ),
+};
+
+export const PaginationOnly: Story = {
+  render: () => (
+    <Frame>
+      <Slider loop draggable>
+        <Slides />
+        <SliderControls>
+          <SliderPagination />
+        </SliderControls>
+      </Slider>
+    </Frame>
+  ),
+};
+
+export const ControlsOnly: Story = {
+  render: () => (
+    <Frame>
+      <Slider loop draggable>
+        <Slides />
+        <SliderControls>
+          <SliderControl direction="prev" />
+          <SliderControl direction="next" />
+        </SliderControls>
+      </Slider>
+    </Frame>
+  ),
+};
+
+export const UseSlider: Story = {
+  render: function UseSliderStory() {
+    const slider = useSlider({ loop: true });
+
+    return (
+      <Flex direction="column" gap="md" style={{ maxWidth: 600 }}>
+        <Slider {...slider.sliderProps}>
+          <Slides />
+          <Chrome />
+        </Slider>
+        <HookBar slider={slider} />
+      </Flex>
+    );
+  },
 };
 
 export const Controlled: Story = {
@@ -155,15 +225,16 @@ export const Controlled: Story = {
     const [currentSlide, setCurrentSlide] = useState(0);
 
     return (
-      <div style={{ display: 'grid', gap: 12 }}>
+      <Flex direction="column" gap="md" style={{ maxWidth: 600 }}>
         <Slider
           currentSlide={currentSlide}
           onSlideChange={setCurrentSlide}
           loop
         >
-          {slides}
+          <Slides />
+          <Chrome />
         </Slider>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <Flex gap="sm" align="center">
           <Button size="sm" onClick={() => setCurrentSlide(0)}>
             Go to 1
           </Button>
@@ -171,49 +242,8 @@ export const Controlled: Story = {
             Go to 3
           </Button>
           <Text>Current: {currentSlide + 1}</Text>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
     );
   },
-};
-
-export const ImperativeApi: Story = {
-  render: () => {
-    const sliderRef = useRef<TSliderHandle>(null);
-
-    return (
-      <div style={{ display: 'grid', gap: 12 }}>
-        <Slider sliderRef={sliderRef} loop>
-          {slides}
-        </Slider>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <Button size="sm" onClick={() => sliderRef.current?.prevSlide()}>
-            Prev
-          </Button>
-          <Button size="sm" onClick={() => sliderRef.current?.nextSlide()}>
-            Next
-          </Button>
-          <Button size="sm" onClick={() => sliderRef.current?.setSlide(3)}>
-            Set 4
-          </Button>
-        </div>
-      </div>
-    );
-  },
-};
-
-export const PaginationOnly: Story = {
-  render: () => (
-    <Slider showActions={false} loop draggable>
-      {slides}
-    </Slider>
-  ),
-};
-
-export const Draggable: Story = {
-  render: () => (
-    <Slider loop draggable showActions={false}>
-      {slides}
-    </Slider>
-  ),
 };

@@ -1,12 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useRef, useState } from 'react';
-import { Button, Menu } from '../../index';
+import { Button, Menu, MenuGroup, MenuItem } from '../..';
 import { MenuBase } from './menu-base';
-import { MenuItem } from './menu-item';
-import { MenuGroup } from './menu-group';
 
 const meta: Meta<typeof MenuBase> = {
-  title: 'Components/Menu/Parts',
+  title: 'Overlays/Menu/Parts',
   component: MenuBase,
   tags: ['autodocs'],
 };
@@ -22,7 +20,7 @@ export const WithRecipe: Story = {
 
     return (
       <>
-        <Button ref={anchorRef} onClick={() => setOpen((v) => !v)}>
+        <Button ref={anchorRef} onClick={() => setOpen((value) => !value)}>
           Open menu
         </Button>
         <Menu

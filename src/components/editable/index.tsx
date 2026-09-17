@@ -1,4 +1,5 @@
 import React, {
+  ChangeEvent,
   KeyboardEvent,
   MouseEvent,
   forwardRef,
@@ -10,33 +11,42 @@ import React, {
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { editableClasses } from './classes';
 import { SEditable } from './styles';
-import { TEditableProps } from './types';
+import { TEditableHandlers, TEditableProps } from './types';
 
-const Editable = forwardRef<HTMLDivElement, TEditableProps>(
+const Editable = forwardRef<HTMLSpanElement, TEditableProps>(
   (
     {
       render,
       mode = 'click',
+      value: valueProp,
+      defaultValue = '',
+      onChange,
       editable: editableProp,
       defaultEditable = false,
       disabled = false,
+      onEditableChange,
       className,
-      onChange,
-      onClick,
-      onDoubleClick,
       onKeyDown,
       ...props
     },
     ref,
   ) => {
-    const rootRef = useRef<HTMLDivElement | null>(null);
-    const isControlled = editableProp !== undefined;
-    const [uncontrolledEditable, setUncontrolledEditable] =
-      useState(defaultEditable);
-    const editable = disabled ? false : isControlled ? editableProp : uncontrolledEditable;
+    const rootRef = useRef<HTMLSpanElement | null>(null);
+
+    const isEditableControlled = editableProp !== undefined;
+    const [uncontrolledEditable, setUncontrolledEditable] = useState(defaultEditable);
+    const editable = disabled
+      ? false
+      : isEditableControlled
+        ? editableProp
+        : uncontrolledEditable;
+
+    const isValueControlled = valueProp !== undefined;
+    const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+    const value = isValueControlled ? valueProp : uncontrolledValue;
 
     const setRefs = useCallback(
-      (node: HTMLDivElement | null) => {
+      (node: HTMLSpanElement | null) => {
         rootRef.current = node;
 
         if (typeof ref === 'function') {
@@ -54,13 +64,24 @@ const Editable = forwardRef<HTMLDivElement, TEditableProps>(
           return;
         }
 
-        if (!isControlled) {
+        if (!isEditableControlled) {
           setUncontrolledEditable(next);
         }
 
-        onChange?.(event, next);
+        onEditableChange?.(event, next);
       },
-      [disabled, editable, isControlled, onChange],
+      [disabled, editable, isEditableControlled, onEditableChange],
+    );
+
+    const handleValueChange = useCallback(
+      (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (!isValueControlled) {
+          setUncontrolledValue(event.target.value);
+        }
+
+        onChange?.(event);
+      },
+      [isValueControlled, onChange],
     );
 
     useEffect(() => {
@@ -100,13 +121,29 @@ const Editable = forwardRef<HTMLDivElement, TEditableProps>(
       };
     }, [editable, setEditable]);
 
-    const activate = (event: MouseEvent<HTMLDivElement>) => {
+    const activate = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
       if (disabled || editable) {
         return;
       }
 
       event.preventDefault();
       setEditable(event, true);
+    };
+
+    const handlers: TEditableHandlers = {
+      ...(mode === 'double-click' ? { onDoubleClick: activate } : { onClick: activate }),
+      onKeyDown: (event) => {
+        if (disabled || editable || event.defaultPrevented) {
+          return;
+        }
+
+        if (event.key === 'Enter' || event.key === ' ') {
+          activate(event);
+        }
+      },
+      tabIndex: disabled ? -1 : 0,
+      role: 'button',
+      ...(disabled ? { 'aria-disabled': true as const } : {}),
     };
 
     return (
@@ -120,18 +157,6 @@ const Editable = forwardRef<HTMLDivElement, TEditableProps>(
           disabled && editableClasses.disabled,
           className,
         )}
-        onClick={(event) => {
-          onClick?.(event);
-          if (mode === 'click') {
-            activate(event);
-          }
-        }}
-        onDoubleClick={(event) => {
-          onDoubleClick?.(event);
-          if (mode === 'doubleclick') {
-            activate(event);
-          }
-        }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
 
@@ -159,7 +184,7 @@ const Editable = forwardRef<HTMLDivElement, TEditableProps>(
           setEditable(event, false);
         }}
       >
-        {render(editable)}
+        {render({ editable, value, onChange: handleValueChange, handlers })}
       </SEditable>
     );
   },
@@ -167,7 +192,13 @@ const Editable = forwardRef<HTMLDivElement, TEditableProps>(
 
 Editable.displayName = 'Editable';
 
-export type { TEditableProps, TEditableMode } from './types';
+export type {
+  TEditableProps,
+  TEditableMode,
+  TEditableRenderProps,
+  TEditableHandlers,
+  TEditableChangeEventHandler,
+} from './types';
 export { editableClasses } from './classes';
 export { Editable };
 export default Editable;

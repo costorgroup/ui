@@ -4,4 +4,5 @@ export const inputRangeFieldClasses = generateUtilityClasses('InputRangeField', 
   'root',
   'active',
   'disabled',
+  'error',
 ]);

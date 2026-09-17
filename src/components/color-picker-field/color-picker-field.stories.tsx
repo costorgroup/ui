@@ -1,19 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { ColorPickerField, Flex, Text } from '../../index';
+import type { TPaletteColor } from '../../theme/types';
+import { ColorPickerField, InputActions, InputButton, Text, Flex } from '../..';
+import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 import type { TColorFormat } from './types';
 
-const FORMATS: TColorFormat[] = [
-  'hex',
-  'hexa',
-  'rgb',
-  'rgba',
-  'hsl',
-  'hsla',
+const COLORS: TPaletteColor[] = [
+  'base',
+  'primary',
+  'secondary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'dark',
+  'light',
+  'default',
+  'inverted',
 ];
 
+const VARIANTS: TInputVariant[] = ['subtle', 'surface', 'outline'];
+const SIZES: TInputSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const FORMATS: TColorFormat[] = ['hex', 'hexa', 'rgb', 'rgba', 'hsl', 'hsla'];
+
 const meta: Meta<typeof ColorPickerField> = {
-  title: 'Forms & Inputs/ColorPickerField',
+  title: 'Forms/ColorPickerField',
   component: ColorPickerField,
   tags: ['autodocs'],
   decorators: [
@@ -23,54 +34,11 @@ const meta: Meta<typeof ColorPickerField> = {
       </div>
     ),
   ],
-  parameters: {
-    controls: {
-      include: [
-        'label',
-        'description',
-        'helperText',
-        'format',
-        'defaultValue',
-        'placeholder',
-        'size',
-        'variant',
-        'color',
-        'fullWidth',
-        'required',
-        'error',
-        'disabled',
-      ],
-    },
-  },
   argTypes: {
-    size: {
-      control: 'select',
-      options: ['xs', 'sm', 'md', 'lg', 'xl'],
-    },
-    variant: {
-      control: 'select',
-      options: ['subtle', 'surface', 'outline'],
-    },
-    color: {
-      control: 'select',
-      options: [
-        'base',
-        'primary',
-        'secondary',
-        'success',
-        'error',
-        'warning',
-        'info',
-        'dark',
-        'light',
-      ],
-    },
-    format: {
-      control: 'select',
-      options: FORMATS,
-    },
-    defaultValue: { control: 'text' },
-    placeholder: { control: 'text' },
+    size: { control: 'select', options: SIZES },
+    variant: { control: 'select', options: VARIANTS },
+    color: { control: 'select', options: COLORS },
+    format: { control: 'select', options: FORMATS },
     fullWidth: { control: 'boolean' },
     required: { control: 'boolean' },
     error: { control: 'boolean' },
@@ -78,10 +46,23 @@ const meta: Meta<typeof ColorPickerField> = {
     label: { control: 'text' },
     description: { control: 'text' },
     helperText: { control: 'text' },
+    defaultValue: { control: 'text' },
+    placeholder: { control: 'text' },
     value: { table: { disable: true } },
     onChange: { table: { disable: true } },
     name: { table: { disable: true } },
     id: { table: { disable: true } },
+  },
+  args: {
+    label: 'Brand color',
+    helperText: 'Output format is set with the format prop.',
+    format: 'hexa',
+    defaultValue: '#3b82f6ff',
+    size: 'md',
+    variant: 'surface',
+    color: 'primary',
+    fullWidth: true,
+    error: false,
   },
 };
 
@@ -89,17 +70,55 @@ export default meta;
 
 type Story = StoryObj<typeof ColorPickerField>;
 
-export const Default: Story = {
-  args: {
-    label: 'Brand color',
-    helperText: 'Output format is set with the format prop.',
-    format: 'hexa',
-    defaultValue: '#3b82f6ff',
-    size: 'md',
-    variant: 'subtle',
-    color: 'primary',
-    fullWidth: true,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {COLORS.map((color) => (
+        <ColorPickerField
+          key={color}
+          color={color}
+          label={color}
+          defaultValue="#3b82f6ff"
+        />
+      ))}
+    </Flex>
+  ),
+};
+
+export const Variants: Story = {
+  render: () => (
+    <Flex direction="column" gap="lg">
+      {VARIANTS.map((variant) => (
+        <Flex key={variant} direction="column" gap="xs">
+          <Text size="sm">{variant}</Text>
+          <ColorPickerField
+            variant={variant}
+            label={variant}
+            defaultValue="#3b82f6ff"
+          />
+        </Flex>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {SIZES.map((size) => (
+        <ColorPickerField
+          key={size}
+          size={size}
+          label={size}
+          defaultValue="#3b82f6ff"
+        />
+      ))}
+    </Flex>
+  ),
 };
 
 export const Controlled: Story = {
@@ -127,4 +146,27 @@ export const HexOnly: Story = {
     defaultValue: '#ef4444',
     helperText: 'Alpha spectrum is hidden when format has no alpha channel.',
   },
+};
+
+export const Error: Story = {
+  args: {
+    helperText: 'Choose a valid brand color.',
+    error: true,
+    required: true,
+  },
+};
+
+export const ActionBar: Story = {
+  render: (args) => (
+    <ColorPickerField
+      {...args}
+      actionBar={
+        <Flex align="center" justify="flex-end">
+          <InputActions>
+            <InputButton radius="sm">Clear value</InputButton>
+          </InputActions>
+        </Flex>
+      }
+    />
+  ),
 };

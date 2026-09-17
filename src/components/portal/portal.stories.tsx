@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, Portal, Text } from '../../index';
+import { Button, Portal, Text } from '../..';
+import { useTheme } from '../../hooks/use-theme';
 
 const meta: Meta<typeof Portal> = {
   title: 'Utilities/Portal',
@@ -14,6 +15,7 @@ type Story = StoryObj<typeof Portal>;
 
 export const Default: Story = {
   render: function DefaultStory() {
+    const theme = useTheme();
     const [open, setOpen] = useState(false);
 
     return (
@@ -30,8 +32,11 @@ export const Default: Story = {
                 bottom: 16,
                 zIndex: 9999,
                 padding: 12,
-                background: 'white',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.16)',
+                borderRadius: 8,
+                border: `1px solid ${theme.surfaces.border}`,
+                background: theme.surfaces.background,
+                color: theme.surfaces.ink,
+                boxShadow: theme.shadows[4],
               }}
             >
               Rendered into document.body

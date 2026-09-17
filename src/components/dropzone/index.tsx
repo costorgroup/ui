@@ -24,6 +24,7 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
   (
     {
       color = 'primary',
+      variant = 'surface',
       title = 'Upload files',
       description = 'Drag and drop files here, or click to browse.',
       icon,
@@ -158,6 +159,7 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
         role="button"
         tabIndex={disabled ? -1 : 0}
         color={color}
+        variant={variant}
         active={active}
         disabled={disabled}
         aria-disabled={disabled || undefined}
@@ -172,6 +174,7 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
         {...props}
         className={mergeClasses(
           dropzoneClasses.root,
+          active && dropzoneClasses.active,
           disabled && dropzoneClasses.disabled,
           className,
         )}

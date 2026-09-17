@@ -1,24 +1,14 @@
-import React, { forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import { useSliderContext } from '../slider-base/context';
 import { sliderPaginationClasses } from './classes';
-import { SliderContext } from '../slider-base/context';
 import { SSliderPagination, SSliderPaginationDot } from './styles';
 import { TSliderPaginationProps } from './types';
 
 const SliderPagination = forwardRef<HTMLDivElement, TSliderPaginationProps>(
   ({ color: colorProp, className, ...props }, ref) => {
-    const slider = useContext(SliderContext);
-
-    if (!slider) {
-      throw new Error('SliderPagination must be used within SliderBase');
-    }
-
-    const {
-      currentSlide,
-      slideCount,
-      setSlide,
-      color: contextColor,
-    } = slider;
+    const { currentSlide, slideCount, setSlide, color: contextColor } =
+      useSliderContext();
 
     const color = colorProp ?? contextColor;
 
@@ -32,6 +22,7 @@ const SliderPagination = forwardRef<HTMLDivElement, TSliderPaginationProps>(
         role="tablist"
         aria-label="Slider pagination"
         {...props}
+        data-slot="pagination"
         className={mergeClasses(
           sliderPaginationClasses.root,
           className,

@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
+import { colorMix } from '../../../helpers/variant-styles/surface';
 import { TInputSize } from '../input-wrapper/types';
 import {
   TInputRangeFieldProps,
   TRangeDirection,
   TRangeValuePosition,
 } from './types';
+
+const RANGE_RAIL_MIX = 22;
 
 type TSRootProps = Pick<
   TInputRangeFieldProps,
@@ -85,16 +88,16 @@ export const SInputRangeField = styled('span', {
   ${({
     theme,
     size = 'md',
-    variant = 'subtle',
+    variant = 'surface',
     color = 'primary',
     direction = 'horizontal',
   }) => {
     const palette = theme.palette[color];
     const { track: trackSize, thumb, pad } = rangeSizeMap[size];
-    const rail = `color-mix(in oklab, ${palette.main} 38%, transparent)`;
+    const rail = colorMix(theme.surfaces.mixer, RANGE_RAIL_MIX);
     const fill = palette.main;
     const thumbBg =
-      variant === 'outline' ? theme.palette.common.white : palette.main;
+      variant === 'outline' ? theme.surfaces.background : palette.main;
     const thumbBorder = variant === 'outline' ? palette.main : 'transparent';
 
     return `
@@ -103,7 +106,7 @@ export const SInputRangeField = styled('span', {
       --range-fill: ${fill};
       --range-thumb: ${thumbBg};
       --range-thumb-border: ${thumbBorder};
-      --range-halo: color-mix(in oklab, ${palette.main} 16%, transparent);
+      --range-halo: ${colorMix(palette.main, 16)};
       --range-value-bg: ${palette.main};
       --range-value-fg: ${palette.contrastText};
 
@@ -203,7 +206,7 @@ export const SInputRangeFieldThumb = styled('span', {
   width: var(--range-thumb-size);
   height: var(--range-thumb-size);
   border: 1px solid var(--range-thumb-border);
-  border-radius: ${({ theme }) => theme.radius.circle};
+  border-radius: ${({ theme }) => theme.radius.full};
   background-color: var(--range-thumb);
   ${({ direction = 'horizontal' }) =>
     direction === 'vertical'
@@ -306,7 +309,7 @@ export const SInputRangeFieldValue = styled.span`
   justify-content: center;
   min-width: 1.5rem;
   padding: 2px 6px;
-  border-radius: ${({ theme }) => theme.radius.small};
+  border-radius: ${({ theme }) => theme.radius.sm};
   background-color: var(--range-value-bg);
   color: var(--range-value-fg);
   font-size: 12px;

@@ -11,7 +11,7 @@ const Divider = forwardRef<HTMLDivElement, TDividerProps>(
       orientation = 'horizontal',
       variant = 'solid',
       size = 'md',
-      color = 'base',
+      color = 'default',
       role = 'separator',
       className,
       ...props
@@ -31,10 +31,7 @@ const Divider = forwardRef<HTMLDivElement, TDividerProps>(
         color={color}
         labeled={Boolean(labeled)}
         {...props}
-        className={mergeClasses(
-          dividerClasses.root,
-          className,
-        )}
+        className={mergeClasses(dividerClasses.root, className)}
       >
         {labeled ? children : null}
       </SDivider>

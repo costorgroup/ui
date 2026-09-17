@@ -1,7 +1,8 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
-import { TButtonSize, TButtonVariant } from '../../button/types';
+import type { TButtonSize, TButtonVariant } from '../../button/types';
 import { TPaginationItemType } from '../types';
+import { TPaginationVariantProp, PAGINATION_DEFAULT_VARIANTS } from '../types';
 
 export type TPaginationItemProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -11,7 +12,7 @@ export type TPaginationItemProps = Omit<
   type?: TPaginationItemType;
   page?: number | null;
   selected?: boolean;
-  variant?: TButtonVariant;
+  variant?: TPaginationVariantProp;
   size?: TButtonSize;
   color?: TPaletteColor;
 };

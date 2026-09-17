@@ -1,13 +1,7 @@
-import { createContext, SyntheticEvent } from 'react';
-import { TPaletteColor } from '../../../theme/types';
-
-export type TAccordionVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'ghost'
-  | 'plain';
+import { createContext, SyntheticEvent, useContext } from 'react';
+import type { TPaletteColor } from '../../../theme/types';
+import type { TAccordionRadius } from '../types';
+import type { TAccordionVariant } from '../variant-styles';
 
 export type TAccordionSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -17,9 +11,22 @@ export type TAccordionContextValue = {
   color: TPaletteColor;
   variant: TAccordionVariant;
   size: TAccordionSize;
+  radius: TAccordionRadius;
   disabled: boolean;
+  grouped: boolean;
+  hasDetails: boolean;
 };
 
 export const AccordionContext = createContext<TAccordionContextValue | null>(
   null,
 );
+
+export const useAccordionContext = (): TAccordionContextValue => {
+  const context = useContext(AccordionContext);
+
+  if (context == null) {
+    throw new Error('Accordion parts must be used within AccordionBase.');
+  }
+
+  return context;
+};

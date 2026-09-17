@@ -1,20 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import {
-  Button,
-  Flex,
-  IconButton,
-  InputBase,
-  InputWrapper,
-  InputGroup,
-  InputHelperText,
-  InputLabel,
-  InputTextField,
-} from '../../index';
+import { Button, IconButton, InputBase, InputWrapper, InputGroup, InputHelperText, InputLabel, InputTextField, Flex } from '../..';
 import { EyeIcon } from '../../icons';
 
 const meta: Meta<typeof InputGroup> = {
-  title: 'Forms & Inputs/InputGroup',
+  title: 'Forms/InputGroup',
   component: InputGroup,
   tags: ['autodocs'],
   decorators: [
@@ -58,7 +48,7 @@ export const Default: Story = {
   args: {
     orientation: 'horizontal',
     color: 'primary',
-    variant: 'subtle',
+    variant: 'surface',
   },
   render: (args) => (
     <InputBase fullWidth>
@@ -78,7 +68,7 @@ export const Default: Story = {
 export const Orientations: Story = {
   render: () => (
     <Flex direction="column" gap="lg" style={{ width: 480 }}>
-      <InputGroup orientation="horizontal" variant="outline" color="primary">
+      <InputGroup orientation="horizontal" variant="outline" color="default">
         <Button type="button">https://</Button>
         <InputWrapper>
           <InputTextField placeholder="example" />
@@ -102,7 +92,7 @@ export const Orientations: Story = {
 
 export const WithIconButton: Story = {
   render: () => (
-    <InputGroup variant="outline" color="primary">
+    <InputGroup variant="outline" color="default">
       <InputWrapper>
         <InputTextField type="password" placeholder="••••••••" />
       </InputWrapper>

@@ -5,13 +5,22 @@ import { SPaginationBase } from './styles';
 import { TPaginationBaseProps } from './types';
 
 const PaginationBase = forwardRef<HTMLElement, TPaginationBaseProps>(
-  ({ children, 'aria-label': ariaLabel = 'pagination navigation', className, ...props }, ref) => {
+  (
+    {
+      children,
+      'aria-label': ariaLabel = 'pagination navigation',
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     return (
-      <SPaginationBase ref={ref} aria-label={ariaLabel} {...props}
-        className={mergeClasses(
-          paginationBaseClasses.root,
-          className,
-        )}>
+      <SPaginationBase
+        ref={ref}
+        aria-label={ariaLabel}
+        {...props}
+        className={mergeClasses(paginationBaseClasses.root, className)}
+      >
         {children}
       </SPaginationBase>
     );

@@ -9,7 +9,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../../helpers/generate-utility-classes';
+import {
+  isAriaInvalid,
+  mergeClasses,
+} from '../../../helpers/generate-utility-classes';
+import { useFormControlState } from '../../form-control/context';
 import { inputColorFieldClasses } from './classes';
 import {
   formatColor,
@@ -26,6 +30,7 @@ import type { TDropdownPlacement } from '../../../helpers/get-dropdown-position'
 import { ArrowBottomIcon, EyeDropperIcon } from '../../../icons';
 import { IconButton } from '../../icon-button';
 import { Portal } from '../../portal';
+import { InputWrapper } from '../input-wrapper';
 import {
   SInputColorField,
   SInputColorFieldAlpha,
@@ -63,16 +68,32 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       defaultOpen = false,
       onOpenChange,
       name,
-      disabled = false,
-      variant = 'subtle',
-      size = 'md',
-      color = 'primary',
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      actionBar,
       id,
       className,
+      'aria-invalid': ariaInvalid,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     forwardedRef,
   ) => {
+    const form = useFormControlState({
+      disabled: disabledProp,
+      variant: variantProp,
+      size: sizeProp,
+      color: colorProp,
+      id,
+    });
+    const disabled = form.disabled;
+    const variant = form.variant;
+    const size = form.size;
+    const color = form.color;
+    const fieldId = id ?? form.id;
+    const error = isAriaInvalid(ariaInvalid) || form.error;
     const listId = useId();
     const isOpenControlled = openProp !== undefined;
     const isValueControlled = value !== undefined;
@@ -327,19 +348,34 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       target.setPointerCapture(event.pointerId);
       onMove(event.clientX, event.clientY);
 
-      const handleMove = (moveEvent: PointerEvent) => {
-        onMove(moveEvent.clientX, moveEvent.clientY);
-      };
+      let active = true;
       const handleUp = (upEvent: PointerEvent) => {
-        target.releasePointerCapture(upEvent.pointerId);
+        if (!active) {
+          return;
+        }
+
+        active = false;
+        if (target.hasPointerCapture(upEvent.pointerId)) {
+          target.releasePointerCapture(upEvent.pointerId);
+        }
         target.removeEventListener('pointermove', handleMove);
         target.removeEventListener('pointerup', handleUp);
         target.removeEventListener('pointercancel', handleUp);
+        target.removeEventListener('lostpointercapture', handleUp);
+      };
+      const handleMove = (moveEvent: PointerEvent) => {
+        if (moveEvent.buttons === 0) {
+          handleUp(moveEvent);
+          return;
+        }
+
+        onMove(moveEvent.clientX, moveEvent.clientY);
       };
 
       target.addEventListener('pointermove', handleMove);
       target.addEventListener('pointerup', handleUp);
       target.addEventListener('pointercancel', handleUp);
+      target.addEventListener('lostpointercapture', handleUp);
     };
 
     const handleTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -401,41 +437,49 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
           <input type="hidden" name={name} value={formatted} disabled={disabled} />
         ) : null}
 
-        <SInputColorFieldTrigger
-          ref={triggerRef}
-          type="button"
-          id={id}
-          disabled={disabled}
+        <InputWrapper
+          open={open}
           variant={variant}
           size={size}
           color={color}
-          open={open}
-          data-open={open ? 'true' : undefined}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-          aria-controls={open ? listId : undefined}
-          onClick={() => setOpen(!open)}
-          onKeyDown={handleTriggerKeyDown}
-          style={
-            {
-              ['--input-color-swatch' as string]: swatch,
-            } as React.CSSProperties
-          }
+          disabled={disabled}
+          trigger
+          actionBar={actionBar}
         >
-          <SInputColorFieldValue>
-            <SInputColorFieldSwatch aria-hidden />
-            {hasValue ? (
-              <SInputColorFieldText>{formatted}</SInputColorFieldText>
-            ) : (
-              <SInputColorFieldPlaceholder>
-                {placeholder}
-              </SInputColorFieldPlaceholder>
-            )}
-          </SInputColorFieldValue>
-          <SInputColorFieldChevron open={open} aria-hidden>
-            <ArrowBottomIcon />
-          </SInputColorFieldChevron>
-        </SInputColorFieldTrigger>
+          <SInputColorFieldTrigger
+            ref={triggerRef}
+            type="button"
+            id={fieldId}
+            size={size}
+            disabled={disabled}
+            aria-haspopup="dialog"
+            aria-expanded={open}
+            aria-controls={open ? listId : undefined}
+            aria-invalid={error || undefined}
+            aria-describedby={ariaDescribedBy ?? form.helperId}
+            onClick={() => setOpen(!open)}
+            onKeyDown={handleTriggerKeyDown}
+            style={
+              {
+                ['--input-color-swatch' as string]: swatch,
+              } as React.CSSProperties
+            }
+          >
+            <SInputColorFieldValue>
+              <SInputColorFieldSwatch aria-hidden />
+              {hasValue ? (
+                <SInputColorFieldText>{formatted}</SInputColorFieldText>
+              ) : (
+                <SInputColorFieldPlaceholder>
+                  {placeholder}
+                </SInputColorFieldPlaceholder>
+              )}
+            </SInputColorFieldValue>
+            <SInputColorFieldChevron open={open} aria-hidden>
+              <ArrowBottomIcon />
+            </SInputColorFieldChevron>
+          </SInputColorFieldTrigger>
+        </InputWrapper>
 
         {open ? (
           <Portal>
@@ -477,7 +521,7 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
                     type="button"
                     variant="ghost"
                     size="sm"
-                    color="base"
+                    color="default"
                     disabled={disabled || !supportsEyeDropper}
                     aria-label="Pick color from screen"
                     title={

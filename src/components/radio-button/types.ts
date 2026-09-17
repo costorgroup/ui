@@ -6,9 +6,9 @@ import type { TPaletteColor } from '../../theme/types';
 
 export type TRadioButtonDirection = TInputControlDirection;
 
-export type TRadioButtonProps = Omit<
+export type TRadioButtonProps<T = unknown> = Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  'color' | 'size' | 'type'
+  'color' | 'size' | 'type' | 'value'
 > & {
   label?: ReactNode;
   description?: ReactNode;
@@ -19,4 +19,5 @@ export type TRadioButtonProps = Omit<
   size?: TInputSize;
   variant?: TInputRadioButtonVariant;
   color?: TPaletteColor;
+  value?: T;
 };

@@ -3,7 +3,7 @@ import { TLinkOwnProps } from './types';
 
 type TSLinkProps = Pick<TLinkOwnProps, 'color' | 'variant' | 'size'>;
 
-const customProps = new Set(['color', 'variant', 'size']);
+const customProps = new Set(['color', 'variant', 'size', 'as']);
 
 export const SLink = styled('a', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -20,13 +20,13 @@ export const SLink = styled('a', {
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.text};
   color: ${({ theme, color = 'primary' }) => theme.palette[color].main};
-  text-decoration: ${({ variant = 'hover' }) =>
+  text-decoration: ${({ variant = 'plain' }) =>
     variant === 'underline' ? 'underline' : 'none'};
   text-underline-offset: 0.2em;
 
   &:hover {
     color: ${({ theme, color = 'primary' }) => theme.palette[color].dark};
-    text-decoration: ${({ variant = 'hover' }) =>
+    text-decoration: ${({ variant = 'plain' }) =>
       variant === 'plain' ? 'none' : 'underline'};
   }
 

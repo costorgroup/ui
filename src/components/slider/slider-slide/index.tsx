@@ -7,11 +7,14 @@ import { TSliderSlideProps } from './types';
 const SliderSlide = forwardRef<HTMLDivElement, TSliderSlideProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SSliderSlide ref={ref} role="group" aria-roledescription="slide" {...props}
-        className={mergeClasses(
-          sliderSlideClasses.root,
-          className,
-        )}>
+      <SSliderSlide
+        ref={ref}
+        role="group"
+        aria-roledescription="slide"
+        data-slot="slide"
+        {...props}
+        className={mergeClasses(sliderSlideClasses.root, className)}
+      >
         {children}
       </SSliderSlide>
     );

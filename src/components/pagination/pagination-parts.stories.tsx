@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import { PaginationBase } from './pagination-base';
-import { PaginationList } from './pagination-list';
-import { PaginationItem } from './pagination-item';
 import { PaginationEllipsis } from './pagination-ellipsis';
+import { PaginationItem } from './pagination-item';
+import { PaginationList } from './pagination-list';
 
 const meta: Meta<typeof PaginationBase> = {
-  title: 'Components/Pagination/Parts',
+  title: 'Navigation/Pagination/Parts',
   component: PaginationBase,
   tags: ['autodocs'],
 };

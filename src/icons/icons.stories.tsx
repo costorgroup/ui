@@ -34,7 +34,8 @@ import {
   MirrorHorizontalIcon,
   MirrorVerticalIcon,
   DownloadIcon,
-} from './index';
+} from './';
+import { useTheme } from '../hooks/use-theme';
 
 const icons = [
   { name: 'EyeIcon', Icon: EyeIcon },
@@ -85,34 +86,39 @@ export default meta;
 type Story = StoryObj;
 
 export const All: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(8.5rem, 1fr))',
-        gap: '1rem',
-      }}
-    >
-      {icons.map(({ name, Icon }) => (
-        <div
-          key={name}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.75rem',
-            padding: '1rem',
-            borderRadius: '0.5rem',
-            background: '#f7f7f8',
-            color: '#1c1c1f',
-          }}
-        >
-          <Icon width="1.75em" height="1.75em" />
-          <span style={{ fontSize: '0.75rem', textAlign: 'center' }}>{name}</span>
-        </div>
-      ))}
-    </div>
-  ),
+  render: function AllStory() {
+    const theme = useTheme();
+
+    return (
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(8.5rem, 1fr))',
+          gap: '1rem',
+        }}
+      >
+        {icons.map(({ name, Icon }) => (
+          <div
+            key={name}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '0.75rem',
+              padding: '1rem',
+              borderRadius: theme.radius.md,
+              background: theme.surfaces.background,
+              border: `1px solid ${theme.surfaces.border}`,
+              color: theme.surfaces.ink,
+            }}
+          >
+            <Icon width="1.75em" height="1.75em" />
+            <span style={{ fontSize: '0.75rem', textAlign: 'center' }}>{name}</span>
+          </div>
+        ))}
+      </div>
+    );
+  },
 };
 
 export const EyeDropper: Story = {

@@ -1,5 +1,5 @@
 import { generateUtilityClasses } from '../../../helpers/generate-utility-classes';
 
-export const sliderControlsClasses = generateUtilityClasses('SliderControls', [
+export const sliderControlsClasses = generateUtilityClasses('V2SliderControls', [
   'root',
 ]);

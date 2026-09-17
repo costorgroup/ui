@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { resolveTrackColor, TTrackVariant } from '../../helpers/variant-styles/track-variant-styles';
 import { TSStepperProps } from './types';
 
 const customProps = new Set([
@@ -27,6 +28,11 @@ const descriptionSize: Record<TSStepperProps['size'], string> = {
   lg: '0.875rem',
 };
 
+/** Outline/plain steppers don't have a filled indicator, so their connecting
+ * line falls back to the same neutral chrome track as subtle/surface. */
+const trackVariant = (variant: TSStepperProps['variant']): TTrackVariant =>
+  variant === 'outline' || variant === 'plain' ? 'subtle' : variant;
+
 export const SStepper = styled('ol', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSStepperProps>`
@@ -40,13 +46,15 @@ export const SStepper = styled('ol', {
   --stepper-title-size: ${({ size }) => titleSize[size]};
   --stepper-description-size: ${({ size }) => descriptionSize[size]};
   --stepper-gap: ${({ theme }) => theme.spacing(theme.gap.sm)};
-  --stepper-main: ${({ theme, color }) => theme.palette[color].main};
-  --stepper-dark: ${({ theme, color }) => theme.palette[color].dark};
-  --stepper-darker: ${({ theme, color }) => theme.palette[color].darker};
-  --stepper-contrast: ${({ theme, color }) => theme.palette[color].contrastText};
-  --stepper-track: ${({ theme, color }) =>
-    `color-mix(in oklab, ${theme.palette[color].main} 22%, transparent)`};
   --stepper-error: ${({ theme }) => theme.palette.error.main};
+  --stepper-fill: ${({ theme, color }) => {
+    const palette = theme.palette[color];
+    return palette === theme.palette.default ? theme.surfaces.ink : palette.main;
+  }};
+  --stepper-track: ${({ theme, color, variant }) => {
+    const palette = theme.palette[color];
+    return resolveTrackColor(trackVariant(variant), palette, theme);
+  }};
 
   ${({ orientation, alternativeLabel }) =>
     orientation === 'horizontal'

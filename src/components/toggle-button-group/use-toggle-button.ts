@@ -1,6 +1,10 @@
 import { MouseEvent, useContext, useState } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonVariant } from '../button/types';
+import {
+  TButtonAppearance,
+  TButtonSize,
+  TButtonVariant,
+} from '../button/types';
 import { ToggleButtonGroupContext, TToggleButtonValue } from './context';
 
 type TUseToggleButtonParams = {
@@ -9,6 +13,8 @@ type TUseToggleButtonParams = {
   defaultActive?: boolean;
   disabled?: boolean;
   variant?: TButtonVariant;
+  appearance?: TButtonAppearance;
+  size?: TButtonSize;
   color?: TPaletteColor;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   onChange?: (event: MouseEvent<HTMLButtonElement>, active: boolean) => void;
@@ -36,6 +42,8 @@ export const useToggleButton = ({
   defaultActive = false,
   disabled,
   variant: variantProp,
+  appearance: appearanceProp,
+  size: sizeProp,
   color: colorProp,
   onClick,
   onChange,
@@ -51,7 +59,9 @@ export const useToggleButton = ({
       : uncontrolledActive;
 
   const variant = variantProp ?? group?.variant ?? 'outline';
-  const color = colorProp ?? group?.color ?? 'primary';
+  const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
+  const color = colorProp ?? group?.color ?? 'default';
+  const size = sizeProp ?? group?.size ?? 'md';
   const resolvedDisabled = disabled ?? group?.disabled ?? false;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -77,6 +87,8 @@ export const useToggleButton = ({
   return {
     active: resolvedActive,
     variant,
+    appearance,
+    size,
     color,
     disabled: resolvedDisabled,
     handleClick,

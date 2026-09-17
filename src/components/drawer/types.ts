@@ -1,7 +1,11 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import type { TDrawerAnchor, TDrawerSize } from './drawer-base/types';
+import type {
+  TDrawerAnchor,
+  TDrawerSize,
+  TDrawerVariant,
+} from './drawer-base/types';
 
-export type { TDrawerAnchor, TDrawerSize };
+export type { TDrawerAnchor, TDrawerSize, TDrawerVariant };
 
 export type TDrawerProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -9,9 +13,13 @@ export type TDrawerProps = Omit<
 > & {
   children?: ReactNode;
   title?: ReactNode;
+  description?: ReactNode;
+  headerActions?: ReactNode;
   actions?: ReactNode;
   size?: TDrawerSize;
   anchor?: TDrawerAnchor;
+  variant?: TDrawerVariant;
   scrollable?: boolean;
+  open?: boolean;
   onClose?: () => void;
 };

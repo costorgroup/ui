@@ -78,5 +78,20 @@ Section.displayName = 'Section';
 export type { TSectionProps } from './types';
 export { sectionClasses } from './classes';
 export { SSectionPathMarker as SectionPathMarker } from './styles';
+export { SectionGroup, sectionGroupClasses, SectionGroupContext } from './section-group';
+export type {
+  TSectionGroupProps,
+  TSectionAlign,
+  TSectionVariant,
+  TSectionGap,
+} from './section-group';
+export { SectionContent, sectionContentClasses } from './section-content';
+export type { TSectionContentProps } from './section-content';
+export { SectionTitle, sectionTitleClasses } from './section-title';
+export type {
+  TSectionTitleProps,
+  TSectionTitleOwnProps,
+  TSectionTitleAs,
+} from './section-title';
 export { Section };
 export default Section;

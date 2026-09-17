@@ -1,107 +1,122 @@
-import React, { ChangeEvent, forwardRef, useId, useState } from 'react';
+import React, {
+  ReactElement,
+  ReactNode,
+  Ref,
+  forwardRef,
+  useId,
+} from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { radioButtonGroupClasses } from './classes';
-import { InputFieldLayout } from '../input/input-base';
+import { FormControl, useFormControl } from '../form-control';
 import { InputBase } from '../input/input-base';
-import { InputHelperText } from '../input/input-helper-text';
-import { Text } from '../text';
-import { inputDescriptionTextSize } from '../input/input-description-text-size';
-import { InputLabel } from '../input/input-label';
 import { RadioButtonGroupContext } from './context';
 import { TRadioButtonGroupProps } from './types';
+import { defaultIsValueEqual } from '../form-control/value';
 
-const RadioButtonGroup = forwardRef<HTMLDivElement, TRadioButtonGroupProps>(
-  (
-    {
-      children,
-      label,
-      description,
-      helperText,
-      name,
-      value,
-      defaultValue = '',
-      onChange,
-      error = false,
-      fullWidth = true,
-      direction = 'vertical',
-      size = 'md',
-      variant = 'subtle',
-      color = 'primary',
-      disabled,
-      className,
-      ...props
-    },
-    ref,
-  ) => {
-    const generatedName = useId();
-    const groupName = name ?? generatedName;
-    const isControlled = value !== undefined;
-    const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-    const currentValue = isControlled ? value : uncontrolledValue;
-    const tone = error ? 'error' : color;
+const RadioButtonGroupBody = ({
+  name,
+  direction,
+  fullWidth,
+  children,
+}: {
+  name?: string;
+  direction: 'vertical' | 'horizontal';
+  fullWidth: boolean;
+  children?: ReactNode;
+}) => {
+  const form = useFormControl();
+  const generatedName = useId();
+  const groupName = name ?? generatedName;
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      if (!isControlled) {
-        setUncontrolledValue(event.target.value);
-      }
-      onChange?.(event);
-    };
-
-    return (
-      <RadioButtonGroupContext.Provider
-        value={{
-          name: groupName,
-          value: currentValue,
-          onChange: handleChange,
-          size,
-          variant,
-          color: tone,
-          error,
-          disabled,
-        }}
+  return (
+    <RadioButtonGroupContext.Provider
+      value={{
+        name: groupName,
+        value: form?.value,
+        onSelect: form?.onChange ?? (() => undefined),
+        isValueEqual: form?.isValueEqual ?? defaultIsValueEqual,
+        size: form?.size,
+        variant: form?.variant,
+        color: form?.color,
+        error: form?.error,
+        disabled: form?.disabled,
+      }}
+    >
+      <InputBase
+        direction={direction}
+        fullWidth={fullWidth}
+        role="radiogroup"
+        aria-invalid={form?.error || undefined}
       >
-        <InputFieldLayout
-          ref={ref}
-          fullWidth={fullWidth}
-          direction="vertical"
-          label={
-            label != null ? <InputLabel size={size}>{label}</InputLabel> : null
-          }
-          description={
-            description != null ? (
-              <Text size={inputDescriptionTextSize[size]} color="base">{description}</Text>
-            ) : null
-          }
-          helperText={
-            helperText != null ? (
-              <InputHelperText size={size} color={tone}>
-                {helperText}
-              </InputHelperText>
-            ) : null
-          }
-          {...props}
-        className={mergeClasses(
-          radioButtonGroupClasses.root,
-          disabled && radioButtonGroupClasses.disabled,
-          error && radioButtonGroupClasses.error,
-          className,
-        )}
-        >
-          <InputBase
-            direction={direction}
-            fullWidth={fullWidth}
-            role="radiogroup"
-            aria-invalid={error || undefined}
-          >
-            {children}
-          </InputBase>
-        </InputFieldLayout>
-      </RadioButtonGroupContext.Provider>
-    );
-  },
-);
+        {children}
+      </InputBase>
+    </RadioButtonGroupContext.Provider>
+  );
+};
 
-RadioButtonGroup.displayName = 'RadioButtonGroup';
+const RadioButtonGroupInner = <T,>(
+  {
+    children,
+    label,
+    description,
+    helperText,
+    name,
+    value,
+    defaultValue,
+    onChange,
+    isValueEqual,
+    error = false,
+    fullWidth = true,
+    direction = 'vertical',
+    size = 'md',
+    variant = 'surface',
+    color = 'primary',
+    disabled,
+    className,
+    ...props
+  }: TRadioButtonGroupProps<T>,
+  ref: Ref<HTMLDivElement>,
+) => {
+  return (
+    <FormControl
+      ref={ref}
+      label={label}
+      description={description}
+      helperText={helperText}
+      value={value}
+      defaultValue={defaultValue}
+      onChange={onChange}
+      isValueEqual={isValueEqual}
+      error={error}
+      fullWidth={fullWidth}
+      size={size}
+      variant={variant}
+      color={color}
+      disabled={disabled}
+      {...props}
+      className={mergeClasses(
+        radioButtonGroupClasses.root,
+        disabled && radioButtonGroupClasses.disabled,
+        error && radioButtonGroupClasses.error,
+        className,
+      )}
+    >
+      <RadioButtonGroupBody
+        name={name}
+        direction={direction}
+        fullWidth={fullWidth}
+      >
+        {children}
+      </RadioButtonGroupBody>
+    </FormControl>
+  );
+};
+
+const RadioButtonGroup = forwardRef(RadioButtonGroupInner) as <T = unknown>(
+  props: TRadioButtonGroupProps<T> & { ref?: Ref<HTMLDivElement> },
+) => ReactElement | null;
+
+(RadioButtonGroup as { displayName?: string }).displayName = 'RadioButtonGroup';
 
 export type { TRadioButtonGroupProps } from './types';
 export { radioButtonGroupClasses } from './classes';

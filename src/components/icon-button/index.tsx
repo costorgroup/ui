@@ -1,7 +1,6 @@
-import React, { forwardRef, MouseEvent, useContext, useState } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { ButtonGroupContext } from '../button-group/context';
-import { InputGroupContext } from '../input-group/context';
+import { useButtonGroupContext } from '../button-group/context';
 import { iconButtonClasses } from './classes';
 import { SIconButton } from './styles';
 import { TIconButtonProps } from './types';
@@ -11,40 +10,32 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
     {
       children,
       variant: variantProp,
-      size = 'md',
+      appearance: appearanceProp,
+      size: sizeProp,
       color: colorProp,
-      rounded = false,
-      type = 'button',
-      onMouseDown,
+      radius = 'sm',
       className,
-      disabled,
-      onFocus,
-      onBlur,
+      disabled: disabledProp,
       ...props
     },
     ref,
   ) => {
-    const buttonGroup = useContext(ButtonGroupContext);
-    const inputGroup = useContext(InputGroupContext);
-    const group = buttonGroup ?? inputGroup;
-
+    const group = useButtonGroupContext();
     const variant = variantProp ?? group?.variant ?? 'solid';
-    const color = colorProp ?? group?.color ?? 'primary';
-    const [focusVisible, setFocusVisible] = useState(false);
-
-    const handleMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-      onMouseDown?.(event);
-    };
+    const appearance = appearanceProp ?? group?.appearance ?? 'opaque';
+    const color = colorProp ?? group?.color ?? 'default';
+    const size = sizeProp ?? group?.size ?? 'md';
+    const disabled = disabledProp ?? group?.disabled ?? false;
 
     return (
       <SIconButton
         ref={ref}
-        type={type}
+        type="button"
         variant={variant}
+        appearance={appearance}
         size={size}
         color={color}
-        rounded={rounded}
+        radius={radius}
         disabled={disabled}
         {...props}
         className={mergeClasses(
@@ -52,15 +43,6 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
           disabled && iconButtonClasses.disabled,
           className,
         )}
-        onFocus={(event) => {
-          setFocusVisible(event.currentTarget.matches(':focus-visible'));
-          onFocus?.(event);
-        }}
-        onBlur={(event) => {
-          setFocusVisible(false);
-          onBlur?.(event);
-        }}
-        onMouseDown={handleMouseDown}
       >
         {children}
       </SIconButton>
@@ -70,6 +52,13 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
 
 IconButton.displayName = 'IconButton';
 
+export type {
+  TIconButtonProps,
+  TIconButtonVariant,
+  TIconButtonAppearance,
+  TIconButtonSize,
+  TIconButtonRadius,
+} from './types';
 export { iconButtonClasses } from './classes';
 export { IconButton };
 export default IconButton;

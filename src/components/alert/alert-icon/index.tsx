@@ -7,11 +7,15 @@ import { TAlertIconProps } from './types';
 const AlertIcon = forwardRef<HTMLSpanElement, TAlertIconProps>(
   ({ children, className, ...props }, ref) => {
     return (
-      <SAlertIcon ref={ref} data-alert-icon="" {...props}
+      <SAlertIcon
+        ref={ref}
+        data-alert-icon=""
+        {...props}
         className={mergeClasses(
           alertIconClasses.root,
           className,
-        )}>
+        )}
+      >
         {children}
       </SAlertIcon>
     );

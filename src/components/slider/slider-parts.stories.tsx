@@ -1,87 +1,75 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Heading, Text } from '../../index';
-import { SliderBase } from './slider-base';
-import { SliderSlides } from './slider-slides';
-import { SliderSlide } from './slider-slide';
-import { SliderContent } from './slider-content';
-import { SliderControls } from './slider-controls';
-import { SliderActions } from './slider-actions';
-import { SliderAction } from './slider-action';
-import { SliderPagination } from './slider-pagination';
+import {
+  Heading,
+  Image,
+  SlidePermanentContent,
+  Slider,
+  SliderControl,
+  SliderControls,
+  SliderPagination,
+  SliderSlide,
+  SliderSlides,
+  Text,
+} from '../..';
 
-const meta: Meta<typeof SliderBase> = {
-  title: 'Components/Slider/Parts',
-  component: SliderBase,
+const meta: Meta<typeof Slider> = {
+  title: 'Data Display/Slider/Parts',
+  component: Slider,
   tags: ['autodocs'],
 };
 
 export default meta;
 
-type Story = StoryObj<typeof SliderBase>;
+type Story = StoryObj<typeof Slider>;
 
 export const Composition: Story = {
   render: () => (
-    <SliderBase loop style={{ minHeight: 280 }}>
-      <SliderSlides>
-        <SliderSlide>
-          <div
-            style={{
-              minHeight: 280,
-              background: '#1f6feb',
-              display: 'grid',
-              placeItems: 'center',
-              color: '#fff',
-            }}
-          >
-            <Heading as="h3" style={{ margin: 0, color: 'inherit' }}>
-              One
+    <div style={{ width: '100%', maxWidth: 600 }}>
+      <Slider loop>
+        <SliderSlides>
+          <SliderSlide>
+            <Image
+              src="https://picsum.photos/seed/parts-1/960/560"
+              width="100%"
+              height={280}
+              radius="none"
+              alt="One"
+            />
+          </SliderSlide>
+          <SliderSlide>
+            <Image
+              src="https://picsum.photos/seed/parts-2/960/560"
+              width="100%"
+              height={280}
+              radius="none"
+              alt="Two"
+            />
+          </SliderSlide>
+          <SliderSlide>
+            <Image
+              src="https://picsum.photos/seed/parts-3/960/560"
+              width="100%"
+              height={280}
+              radius="none"
+              alt="Three"
+            />
+          </SliderSlide>
+        </SliderSlides>
+        <SlidePermanentContent>
+          <div style={{ position: 'absolute', left: 24, top: 24 }}>
+            <Heading as="h3" style={{ margin: 0, color: '#fff' }}>
+              Overlay
             </Heading>
+            <Text style={{ color: '#fff' }}>DIY slider parts</Text>
           </div>
-        </SliderSlide>
-        <SliderSlide>
-          <div
-            style={{
-              minHeight: 280,
-              background: '#238636',
-              display: 'grid',
-              placeItems: 'center',
-              color: '#fff',
-            }}
-          >
-            <Heading as="h3" style={{ margin: 0, color: 'inherit' }}>
-              Two
-            </Heading>
-          </div>
-        </SliderSlide>
-        <SliderSlide>
-          <div
-            style={{
-              minHeight: 280,
-              background: '#9a6700',
-              display: 'grid',
-              placeItems: 'center',
-              color: '#fff',
-            }}
-          >
-            <Heading as="h3" style={{ margin: 0, color: 'inherit' }}>
-              Three
-            </Heading>
-          </div>
-        </SliderSlide>
-      </SliderSlides>
-      <SliderContent>
-        <div style={{ position: 'absolute', left: 24, top: 24 }}>
-          <Text style={{ color: '#fff' }}>Overlay content</Text>
-        </div>
-      </SliderContent>
-      <SliderControls>
-        <SliderActions>
-          <SliderAction direction="prev" />
-          <SliderAction direction="next" />
-        </SliderActions>
-        <SliderPagination />
-      </SliderControls>
-    </SliderBase>
+        </SlidePermanentContent>
+        <SliderControls>
+          <SliderControl direction="prev" />
+          <SliderControl direction="next" />
+          <SliderPagination />
+        </SliderControls>
+      </Slider>
+    </div>
   ),
 };

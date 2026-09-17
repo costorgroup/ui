@@ -1,9 +1,14 @@
 import { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
-import { TButtonVariant } from '../button/types';
-import { TToggleButtonValue } from './context';
-
-export type TToggleButtonGroupOrientation = 'horizontal' | 'vertical';
+import {
+  TButtonAppearance,
+  TButtonSize,
+  TButtonVariant,
+} from '../button/types';
+import {
+  TToggleButtonGroupOrientation,
+  TToggleButtonValue,
+} from './context';
 
 export type TToggleButtonGroupProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -13,7 +18,10 @@ export type TToggleButtonGroupProps = Omit<
   orientation?: TToggleButtonGroupOrientation;
   color?: TPaletteColor;
   variant?: TButtonVariant;
+  appearance?: TButtonAppearance;
+  size?: TButtonSize;
   disabled?: boolean;
+  rounded?: boolean;
   exclusive?: boolean;
   value?: TToggleButtonValue | TToggleButtonValue[] | null;
   defaultValue?: TToggleButtonValue | TToggleButtonValue[] | null;
@@ -21,4 +29,11 @@ export type TToggleButtonGroupProps = Omit<
     event: MouseEvent<HTMLButtonElement>,
     value: TToggleButtonValue | TToggleButtonValue[] | null,
   ) => void;
+};
+
+export type TSToggleButtonGroupProps = {
+  orientation: TToggleButtonGroupOrientation;
+  variant?: TButtonVariant;
+  color: TPaletteColor;
+  rounded?: boolean;
 };

@@ -9,12 +9,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { menuClasses } from './classes';
 import { createPortal } from 'react-dom';
 import { useTheme } from '@emotion/react';
-import { getMenuPosition } from './get-coords';
+import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { menuClasses } from './classes';
 import { MenuContentContext, MenuContext, MenuItemContext } from './context';
+import { getMenuPosition } from './get-coords';
 import { MenuBase } from './menu-base';
 import { TMenuRootProps } from './types';
 
@@ -38,10 +38,12 @@ type TMenuPanelProps = TMenuRootProps & {
 const MenuPanel = ({
   children,
   placement: placementProp,
+  offset: offsetProp,
   onMouseEnter,
   onMouseLeave,
   panelRef,
-  className, ...props
+  className,
+  ...props
 }: TMenuPanelProps) => {
   const theme = useTheme();
   const menu = useContext(MenuContext);
@@ -92,7 +94,8 @@ const MenuPanel = ({
     if (value.endsWith('rem')) {
       const root =
         typeof document !== 'undefined'
-          ? parseFloat(getComputedStyle(document.documentElement).fontSize) || 16
+          ? parseFloat(getComputedStyle(document.documentElement).fontSize) ||
+            16
           : 16;
 
       return amount * root;
@@ -109,16 +112,19 @@ const MenuPanel = ({
       return;
     }
 
+    const gap = isSubmenu ? (offsetProp ?? 4) : menu.offset;
+
     const next = getMenuPosition(
       anchor.getBoundingClientRect(),
       content.getBoundingClientRect(),
       preferredPlacement,
-      menu.offset,
+      gap,
       getViewportPadding(),
       {
         width: window.innerWidth,
         height: window.innerHeight,
       },
+      isSubmenu ? -gap : 0,
     );
 
     setCoords({ top: next.top, left: next.left });
@@ -128,6 +134,7 @@ const MenuPanel = ({
     isSubmenu,
     item?.itemRef,
     menu,
+    offsetProp,
     preferredPlacement,
   ]);
 
@@ -268,10 +275,7 @@ const MenuPanel = ({
           }
         }}
         {...props}
-        className={mergeClasses(
-          menuClasses.root,
-          className,
-        )}
+        className={mergeClasses(menuClasses.root, className)}
       >
         {children}
       </MenuBase>
@@ -321,8 +325,7 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
       const { top, left } = anchorPosition;
 
       return {
-        getBoundingClientRect: () =>
-          new DOMRect(left, top, 0, 0),
+        getBoundingClientRect: () => new DOMRect(left, top, 0, 0),
         contains: () => false,
       };
     }, [anchorEl, anchorPosition]);
@@ -341,7 +344,13 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
 
     if (isSubmenu) {
       return (
-        <MenuPanel placement={placement} panelRef={ref} {...props}>
+        <MenuPanel
+          placement={placement}
+          offset={offset}
+          panelRef={ref}
+          className={className}
+          {...props}
+        >
           {children}
         </MenuPanel>
       );
@@ -349,7 +358,12 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
 
     return (
       <MenuContext.Provider value={value}>
-        <MenuPanel placement={rootPlacement} panelRef={ref} {...props}>
+        <MenuPanel
+          placement={rootPlacement}
+          panelRef={ref}
+          className={className}
+          {...props}
+        >
           {children}
         </MenuPanel>
       </MenuContext.Provider>
@@ -360,6 +374,21 @@ const Menu = forwardRef<HTMLDivElement, TMenuRootProps>(
 Menu.displayName = 'Menu';
 
 export type { TMenuRootProps, TMenuAnchorPosition } from './types';
+export type { TMenuPlacement } from './context';
 export { menuClasses } from './classes';
+export { MenuBase, menuBaseClasses } from './menu-base';
+export type { TMenuBaseProps } from './menu-base';
+export { MenuItem, menuItemClasses } from './menu-item';
+export type { TMenuItemProps } from './menu-item';
+export { MenuGroup, menuGroupClasses } from './menu-group';
+export type { TMenuGroupProps } from './menu-group';
+export { useMenu } from '../../hooks/use-menu';
+export type {
+  TMenuTrigger,
+  TUseMenuOptions,
+  TUseMenuReturn,
+  TUseMenuTriggerProps,
+  TUseMenuMenuProps,
+} from '../../hooks/use-menu';
 export { Menu };
 export default Menu;

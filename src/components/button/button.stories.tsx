@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React from 'react';
-import { Button, Flex, Text } from '../../index';
 import type { TPaletteColor } from '../../theme/types';
-import type { TButtonSize, TButtonVariant } from './types';
+import { Button, ButtonGroup, Text, Flex } from '../..';
+import type { TButtonRadius, TButtonSize, TButtonVariant } from './types';
 
 const COLORS: TPaletteColor[] = [
   'base',
@@ -28,27 +28,28 @@ const VARIANTS: TButtonVariant[] = [
 ];
 
 const SIZES: TButtonSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const RADIUS: TButtonRadius[] = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill'];
 
 const meta: Meta<typeof Button> = {
   title: 'Buttons/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: 'select',
-      options: VARIANTS,
-    },
-    size: {
-      control: 'select',
-      options: SIZES,
-    },
-    color: {
-      control: 'select',
-      options: COLORS,
-    },
-    disabled: {
-      control: 'boolean',
-    },
+    variant: { control: 'select', options: VARIANTS },
+    appearance: { control: 'select', options: ['opaque', 'transparent'] },
+    size: { control: 'select', options: SIZES },
+    color: { control: 'select', options: COLORS },
+    radius: { control: 'select', options: RADIUS },
+    disabled: { control: 'boolean' },
+  },
+  args: {
+    children: 'Button',
+    variant: 'solid',
+    appearance: 'opaque',
+    size: 'md',
+    color: 'default',
+    radius: 'sm',
+    disabled: false,
   },
 };
 
@@ -56,14 +57,20 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Default: Story = {
-  args: {
-    children: 'Button',
-    variant: 'solid',
-    size: 'md',
-    color: 'primary',
-    disabled: false,
-  },
+export const Playground: Story = {
+  tags: ['!dev'],
+};
+
+export const Colors: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {COLORS.map((color) => (
+        <Button key={color} color={color}>
+          {color}
+        </Button>
+      ))}
+    </Flex>
+  ),
 };
 
 export const Variants: Story = {
@@ -78,7 +85,7 @@ export const Variants: Story = {
                 {color}
               </Button>
             ))}
-            <Button variant={variant} color="primary" disabled>
+            <Button variant={variant} disabled>
               disabled
             </Button>
           </Flex>
@@ -96,6 +103,48 @@ export const Sizes: Story = {
           {size}
         </Button>
       ))}
+    </Flex>
+  ),
+};
+
+export const Radius: Story = {
+  render: () => (
+    <Flex gap="sm" wrap="wrap" align="center">
+      {RADIUS.map((radius) => (
+        <Button key={radius} radius={radius}>
+          {radius}
+        </Button>
+      ))}
+    </Flex>
+  ),
+};
+
+export const Group: Story = {
+  render: (args) => (
+    <Flex gap="lg" align="center" wrap="wrap">
+      <ButtonGroup
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <Button>Left</Button>
+        <Button>Center</Button>
+        <Button>Right</Button>
+      </ButtonGroup>
+      <ButtonGroup
+        rounded
+        variant={args.variant}
+        color={args.color}
+        size={args.size}
+        appearance={args.appearance}
+        disabled={args.disabled}
+      >
+        <Button>Left</Button>
+        <Button>Center</Button>
+        <Button>Right</Button>
+      </ButtonGroup>
     </Flex>
   ),
 };

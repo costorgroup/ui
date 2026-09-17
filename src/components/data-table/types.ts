@@ -1,14 +1,9 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import { TTableSize } from '../table/table-base/context';
 import { TPaletteColor } from '../../theme/types';
+import type { TPanelElevation, TPanelRadius, TPanelVariant } from '../panel/types';
+import type { TTableSize } from '../table/table-root/context';
 
-export type TDataTableVariant =
-  | 'solid'
-  | 'subtle'
-  | 'surface'
-  | 'outline'
-  | 'ghost'
-  | 'plain';
+export type TDataTableVariant = TPanelVariant;
 
 export type TDataTableRow = Record<string, unknown> & {
   id?: string | number;
@@ -41,6 +36,8 @@ export type TDataTableProps<T extends TDataTableRow = TDataTableRow> = Omit<
   description?: ReactNode;
   color?: TPaletteColor;
   variant?: TDataTableVariant;
+  elevation?: TPanelElevation;
+  radius?: TPanelRadius;
   size?: TTableSize;
   pageSize?: number;
   searchPlaceholder?: string;
@@ -51,9 +48,4 @@ export type TDataTableProps<T extends TDataTableRow = TDataTableRow> = Omit<
   defaultPage?: number;
   onPageChange?: (page: number) => void;
   getRowId?: (row: T, index: number) => string | number;
-};
-
-export type TSDataTableProps = {
-  color: TPaletteColor;
-  variant: TDataTableVariant;
 };

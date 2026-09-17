@@ -1,8 +1,8 @@
 import { InputHTMLAttributes } from 'react';
 import { TPaletteColor } from '../../../theme/types';
-import { TInputSize } from '../input-wrapper/types';
+import { TInputSize, TInputVariant } from '../input-wrapper/types';
 
-export type TInputSwitchVariant = 'subtle' | 'surface' | 'outline';
+export type TInputSwitchVariant = TInputVariant;
 
 export type TInputSwitchProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,

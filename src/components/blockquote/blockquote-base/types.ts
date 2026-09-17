@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
+import type { TBlockquoteVariant } from '../types';
 
 export type TBlockquoteBaseProps = Omit<
   HTMLAttributes<HTMLQuoteElement>,
@@ -7,8 +8,5 @@ export type TBlockquoteBaseProps = Omit<
 > & {
   children?: ReactNode;
   color?: TPaletteColor;
-};
-
-export type TSBlockquoteBaseProps = {
-  color: TPaletteColor;
+  variant?: TBlockquoteVariant;
 };

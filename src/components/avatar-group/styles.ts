@@ -1,28 +1,22 @@
 import styled from '@emotion/styled';
 import { TAvatarGroupSpacing, TSAvatarGroupProps } from '../avatar/context';
-import { TAvatarSize } from '../avatar/types';
 
 const customProps = new Set(['spacing', 'size']);
 
-const spacingMap: Record<'small' | 'medium', string> = {
-  small: '-0.5rem',
-  medium: '-0.75rem',
+const overlap: Record<Exclude<TAvatarGroupSpacing, number>, number> = {
+  sm: 0.28,
+  md: 0.38,
 };
 
-const sizeRing: Record<TAvatarSize, string> = {
-  xs: '1px',
-  sm: '1.5px',
-  md: '2px',
-  lg: '2.5px',
-  xl: '3px',
-};
-
-const resolveSpacing = (spacing: TAvatarGroupSpacing) => {
+const resolveSpacing = (
+  spacing: TAvatarGroupSpacing,
+  height: string,
+) => {
   if (typeof spacing === 'number') {
     return `${-spacing}px`;
   }
 
-  return spacingMap[spacing];
+  return `calc(${height} * -${overlap[spacing]})`;
 };
 
 export const SAvatarGroup = styled('div', {
@@ -34,9 +28,9 @@ export const SAvatarGroup = styled('div', {
   justify-content: flex-end;
 
   > * {
-    margin-left: ${({ spacing }) => resolveSpacing(spacing)};
-    box-shadow: ${({ theme, size }) =>
-      `0 0 0 ${sizeRing[size]} ${theme.palette.common.white}`};
+    margin-left: ${({ theme, spacing, size }) =>
+      resolveSpacing(spacing, theme.sizes[size].height)};
+    box-shadow: ${({ theme }) => `0 0 0 2px ${theme.surfaces.background}`};
   }
 
   > *:last-of-type {
