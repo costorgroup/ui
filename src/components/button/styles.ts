@@ -19,12 +19,11 @@ export const SButton = styled('button', {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  min-height: 0;
   border: 1px solid;
   border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};
-  line-height: 1;
+  line-height: 1.2;
   letter-spacing: -0.01em;
   cursor: pointer;
   transition:
@@ -39,14 +38,15 @@ export const SButton = styled('button', {
     const step = theme.sizes[size];
 
     return `
-      height: ${step.height};
+      min-height: ${step.height};
       gap: ${step.gap};
-      padding: 0 ${step.padX};
+      padding: ${step.padY} ${step.padX};
       font-size: ${step.fontSize};
 
       & svg {
         width: ${step.icon};
         height: ${step.icon};
+        flex-shrink: 0;
       }
     `;
   }}

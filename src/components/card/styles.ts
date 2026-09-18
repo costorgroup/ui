@@ -23,7 +23,7 @@ export const SCard = styled(Panel, {
   gap: var(--card-spacing);
   padding-block: var(--card-spacing);
 
-  &:has(> .${cardImageClasses.root}:first-child) {
+  &:has(> .${cardImageClasses.root}:first-of-type) {
     padding-top: 0;
   }
 

@@ -49,7 +49,7 @@ export const STabs = styled('div', {
   overflow: hidden;
   padding: ${({ variant }) => (variant === 'plain' ? 0 : '3px')};
   border-radius: ${({ theme, variant }) =>
-    variant === 'plain' ? 0 : theme.radius.md};
+    variant === 'plain' ? 0 : theme.radius.sm};
   border: 1px solid
     ${({ theme, variant }) =>
       variant === 'surface' ? theme.surfaces.border : 'transparent'};

@@ -1300,6 +1300,10 @@ export {
   MirrorHorizontalIcon,
   MirrorVerticalIcon,
   DownloadIcon,
+  SettingsIcon,
+  UsersIcon,
+  ChatDotsIcon,
+  UserAddIcon,
   type TEyeIconProps,
   type TEyeClosedIconProps,
   type TEyeDropperIconProps,
@@ -1332,6 +1336,10 @@ export {
   type TRotateRightIconProps,
   type TMirrorHorizontalIconProps,
   type TMirrorVerticalIconProps,
+  type TSettingsIconProps,
+  type TUsersIconProps,
+  type TChatDotsIconProps,
+  type TUserAddIconProps,
   type TDownloadIconProps,
 } from './icons';
 export {

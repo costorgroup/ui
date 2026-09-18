@@ -17,7 +17,7 @@ export const SIconButton = styled('button', {
   justify-content: center;
   flex-shrink: 0;
   box-sizing: border-box;
-  min-height: 0;
+  aspect-ratio: 1 / 1;
   border: 1px solid;
   border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
@@ -37,14 +37,15 @@ export const SIconButton = styled('button', {
     const step = theme.sizes[size];
 
     return `
-      width: ${step.height};
-      height: ${step.height};
+      min-width: ${step.height};
+      min-height: ${step.height};
       padding: 0;
       font-size: ${step.fontSize};
 
       & svg {
         width: ${step.icon};
         height: ${step.icon};
+        flex-shrink: 0;
       }
     `;
   }}

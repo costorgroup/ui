@@ -14,17 +14,17 @@ export const SAccordionGroup = styled('div', {
     border-radius: 0;
   }
 
-  & > [data-accordion-grouped]:first-child {
+  & > [data-accordion-grouped]:first-of-type {
     border-top-left-radius: ${({ theme, radius }) => theme.radius[radius]};
     border-top-right-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 
-  & > [data-accordion-grouped]:last-child {
+  & > [data-accordion-grouped]:last-of-type {
     border-bottom-left-radius: ${({ theme, radius }) => theme.radius[radius]};
     border-bottom-right-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 
-  & > [data-accordion-grouped]:only-child {
+  & > [data-accordion-grouped]:only-of-type {
     border-radius: ${({ theme, radius }) => theme.radius[radius]};
   }
 `;

@@ -145,7 +145,7 @@ export const SInputWrapper = styled('div', {
         min-height: 0;
       }
 
-      ${inRow(`.${inputButtonClasses.root}:first-child`)} {
+      ${inRow(`.${inputButtonClasses.root}:first-of-type`)} {
         margin-right: -${step.gap};
       }
 

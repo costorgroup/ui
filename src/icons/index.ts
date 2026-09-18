@@ -31,6 +31,10 @@ import RotateRightIcon from './rotate-right-icon';
 import MirrorHorizontalIcon from './mirror-horizontal-icon';
 import MirrorVerticalIcon from './mirror-vertical-icon';
 import DownloadIcon from './download-icon';
+import SettingsIcon from './settings-icon';
+import UsersIcon from './users-icon';
+import ChatDotsIcon from './chat-dots-icon';
+import UserAddIcon from './user-add-icon';
 import type { TEyeIconProps } from './eye-icon/types';
 import type { TEyeClosedIconProps } from './eye-closed-icon/types';
 import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
@@ -64,6 +68,10 @@ import type { TRotateRightIconProps } from './rotate-right-icon/types';
 import type { TMirrorHorizontalIconProps } from './mirror-horizontal-icon/types';
 import type { TMirrorVerticalIconProps } from './mirror-vertical-icon/types';
 import type { TDownloadIconProps } from './download-icon/types';
+import type { TSettingsIconProps } from './settings-icon/types';
+import type { TUsersIconProps } from './users-icon/types';
+import type { TChatDotsIconProps } from './chat-dots-icon/types';
+import type { TUserAddIconProps } from './user-add-icon/types';
 
 export type {
   TEyeIconProps,
@@ -99,6 +107,10 @@ export type {
   TMirrorHorizontalIconProps,
   TMirrorVerticalIconProps,
   TDownloadIconProps,
+  TSettingsIconProps,
+  TUsersIconProps,
+  TChatDotsIconProps,
+  TUserAddIconProps,
 };
 
 export {
@@ -135,4 +147,8 @@ export {
   MirrorHorizontalIcon,
   MirrorVerticalIcon,
   DownloadIcon,
+  SettingsIcon,
+  UsersIcon,
+  ChatDotsIcon,
+  UserAddIcon,
 };

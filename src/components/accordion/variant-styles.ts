@@ -27,7 +27,7 @@ const groupedItemDivider = (theme: TTheme, grouped: boolean) => {
   }
 
   return `
-    &:not(:last-child) {
+    &:not(:last-of-type) {
       border-bottom: ${accordionGroupItemDivider(theme)};
     }
   `;
@@ -39,7 +39,7 @@ const groupedCollapseTop = (grouped: boolean) => {
   }
 
   return `
-    &:not(:first-child) {
+    &:not(:first-of-type) {
       border-top: none;
     }
   `;
@@ -66,7 +66,7 @@ export const accordionShellVariantStyles = (
         ${
           grouped
             ? `
-          &:not(:last-child) {
+          &:not(:last-of-type) {
             border-bottom: 1px solid ${theme.surfaces.divider};
           }
         `

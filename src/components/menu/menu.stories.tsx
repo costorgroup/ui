@@ -1,6 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, Menu, MenuGroup, MenuItem, Text, useMenu, Flex } from '../..';
+import {
+  Button,
+  IconButton,
+  Menu,
+  MenuGroup,
+  MenuItem,
+  MoreHorizontalIcon,
+  Text,
+  useMenu,
+  Flex,
+} from '../..';
 import type { TMenuPlacement } from './context';
 
 const PLACEMENTS: TMenuPlacement[] = [
@@ -178,6 +188,109 @@ export const Placements: Story = {
           <MenuItem onClick={menu.close}>Action one</MenuItem>
           <MenuItem onClick={menu.close}>Action two</MenuItem>
         </Menu>
+      </Flex>
+    );
+  },
+};
+
+type TListRow = {
+  id: string;
+  name: string;
+};
+
+const LIST_ROWS: TListRow[] = [
+  { id: 'r1', name: 'Quarterly report.pdf' },
+  { id: 'r2', name: 'Budget proposal.xlsx' },
+  { id: 'r3', name: 'Team photo.png' },
+];
+
+// `useMenu()` is a hook, so it can't be called inline inside `.map()` — every
+// row needs its own instance, or all rows would share one open/anchor state.
+// Extract the trigger + menu into their own row-scoped component instead.
+const ListRowActions = ({
+  row,
+  onRename,
+  onDelete,
+}: {
+  row: TListRow;
+  onRename: (row: TListRow) => void;
+  onDelete: (row: TListRow) => void;
+}) => {
+  const menu = useMenu({ placement: 'bottom-end' });
+
+  return (
+    <>
+      <IconButton
+        variant="ghost"
+        color="default"
+        size="sm"
+        aria-label={`Actions for ${row.name}`}
+        {...menu.triggerProps}
+      >
+        <MoreHorizontalIcon />
+      </IconButton>
+      <Menu {...menu.menuProps}>
+        <MenuItem
+          onClick={() => {
+            onRename(row);
+            menu.close();
+          }}
+        >
+          Rename
+        </MenuItem>
+        <MenuItem
+          color="error"
+          onClick={() => {
+            onDelete(row);
+            menu.close();
+          }}
+        >
+          Delete
+        </MenuItem>
+      </Menu>
+    </>
+  );
+};
+
+export const InList: Story = {
+  name: 'In a list (.map)',
+  render: function InListStory() {
+    const [rows, setRows] = useState(LIST_ROWS);
+
+    return (
+      <Flex direction="column" gap="xs" style={{ width: 320 }}>
+        {rows.map((row) => (
+          <Flex
+            key={row.id}
+            align="center"
+            justify="space-between"
+            gap="sm"
+            style={{
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: '1px solid currentColor',
+            }}
+          >
+            <Text size="sm">{row.name}</Text>
+            <ListRowActions
+              row={row}
+              onRename={(target) =>
+                setRows((current) =>
+                  current.map((item) =>
+                    item.id === target.id
+                      ? { ...item, name: `${item.name} (renamed)` }
+                      : item,
+                  ),
+                )
+              }
+              onDelete={(target) =>
+                setRows((current) =>
+                  current.filter((item) => item.id !== target.id),
+                )
+              }
+            />
+          </Flex>
+        ))}
       </Flex>
     );
   },

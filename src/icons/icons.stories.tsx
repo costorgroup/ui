@@ -34,6 +34,10 @@ import {
   MirrorHorizontalIcon,
   MirrorVerticalIcon,
   DownloadIcon,
+  SettingsIcon,
+  UsersIcon,
+  ChatDotsIcon,
+  UserAddIcon,
 } from './';
 import { useTheme } from '../hooks/use-theme';
 
@@ -71,6 +75,10 @@ const icons = [
   { name: 'MirrorHorizontalIcon', Icon: MirrorHorizontalIcon },
   { name: 'MirrorVerticalIcon', Icon: MirrorVerticalIcon },
   { name: 'DownloadIcon', Icon: DownloadIcon },
+  { name: 'SettingsIcon', Icon: SettingsIcon },
+  { name: 'UsersIcon', Icon: UsersIcon },
+  { name: 'ChatDotsIcon', Icon: ChatDotsIcon },
+  { name: 'UserAddIcon', Icon: UserAddIcon },
 ] as const;
 
 const meta: Meta = {
