@@ -32,7 +32,8 @@ export const SAccordionDetailsClip = styled.div`
 export const SAccordionDetailsInner = styled('div', {
   shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
 })<TSAccordionDetailsInnerProps>`
-  padding: ${({ theme, size }) => theme.sizes[size].padX};
+  padding: ${({ theme, size, variant }) =>
+    variant === 'plain' ? 0 : theme.sizes[size].padX};
   background-color: ${({ theme, variant, color }) =>
     accordionDetailsBackground(variant, theme.palette[color])};
   color: ${({ theme, variant, color }) =>

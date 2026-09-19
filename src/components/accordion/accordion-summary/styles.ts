@@ -29,10 +29,18 @@ export const SAccordionSummary = styled('button', {
     `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`};
   width: 100%;
   margin: 0;
-  padding: ${({ theme, size }) => {
+  padding: ${({ theme, size, variant }) => {
+    if (variant === 'plain') {
+      return 0;
+    }
+
     const scale = theme.sizeScale[size];
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
+  margin-bottom: ${({ theme, variant, expanded, hasDetails, size }) =>
+    variant === 'plain' && expanded && hasDetails
+      ? `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`
+      : 0};
   border: none;
   border-bottom: ${({
     theme,
@@ -41,9 +49,11 @@ export const SAccordionSummary = styled('button', {
     expanded,
     hasDetails,
   }) =>
-    expanded && hasDetails
-      ? accordionSummaryDivider(variant, theme.palette[paletteColor], theme)
-      : '1px solid transparent'};
+    variant === 'plain'
+      ? 'none'
+      : expanded && hasDetails
+        ? accordionSummaryDivider(variant, theme.palette[paletteColor], theme)
+        : '1px solid transparent'};
   background: transparent;
   font: inherit;
   color: ${({ theme, variant, paletteColor }) =>
