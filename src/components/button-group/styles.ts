@@ -4,7 +4,7 @@ import { buttonClasses } from '../button/classes';
 import { iconButtonClasses } from '../icon-button/classes';
 import { TSButtonGroupProps } from './types';
 
-const customProps = new Set(['orientation', 'variant', 'color', 'rounded']);
+const customProps = new Set(['orientation', 'variant', 'color', 'rounded', 'fullWidth']);
 
 const button = `.${buttonClasses.root}`;
 const iconButton = `.${iconButtonClasses.root}`;
@@ -19,9 +19,11 @@ export const SButtonGroup = styled('div', {
   align-items: stretch;
   vertical-align: top;
   box-sizing: border-box;
+  width: ${({ fullWidth = false }) => (fullWidth ? '100%' : 'auto')};
 
   ${itemSelector} {
     position: relative;
+    flex: ${({ fullWidth = false }) => (fullWidth ? '1 1 0' : 'initial')};
   }
 
   ${itemSelector}:hover,

@@ -15,6 +15,7 @@ export type TButtonGroupProps = Omit<
   size?: TButtonSize;
   disabled?: boolean;
   rounded?: boolean;
+  fullWidth?: boolean;
 };
 
 export type TSButtonGroupProps = {
@@ -22,4 +23,5 @@ export type TSButtonGroupProps = {
   variant?: TButtonVariant;
   color: TPaletteColor;
   rounded?: boolean;
+  fullWidth?: boolean;
 };

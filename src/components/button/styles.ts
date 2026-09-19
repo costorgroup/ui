@@ -1,16 +1,35 @@
 import styled from '@emotion/styled';
 import { TButtonOwnProps } from './types';
-import { currentVariantStyles, variantStyles } from './variant-styles';
+import {
+  currentVariantStyles,
+  forceContrastTextStyles,
+  variantStyles,
+} from './variant-styles';
 
 type TSButtonProps = Pick<
   TButtonOwnProps,
-  'variant' | 'appearance' | 'size' | 'color' | 'radius'
+  | 'variant'
+  | 'appearance'
+  | 'size'
+  | 'color'
+  | 'radius'
+  | 'fullWidth'
+  | 'forceContrastText'
 >;
 
 // 'as' must be excluded too: a custom shouldForwardProp otherwise makes
 // emotion treat `as` as a regular DOM attribute instead of a tag override,
 // which silently breaks polymorphic tag switching.
-const customProps = new Set(['variant', 'appearance', 'size', 'color', 'radius', 'as']);
+const customProps = new Set([
+  'variant',
+  'appearance',
+  'size',
+  'color',
+  'radius',
+  'fullWidth',
+  'forceContrastText',
+  'as',
+]);
 
 export const SButton = styled('button', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -19,6 +38,7 @@ export const SButton = styled('button', {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  width: ${({ fullWidth = false }) => (fullWidth ? '100%' : 'auto')};
   border: 1px solid;
   border-radius: ${({ theme, radius = 'sm' }) => theme.radius[radius]};
   font-family: inherit;
@@ -68,6 +88,9 @@ export const SButton = styled('button', {
       appearance,
       theme.surfaces.background,
     )}
+
+  ${({ theme, color = 'default', forceContrastText = false }) =>
+    forceContrastText ? forceContrastTextStyles(theme.palette[color]) : ''}
 
   &:disabled {
     opacity: 0.45;

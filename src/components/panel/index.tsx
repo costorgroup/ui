@@ -11,6 +11,7 @@ const Panel = forwardRef<HTMLDivElement, TPanelProps>(
       elevation = 1,
       variant = 'surface',
       radius = 'xl',
+      fullWidth = false,
       className,
       ...props
     },
@@ -21,6 +22,7 @@ const Panel = forwardRef<HTMLDivElement, TPanelProps>(
       elevation={elevation}
       variant={variant}
       radius={radius}
+      fullWidth={fullWidth}
       {...props}
       className={mergeClasses(
         panelClasses.root,

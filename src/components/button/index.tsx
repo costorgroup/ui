@@ -15,6 +15,8 @@ const Button = forwardRef(function Button<C extends ElementType = 'button'>(
     size: sizeProp,
     color: colorProp,
     radius = 'sm',
+    fullWidth = false,
+    forceContrastText = false,
     className,
     disabled: disabledProp,
     ...props
@@ -38,6 +40,8 @@ const Button = forwardRef(function Button<C extends ElementType = 'button'>(
       size={size}
       color={color}
       radius={radius}
+      fullWidth={fullWidth}
+      forceContrastText={forceContrastText}
       disabled={disabled}
       {...props}
       className={mergeClasses(

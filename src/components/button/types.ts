@@ -16,6 +16,8 @@ export type TButtonOwnProps = {
   size?: TButtonSize;
   color?: TPaletteColor;
   radius?: TButtonRadius;
+  fullWidth?: boolean;
+  forceContrastText?: boolean;
 };
 
 export type TButtonProps<C extends ElementType = 'button'> = TPolymorphicProps<

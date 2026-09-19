@@ -9,6 +9,7 @@ const PaginationBase = forwardRef<HTMLElement, TPaginationBaseProps>(
     {
       children,
       'aria-label': ariaLabel = 'pagination navigation',
+      fullWidth = false,
       className,
       ...props
     },
@@ -18,6 +19,7 @@ const PaginationBase = forwardRef<HTMLElement, TPaginationBaseProps>(
       <SPaginationBase
         ref={ref}
         aria-label={ariaLabel}
+        fullWidth={fullWidth}
         {...props}
         className={mergeClasses(paginationBaseClasses.root, className)}
       >

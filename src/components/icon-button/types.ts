@@ -22,4 +22,5 @@ export type TIconButtonProps = Omit<
   size?: TIconButtonSize;
   color?: TPaletteColor;
   radius?: TIconButtonRadius;
+  forceContrastText?: boolean;
 };

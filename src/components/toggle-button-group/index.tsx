@@ -39,6 +39,7 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, TToggleButtonGroupProps>(
       className,
       disabled = false,
       rounded = false,
+      fullWidth = false,
       exclusive = true,
       value: valueProp,
       defaultValue = exclusive ? null : [],
@@ -89,6 +90,7 @@ const ToggleButtonGroup = forwardRef<HTMLDivElement, TToggleButtonGroupProps>(
           variant={variant}
           color={color}
           rounded={rounded}
+          fullWidth={fullWidth}
           role="group"
           {...props}
           className={mergeClasses(

@@ -6,12 +6,13 @@ import {
 } from '../../helpers/variant-styles/surface';
 import { TSPanelProps } from './types';
 
-const customProps = new Set(['elevation', 'variant', 'radius']);
+const customProps = new Set(['elevation', 'variant', 'radius', 'fullWidth']);
 
 export const SPanel = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSPanelProps>`
   box-sizing: border-box;
+  width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   color: ${({ theme }) => theme.surfaces.ink};
   border-radius: ${({ theme, radius }) => theme.radius[radius]};
 

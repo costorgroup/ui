@@ -1,13 +1,25 @@
 import styled from '@emotion/styled';
-import { variantStyles } from '../button/variant-styles';
+import { forceContrastTextStyles, variantStyles } from '../button/variant-styles';
 import { TIconButtonProps } from './types';
 
 type TSIconButtonProps = Pick<
   TIconButtonProps,
-  'variant' | 'appearance' | 'size' | 'color' | 'radius'
+  | 'variant'
+  | 'appearance'
+  | 'size'
+  | 'color'
+  | 'radius'
+  | 'forceContrastText'
 >;
 
-const customProps = new Set(['variant', 'appearance', 'size', 'color', 'radius']);
+const customProps = new Set([
+  'variant',
+  'appearance',
+  'size',
+  'color',
+  'radius',
+  'forceContrastText',
+]);
 
 export const SIconButton = styled('button', {
   shouldForwardProp: (prop) => !customProps.has(prop),
@@ -58,6 +70,9 @@ export const SIconButton = styled('button', {
       appearance,
       theme.surfaces.background,
     )}
+
+  ${({ theme, color = 'default', forceContrastText = false }) =>
+    forceContrastText ? forceContrastTextStyles(theme.palette[color]) : ''}
 
   &:disabled {
     opacity: 0.45;

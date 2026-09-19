@@ -16,6 +16,7 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
       size,
       disabled = false,
       rounded = false,
+      fullWidth = false,
       className,
       ...props
     },
@@ -34,6 +35,7 @@ const ButtonGroup = forwardRef<HTMLDivElement, TButtonGroupProps>(
           variant={variant}
           color={color}
           rounded={rounded}
+          fullWidth={fullWidth}
           role="group"
           {...props}
           className={mergeClasses(

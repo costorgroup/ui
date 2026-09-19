@@ -14,6 +14,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
       size: sizeProp,
       color: colorProp,
       radius = 'sm',
+      forceContrastText = false,
       className,
       disabled: disabledProp,
       ...props
@@ -36,6 +37,7 @@ const IconButton = forwardRef<HTMLButtonElement, TIconButtonProps>(
         size={size}
         color={color}
         radius={radius}
+        forceContrastText={forceContrastText}
         disabled={disabled}
         {...props}
         className={mergeClasses(

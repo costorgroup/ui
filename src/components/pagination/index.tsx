@@ -58,6 +58,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       variant = PAGINATION_DEFAULT_VARIANTS,
       size = 'md',
       disabled = false,
+      fullWidth = false,
       hidePrevButton = false,
       hideNextButton = false,
       showFirstButton = false,
@@ -102,6 +103,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
     return (
       <PaginationBase
         ref={ref}
+        fullWidth={fullWidth}
         {...props}
         className={mergeClasses(
           paginationClasses.root,

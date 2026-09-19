@@ -4,7 +4,7 @@ import { toggleButtonClasses } from '../toggle-button/classes';
 import { toggleIconButtonClasses } from '../toggle-icon-button/classes';
 import { TSToggleButtonGroupProps } from './types';
 
-const customProps = new Set(['orientation', 'variant', 'color', 'rounded']);
+const customProps = new Set(['orientation', 'variant', 'color', 'rounded', 'fullWidth']);
 
 const toggleButton = `.${toggleButtonClasses.root}`;
 const toggleIconButton = `.${toggleIconButtonClasses.root}`;
@@ -19,9 +19,11 @@ export const SToggleButtonGroup = styled('div', {
   align-items: stretch;
   vertical-align: top;
   box-sizing: border-box;
+  width: ${({ fullWidth = false }) => (fullWidth ? '100%' : 'auto')};
 
   ${itemSelector} {
     position: relative;
+    flex: ${({ fullWidth = false }) => (fullWidth ? '1 1 0' : 'initial')};
   }
 
   ${itemSelector}:hover,

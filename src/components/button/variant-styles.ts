@@ -185,6 +185,26 @@ const activeFill = (
   }
 };
 
+/** Pins text/icon color to `palette.contrastText` across every state
+ * (idle, hover, active, pressed, current), overriding whatever the variant
+ * would otherwise set — for callers that need a fixed-contrast label
+ * regardless of `variant`. Must be interpolated after `variantStyles` (and
+ * `pressedVariantStyles/currentVariantStyles`, when used) so the cascade
+ * lets it win. */
+export const forceContrastTextStyles = (palette: TThemeColorScale) => `
+  color: ${palette.contrastText};
+
+  &:hover:not(:disabled):not([aria-disabled='true']),
+  &:active:not(:disabled):not([aria-disabled='true']),
+  &[aria-pressed='true']:not(:disabled),
+  &[aria-pressed='true']:hover:not(:disabled),
+  &[aria-pressed='true']:active:not(:disabled),
+  &[aria-current='page']:not(:disabled),
+  &[aria-current='page']:hover:not(:disabled) {
+    color: ${palette.contrastText};
+  }
+`;
+
 export const pressedVariantStyles = (
   variant: TButtonVariant,
   palette: TThemeColorScale,

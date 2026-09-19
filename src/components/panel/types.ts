@@ -10,10 +10,12 @@ export type TPanelProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   elevation?: TPanelElevation;
   variant?: TPanelVariant;
   radius?: TPanelRadius;
+  fullWidth?: boolean;
 };
 
 export type TSPanelProps = {
   elevation: TPanelElevation;
   variant: TPanelVariant;
   radius: TPanelRadius;
+  fullWidth: boolean;
 };

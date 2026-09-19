@@ -43,6 +43,7 @@ export type TPaginationProps = Omit<
   variant?: TPaginationVariantProp;
   size?: TPaginationSize;
   disabled?: boolean;
+  fullWidth?: boolean;
   hidePrevButton?: boolean;
   hideNextButton?: boolean;
   showFirstButton?: boolean;

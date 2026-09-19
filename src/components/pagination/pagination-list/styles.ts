@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 export const SPaginationList = styled.ul`
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;

@@ -22,6 +22,7 @@ export type TToggleButtonGroupProps = Omit<
   size?: TButtonSize;
   disabled?: boolean;
   rounded?: boolean;
+  fullWidth?: boolean;
   exclusive?: boolean;
   value?: TToggleButtonValue | TToggleButtonValue[] | null;
   defaultValue?: TToggleButtonValue | TToggleButtonValue[] | null;
@@ -36,4 +37,5 @@ export type TSToggleButtonGroupProps = {
   variant?: TButtonVariant;
   color: TPaletteColor;
   rounded?: boolean;
+  fullWidth?: boolean;
 };

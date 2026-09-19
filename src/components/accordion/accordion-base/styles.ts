@@ -21,8 +21,8 @@ export const SAccordionBase = styled('div', {
   width: 100%;
   min-width: 0;
   overflow: hidden;
-  ${({ theme, radius, grouped }) =>
-    grouped ? '' : `border-radius: ${theme.radius[radius]};`}
+  ${({ theme, radius, variant, grouped }) =>
+    grouped || variant === 'plain' ? '' : `border-radius: ${theme.radius[radius]};`}
   ${({ theme, color, variant, expanded, grouped }) => {
     const palette = theme.palette[color];
     return accordionShellVariantStyles(variant, palette, theme, {
