@@ -38,6 +38,11 @@ import {
   UsersIcon,
   ChatDotsIcon,
   UserAddIcon,
+  UserIcon,
+  BagIcon,
+  GraduationCapIcon,
+  GlobeIcon,
+  CertificateIcon,
 } from './';
 import { useTheme } from '../hooks/use-theme';
 
@@ -79,6 +84,11 @@ const icons = [
   { name: 'UsersIcon', Icon: UsersIcon },
   { name: 'ChatDotsIcon', Icon: ChatDotsIcon },
   { name: 'UserAddIcon', Icon: UserAddIcon },
+  { name: 'UserIcon', Icon: UserIcon },
+  { name: 'BagIcon', Icon: BagIcon },
+  { name: 'GraduationCapIcon', Icon: GraduationCapIcon },
+  { name: 'GlobeIcon', Icon: GlobeIcon },
+  { name: 'CertificateIcon', Icon: CertificateIcon },
 ] as const;
 
 const meta: Meta = {

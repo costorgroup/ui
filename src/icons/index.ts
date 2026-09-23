@@ -35,6 +35,11 @@ import SettingsIcon from './settings-icon';
 import UsersIcon from './users-icon';
 import ChatDotsIcon from './chat-dots-icon';
 import UserAddIcon from './user-add-icon';
+import UserIcon from './user-icon';
+import BagIcon from './bag-icon';
+import GraduationCapIcon from './graduation-cap-icon';
+import GlobeIcon from './globe-icon';
+import CertificateIcon from './certificate-icon';
 import type { TEyeIconProps } from './eye-icon/types';
 import type { TEyeClosedIconProps } from './eye-closed-icon/types';
 import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
@@ -72,6 +77,11 @@ import type { TSettingsIconProps } from './settings-icon/types';
 import type { TUsersIconProps } from './users-icon/types';
 import type { TChatDotsIconProps } from './chat-dots-icon/types';
 import type { TUserAddIconProps } from './user-add-icon/types';
+import type { TUserIconProps } from './user-icon/types';
+import type { TBagIconProps } from './bag-icon/types';
+import type { TGraduationCapIconProps } from './graduation-cap-icon/types';
+import type { TGlobeIconProps } from './globe-icon/types';
+import type { TCertificateIconProps } from './certificate-icon/types';
 
 export type {
   TEyeIconProps,
@@ -111,6 +121,11 @@ export type {
   TUsersIconProps,
   TChatDotsIconProps,
   TUserAddIconProps,
+  TUserIconProps,
+  TBagIconProps,
+  TGraduationCapIconProps,
+  TGlobeIconProps,
+  TCertificateIconProps,
 };
 
 export {
@@ -151,4 +166,9 @@ export {
   UsersIcon,
   ChatDotsIcon,
   UserAddIcon,
+  UserIcon,
+  BagIcon,
+  GraduationCapIcon,
+  GlobeIcon,
+  CertificateIcon,
 };

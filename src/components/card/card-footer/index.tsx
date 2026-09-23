@@ -5,10 +5,25 @@ import { SCardFooter } from './styles';
 import { TCardFooterProps } from './types';
 
 const CardFooter = forwardRef<HTMLDivElement, TCardFooterProps>(
-  ({ children, variant = 'plain', className, ...props }, ref) => (
+  (
+    {
+      children,
+      variant = 'plain',
+      align = 'center',
+      justify,
+      gap = 'sm',
+      className,
+      ...props
+    },
+    ref,
+  ) => (
     <SCardFooter
       ref={ref}
       variant={variant}
+      wrap="wrap"
+      align={align}
+      justify={justify}
+      gap={gap}
       data-slot="card-footer"
       {...props}
       className={mergeClasses(

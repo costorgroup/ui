@@ -216,8 +216,8 @@ export const MutedFooter: Story = {
           shared documents, project files, and collaboration tools.
         </Text>
       </CardContent>
-      <CardFooter variant="muted">
-        <Button size="sm" variant="outline" style={{ marginLeft: 'auto' }}>
+      <CardFooter variant="muted" justify="flex-end">
+        <Button size="sm" variant="outline">
           Decline
         </Button>
         <Button size="sm">Accept</Button>
@@ -240,10 +240,8 @@ export const BorderedSections: Story = {
               Choose how you want to be notified about activity in your workspace.
             </Text>
           </CardContent>
-          <CardFooter variant={variant}>
-            <Button size="sm" style={{ marginLeft: 'auto' }}>
-              Save
-            </Button>
+          <CardFooter variant={variant} justify="flex-end">
+            <Button size="sm">Save</Button>
           </CardFooter>
         </Card>
       ))}

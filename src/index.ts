@@ -1311,6 +1311,11 @@ export {
   UsersIcon,
   ChatDotsIcon,
   UserAddIcon,
+  UserIcon,
+  BagIcon,
+  GraduationCapIcon,
+  GlobeIcon,
+  CertificateIcon,
   type TEyeIconProps,
   type TEyeClosedIconProps,
   type TEyeDropperIconProps,
@@ -1347,6 +1352,11 @@ export {
   type TUsersIconProps,
   type TChatDotsIconProps,
   type TUserAddIconProps,
+  type TUserIconProps,
+  type TBagIconProps,
+  type TGraduationCapIconProps,
+  type TGlobeIconProps,
+  type TCertificateIconProps,
   type TDownloadIconProps,
 } from './icons';
 export {
