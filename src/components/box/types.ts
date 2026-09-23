@@ -8,6 +8,8 @@ export type TCStyle = CSSObject | ((theme: TTheme) => CSSObject);
 export type TBoxOwnProps = {
   children?: ReactNode;
   cStyle?: TCStyle;
+  /** Stretch to `width: 100%`. */
+  fullWidth?: boolean;
 };
 
 export type TBoxProps<C extends ElementType = 'div'> = TPolymorphicProps<

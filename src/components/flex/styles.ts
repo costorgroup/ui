@@ -14,6 +14,7 @@ type TSFlexProps = Pick<
   | 'basis'
   | 'gap'
   | 'inline'
+  | 'fullWidth'
 >;
 
 const customProps = new Set([
@@ -28,6 +29,7 @@ const customProps = new Set([
   'basis',
   'gap',
   'inline',
+  'fullWidth',
 ]);
 
 export const SFlex = styled('div', {
@@ -42,6 +44,7 @@ export const SFlex = styled('div', {
   flex-grow: ${({ grow }) => grow};
   flex-shrink: ${({ shrink }) => shrink};
   flex-basis: ${({ basis }) => basis};
+  ${({ fullWidth }) => (fullWidth ? 'width: 100%;' : '')}
   gap: ${({ theme, gap }) => {
     if (gap === undefined) {
       return undefined;

@@ -19,6 +19,7 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
     basis,
     gap,
     inline = false,
+    fullWidth = false,
     className,
     ...props
   }: TFlexProps<C>,
@@ -38,6 +39,7 @@ const Flex = forwardRef(function Flex<C extends ElementType = 'div'>(
       basis={basis}
       gap={gap}
       inline={inline}
+      fullWidth={fullWidth}
       {...props}
       className={mergeClasses(flexClasses.root, className)}
     >

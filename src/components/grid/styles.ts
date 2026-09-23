@@ -12,6 +12,7 @@ type TSGridProps = Pick<
   | 'alignItems'
   | 'justifyItems'
   | 'minChildWidth'
+  | 'fullWidth'
 >;
 
 const customProps = new Set([
@@ -23,6 +24,7 @@ const customProps = new Set([
   'alignItems',
   'justifyItems',
   'minChildWidth',
+  'fullWidth',
   'as',
 ]);
 
@@ -57,6 +59,7 @@ export const SGrid = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSGridProps>`
   display: grid;
+  ${({ fullWidth }) => (fullWidth ? 'width: 100%;' : '')}
   grid-template-columns: ${({ columns, templateColumns }) =>
     toTemplate(templateColumns) ?? toRepeat(columns, 3)};
   grid-template-rows: ${({ rows, templateRows }) =>

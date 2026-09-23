@@ -17,6 +17,7 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
     alignItems,
     justifyItems,
     minChildWidth,
+    fullWidth = false,
     className,
     ...props
   }: TGridProps<C>,
@@ -34,6 +35,7 @@ const Grid = forwardRef(function Grid<C extends ElementType = 'div'>(
       alignItems={alignItems}
       justifyItems={justifyItems}
       minChildWidth={minChildWidth}
+      fullWidth={fullWidth}
       {...props}
       className={mergeClasses(gridClasses.root, className)}
     >

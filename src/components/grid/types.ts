@@ -22,6 +22,8 @@ export type TGridOwnProps = {
   justifyItems?: CSSProperties['justifyItems'];
   /** Below this breakpoint, every child spans one full row (ignores cell spans). */
   minChildWidth?: TBreakpoint;
+  /** Stretch to `width: 100%`. */
+  fullWidth?: boolean;
 };
 
 export type TGridProps<C extends ElementType = 'div'> = TPolymorphicProps<

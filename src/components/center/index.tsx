@@ -6,7 +6,7 @@ import { SCenter } from './styles';
 import { TCenterOwnProps, TCenterProps } from './types';
 
 const Center = forwardRef(function Center<C extends ElementType = 'div'>(
-  { as, children, absolute = false, axis = 'both', inline = false, className, ...props }: TCenterProps<C>,
+  { as, children, absolute = false, axis = 'both', inline = false, fullWidth = false, className, ...props }: TCenterProps<C>,
   ref: React.Ref<Element>,
 ) {
   return (
@@ -16,6 +16,7 @@ const Center = forwardRef(function Center<C extends ElementType = 'div'>(
       absolute={absolute}
       axis={axis}
       inline={inline}
+      fullWidth={fullWidth}
       {...props}
       className={mergeClasses(centerClasses.root, className)}
     >

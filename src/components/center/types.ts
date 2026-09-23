@@ -8,6 +8,8 @@ export type TCenterOwnProps = {
   absolute?: boolean;
   axis?: TCenterAxis;
   inline?: boolean;
+  /** Stretch to `width: 100%`. */
+  fullWidth?: boolean;
 };
 
 export type TCenterProps<C extends ElementType = 'div'> = TPolymorphicProps<

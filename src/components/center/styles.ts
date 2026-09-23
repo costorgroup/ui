@@ -1,13 +1,18 @@
 import styled from '@emotion/styled';
 import { TCenterOwnProps } from './types';
 
-type TSCenterProps = Pick<TCenterOwnProps, 'absolute' | 'axis' | 'inline'>;
+type TSCenterProps = Pick<
+  TCenterOwnProps,
+  'absolute' | 'axis' | 'inline' | 'fullWidth'
+>;
 
-const customProps = new Set(['absolute', 'axis', 'inline', 'as']);
+const customProps = new Set(['absolute', 'axis', 'inline', 'fullWidth', 'as']);
 
 export const SCenter = styled('div', {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSCenterProps>`
+  ${({ fullWidth }) => (fullWidth ? 'width: 100%;' : '')}
+
   ${({ absolute = false, axis = 'both', inline = false }) => {
     if (absolute) {
       if (axis === 'horizontal') {

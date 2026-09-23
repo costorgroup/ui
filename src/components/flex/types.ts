@@ -16,6 +16,8 @@ export type TFlexOwnProps = {
   basis?: CSSProperties['flexBasis'];
   gap?: TFlexGap;
   inline?: boolean;
+  /** Stretch to `width: 100%`. */
+  fullWidth?: boolean;
 };
 
 export type TFlexProps<C extends ElementType = 'div'> = TPolymorphicProps<
