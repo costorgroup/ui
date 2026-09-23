@@ -1,6 +1,13 @@
 import styled from '@emotion/styled';
+import { CHROME_IDLE } from '../../../helpers/variant-styles';
+import { colorMix } from '../../../helpers/variant-styles/surface';
+import { TSCardHeaderProps } from './types';
 
-export const SCardHeader = styled.div`
+const customProps = new Set(['variant']);
+
+export const SCardHeader = styled('div', {
+  shouldForwardProp: (prop) => !customProps.has(prop),
+})<TSCardHeaderProps>`
   display: grid;
   grid-auto-rows: min-content;
   align-items: start;
@@ -11,4 +18,18 @@ export const SCardHeader = styled.div`
   &:has([data-slot='card-action']) {
     grid-template-columns: 1fr auto;
   }
+
+  ${({ theme, variant }) => {
+    if (variant === 'plain') return '';
+
+    return `
+      padding-bottom: var(--card-spacing);
+      border-bottom: 1px solid ${theme.surfaces.divider};
+      ${variant === 'muted' ? `background-color: ${colorMix(theme.surfaces.mixer, CHROME_IDLE)};` : ''}
+
+      &:first-child {
+        padding-top: var(--card-spacing);
+      }
+    `;
+  }}
 `;

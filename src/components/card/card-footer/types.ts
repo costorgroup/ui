@@ -1,6 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
 
-export type TCardFooterVariant = 'plain' | 'muted';
+export type TCardFooterVariant = 'plain' | 'muted' | 'border';
 
 export type TCardFooterProps = HTMLAttributes<HTMLDivElement> & {
   children?: ReactNode;

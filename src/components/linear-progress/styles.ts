@@ -1,14 +1,14 @@
-import styled from '@emotion/styled';
-import { keyframes } from '@emotion/react';
+import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 import {
   TSLinearProgressFillProps,
   TSLinearProgressGapProps,
   TSLinearProgressProps,
-} from './types';
-import { trackVariantStyles } from './variant-styles';
+} from "./types";
+import { trackVariantStyles } from "./variant-styles";
 
-const customRootProps = new Set(['width', 'height', 'color', 'variant']);
-const customSizeProps = new Set(['size']);
+const customRootProps = new Set(["width", "height", "color", "variant"]);
+const customSizeProps = new Set(["size"]);
 
 const slide = keyframes`
   from {
@@ -20,19 +20,19 @@ const slide = keyframes`
   }
 `;
 
-export const SLinearProgress = styled('div', {
+export const SLinearProgress = styled("div", {
   shouldForwardProp: (prop) => !customRootProps.has(prop),
 })<TSLinearProgressProps>`
   position: relative;
   display: block;
   box-sizing: border-box;
-  flex-shrink: 0;
-  width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
-  height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height)};
+  width: ${({ width }) => (typeof width === "number" ? `${width}px` : width)};
+  height: ${({ height }) =>
+    typeof height === "number" ? `${height}px` : height};
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radius.pill};
   color: ${({ theme, color }) =>
-    color === 'default' ? theme.surfaces.ink : theme.palette[color].main};
+    color === "default" ? theme.surfaces.ink : theme.palette[color].main};
 
   ${({ theme, color, variant }) => {
     const palette = theme.palette[color];
@@ -50,7 +50,7 @@ export const SLinearProgressRail = styled.div`
   animation: ${slide} 1.4s linear infinite;
 `;
 
-export const SLinearProgressFill = styled('div', {
+export const SLinearProgressFill = styled("div", {
   shouldForwardProp: (prop) => !customSizeProps.has(prop),
 })<TSLinearProgressFillProps>`
   box-sizing: border-box;
@@ -59,10 +59,12 @@ export const SLinearProgressFill = styled('div', {
   height: 100%;
   border-radius: ${({ theme }) => theme.radius.pill};
   background-color: currentColor;
-  transition: width 0.2s ease, flex-basis 0.2s ease;
+  transition:
+    width 0.2s ease,
+    flex-basis 0.2s ease;
 `;
 
-export const SLinearProgressGap = styled('div', {
+export const SLinearProgressGap = styled("div", {
   shouldForwardProp: (prop) => !customSizeProps.has(prop),
 })<TSLinearProgressGapProps>`
   box-sizing: border-box;

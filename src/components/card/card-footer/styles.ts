@@ -15,11 +15,12 @@ export const SCardFooter = styled('div', {
   padding: var(--card-spacing);
   min-width: 0;
 
-  ${({ theme, variant }) =>
-    variant === 'muted'
-      ? `
-          border-top: 1px solid ${theme.surfaces.divider};
-          background-color: ${colorMix(theme.surfaces.mixer, CHROME_IDLE)};
-        `
-      : ''}
+  ${({ theme, variant }) => {
+    if (variant === 'plain') return '';
+
+    return `
+      border-top: 1px solid ${theme.surfaces.divider};
+      ${variant === 'muted' ? `background-color: ${colorMix(theme.surfaces.mixer, CHROME_IDLE)};` : ''}
+    `;
+  }}
 `;

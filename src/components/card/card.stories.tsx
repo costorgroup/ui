@@ -226,6 +226,31 @@ export const MutedFooter: Story = {
   ),
 };
 
+export const BorderedSections: Story = {
+  render: (args) => (
+    <Flex gap="md" wrap="wrap" align="start">
+      {(['border', 'muted'] as const).map((variant) => (
+        <Card key={variant} {...args} style={{ width: 340 }}>
+          <CardHeader variant={variant}>
+            <CardTitle>Notifications</CardTitle>
+            <CardDescription>Header and footer use variant=&quot;{variant}&quot;.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Text size="sm">
+              Choose how you want to be notified about activity in your workspace.
+            </Text>
+          </CardContent>
+          <CardFooter variant={variant}>
+            <Button size="sm" style={{ marginLeft: 'auto' }}>
+              Save
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </Flex>
+  ),
+};
+
 export const Sizes: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap" align="start">

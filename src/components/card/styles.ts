@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Panel } from '../panel';
 import { cardFooterClasses } from './card-footer/classes';
+import { cardHeaderClasses } from './card-header/classes';
 import { cardImageClasses } from './card-image/classes';
 import { TSCardProps } from './types';
 
@@ -24,6 +25,11 @@ export const SCard = styled(Panel, {
   padding-block: var(--card-spacing);
 
   &:has(> .${cardImageClasses.root}:first-of-type) {
+    padding-top: 0;
+  }
+
+  &:has(> .${cardHeaderClasses.muted}:first-child),
+  &:has(> .${cardHeaderClasses.border}:first-child) {
     padding-top: 0;
   }
 

@@ -301,6 +301,7 @@ export {
   type TCardSize,
   type TCardImageProps,
   type TCardHeaderProps,
+  type TCardHeaderVariant,
   type TCardTitleProps,
   type TCardDescriptionProps,
   type TCardActionProps,

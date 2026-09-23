@@ -5,12 +5,17 @@ import { SCardHeader } from './styles';
 import { TCardHeaderProps } from './types';
 
 const CardHeader = forwardRef<HTMLDivElement, TCardHeaderProps>(
-  ({ children, className, ...props }, ref) => (
+  ({ children, variant = 'plain', className, ...props }, ref) => (
     <SCardHeader
       ref={ref}
+      variant={variant}
       data-slot="card-header"
       {...props}
-      className={mergeClasses(cardHeaderClasses.root, className)}
+      className={mergeClasses(
+        cardHeaderClasses.root,
+        cardHeaderClasses[variant],
+        className,
+      )}
     >
       {children}
     </SCardHeader>
@@ -19,7 +24,7 @@ const CardHeader = forwardRef<HTMLDivElement, TCardHeaderProps>(
 
 CardHeader.displayName = 'CardHeader';
 
-export type { TCardHeaderProps } from './types';
+export type { TCardHeaderProps, TCardHeaderVariant } from './types';
 export { cardHeaderClasses } from './classes';
 export { CardHeader };
 export default CardHeader;

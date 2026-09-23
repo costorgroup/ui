@@ -36,7 +36,7 @@ Card.displayName = 'Card';
 
 export type { TCardProps, TCardSize } from './types';
 export type { TCardImageProps } from './card-image';
-export type { TCardHeaderProps } from './card-header';
+export type { TCardHeaderProps, TCardHeaderVariant } from './card-header';
 export type { TCardTitleProps } from './card-title';
 export type { TCardDescriptionProps } from './card-description';
 export type { TCardActionProps } from './card-action';

@@ -1,3 +1,8 @@
 import { generateUtilityClasses } from '../../../helpers/generate-utility-classes';
 
-export const cardHeaderClasses = generateUtilityClasses('V2CardHeader', ['root']);
+export const cardHeaderClasses = generateUtilityClasses('V2CardHeader', [
+  'root',
+  'plain',
+  'muted',
+  'border',
+]);
