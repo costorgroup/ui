@@ -1082,6 +1082,12 @@ export {
   type TBadgeAnchorOrigin,
 } from './components/badge';
 export {
+  Status,
+  statusClasses,
+  type TStatusProps,
+  type TStatusSize,
+} from './components/status';
+export {
   Breadcrumb,
   breadcrumbClasses,
   BreadcrumbBase,

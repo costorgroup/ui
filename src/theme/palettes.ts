@@ -56,7 +56,7 @@ export const defaultAccents: TThemeAccent[] = [
     id: 'default',
     name: 'Default',
     palette: {
-      primary: createColorScale('#00ebff', '#000000'),
+      primary: createColorScale('#4226df', '#ffffff'),
       secondary: scale('#334566'),
     },
   },

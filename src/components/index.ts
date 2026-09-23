@@ -1168,6 +1168,13 @@ export {
 } from './badge';
 
 export {
+  Status,
+  statusClasses,
+  type TStatusProps,
+  type TStatusSize,
+} from './status';
+
+export {
   Breadcrumb,
   breadcrumbClasses,
   BreadcrumbBase,

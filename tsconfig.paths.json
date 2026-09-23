@@ -622,6 +622,9 @@
       "@costor/ui/SpeedDial": [
         "./src/components/speed-dial/index.tsx"
       ],
+      "@costor/ui/Status": [
+        "./src/components/status/index.tsx"
+      ],
       "@costor/ui/Step": [
         "./src/components/stepper/step/index.tsx"
       ],

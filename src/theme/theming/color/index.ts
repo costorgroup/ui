@@ -12,7 +12,7 @@ export type TColorScheme = keyof typeof canvas;
 
 const createPalette = () => {
   return {
-    primary: createColorScale("#00ebff", "#000000"),
+    primary: createColorScale("#4226df", "#ffffff"),
     secondary: createColorScale("#334566", "#ffffff"),
     success: createColorScale("#34c759", "#ffffff"),
     error: createColorScale("#ff3b30", "#ffffff"),
