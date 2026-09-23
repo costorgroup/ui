@@ -43,6 +43,7 @@ import {
   GraduationCapIcon,
   GlobeIcon,
   CertificateIcon,
+  SkillIcon,
 } from './';
 import { useTheme } from '../hooks/use-theme';
 
@@ -89,6 +90,7 @@ const icons = [
   { name: 'GraduationCapIcon', Icon: GraduationCapIcon },
   { name: 'GlobeIcon', Icon: GlobeIcon },
   { name: 'CertificateIcon', Icon: CertificateIcon },
+  { name: 'SkillIcon', Icon: SkillIcon },
 ] as const;
 
 const meta: Meta = {

@@ -12,7 +12,7 @@ const PauseIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="4 4 16.01 16.01"
       fill="none"
       {...props}
     >

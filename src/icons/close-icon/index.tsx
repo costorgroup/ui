@@ -12,7 +12,7 @@ const CloseIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="4.48 4.51 15.01 15.01"
       fill="none"
       {...props}
     >

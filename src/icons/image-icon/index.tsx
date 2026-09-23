@@ -12,7 +12,7 @@ const ImageIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="2.99 2.98 18.02 18.02"
       fill="none"
       {...props}
     >

@@ -12,7 +12,7 @@ const GraduationCapIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 -64 640 640"
+      viewBox="0 -64 640.01 640.01"
       fill="none"
       {...props}
     >

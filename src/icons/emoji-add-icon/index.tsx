@@ -12,7 +12,7 @@ const EmojiAddIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="1.99 1.99 21.02 21.02"
       fill="none"
       {...props}
     >

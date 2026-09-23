@@ -12,7 +12,7 @@ const MoreHorizontalIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="3.24 3.25 17.51 17.51"
       fill="none"
       {...props}
     >

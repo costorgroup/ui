@@ -12,7 +12,7 @@ const SettingsIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="2.57 2.57 18.86 18.86"
       fill="none"
       {...props}
     >

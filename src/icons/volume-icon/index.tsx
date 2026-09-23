@@ -12,7 +12,7 @@ const VolumeIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="3 3.05 17.91 17.91"
       fill="none"
       {...props}
     >

@@ -12,7 +12,7 @@ const UsersIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="3.49 4.62 18.26 18.26"
       fill="none"
       {...props}
     >

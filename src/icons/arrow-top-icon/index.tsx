@@ -12,7 +12,7 @@ const ArrowTopIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="4.01 3.61 15.98 15.98"
       fill="none"
       {...props}
     >

@@ -12,7 +12,7 @@ const GlobeIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 32 32"
+      viewBox="-0.04 -0.04 32.08 32.08"
       fill="none"
       {...props}
     >

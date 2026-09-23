@@ -1316,6 +1316,7 @@ export {
   GraduationCapIcon,
   GlobeIcon,
   CertificateIcon,
+  SkillIcon,
   type TEyeIconProps,
   type TEyeClosedIconProps,
   type TEyeDropperIconProps,
@@ -1357,6 +1358,7 @@ export {
   type TGraduationCapIconProps,
   type TGlobeIconProps,
   type TCertificateIconProps,
+  type TSkillIconProps,
   type TDownloadIconProps,
 } from './icons';
 export {

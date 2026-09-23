@@ -40,6 +40,7 @@ import BagIcon from './bag-icon';
 import GraduationCapIcon from './graduation-cap-icon';
 import GlobeIcon from './globe-icon';
 import CertificateIcon from './certificate-icon';
+import SkillIcon from './skill-icon';
 import type { TEyeIconProps } from './eye-icon/types';
 import type { TEyeClosedIconProps } from './eye-closed-icon/types';
 import type { TEyeDropperIconProps } from './eye-dropper-icon/types';
@@ -82,6 +83,7 @@ import type { TBagIconProps } from './bag-icon/types';
 import type { TGraduationCapIconProps } from './graduation-cap-icon/types';
 import type { TGlobeIconProps } from './globe-icon/types';
 import type { TCertificateIconProps } from './certificate-icon/types';
+import type { TSkillIconProps } from './skill-icon/types';
 
 export type {
   TEyeIconProps,
@@ -126,6 +128,7 @@ export type {
   TGraduationCapIconProps,
   TGlobeIconProps,
   TCertificateIconProps,
+  TSkillIconProps,
 };
 
 export {
@@ -171,4 +174,5 @@ export {
   GraduationCapIcon,
   GlobeIcon,
   CertificateIcon,
+  SkillIcon,
 };

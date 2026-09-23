@@ -12,7 +12,7 @@ const PlayIcon = ({
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      viewBox="0 0 24 24"
+      viewBox="5.32 4.47 15.06 15.06"
       fill="none"
       {...props}
     >
