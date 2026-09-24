@@ -249,6 +249,30 @@ export const BorderedSections: Story = {
   ),
 };
 
+export const ScrollableContent: Story = {
+  render: (args) => (
+    <Card {...args} style={{ maxWidth: 420, maxHeight: 360 }}>
+      <CardHeader variant="border">
+        <CardTitle>Changelog</CardTitle>
+        <CardDescription>Content scrolls when the card has a max height.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Flex direction="column" gap="md">
+          {Array.from({ length: 12 }, (_, i) => (
+            <Text key={i} size="sm">
+              v2.{12 - i}.0 — Improved spacing, new icons, and bug fixes across
+              inputs, menus, and surfaces.
+            </Text>
+          ))}
+        </Flex>
+      </CardContent>
+      <CardFooter variant="border" justify="flex-end">
+        <Button size="sm">Got it</Button>
+      </CardFooter>
+    </Card>
+  ),
+};
+
 export const Sizes: Story = {
   render: () => (
     <Flex gap="md" wrap="wrap" align="start">

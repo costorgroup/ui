@@ -68,7 +68,9 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
           className={accordionSummaryClasses.expandIcon}
           aria-hidden
         >
-          {expandIcon ?? <ArrowBottomIcon />}
+          {expandIcon ?? (
+            <ArrowBottomIcon width="0.875em" height="0.875em" />
+          )}
         </SAccordionExpandIcon>
       </SAccordionSummary>
     );

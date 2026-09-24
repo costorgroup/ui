@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
-import { ArrowBottomIcon } from '../../icons';
 import { AccordionBase } from './accordion-base';
 import { AccordionDetails } from './accordion-details';
 import { AccordionSummary } from './accordion-summary';
@@ -50,7 +49,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         )}
       >
         <AccordionSummary
-          expandIcon={icon ?? <ArrowBottomIcon />}
+          expandIcon={icon}
           expandIconPosition={expandIconPosition}
           className={accordionClasses.summary}
         >

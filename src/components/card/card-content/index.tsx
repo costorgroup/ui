@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { cardContentClasses } from './classes';
-import { SCardContent } from './styles';
+import { SCardContent, SCardContentInner } from './styles';
 import { TCardContentProps } from './types';
 
 const CardContent = forwardRef<HTMLDivElement, TCardContentProps>(
@@ -12,7 +12,7 @@ const CardContent = forwardRef<HTMLDivElement, TCardContentProps>(
       {...props}
       className={mergeClasses(cardContentClasses.root, className)}
     >
-      {children}
+      <SCardContentInner>{children}</SCardContentInner>
     </SCardContent>
   ),
 );

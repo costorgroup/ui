@@ -1,5 +1,6 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { ReactNode } from 'react';
+import type { TScrollAreaProps } from '../../scroll-area/types';
 
-export type TCardContentProps = HTMLAttributes<HTMLDivElement> & {
+export type TCardContentProps = TScrollAreaProps & {
   children?: ReactNode;
 };
