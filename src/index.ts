@@ -249,6 +249,9 @@ export {
   Dropzone,
   dropzoneClasses,
   type TDropzoneProps,
+  type TDropzoneSize,
+  type TDropzoneSpacing,
+  type TDropzonePreviewContext,
 } from './components/dropzone';
 export {
   Panel,

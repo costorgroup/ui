@@ -34,18 +34,27 @@ const meta: Meta<typeof Dropzone> = {
   argTypes: {
     color: { control: 'select', options: COLORS },
     variant: { control: 'select', options: VARIANTS },
+    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    padding: { control: 'text' },
+    gap: { control: 'text' },
     title: { control: 'text' },
     description: { control: 'text' },
     accept: { control: 'text' },
     multiple: { control: 'boolean' },
     disabled: { control: 'boolean' },
     onFiles: { table: { disable: true } },
+    onReject: { table: { disable: true } },
+    onRemove: { table: { disable: true } },
+    renderPreview: { table: { disable: true } },
+    files: { table: { disable: true } },
+    defaultFiles: { table: { disable: true } },
     icon: { table: { disable: true } },
     inputProps: { table: { disable: true } },
   },
   args: {
     color: 'primary',
     variant: 'surface',
+    size: 'md',
     title: 'Upload files',
     description: 'Drag and drop files here, or click to browse.',
     multiple: true,
@@ -82,6 +91,54 @@ export const Variants: Story = {
       ))}
     </Flex>
   ),
+};
+
+export const Sizes: Story = {
+  render: () => (
+    <Flex direction="column" gap="md">
+      {(['sm', 'md', 'lg'] as const).map((size) => (
+        <Dropzone key={size} size={size} title={`size="${size}"`} />
+      ))}
+    </Flex>
+  ),
+};
+
+export const CustomSpacing: Story = {
+  args: {
+    padding: 'md',
+    gap: 'xs',
+    title: 'Compact dropzone',
+    description: 'padding="md", gap="xs"',
+  },
+};
+
+export const ImagePreview: Story = {
+  render: function ImagePreviewStory() {
+    const [rejected, setRejected] = useState<string[]>([]);
+
+    return (
+      <Flex direction="column" gap="md">
+        <Dropzone
+          title="Upload a cover image"
+          description="PNG, JPG or WEBP. Hover the preview to reupload or remove, or drop another image on it."
+          accept={['image/png', 'image/jpeg', '.webp']}
+          multiple={false}
+          onReject={(files) => setRejected(files.map((file) => file.name))}
+          onFiles={() => setRejected([])}
+          renderPreview={({ files, urls }) => (
+            <img
+              src={urls[0]}
+              alt={files[0].name}
+              style={{ width: '100%', maxHeight: 320, objectFit: 'cover' }}
+            />
+          )}
+        />
+        {rejected.length > 0 ? (
+          <Text size="sm">Not an accepted format: {rejected.join(', ')}</Text>
+        ) : null}
+      </Flex>
+    );
+  },
 };
 
 export const ImagesOnly: Story = {

@@ -4,4 +4,6 @@ export const dropzoneClasses = generateUtilityClasses('Dropzone', [
   'root',
   'active',
   'disabled',
+  'preview',
+  'overlay',
 ]);

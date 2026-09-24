@@ -269,6 +269,9 @@ export {
   Dropzone,
   dropzoneClasses,
   type TDropzoneProps,
+  type TDropzoneSize,
+  type TDropzoneSpacing,
+  type TDropzonePreviewContext,
 } from './dropzone';
 
 export {
