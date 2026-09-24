@@ -1,11 +1,11 @@
-import styled from '@emotion/styled';
-import { CHROME_IDLE } from '../../../helpers/variant-styles';
-import { colorMix } from '../../../helpers/variant-styles/surface';
-import { TSCardHeaderProps } from './types';
+import styled from "@emotion/styled";
+import { CHROME_IDLE } from "../../../helpers/variant-styles";
+import { colorMix } from "../../../helpers/variant-styles/surface";
+import { TSCardHeaderProps } from "./types";
 
-const customProps = new Set(['variant']);
+const customProps = new Set(["variant"]);
 
-export const SCardHeader = styled('div', {
+export const SCardHeader = styled("div", {
   shouldForwardProp: (prop) => !customProps.has(prop),
 })<TSCardHeaderProps>`
   display: grid;
@@ -15,17 +15,13 @@ export const SCardHeader = styled('div', {
   padding-inline: var(--card-spacing);
   min-width: 0;
 
-  &:has([data-slot='card-action']) {
-    grid-template-columns: 1fr auto;
-  }
-
   ${({ theme, variant }) => {
-    if (variant === 'plain') return '';
+    if (variant === "plain") return "";
 
     return `
       padding-bottom: var(--card-spacing);
       border-bottom: 1px solid ${theme.surfaces.divider};
-      ${variant === 'muted' ? `background-color: ${colorMix(theme.surfaces.mixer, CHROME_IDLE)};` : ''}
+      ${variant === "muted" ? `background-color: ${colorMix(theme.surfaces.mixer, CHROME_IDLE)};` : ""}
 
       &:first-child {
         padding-top: var(--card-spacing);
