@@ -9,7 +9,7 @@ import React, {
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { useAccordionGroupContext } from '../accordion-group/context';
 import { TPaletteColor } from '../../../theme/types';
-import { TAccordionVariant } from '../variant-styles';
+import { TAccordionColorScope, TAccordionVariant } from '../variant-styles';
 import { accordionBaseClasses } from './classes';
 import { AccordionContext, TAccordionContextValue, TAccordionSize } from './context';
 import { SAccordionBase } from './styles';
@@ -28,6 +28,8 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
       size: sizeProp,
       radius: radiusProp,
       hasDetails: hasDetailsProp,
+      colorScope: colorScopeProp,
+      forceContrastText: forceContrastTextProp,
       className,
       ...props
     },
@@ -39,6 +41,10 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
       variantProp ?? group?.variant ?? 'subtle';
     const size: TAccordionSize = sizeProp ?? group?.size ?? 'md';
     const radius = radiusProp ?? group?.radius ?? 'md';
+    const colorScope: TAccordionColorScope =
+      colorScopeProp ?? group?.colorScope ?? 'all';
+    const forceContrastText =
+      forceContrastTextProp ?? group?.forceContrastText ?? false;
     const grouped = group != null;
     const isControlled = expandedProp !== undefined;
     const [uncontrolledExpanded, setUncontrolledExpanded] =
@@ -88,10 +94,14 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
         disabled,
         grouped,
         hasDetails,
+        colorScope,
+        forceContrastText,
       }),
       [
         color,
+        colorScope,
         disabled,
+        forceContrastText,
         expanded,
         grouped,
         hasDetails,
@@ -113,6 +123,8 @@ const AccordionBase = forwardRef<HTMLDivElement, TAccordionBaseProps>(
           color={color}
           variant={variant}
           grouped={grouped}
+          colorScope={colorScope}
+          forceContrastText={forceContrastText}
           data-accordion-grouped={grouped ? '' : undefined}
           {...props}
           className={mergeClasses(

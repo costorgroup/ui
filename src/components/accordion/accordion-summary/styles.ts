@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import {
   accordionSummaryDivider,
-  accordionSummaryIconColors,
-  accordionSummaryIdleColor,
+  accordionSummaryVariantStyles,
 } from '../variant-styles';
 import { accordionSummaryClasses } from './classes';
 import {
@@ -18,6 +17,9 @@ const summaryCustomProps = new Set([
   'expandIconPosition',
   'size',
   'hasDetails',
+  'forceContrastText',
+  'colorScope',
+  'radius',
 ]);
 
 export const SAccordionSummary = styled('button', {
@@ -37,27 +39,19 @@ export const SAccordionSummary = styled('button', {
     const scale = theme.sizeScale[size];
     return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
   }};
-  margin-bottom: ${({ theme, variant, expanded, hasDetails, size }) =>
-    variant === 'plain' && expanded && hasDetails
+  margin-bottom: ${({ theme, variant, colorScope, expanded, hasDetails, size }) =>
+    (variant === 'plain' || colorScope === 'summary') && expanded && hasDetails
       ? `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`
       : 0};
   border: none;
-  border-bottom: ${({
-    theme,
-    paletteColor,
-    variant,
-    expanded,
-    hasDetails,
-  }) =>
+  border-bottom: ${({ theme, variant, expanded, hasDetails }) =>
     variant === 'plain'
       ? 'none'
       : expanded && hasDetails
-        ? accordionSummaryDivider(variant, theme.palette[paletteColor], theme)
+        ? accordionSummaryDivider(variant, theme)
         : '1px solid transparent'};
   background: transparent;
   font: inherit;
-  color: ${({ theme, variant, paletteColor }) =>
-    accordionSummaryIdleColor(variant, theme.palette[paletteColor], theme)};
   text-align: left;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   transition:
@@ -68,30 +62,12 @@ export const SAccordionSummary = styled('button', {
     expandIconPosition === 'left' ? 'row-reverse' : 'row'};
   justify-content: space-between;
 
-  ${({ theme, paletteColor, variant, expanded, hasDetails }) => {
-    const palette = theme.palette[paletteColor];
-    const icon = accordionSummaryIconColors(
-      variant,
-      palette,
-      theme,
-      expanded && hasDetails,
-    );
-
-    return `
-      & .${accordionSummaryClasses.expandIcon} {
-        color: ${icon.idle};
-      }
-
-      &:hover:not(:disabled) .${accordionSummaryClasses.expandIcon} {
-        color: ${icon.hover};
-      }
-
-      &:active:not(:disabled) .${accordionSummaryClasses.expandIcon},
-      &:focus-visible .${accordionSummaryClasses.expandIcon} {
-        color: ${icon.focus};
-      }
-    `;
-  }}
+  ${({ theme, paletteColor, variant, colorScope, radius, forceContrastText }) =>
+    accordionSummaryVariantStyles(variant, theme.palette[paletteColor], theme, {
+      colorScope,
+      radius,
+      forceContrastText,
+    })}
 
   &:focus-visible {
     outline: 2px solid

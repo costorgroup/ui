@@ -1,15 +1,11 @@
 import styled from '@emotion/styled';
 import {
-  accordionDetailsBackground,
-  accordionDetailsColor,
-} from '../variant-styles';
-import {
   TSAccordionDetailsInnerProps,
   TSAccordionDetailsProps,
 } from './types';
 
 const detailsCustomProps = new Set(['expanded']);
-const detailsInnerCustomProps = new Set(['size', 'variant', 'color']);
+const detailsInnerCustomProps = new Set(['size', 'variant', 'colorScope']);
 
 export const SAccordionDetails = styled('div', {
   shouldForwardProp: (prop) => !detailsCustomProps.has(prop),
@@ -32,10 +28,6 @@ export const SAccordionDetailsClip = styled.div`
 export const SAccordionDetailsInner = styled('div', {
   shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
 })<TSAccordionDetailsInnerProps>`
-  padding: ${({ theme, size, variant }) =>
-    variant === 'plain' ? 0 : theme.sizes[size].padX};
-  background-color: ${({ theme, variant, color }) =>
-    accordionDetailsBackground(variant, theme.palette[color])};
-  color: ${({ theme, variant, color }) =>
-    accordionDetailsColor(variant, theme.palette[color], theme)};
+  padding: ${({ theme, size, variant, colorScope }) =>
+    variant === 'plain' || colorScope === 'summary' ? 0 : theme.sizes[size].padX};
 `;

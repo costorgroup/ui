@@ -7,7 +7,7 @@ import { TButtonVariant } from './types';
 
 export const V2_BUTTON_RADIUS = '5px';
 
-const BUTTON_TINT = 20;
+export const BUTTON_TINT = 20;
 
 const tint = (
   color: string,

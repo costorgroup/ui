@@ -1,7 +1,10 @@
 import { createContext, SyntheticEvent, useContext } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
 import type { TAccordionRadius } from '../types';
-import type { TAccordionVariant } from '../variant-styles';
+import type {
+  TAccordionColorScope,
+  TAccordionVariant,
+} from '../variant-styles';
 
 export type TAccordionSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -15,6 +18,8 @@ export type TAccordionContextValue = {
   disabled: boolean;
   grouped: boolean;
   hasDetails: boolean;
+  colorScope: TAccordionColorScope;
+  forceContrastText: boolean;
 };
 
 export const AccordionContext = createContext<TAccordionContextValue | null>(

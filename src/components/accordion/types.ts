@@ -2,7 +2,10 @@ import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
 import { TPaletteColor, TThemeRadius } from '../../theme/types';
 import type { TAccordionExpandIconPosition } from './accordion-summary/types';
 import type { TAccordionSize } from './accordion-base/context';
-import type { TAccordionVariant } from './variant-styles';
+import type {
+  TAccordionColorScope,
+  TAccordionVariant,
+} from './variant-styles';
 
 export type TAccordionRadius = keyof TThemeRadius;
 
@@ -22,6 +25,10 @@ export type TAccordionProps = Omit<
   variant?: TAccordionVariant;
   size?: TAccordionSize;
   radius?: TAccordionRadius;
+  /** `all` colors the whole accordion, `summary` only the summary row. */
+  colorScope?: TAccordionColorScope;
+  /** Pins text/icon to `palette.contrastText`, same as Button. */
+  forceContrastText?: boolean;
 };
 
 export type { TAccordionSize } from './accordion-base/context';

@@ -2,7 +2,10 @@ import { HTMLAttributes, ReactNode } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
 import type { TAccordionSize } from '../accordion-base/context';
 import type { TAccordionRadius } from '../types';
-import type { TAccordionVariant } from '../variant-styles';
+import type {
+  TAccordionColorScope,
+  TAccordionVariant,
+} from '../variant-styles';
 
 export type TAccordionGroupRadius = TAccordionRadius;
 
@@ -15,6 +18,8 @@ export type TAccordionGroupProps = Omit<
   variant?: TAccordionVariant;
   size?: TAccordionSize;
   radius?: TAccordionGroupRadius;
+  colorScope?: TAccordionColorScope;
+  forceContrastText?: boolean;
 };
 
 export type TSAccordionGroupProps = {

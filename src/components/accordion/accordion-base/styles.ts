@@ -10,6 +10,8 @@ const rootCustomProps = new Set([
   'color',
   'variant',
   'grouped',
+  'colorScope',
+  'forceContrastText',
 ]);
 
 export const SAccordionBase = styled('div', {
@@ -21,15 +23,16 @@ export const SAccordionBase = styled('div', {
   width: 100%;
   min-width: 0;
   overflow: hidden;
-  ${({ theme, radius, variant, grouped }) =>
-    grouped || variant === 'plain' ? '' : `border-radius: ${theme.radius[radius]};`}
-  ${({ theme, color, variant, expanded, grouped }) => {
-    const palette = theme.palette[color];
-    return accordionShellVariantStyles(variant, palette, theme, {
-      expanded,
+  ${({ theme, radius, variant, grouped, colorScope }) =>
+    grouped || variant === 'plain' || colorScope === 'summary'
+      ? ''
+      : `border-radius: ${theme.radius[radius]};`}
+  ${({ theme, color, variant, grouped, colorScope, forceContrastText }) =>
+    accordionShellVariantStyles(variant, theme.palette[color], theme, {
       grouped,
-    });
-  }}
+      colorScope,
+      forceContrastText,
+    })}
   font-family: inherit;
   font-size: ${({ theme, size }) => theme.sizes[size].fontSize};
   font-weight: ${({ theme }) => theme.typography.fontWeight.regular};

@@ -30,6 +30,9 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
       size,
       disabled,
       hasDetails,
+      forceContrastText,
+      colorScope,
+      radius,
     } = useAccordionContext();
 
     return (
@@ -44,6 +47,9 @@ const AccordionSummary = forwardRef<HTMLButtonElement, TAccordionSummaryProps>(
         expandIconPosition={expandIconPosition}
         size={size}
         hasDetails={hasDetails}
+        forceContrastText={forceContrastText}
+        colorScope={colorScope}
+        radius={radius}
         onClick={(event) => {
           onClick?.(event);
 

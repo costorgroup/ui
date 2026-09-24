@@ -1171,6 +1171,7 @@ export {
   type TAccordionSize,
   type TAccordionRadius,
   type TAccordionVariant,
+  type TAccordionColorScope,
 } from './components/accordion';
 export {
   Alert,

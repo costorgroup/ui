@@ -11,7 +11,7 @@ import { TAccordionDetailsProps } from './types';
 
 const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
   ({ children, className, ...props }, ref) => {
-    const { expanded, color, variant, size } = useAccordionContext();
+    const { expanded, variant, size, colorScope } = useAccordionContext();
 
     return (
       <SAccordionDetails
@@ -22,7 +22,7 @@ const AccordionDetails = forwardRef<HTMLDivElement, TAccordionDetailsProps>(
         className={mergeClasses(accordionDetailsClasses.root, className)}
       >
         <SAccordionDetailsClip>
-          <SAccordionDetailsInner size={size} variant={variant} color={color}>
+          <SAccordionDetailsInner size={size} variant={variant} colorScope={colorScope}>
             {children}
           </SAccordionDetailsInner>
         </SAccordionDetailsClip>

@@ -1260,6 +1260,7 @@ export {
   type TAccordionSize,
   type TAccordionRadius,
   type TAccordionVariant,
+  type TAccordionColorScope,
 } from './accordion';
 
 export {

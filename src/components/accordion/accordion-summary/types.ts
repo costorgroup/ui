@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
-import { TAccordionVariant } from '../variant-styles';
+import { TAccordionColorScope, TAccordionVariant } from '../variant-styles';
+import type { TAccordionRadius } from '../types';
 import { TAccordionSize } from '../accordion-base/context';
 
 export type TAccordionExpandIconPosition = 'left' | 'right';
@@ -22,6 +23,9 @@ export type TSAccordionSummaryProps = {
   expandIconPosition: TAccordionExpandIconPosition;
   size: TAccordionSize;
   hasDetails: boolean;
+  forceContrastText: boolean;
+  colorScope: TAccordionColorScope;
+  radius: TAccordionRadius;
 };
 
 export type TSAccordionExpandIconProps = {

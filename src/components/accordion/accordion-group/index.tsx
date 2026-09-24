@@ -13,14 +13,16 @@ const AccordionGroup = forwardRef<HTMLDivElement, TAccordionGroupProps>(
       variant,
       size,
       radius = 'md',
+      colorScope,
+      forceContrastText,
       className,
       ...props
     },
     ref,
   ) => {
     const contextValue = useMemo(
-      () => ({ color, variant, size, radius }),
-      [color, radius, size, variant],
+      () => ({ color, variant, size, radius, colorScope, forceContrastText }),
+      [color, colorScope, forceContrastText, radius, size, variant],
     );
 
     return (

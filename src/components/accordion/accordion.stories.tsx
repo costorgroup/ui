@@ -49,8 +49,17 @@ const meta: Meta<typeof Accordion> = {
     variant: 'subtle',
     size: 'md',
     radius: 'md',
+    colorScope: 'all',
+    forceContrastText: false,
   },
   argTypes: {
+    colorScope: {
+      control: 'inline-radio',
+      options: ['all', 'summary'],
+    },
+    forceContrastText: {
+      control: 'boolean',
+    },
     expanded: {
       control: 'boolean',
     },
@@ -129,9 +138,35 @@ export const Variants: Story = {
           color={args.color}
           size={args.size}
           radius={args.radius}
+          colorScope={args.colorScope}
+          forceContrastText={args.forceContrastText}
           defaultExpanded
         >
-          {variant} variant details use idle chrome fill.
+          {variant} variant details.
+        </Accordion>
+      ))}
+    </Flex>
+  ),
+};
+
+export const ColorScope: Story = {
+  args: {
+    color: 'primary',
+    variant: 'solid',
+  },
+  render: (args) => (
+    <Flex direction="column" gap="md" style={{ width: 420 }}>
+      {(['all', 'summary'] as const).map((colorScope) => (
+        <Accordion
+          key={colorScope}
+          {...args}
+          summary={`colorScope="${colorScope}"`}
+          colorScope={colorScope}
+          defaultExpanded
+        >
+          {colorScope === 'all'
+            ? 'The whole accordion follows the color.'
+            : 'Only the summary follows the color; details stay neutral.'}
         </Accordion>
       ))}
     </Flex>

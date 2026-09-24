@@ -21,6 +21,8 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       variant,
       size,
       radius,
+      colorScope,
+      forceContrastText,
       className,
       ...props
     },
@@ -39,6 +41,8 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         variant={variant}
         size={size}
         radius={radius}
+        colorScope={colorScope}
+        forceContrastText={forceContrastText}
         hasDetails={hasDetails}
         {...props}
         className={mergeClasses(
@@ -73,7 +77,10 @@ export type {
   TAccordionExpandIconPosition,
   TAccordionSize,
 } from './types';
-export type { TAccordionVariant } from './variant-styles';
+export type {
+  TAccordionVariant,
+  TAccordionColorScope,
+} from './variant-styles';
 export { AccordionBase } from './accordion-base';
 export type { TAccordionBaseProps } from './accordion-base';
 export { accordionBaseClasses } from './accordion-base';
