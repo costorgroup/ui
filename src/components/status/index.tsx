@@ -3,10 +3,18 @@ import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { statusClasses } from './classes';
 import { SStatus, SStatusDot } from './styles';
 import { TStatusProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Status = forwardRef<HTMLSpanElement, TStatusProps>(
   (
-    { color = 'success', size = 'md', pulse = false, className, ...props },
+    {
+      color = 'success',
+      size = 'md',
+      pulse = false,
+      className,
+      slotProps,
+      ...props
+    },
     ref,
   ) => {
     const styleProps = { color, size, pulse };
@@ -22,10 +30,15 @@ const Status = forwardRef<HTMLSpanElement, TStatusProps>(
         className={mergeClasses(statusClasses.root, className)}
       >
         <SStatusDot
-          {...styleProps}
-          className={mergeClasses(
-            statusClasses.dot,
-            pulse && statusClasses.pulse,
+          {...mergeSlotProps(
+            {
+              ...styleProps,
+              className: mergeClasses(
+                statusClasses.dot,
+                pulse && statusClasses.pulse,
+              ),
+            },
+            slotProps?.dot,
           )}
         />
       </SStatus>
@@ -35,7 +48,7 @@ const Status = forwardRef<HTMLSpanElement, TStatusProps>(
 
 Status.displayName = 'Status';
 
-export type { TStatusProps, TStatusSize } from './types';
+export type { TStatusProps, TStatusSlotProps, TStatusSize } from './types';
 export { statusClasses } from './classes';
 export { Status };
 export default Status;

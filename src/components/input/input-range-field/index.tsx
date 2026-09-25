@@ -24,10 +24,12 @@ import {
 } from './styles';
 import {
   TInputRangeFieldProps,
+  TInputRangeFieldSlotProps,
   TRangeDirection,
   TRangeThumb,
   TRangeValue,
 } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const toNumber = (value: unknown, fallback: number) => {
   const parsed = typeof value === 'number' ? value : Number(value);
@@ -193,6 +195,7 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
       required: requiredProp,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     ref,
@@ -573,35 +576,52 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
 
     return (
       <SInputRangeField
-        ref={rootRef}
-        size={size}
-        variant={variant}
-        color={color}
-        direction={direction}
-        track={track}
-        className={mergeClasses(
-          inputRangeFieldClasses.root,
-          disabled && inputRangeFieldClasses.disabled,
-          form.error && inputRangeFieldClasses.error,
-          className,
+        {...mergeSlotProps(
+          {
+            ref: rootRef,
+            size,
+            variant,
+            color,
+            direction,
+            track,
+            className: mergeClasses(
+              inputRangeFieldClasses.root,
+              disabled && inputRangeFieldClasses.disabled,
+              form.error && inputRangeFieldClasses.error,
+              className,
+            ),
+            onPointerDown: handlePointerDown,
+            onPointerMove: handlePointerMove,
+            onPointerUp: handlePointerUp,
+            onPointerCancel: handlePointerUp,
+            onLostPointerCapture: handlePointerUp,
+            onPointerLeave: () => {
+              if (!dragRef.current) {
+                setHoveredThumb(null);
+              }
+            },
+          },
+          slotProps?.container,
         )}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={handlePointerUp}
-        onLostPointerCapture={handlePointerUp}
-        onPointerLeave={() => {
-          if (!dragRef.current) {
-            setHoveredThumb(null);
-          }
-        }}
       >
-        <SInputRangeFieldRail direction={direction} />
+        <SInputRangeFieldRail
+          {...mergeSlotProps(
+            {
+              direction,
+            },
+            slotProps?.rail,
+          )}
+        />
         {fillStyles.map((style, index) => (
           <SInputRangeFieldTrack
             key={index}
-            direction={direction}
-            style={style}
+            {...mergeSlotProps(
+              {
+                direction,
+                style,
+              },
+              slotProps?.track,
+            )}
           />
         ))}
         {thumbs.map((thumb) => {
@@ -618,20 +638,30 @@ const InputRangeField = forwardRef<HTMLInputElement, TInputRangeFieldProps>(
           return (
             <SInputRangeFieldThumb
               key={thumb.key}
-              data-range-thumb=""
-              data-active={visible}
-              direction={direction}
-              style={thumbStyle}
+              {...mergeSlotProps(
+                {
+                  'data-range-thumb': '',
+                  'data-active': visible,
+                  direction,
+                  style: thumbStyle,
+                },
+                slotProps?.thumb,
+              )}
             >
               <SInputRangeFieldTooltip
-                visible={visible}
-                position={valuePosition}
+                {...mergeSlotProps(
+                  {
+                    visible,
+                    position: valuePosition,
+                  },
+                  slotProps?.tooltip,
+                )}
               >
                 {renderValue?.({
                   value: thumb.value,
                   thumb: thumb.key,
                   formatted,
-                }) ?? <SInputRangeFieldValue>{formatted}</SInputRangeFieldValue>}
+                }) ?? <SInputRangeFieldValue {...slotProps?.valueLabel}>{formatted}</SInputRangeFieldValue>}
               </SInputRangeFieldTooltip>
             </SInputRangeFieldThumb>
           );

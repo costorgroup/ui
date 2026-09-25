@@ -27,6 +27,7 @@ import {
   SInputFileFieldValue,
 } from './styles';
 import { TInputFileFieldProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
   (
@@ -48,6 +49,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
       className,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -171,33 +173,53 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
           : null}
 
         <SInputFileFieldHiddenInput
-          ref={inputRef}
-          id={fieldId}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          disabled={disabled}
-          tabIndex={-1}
-          aria-hidden
-          onChange={handleInputChange}
-          onClick={(event) => event.stopPropagation()}
+          {...mergeSlotProps(
+            {
+              ref: inputRef,
+              id: fieldId,
+              type: 'file',
+              accept,
+              multiple,
+              disabled,
+              tabIndex: -1,
+              'aria-hidden': true,
+              onChange: handleInputChange,
+              onClick: (event) => event.stopPropagation(),
+            },
+            slotProps?.fileInput,
+          )}
         />
 
-        <InputWrapper open={modalOpen} trigger>
+        <InputWrapper
+          {...mergeSlotProps(
+            {
+              open: modalOpen,
+              trigger: true,
+            },
+            slotProps?.wrapper,
+          )}
+        >
           <SInputFileFieldTrigger
-            type="button"
-            size={size}
-            aria-haspopup={multiple ? 'dialog' : undefined}
-            aria-expanded={multiple ? modalOpen : undefined}
-            aria-invalid={error || undefined}
-            aria-describedby={ariaDescribedBy ?? form.helperId}
-            onClick={handleTriggerClick}
+            {...mergeSlotProps(
+              {
+                type: 'button',
+                size,
+                'aria-haspopup': multiple ? 'dialog' : undefined,
+                'aria-expanded': multiple ? modalOpen : undefined,
+                'aria-invalid': error || undefined,
+                'aria-describedby': ariaDescribedBy ?? form.helperId,
+                onClick: handleTriggerClick,
+              },
+              slotProps?.trigger,
+            )}
           >
-            <SInputFileFieldValue>
+            <SInputFileFieldValue {...slotProps?.value}>
               {displayLabel != null ? (
-                <SInputFileFieldText>{displayLabel}</SInputFileFieldText>
+                <SInputFileFieldText {...slotProps?.text}>
+                  {displayLabel}
+                </SInputFileFieldText>
               ) : (
-                <SInputFileFieldPlaceholder>
+                <SInputFileFieldPlaceholder {...slotProps?.placeholder}>
                   {placeholder}
                 </SInputFileFieldPlaceholder>
               )}
@@ -205,10 +227,15 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
           </SInputFileFieldTrigger>
           {files.length > 0 ? (
             <InputButton
-              type="button"
-              aria-label={multiple ? 'Clear files' : 'Remove file'}
-              disabled={disabled}
-              onClick={handleClear}
+              {...mergeSlotProps(
+                {
+                  type: 'button',
+                  'aria-label': multiple ? 'Clear files' : 'Remove file',
+                  disabled,
+                  onClick: handleClear,
+                },
+                slotProps?.clearButton,
+              )}
             >
               <CloseIcon />
             </InputButton>
@@ -217,15 +244,20 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
 
         {modalOpen && multiple ? (
           <InputFileFieldModal
-            files={files}
-            accept={accept}
-            disabled={disabled}
-            color={color}
-            variant={variant}
-            title={modalTitle}
-            description={modalDescription}
-            onConfirm={handleModalConfirm}
-            onCancel={handleModalCancel}
+            {...mergeSlotProps(
+              {
+                files,
+                accept,
+                disabled,
+                color,
+                variant,
+                title: modalTitle,
+                description: modalDescription,
+                onConfirm: handleModalConfirm,
+                onCancel: handleModalCancel,
+              },
+              slotProps?.modal,
+            )}
           />
         ) : null}
       </SInputFileField>
@@ -235,7 +267,7 @@ const InputFileField = forwardRef<HTMLDivElement, TInputFileFieldProps>(
 
 InputFileField.displayName = 'InputFileField';
 
-export type { TInputFileFieldProps } from './types';
+export type { TInputFileFieldProps, TInputFileFieldSlotProps } from './types';
 export { inputFileFieldClasses } from './classes';
 export { InputFileField };
 export default InputFileField;

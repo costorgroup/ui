@@ -9,6 +9,7 @@ import { AlertContent } from './alert-content';
 import { AlertActions } from './alert-actions';
 import { SAlertClose } from './styles';
 import { TAlertProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Alert = forwardRef<HTMLDivElement, TAlertProps>(
   (
@@ -23,6 +24,7 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       radius = 'md',
       onClose,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -43,19 +45,32 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
           className,
         )}
       >
-        {icon != null ? <AlertIcon>{icon}</AlertIcon> : null}
-        <AlertBody>
-          {title != null ? <AlertTitle>{title}</AlertTitle> : null}
-          {children != null ? <AlertContent>{children}</AlertContent> : null}
-          {actions != null ? <AlertActions>{actions}</AlertActions> : null}
+        {icon != null ? (
+          <AlertIcon {...slotProps?.icon}>{icon}</AlertIcon>
+        ) : null}
+        <AlertBody {...slotProps?.body}>
+          {title != null ? (
+            <AlertTitle {...slotProps?.title}>{title}</AlertTitle>
+          ) : null}
+          {children != null ? (
+            <AlertContent {...slotProps?.content}>{children}</AlertContent>
+          ) : null}
+          {actions != null ? (
+            <AlertActions {...slotProps?.actions}>{actions}</AlertActions>
+          ) : null}
         </AlertBody>
         {closable ? (
           <SAlertClose
-            aria-label="Close"
-            variant="ghost"
-            color={color}
-            size={size === 'lg' ? 'md' : 'sm'}
-            onClick={onClose}
+            {...mergeSlotProps(
+              {
+                'aria-label': 'Close',
+                variant: 'ghost',
+                color,
+                size: size === 'lg' ? 'md' : 'sm',
+                onClick: onClose,
+              },
+              slotProps?.closeButton,
+            )}
           >
             <CloseIcon />
           </SAlertClose>
@@ -69,6 +84,7 @@ Alert.displayName = 'Alert';
 
 export type {
   TAlertProps,
+  TAlertSlotProps,
   TAlertVariant,
   TAlertSize,
   TAlertRadius,

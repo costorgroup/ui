@@ -4,6 +4,7 @@ import CloseIcon from '../../icons/close-icon';
 import { chipClasses } from './classes';
 import { SChip, SChipDelete } from './styles';
 import { TChipProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Chip = forwardRef<HTMLSpanElement, TChipProps>(
   (
@@ -20,6 +21,7 @@ const Chip = forwardRef<HTMLSpanElement, TChipProps>(
       onDelete,
       onKeyDown,
       tabIndex,
+      slotProps,
       ...props
     },
     ref,
@@ -61,19 +63,24 @@ const Chip = forwardRef<HTMLSpanElement, TChipProps>(
         {children}
         {onDelete ? (
           <SChipDelete
-            size="xs"
-            radius="full"
-            variant="ghost"
-            appearance={appearance}
-            color={color}
-            className={chipClasses.delete}
-            disabled={disabled}
-            aria-label="Delete"
-            onMouseDown={(event) => event.stopPropagation()}
-            onClick={(event) => {
-              event.stopPropagation();
-              if (!disabled) onDelete(event);
-            }}
+            {...mergeSlotProps(
+              {
+                size: 'xs',
+                radius: 'full',
+                variant: 'ghost',
+                appearance,
+                color,
+                className: chipClasses.delete,
+                disabled,
+                'aria-label': 'Delete',
+                onMouseDown: (event) => event.stopPropagation(),
+                onClick: (event) => {
+                  event.stopPropagation();
+                  if (!disabled) onDelete(event);
+                },
+              },
+              slotProps?.deleteButton,
+            )}
           >
             <CloseIcon />
           </SChipDelete>
@@ -87,6 +94,7 @@ Chip.displayName = 'Chip';
 
 export type {
   TChipProps,
+  TChipSlotProps,
   TChipVariant,
   TChipAppearance,
   TChipSize,

@@ -7,6 +7,7 @@ import { SectionTitle } from './section-title';
 import { sectionTitleClasses } from './section-title/classes';
 import { SSection, SSectionPathMarker } from './styles';
 import { TSectionProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const PathMarker = () => (
   <SSectionPathMarker
@@ -16,7 +17,7 @@ const PathMarker = () => (
 );
 
 const Section = forwardRef<HTMLElement, TSectionProps>(
-  ({ children, title, className, ...props }, ref) => {
+  ({ children, title, className, slotProps, ...props }, ref) => {
     const group = useContext(SectionGroupContext);
     const align = group?.align ?? 'left';
     const color = group?.color ?? ('primary' as const);
@@ -34,9 +35,18 @@ const Section = forwardRef<HTMLElement, TSectionProps>(
         body = (
           <>
             {showNodes && !isFirst ? <PathMarker /> : null}
-            <SectionTitle showMarker={false}>{title}</SectionTitle>
+            <SectionTitle
+              {...mergeSlotProps(
+                {
+                  showMarker: false,
+                },
+                slotProps?.title,
+              )}
+            >{title}</SectionTitle>
             {children != null ? (
-              <SectionContent>{children}</SectionContent>
+              <SectionContent {...slotProps?.content}>
+                {children}
+              </SectionContent>
             ) : null}
             {showNodes && !isLast ? <PathMarker /> : null}
           </>
@@ -44,9 +54,18 @@ const Section = forwardRef<HTMLElement, TSectionProps>(
       } else {
         body = (
           <>
-            <SectionTitle showMarker={showNodes}>{title}</SectionTitle>
+            <SectionTitle
+              {...mergeSlotProps(
+                {
+                  showMarker: showNodes,
+                },
+                slotProps?.title,
+              )}
+            >{title}</SectionTitle>
             {children != null ? (
-              <SectionContent>{children}</SectionContent>
+              <SectionContent {...slotProps?.content}>
+                {children}
+              </SectionContent>
             ) : null}
           </>
         );
@@ -75,7 +94,7 @@ const Section = forwardRef<HTMLElement, TSectionProps>(
 
 Section.displayName = 'Section';
 
-export type { TSectionProps } from './types';
+export type { TSectionProps, TSectionSlotProps } from './types';
 export { sectionClasses } from './classes';
 export { SSectionPathMarker as SectionPathMarker } from './styles';
 export { SectionGroup, sectionGroupClasses, SectionGroupContext } from './section-group';

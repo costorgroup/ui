@@ -1,8 +1,15 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
 import { TTabsAppearance, TTabsOrientation, TTabsVariant } from './context';
+import type { TSlotProps } from '../../helpers/slot-props';
 
 export type { TTabsVariant };
+
+export type TTabsSlotProps = TSlotProps<{
+  list: HTMLAttributes<HTMLDivElement>;
+  indicator: HTMLAttributes<HTMLSpanElement>;
+  fade: HTMLAttributes<HTMLSpanElement>;
+}>;
 
 export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'color'> & {
   children?: ReactNode;
@@ -19,6 +26,7 @@ export type TTabsProps = Omit<HTMLAttributes<HTMLDivElement>, 'onChange' | 'colo
   draggable?: boolean;
   /** Active indicator / label color. Omit for theme contrast pill. */
   color?: TPaletteColor;
+  slotProps?: TTabsSlotProps;
 };
 
 export type STTabIndicatorProps = {

@@ -4,7 +4,7 @@ import { autoCompleteClasses } from './classes';
 import { FormControl } from '../form-control';
 import type { TFormControlChangeHandler } from '../form-control/types';
 import { InputAutoComplete } from '../input/input-auto-complete';
-import { TAutoCompleteProps } from './types';
+import { TAutoCompleteProps, TAutoCompleteSlotProps } from './types';
 
 const AutoCompleteInner = <T,>(
   {
@@ -25,12 +25,14 @@ const AutoCompleteInner = <T,>(
     isValueEqual,
     disabled,
     id,
+    slotProps,
     ...props
   }: TAutoCompleteProps<T>,
   ref: Ref<HTMLDivElement>,
 ) => {
   return (
     <FormControl
+      {...slotProps?.root}
       label={label}
       description={description}
       helperText={helperText}
@@ -52,10 +54,12 @@ const AutoCompleteInner = <T,>(
         autoCompleteClasses.root,
         error && autoCompleteClasses.error,
         required && autoCompleteClasses.required,
+        slotProps?.root?.className,
         className,
       )}
+      slotProps={slotProps}
     >
-      <InputAutoComplete ref={ref} {...props}>
+      <InputAutoComplete slotProps={slotProps} ref={ref} {...props}>
         {children}
       </InputAutoComplete>
     </FormControl>
@@ -68,7 +72,7 @@ const AutoComplete = forwardRef(AutoCompleteInner) as <T = unknown>(
 
 (AutoComplete as { displayName?: string }).displayName = 'AutoComplete';
 
-export type { TAutoCompleteProps };
+export type { TAutoCompleteProps, TAutoCompleteSlotProps };
 export { autoCompleteClasses } from './classes';
 export { AutoComplete };
 export default AutoComplete;

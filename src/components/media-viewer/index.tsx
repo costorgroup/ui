@@ -43,6 +43,7 @@ import {
   SMediaViewerVideo,
 } from './styles';
 import { TMediaViewerItem, TMediaViewerProps, TMediaViewerType } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const ZOOM_MIN = 0.5;
 const ZOOM_MAX = 4;
@@ -157,6 +158,7 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
       imgProps,
       videoProps,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -581,7 +583,17 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
 
     return (
       <Portal>
-        <Backdrop padding lockScroll align="stretch" onClose={close}>
+        <Backdrop
+          {...mergeSlotProps(
+            {
+              padding: true,
+              lockScroll: true,
+              align: 'stretch',
+              onClose: close,
+            },
+            slotProps?.backdrop,
+          )}
+        >
           <SMediaViewerRoot
             ref={ref}
             {...props}
@@ -591,12 +603,24 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
               className,
             )}
           >
-            <SMediaViewerStage className={mediaViewerClasses.stage}>
+            <SMediaViewerStage
+              {...mergeSlotProps(
+                {
+                  className: mediaViewerClasses.stage,
+                },
+                slotProps?.stage,
+              )}
+            >
               <SMediaViewerFrame
-                role="dialog"
-                aria-modal="true"
-                aria-label={activeLabel}
-                className={mediaViewerClasses.frame}
+                {...mergeSlotProps(
+                  {
+                    role: 'dialog',
+                    'aria-modal': 'true',
+                    'aria-label': activeLabel,
+                    className: mediaViewerClasses.frame,
+                  },
+                  slotProps?.frame,
+                )}
               >
                 <SMediaViewerMedia
                   ref={viewportRef}
@@ -685,45 +709,55 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                       {isVideo ? (
                         <SMediaViewerVideo
                           key={`${active.src}-${index}`}
-                          src={active.src}
-                          poster={active.thumbnail || undefined}
-                          playsInline
-                          preload="metadata"
-                          ready={mediaReady}
-                          className={mediaViewerClasses.video}
-                          {...videoProps}
-                          ref={videoRef}
-                          onPlay={(event) => {
-                            setPlaying(true);
-                            videoProps?.onPlay?.(event);
-                          }}
-                          onPause={(event) => {
-                            setPlaying(false);
-                            videoProps?.onPause?.(event);
-                          }}
-                          onEnded={(event) => {
-                            setPlaying(false);
-                            videoProps?.onEnded?.(event);
-                          }}
-                          onLoadedMetadata={(event) => {
-                            captureNatural(event.currentTarget);
-                            showVideoFrame(event.currentTarget);
-                            videoProps?.onLoadedMetadata?.(event);
-                          }}
+                          {...mergeSlotProps(
+                            {
+                              src: active.src,
+                              poster: active.thumbnail || undefined,
+                              playsInline: true,
+                              preload: 'metadata',
+                              ready: mediaReady,
+                              className: mediaViewerClasses.video,
+                              ...videoProps,
+                              ref: videoRef,
+                              onPlay: (event) => {
+                                setPlaying(true);
+                                videoProps?.onPlay?.(event);
+                              },
+                              onPause: (event) => {
+                                setPlaying(false);
+                                videoProps?.onPause?.(event);
+                              },
+                              onEnded: (event) => {
+                                setPlaying(false);
+                                videoProps?.onEnded?.(event);
+                              },
+                              onLoadedMetadata: (event) => {
+                                captureNatural(event.currentTarget);
+                                showVideoFrame(event.currentTarget);
+                                videoProps?.onLoadedMetadata?.(event);
+                              },
+                            },
+                            slotProps?.video,
+                          )}
                         />
                       ) : (
                         <SMediaViewerImage
                           key={`${active.src}-${index}`}
-                          src={active.src}
-                          alt={active.alt ?? ''}
-                          ready={mediaReady}
-                          className={mediaViewerClasses.image}
-                          {...imgProps}
-                          ref={imageRef}
-                          onLoad={(event) => {
-                            captureNatural(event.currentTarget);
-                            imgProps?.onLoad?.(event);
-                          }}
+                          {...mergeSlotProps(
+                            {
+                              src: active.src,
+                              alt: active.alt ?? '',
+                              ready: mediaReady,
+                              className: mediaViewerClasses.image,
+                              ...imgProps,
+                              ref: imageRef,
+                              onLoad: (event) => {
+                                captureNatural(event.currentTarget);
+                                imgProps?.onLoad?.(event);
+                              },
+                            },
+                            slotProps?.image,
+                          )}
                         />
                       )}
                     </SMediaViewerTransform>
@@ -733,11 +767,23 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
               </SMediaViewerFrame>
             </SMediaViewerStage>
             <SMediaViewerChrome
-              ref={chromeRef}
-              className={mediaViewerClasses.chrome}
+              {...mergeSlotProps(
+                {
+                  ref: chromeRef,
+                  className: mediaViewerClasses.chrome,
+                },
+                slotProps?.chrome,
+              )}
             >
               {active.caption != null ? (
-                <SMediaViewerCaption className={mediaViewerClasses.caption}>
+                <SMediaViewerCaption
+                  {...mergeSlotProps(
+                    {
+                      className: mediaViewerClasses.caption,
+                    },
+                    slotProps?.caption,
+                  )}
+                >
                     {typeof active.caption === 'string' ? (
                       <Text size="sm">{active.caption}</Text>
                     ) : (
@@ -745,20 +791,37 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                     )}
                 </SMediaViewerCaption>
               ) : active.alt ? (
-                <SMediaViewerCaption className={mediaViewerClasses.caption}>
+                <SMediaViewerCaption
+                  {...mergeSlotProps(
+                    {
+                      className: mediaViewerClasses.caption,
+                    },
+                    slotProps?.caption,
+                  )}
+                >
                   <Text size="sm">{active.alt}</Text>
                 </SMediaViewerCaption>
               ) : null}
               {canBrowse ? (
                 <SMediaViewerGallery
-                  ref={setGalleryEl}
-                  className={mediaViewerClasses.gallery}
+                  {...mergeSlotProps(
+                    {
+                      ref: setGalleryEl,
+                      className: mediaViewerClasses.gallery,
+                    },
+                    slotProps?.gallery,
+                  )}
                 >
                   <SMediaViewerTrack
-                    ref={setTrackEl}
-                    offset={galleryOffset}
-                    ready={galleryReady}
-                    className={mediaViewerClasses.track}
+                    {...mergeSlotProps(
+                      {
+                        ref: setTrackEl,
+                        offset: galleryOffset,
+                        ready: galleryReady,
+                        className: mediaViewerClasses.track,
+                      },
+                      slotProps?.track,
+                    )}
                   >
                     {items.map((item, itemIndex) => {
                       const selected = itemIndex === index;
@@ -767,15 +830,20 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                       return (
                         <SMediaViewerThumb
                           key={`${item.src}-${itemIndex}`}
-                          type="button"
-                          selected={selected}
-                          aria-current={selected ? 'true' : undefined}
-                          aria-label={item.alt || `Item ${itemIndex + 1}`}
-                          className={mergeClasses(
-                            mediaViewerClasses.thumb,
-                            selected && mediaViewerClasses.selected,
+                          {...mergeSlotProps(
+                            {
+                              type: 'button',
+                              selected,
+                              'aria-current': selected ? 'true' : undefined,
+                              'aria-label': item.alt || `Item ${itemIndex + 1}`,
+                              className: mergeClasses(
+                                mediaViewerClasses.thumb,
+                                selected && mediaViewerClasses.selected,
+                              ),
+                              onClick: () => setIndex(itemIndex),
+                            },
+                            slotProps?.thumb,
                           )}
-                          onClick={() => setIndex(itemIndex)}
                         >
                           {thumbIsVideo ? (
                             <video
@@ -805,10 +873,15 @@ const MediaViewer = forwardRef<HTMLDivElement, TMediaViewerProps>(
                 </SMediaViewerGallery>
               ) : null}
               <Dock
-                size="xs"
-                variant="surface"
-                appearance="opaque"
-                className={mediaViewerClasses.dock}
+                {...mergeSlotProps(
+                  {
+                    size: 'xs',
+                    variant: 'surface',
+                    appearance: 'opaque',
+                    className: mediaViewerClasses.dock,
+                  },
+                  slotProps?.toolbar,
+                )}
               >
                 <DockItem
                   {...TOOL_ITEM}
@@ -910,6 +983,7 @@ MediaViewer.displayName = 'MediaViewer';
 export type {
   TMediaViewerItem,
   TMediaViewerProps,
+  TMediaViewerSlotProps,
   TMediaViewerType,
 } from './types';
 export { mediaViewerClasses } from './classes';

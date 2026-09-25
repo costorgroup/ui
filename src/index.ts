@@ -47,6 +47,7 @@ export {
   DrawerDescription,
   drawerDescriptionClasses,
   type TDrawerProps,
+  type TDrawerSlotProps,
   type TDrawerSize,
   type TDrawerAnchor,
   type TDrawerVariant,
@@ -78,6 +79,7 @@ export {
   ModalDescription,
   modalDescriptionClasses,
   type TModalProps,
+  type TModalSlotProps,
   type TModalSize,
   type TModalVariant,
   type TModalBaseProps,
@@ -94,6 +96,7 @@ export {
   MediaViewer,
   mediaViewerClasses,
   type TMediaViewerProps,
+  type TMediaViewerSlotProps,
   type TMediaViewerItem,
   type TMediaViewerType,
 } from './components/media-viewer';
@@ -101,6 +104,7 @@ export {
   Image,
   imageClasses,
   type TImageProps,
+  type TImageSlotProps,
   type TImageRadius,
   type TImageAnimation,
 } from './components/image';
@@ -108,6 +112,7 @@ export {
   Video,
   videoClasses,
   type TVideoProps,
+  type TVideoSlotProps,
   type TVideoRadius,
 } from './components/video';
 export {
@@ -124,6 +129,7 @@ export {
   BubbleContext,
   useBubbleContext,
   type TBubbleProps,
+  type TBubbleSlotProps,
   type TBubbleVariant,
   type TBubbleAlign,
   type TBubbleReactionSide,
@@ -170,6 +176,7 @@ export {
   MarqueeItem,
   marqueeItemClasses,
   type TMarqueeProps,
+  type TMarqueeSlotProps,
   type TMarqueeDirection,
   type TMarqueeGap,
   type TMarqueeItemProps,
@@ -178,6 +185,7 @@ export {
   ScrollArea,
   scrollAreaClasses,
   type TScrollAreaProps,
+  type TScrollAreaSlotProps,
   type TScrollAreaScrollbarVisibility,
   type TScrollAreaScrollbarPosition,
   type TScrollAreaScrollbarDirection,
@@ -249,6 +257,7 @@ export {
   Dropzone,
   dropzoneClasses,
   type TDropzoneProps,
+  type TDropzoneSlotProps,
   type TDropzoneSize,
   type TDropzoneSpacing,
   type TDropzonePreviewContext,
@@ -314,6 +323,7 @@ export {
   DataTable,
   dataTableClasses,
   type TDataTableProps,
+  type TDataTableSlotProps,
   type TDataTableColumn,
   type TDataTableRow,
   type TDataTableVariant,
@@ -399,6 +409,7 @@ export {
   SectionTitle,
   sectionTitleClasses,
   type TSectionProps,
+  type TSectionSlotProps,
   type TSectionGroupProps,
   type TSectionAlign,
   type TSectionVariant,
@@ -468,6 +479,7 @@ export {
   LayersContext,
   useLayersContext,
   type TLayersProps,
+  type TLayersSlotProps,
   type TLayersRadius,
   type TLayersSpread,
   type TLayerProps,
@@ -510,6 +522,7 @@ export {
   SpeedDial,
   speedDialClasses,
   type TSpeedDialProps,
+  type TSpeedDialSlotProps,
   type TSpeedDialItemsDirection,
   type TSpeedDialInset,
 } from './components/speed-dial';
@@ -571,6 +584,7 @@ export {
   Tab,
   tabClasses,
   type TTabsProps,
+  type TTabsSlotProps,
   type TTabsAppearance,
   type TTabsOrientation,
   type TTabsVariant,
@@ -737,6 +751,7 @@ export {
   type TInputControlDirection,
   type TInputFieldLayoutProps,
   type TInputWrapperProps,
+  type TInputWrapperSlotProps,
   type TInputVariant,
   INPUT_VARIANTS,
   type TInputSize,
@@ -750,18 +765,25 @@ export {
   inputActionsClasses,
   type TInputTextFieldProps,
   type TInputNumberFieldProps,
+  type TInputNumberFieldSlotProps,
   type TInputTextAreaFieldProps,
   type TInputRichTextFieldProps,
+  type TInputRichTextFieldSlotProps,
   type TInputHelperTextProps,
   type TInputCheckBoxProps,
+  type TInputCheckBoxSlotProps,
   type TInputCheckBoxVariant,
   type TInputRadioButtonProps,
+  type TInputRadioButtonSlotProps,
   type TInputRadioButtonVariant,
   type TInputSwitchProps,
+  type TInputSwitchSlotProps,
   type TInputSwitchVariant,
   type TInputSelectProps,
+  type TInputSelectSlotProps,
   type TInputSelectOptionProps,
   type TInputAutoCompleteProps,
+  type TInputAutoCompleteSlotProps,
   defaultGetOptionLabel,
   defaultGetOptionKey,
   defaultFilterOptions,
@@ -770,8 +792,10 @@ export {
   type TFilterOptionsState,
   type TFilterOptions,
   type TInputPinFieldProps,
+  type TInputPinFieldSlotProps,
   type TInputPinFieldType,
   type TInputRangeFieldProps,
+  type TInputRangeFieldSlotProps,
   type TRangeDirection,
   type TRangeRenderValue,
   type TRangeRenderValueProps,
@@ -780,15 +804,19 @@ export {
   type TRangeValue,
   type TRangeValuePosition,
   type TInputColorFieldProps,
+  type TInputColorFieldSlotProps,
   type TInputEmojiFieldProps,
+  type TInputEmojiFieldSlotProps,
   type TEmojiCategory,
   type TEmojiCategoryId,
   type TEmojiItem,
   type TInputDateFieldProps,
+  type TInputDateFieldSlotProps,
   type TDatePickerMode,
   type TDatePickerDisplayType,
   type TTimePickerDisplayType,
   type TInputFileFieldProps,
+  type TInputFileFieldSlotProps,
   type TInputFileFieldModalProps,
 } from './components/input';
 
@@ -800,39 +828,47 @@ export {
   useFormControlState,
   type TFormControlProps,
   type TFormControlChangeHandler,
+  type TFormControlSlotProps,
+  type TFieldSlotProps,
   type TFormControlContextValue,
 } from './components/form-control';
 export {
   TextField,
   textFieldClasses,
   type TTextFieldProps,
+  type TTextFieldSlotProps,
 } from './components/text-field';
 export {
   TextArea,
   textAreaClasses,
   type TTextAreaProps,
+  type TTextAreaSlotProps,
 } from './components/text-area';
 export {
   NumberField,
   numberFieldClasses,
   type TNumberFieldProps,
+  type TNumberFieldSlotProps,
 } from './components/number-field';
 export {
   Switch,
   switchClasses,
   type TSwitchProps,
+  type TSwitchSlotProps,
   type TSwitchDirection,
 } from './components/switch';
 export {
   CheckBox,
   checkBoxClasses,
   type TCheckBoxProps,
+  type TCheckBoxSlotProps,
   type TCheckBoxDirection,
 } from './components/check-box';
 export {
   Rating,
   ratingClasses,
   type TRatingProps,
+  type TRatingSlotProps,
   type TRatingSize,
   type TRatingVariant,
 } from './components/rating';
@@ -840,6 +876,7 @@ export {
   Chip,
   chipClasses,
   type TChipProps,
+  type TChipSlotProps,
   type TChipVariant,
   type TChipAppearance,
   type TChipSize,
@@ -876,6 +913,7 @@ export {
   Tooltip,
   tooltipClasses,
   type TTooltipProps,
+  type TTooltipSlotProps,
   type TTooltipPlacement,
   type TTooltipRender,
   type TTooltipRenderProps,
@@ -906,12 +944,14 @@ export {
   RadioButton,
   radioButtonClasses,
   type TRadioButtonProps,
+  type TRadioButtonSlotProps,
   type TRadioButtonDirection,
 } from './components/radio-button';
 export {
   RadioButtonGroup,
   radioButtonGroupClasses,
   type TRadioButtonGroupProps,
+  type TRadioButtonGroupSlotProps,
 } from './components/radio-button-group';
 export { RadioButtonGroupContext } from './components/radio-button-group/context';
 export type { TRadioButtonGroupContextValue } from './components/radio-button-group/context';
@@ -919,6 +959,7 @@ export {
   Select,
   selectClasses,
   type TSelectProps,
+  type TSelectSlotProps,
 } from './components/select';
 export {
   SelectOption,
@@ -928,6 +969,7 @@ export {
   NativeSelect,
   nativeSelectClasses,
   type TNativeSelectProps,
+  type TNativeSelectSlotProps,
   type TNativeSelectOption,
   type TNativeSelectChangeHandler,
 } from './components/native-select';
@@ -935,6 +977,7 @@ export {
   AutoComplete,
   autoCompleteClasses,
   type TAutoCompleteProps,
+  type TAutoCompleteSlotProps,
 } from './components/auto-complete';
 export {
   AutoCompleteOption,
@@ -952,6 +995,7 @@ export {
   PaginationEllipsis,
   paginationEllipsisClasses,
   type TPaginationProps,
+  type TPaginationSlotProps,
   type TPaginationVariant,
   type TPaginationVariantProp,
   type TPaginationSize,
@@ -1006,36 +1050,43 @@ export {
   PinField,
   pinFieldClasses,
   type TPinFieldProps,
+  type TPinFieldSlotProps,
 } from './components/pin-field';
 export {
   Range,
   rangeClasses,
   type TRangeProps,
+  type TRangeSlotProps,
 } from './components/range';
 export {
   ColorPickerField,
   colorPickerFieldClasses,
   type TColorPickerFieldProps,
+  type TColorPickerFieldSlotProps,
 } from './components/color-picker-field';
 export {
   EmojiPickerField,
   emojiPickerFieldClasses,
   type TEmojiPickerFieldProps,
+  type TEmojiPickerFieldSlotProps,
 } from './components/emoji-picker-field';
 export {
   FileField,
   fileFieldClasses,
   type TFileFieldProps,
+  type TFileFieldSlotProps,
 } from './components/file-field';
 export {
   RichTextField,
   richTextFieldClasses,
   type TRichTextFieldProps,
+  type TRichTextFieldSlotProps,
 } from './components/rich-text-field';
 export {
   DatePickerField,
   datePickerFieldClasses,
   type TDatePickerFieldProps,
+  type TDatePickerFieldSlotProps,
 } from './components/date-picker-field';
 export {
   InputGroup,
@@ -1048,12 +1099,14 @@ export {
   LinearProgress,
   linearProgressClasses,
   type TLinearProgressProps,
+  type TLinearProgressSlotProps,
   type TLinearProgressVariant,
 } from './components/linear-progress';
 export {
   CircularProgress,
   circularProgressClasses,
   type TCircularProgressProps,
+  type TCircularProgressSlotProps,
   type TCircularProgressVariant,
 } from './components/circular-progress';
 export {
@@ -1067,6 +1120,7 @@ export {
   Avatar,
   avatarClasses,
   type TAvatarProps,
+  type TAvatarSlotProps,
   type TAvatarSize,
   type TAvatarRadius,
 } from './components/avatar';
@@ -1074,12 +1128,14 @@ export {
   AvatarGroup,
   avatarGroupClasses,
   type TAvatarGroupProps,
+  type TAvatarGroupSlotProps,
   type TAvatarGroupSpacing,
 } from './components/avatar-group';
 export {
   Badge,
   badgeClasses,
   type TBadgeProps,
+  type TBadgeSlotProps,
   type TBadgeVariant,
   type TBadgeSize,
   type TBadgeOverlap,
@@ -1089,6 +1145,7 @@ export {
   Status,
   statusClasses,
   type TStatusProps,
+  type TStatusSlotProps,
   type TStatusSize,
 } from './components/status';
 export {
@@ -1108,6 +1165,7 @@ export {
   BreadcrumbEllipsis,
   breadcrumbEllipsisClasses,
   type TBreadcrumbProps,
+  type TBreadcrumbSlotProps,
   type TBreadcrumbSize,
   type TBreadcrumbBaseProps,
   type TBreadcrumbItemProps,
@@ -1166,6 +1224,7 @@ export {
   AccordionGroup,
   accordionGroupClasses,
   type TAccordionProps,
+  type TAccordionSlotProps,
   type TAccordionBaseProps,
   type TAccordionSummaryProps,
   type TAccordionDetailsProps,
@@ -1191,6 +1250,7 @@ export {
   AlertActions,
   alertActionsClasses,
   type TAlertProps,
+  type TAlertSlotProps,
   type TAlertBaseProps,
   type TAlertVariant,
   type TAlertSize,

@@ -2,6 +2,12 @@ import { ReactNode } from 'react';
 import type { AnyExtension, Editor } from '@tiptap/react';
 import type { TPaletteColor } from '../../theme/types';
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+import type { TFieldSlotProps } from '../form-control/types';
+import type { TInputRichTextFieldSlotProps } from '../input/input-rich-text-field/types';
+
+export type TRichTextFieldSlotProps = TFieldSlotProps<
+  Required<TInputRichTextFieldSlotProps>
+>;
 
 export type TRichTextFieldProps = {
   label?: ReactNode;
@@ -29,4 +35,5 @@ export type TRichTextFieldProps = {
   name?: string;
   className?: string;
   actionBar?: ReactNode;
+  slotProps?: TRichTextFieldSlotProps;
 };

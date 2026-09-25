@@ -1,6 +1,10 @@
 import { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
 import type { TButtonSize, TButtonVariant } from '../button/types';
+import type { TSlotProps } from '../../helpers/slot-props';
+import type { TPaginationListProps } from './pagination-list/types';
+import type { TPaginationItemProps } from './pagination-item/types';
+import type { TPaginationEllipsisProps } from './pagination-ellipsis/types';
 
 export type TPaginationVariant = TButtonVariant;
 
@@ -31,6 +35,12 @@ export type TPaginationItemData = {
   disabled: boolean;
 };
 
+export type TPaginationSlotProps = TSlotProps<{
+  list: TPaginationListProps;
+  item: TPaginationItemProps;
+  ellipsis: TPaginationEllipsisProps;
+}>;
+
 export type TPaginationProps = Omit<
   HTMLAttributes<HTMLElement>,
   'onChange' | 'color'
@@ -56,6 +66,7 @@ export type TPaginationProps = Omit<
     selected: boolean,
   ) => string;
   children?: ReactNode;
+  slotProps?: TPaginationSlotProps;
 };
 
 export const PAGINATION_INACTIVE_COLOR = 'default' as const satisfies TPaletteColor;

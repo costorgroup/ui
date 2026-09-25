@@ -5,6 +5,7 @@ import { AccordionDetails } from './accordion-details';
 import { AccordionSummary } from './accordion-summary';
 import { accordionClasses } from './classes';
 import { TAccordionProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
   (
@@ -24,6 +25,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       colorScope,
       forceContrastText,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -53,14 +55,26 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         )}
       >
         <AccordionSummary
-          expandIcon={icon}
-          expandIconPosition={expandIconPosition}
-          className={accordionClasses.summary}
+          {...mergeSlotProps(
+            {
+              expandIcon: icon,
+              expandIconPosition,
+              className: accordionClasses.summary,
+            },
+            slotProps?.summary,
+          )}
         >
           {summary}
         </AccordionSummary>
         {hasDetails ? (
-          <AccordionDetails className={accordionClasses.details}>
+          <AccordionDetails
+            {...mergeSlotProps(
+              {
+                className: accordionClasses.details,
+              },
+              slotProps?.details,
+            )}
+          >
             {children}
           </AccordionDetails>
         ) : null}
@@ -73,6 +87,7 @@ Accordion.displayName = 'Accordion';
 
 export type {
   TAccordionProps,
+  TAccordionSlotProps,
   TAccordionRadius,
   TAccordionExpandIconPosition,
   TAccordionSize,

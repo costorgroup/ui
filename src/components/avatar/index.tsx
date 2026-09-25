@@ -1,5 +1,6 @@
 import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { mergeSlotProps } from '../../helpers/slot-props';
 import { getInitials } from '../../helpers';
 import { avatarClasses } from './classes';
 import { AvatarGroupContext } from './context';
@@ -15,13 +16,15 @@ const Avatar = forwardRef<HTMLDivElement, TAvatarProps>(
       size: sizeProp,
       radius: radiusProp,
       children,
-      imgProps,
+      imgProps: imgPropsProp,
       className,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     const group = useContext(AvatarGroupContext);
+    const imgProps = mergeSlotProps(imgPropsProp ?? {}, slotProps?.img);
     const size = sizeProp ?? group?.size ?? 'md';
     const radius = radiusProp ?? group?.radius ?? 'full';
     const hasSrc = Boolean(src);
@@ -83,7 +86,12 @@ const Avatar = forwardRef<HTMLDivElement, TAvatarProps>(
 
 Avatar.displayName = 'Avatar';
 
-export type { TAvatarProps, TAvatarSize, TAvatarRadius } from './types';
+export type {
+  TAvatarProps,
+  TAvatarSlotProps,
+  TAvatarSize,
+  TAvatarRadius,
+} from './types';
 export { avatarClasses } from './classes';
 export { AvatarGroupContext } from './context';
 export type {

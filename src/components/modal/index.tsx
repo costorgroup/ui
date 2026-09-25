@@ -1,4 +1,9 @@
-import React, { forwardRef, isValidElement, ReactNode } from 'react';
+import React, {
+  forwardRef,
+  HTMLAttributes,
+  isValidElement,
+  ReactNode,
+} from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { Portal } from '../portal';
 import { Backdrop } from '../backdrop';
@@ -11,24 +16,26 @@ import { ModalHeader } from './modal-header';
 import { ModalHeaderActions } from './modal-header-actions';
 import { ModalTitle } from './modal-title';
 import { TModalProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const wrapSlot = (
   value: ReactNode,
   Slot: typeof ModalTitle | typeof ModalDescription,
+  slotProps?: Omit<HTMLAttributes<HTMLElement>, 'color'>,
 ) => {
   if (value == null) {
     return null;
   }
 
   if (typeof value === 'string' || typeof value === 'number') {
-    return <Slot>{value}</Slot>;
+    return <Slot {...slotProps}>{value}</Slot>;
   }
 
   if (isValidElement(value)) {
     return value;
   }
 
-  return <Slot>{value}</Slot>;
+  return <Slot {...slotProps}>{value}</Slot>;
 };
 
 const Modal = forwardRef<HTMLDivElement, TModalProps>(
@@ -45,19 +52,25 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
       open = true,
       onClose,
       className,
+      slotProps,
       ...props
     },
     ref,
   ) => (
     <Portal>
       <Backdrop
-        scrollable={scrollable}
-        align="center"
-        justify="center"
-        layer="modal"
-        lockScroll
-        open={open}
-        onClose={onClose}
+        {...mergeSlotProps(
+          {
+            scrollable,
+            align: 'center',
+            justify: 'center',
+            layer: 'modal',
+            lockScroll: true,
+            open,
+            onClose,
+          },
+          slotProps?.backdrop,
+        )}
       >
         <ModalBase
           ref={ref}
@@ -68,18 +81,29 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
           className={mergeClasses(modalClasses.root, className)}
         >
           {title != null || description != null || headerActions != null ? (
-            <ModalHeader>
-              {wrapSlot(title, ModalTitle)}
-              {wrapSlot(description, ModalDescription)}
+            <ModalHeader {...slotProps?.header}>
+              {wrapSlot(title, ModalTitle, slotProps?.title)}
+              {wrapSlot(description, ModalDescription, slotProps?.description)}
               {headerActions != null ? (
-                <ModalHeaderActions>{headerActions}</ModalHeaderActions>
+                <ModalHeaderActions {...slotProps?.headerActions}>
+                  {headerActions}
+                </ModalHeaderActions>
               ) : null}
             </ModalHeader>
           ) : null}
           {children != null ? (
-            <ModalBody scrollable={scrollable}>{children}</ModalBody>
+            <ModalBody
+              {...mergeSlotProps(
+                {
+                  scrollable,
+                },
+                slotProps?.body,
+              )}
+            >{children}</ModalBody>
           ) : null}
-          {actions != null ? <ModalActions>{actions}</ModalActions> : null}
+          {actions != null ? (
+            <ModalActions {...slotProps?.actions}>{actions}</ModalActions>
+          ) : null}
         </ModalBase>
       </Backdrop>
     </Portal>
@@ -88,7 +112,12 @@ const Modal = forwardRef<HTMLDivElement, TModalProps>(
 
 Modal.displayName = 'Modal';
 
-export type { TModalProps, TModalSize, TModalVariant } from './types';
+export type {
+  TModalProps,
+  TModalSlotProps,
+  TModalSize,
+  TModalVariant,
+} from './types';
 export { modalClasses } from './classes';
 export { ModalBase, modalBaseClasses } from './modal-base';
 export type { TModalBaseProps } from './modal-base';

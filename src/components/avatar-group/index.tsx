@@ -11,6 +11,7 @@ import { AvatarGroupContext } from '../avatar/context';
 import { avatarGroupClasses } from './classes';
 import { SAvatarGroup } from './styles';
 import { TAvatarGroupRootProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
   (
@@ -23,6 +24,7 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
       radius = 'full',
       renderSurplus,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -44,7 +46,16 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
 
     if (surplus > 0) {
       surplusNode = (
-        <Avatar size={size} radius={radius} aria-label={`${surplus} more`}>
+        <Avatar
+          {...mergeSlotProps(
+            {
+              size,
+              radius,
+              'aria-label': `${surplus} more`,
+            },
+            slotProps?.surplus,
+          )}
+        >
           {renderSurplus ? renderSurplus(surplus) : `+${surplus}`}
         </Avatar>
       );
@@ -69,7 +80,10 @@ const AvatarGroup = forwardRef<HTMLDivElement, TAvatarGroupRootProps>(
 
 AvatarGroup.displayName = 'AvatarGroup';
 
-export type { TAvatarGroupRootProps as TAvatarGroupProps } from './types';
+export type {
+  TAvatarGroupRootProps as TAvatarGroupProps,
+  TAvatarGroupSlotProps,
+} from './types';
 export type { TAvatarGroupSpacing } from '../avatar/context';
 export { avatarGroupClasses } from './classes';
 export { AvatarGroup };

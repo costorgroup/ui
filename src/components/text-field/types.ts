@@ -1,6 +1,17 @@
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { InputHTMLAttributes, ReactNode, RefAttributes } from 'react';
+import type { TFieldSlotProps } from '../form-control/types';
+import type { TInputIconProps } from '../input/input-icon/types';
+import type { TInputWrapperProps } from '../input/input-wrapper/types';
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 import type { TPaletteColor } from '../../theme/types';
+
+export type TTextFieldSlotProps = TFieldSlotProps<{
+  wrapper: TInputWrapperProps;
+  input: InputHTMLAttributes<HTMLInputElement> &
+    RefAttributes<HTMLInputElement>;
+  startIcon: TInputIconProps;
+  endIcon: TInputIconProps;
+}>;
 
 export type TTextFieldProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -18,4 +29,5 @@ export type TTextFieldProps = Omit<
   startIcon?: ReactNode;
   endIcon?: ReactNode;
   actionBar?: ReactNode;
+  slotProps?: TTextFieldSlotProps;
 };

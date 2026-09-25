@@ -1,9 +1,37 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import {
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+} from 'react';
 import { TPaletteColor } from '../../../theme/types';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
 import type { TColorFormat } from '../../../helpers/color';
+import type { TSlotProps } from '../../../helpers/slot-props';
+import type { TInputWrapperProps } from '../input-wrapper/types';
+import type { TIconButtonProps } from '../../icon-button/types';
 
 export type { TColorFormat };
+
+export type TInputColorFieldSlotProps = TSlotProps<{
+  hiddenInput: InputHTMLAttributes<HTMLInputElement>;
+  wrapper: TInputWrapperProps;
+  trigger: ButtonHTMLAttributes<HTMLButtonElement>;
+  value: HTMLAttributes<HTMLSpanElement>;
+  swatch: HTMLAttributes<HTMLSpanElement>;
+  text: HTMLAttributes<HTMLSpanElement>;
+  placeholder: HTMLAttributes<HTMLSpanElement>;
+  chevron: HTMLAttributes<HTMLSpanElement>;
+  dropdown: HTMLAttributes<HTMLDivElement>;
+  picker: HTMLAttributes<HTMLDivElement>;
+  spectrum: HTMLAttributes<HTMLDivElement>;
+  controls: HTMLAttributes<HTMLDivElement>;
+  eyeDropperButton: TIconButtonProps;
+  preview: HTMLAttributes<HTMLSpanElement>;
+  sliders: HTMLAttributes<HTMLDivElement>;
+  hue: HTMLAttributes<HTMLDivElement>;
+  alpha: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TInputColorFieldProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -23,6 +51,7 @@ export type TInputColorFieldProps = Omit<
   size?: TInputSize;
   color?: TPaletteColor;
   actionBar?: ReactNode;
+  slotProps?: TInputColorFieldSlotProps;
 };
 
 export type TSInputColorFieldDropdownProps = {

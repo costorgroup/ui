@@ -19,6 +19,7 @@ import {
   SInputRadioButtonInput,
 } from './styles';
 import { TInputRadioButtonProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const InputRadioButtonInner = <T,>(
   {
@@ -37,6 +38,7 @@ const InputRadioButtonInner = <T,>(
     onBlur,
     'aria-invalid': ariaInvalid,
     'aria-describedby': ariaDescribedBy,
+    slotProps,
     ...props
   }: TInputRadioButtonProps<T>,
   ref: Ref<HTMLInputElement>,
@@ -68,12 +70,17 @@ const InputRadioButtonInner = <T,>(
 
   return (
     <SInputRadioButton
-      className={mergeClasses(
-        inputRadioButtonClasses.root,
-        form.disabled && inputRadioButtonClasses.disabled,
-        (checked ?? defaultChecked) && inputRadioButtonClasses.checked,
-        error && inputRadioButtonClasses.error,
-        className,
+      {...mergeSlotProps(
+        {
+          className: mergeClasses(
+            inputRadioButtonClasses.root,
+            form.disabled && inputRadioButtonClasses.disabled,
+            (checked ?? defaultChecked) && inputRadioButtonClasses.checked,
+            error && inputRadioButtonClasses.error,
+            className,
+          ),
+        },
+        slotProps?.container,
       )}
     >
       <SInputRadioButtonInput
@@ -94,14 +101,24 @@ const InputRadioButtonInner = <T,>(
         className={inputRadioButtonClasses.input}
       />
       <SInputRadioButtonControl
-        className={inputRadioButtonClasses.control}
-        variant={form.variant}
-        size={form.size}
-        color={form.color}
+        {...mergeSlotProps(
+          {
+            className: inputRadioButtonClasses.control,
+            variant: form.variant,
+            size: form.size,
+            color: form.color,
+          },
+          slotProps?.control,
+        )}
       >
         <SInputRadioButtonDot
-          className={inputRadioButtonClasses.dot}
-          aria-hidden
+          {...mergeSlotProps(
+            {
+              className: inputRadioButtonClasses.dot,
+              'aria-hidden': true,
+            },
+            slotProps?.dot,
+          )}
         />
       </SInputRadioButtonControl>
     </SInputRadioButton>
@@ -114,6 +131,7 @@ const InputRadioButton = forwardRef(InputRadioButtonInner) as <T = unknown>(
 
 (InputRadioButton as { displayName?: string }).displayName = 'InputRadioButton';
 
+export type { TInputRadioButtonSlotProps } from './types';
 export { inputRadioButtonClasses } from './classes';
 export { InputRadioButton };
 export default InputRadioButton;

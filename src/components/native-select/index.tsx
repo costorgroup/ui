@@ -11,6 +11,7 @@ import {
   SNativeSelectRoot,
 } from './styles';
 import { TNativeSelectOption, TNativeSelectProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const toOption = (option: string | TNativeSelectOption): TNativeSelectOption =>
   typeof option === 'string' ? { value: option, label: option } : option;
@@ -29,6 +30,7 @@ const NativeSelectField = forwardRef<HTMLSelectElement, TNativeSelectProps>(
       id,
       required,
       actionBar,
+      slotProps,
     },
     ref,
   ) => {
@@ -51,29 +53,39 @@ const NativeSelectField = forwardRef<HTMLSelectElement, TNativeSelectProps>(
 
     return (
       <InputWrapper
-        variant={form.variant}
-        size={form.size}
-        color={form.color}
-        disabled={form.disabled}
-        error={form.error}
-        actionBar={actionBar}
+        {...mergeSlotProps(
+          {
+            variant: form.variant,
+            size: form.size,
+            color: form.color,
+            disabled: form.disabled,
+            error: form.error,
+            actionBar,
+          },
+          slotProps?.wrapper,
+        )}
       >
-        <SNativeSelectRoot>
+        <SNativeSelectRoot {...slotProps?.container}>
           <SNativeSelectField
-            ref={ref}
-            className={nativeSelectClasses.field}
-            fieldSize={form.size}
-            id={id ?? form.id}
-            name={name}
-            autoComplete={autoComplete}
-            disabled={form.disabled}
-            required={form.required}
-            aria-invalid={form.error || undefined}
-            aria-describedby={form.helperId}
-            value={currentValue}
-            onChange={handleChange}
-            onFocus={() => form.setFocused?.(true)}
-            onBlur={() => form.setFocused?.(false)}
+            {...mergeSlotProps(
+              {
+                ref,
+                className: nativeSelectClasses.field,
+                fieldSize: form.size,
+                id: id ?? form.id,
+                name,
+                autoComplete,
+                disabled: form.disabled,
+                required: form.required,
+                'aria-invalid': form.error || undefined,
+                'aria-describedby': form.helperId,
+                value: currentValue,
+                onChange: handleChange,
+                onFocus: () => form.setFocused?.(true),
+                onBlur: () => form.setFocused?.(false),
+              },
+              slotProps?.select,
+            )}
           >
             {placeholder != null ? (
               <option value="" disabled hidden>
@@ -83,14 +95,26 @@ const NativeSelectField = forwardRef<HTMLSelectElement, TNativeSelectProps>(
             {items.map((option) => (
               <option
                 key={option.value}
-                value={option.value}
-                disabled={option.disabled}
+                {...mergeSlotProps(
+                  {
+                    value: option.value,
+                    disabled: option.disabled,
+                  },
+                  slotProps?.option,
+                )}
               >
                 {option.label}
               </option>
             ))}
           </SNativeSelectField>
-          <SNativeSelectChevron aria-hidden>
+          <SNativeSelectChevron
+            {...mergeSlotProps(
+              {
+                'aria-hidden': true,
+              },
+              slotProps?.chevron,
+            )}
+          >
             <ArrowBottomIcon width="1em" height="1em" />
           </SNativeSelectChevron>
         </SNativeSelectRoot>
@@ -119,12 +143,20 @@ const NativeSelect = forwardRef<HTMLSelectElement, TNativeSelectProps>(
       onChange,
       disabled,
       id,
+      options,
+      placeholder,
+      name,
+      autoComplete,
+      actionBar,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
+        {...props}
         label={label}
         description={description}
         helperText={helperText}
@@ -144,12 +176,19 @@ const NativeSelect = forwardRef<HTMLSelectElement, TNativeSelectProps>(
           disabled && nativeSelectClasses.disabled,
           error && nativeSelectClasses.error,
           required && nativeSelectClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
         <NativeSelectField
           ref={ref}
-          {...props}
+          options={options}
+          placeholder={placeholder}
+          name={name}
+          autoComplete={autoComplete}
+          actionBar={actionBar}
+          slotProps={slotProps}
           value={value}
           defaultValue={defaultValue}
           onChange={onChange}
@@ -164,7 +203,12 @@ const NativeSelect = forwardRef<HTMLSelectElement, TNativeSelectProps>(
 
 NativeSelect.displayName = 'NativeSelect';
 
-export type { TNativeSelectProps, TNativeSelectOption, TNativeSelectChangeHandler } from './types';
+export type {
+  TNativeSelectProps,
+  TNativeSelectSlotProps,
+  TNativeSelectOption,
+  TNativeSelectChangeHandler,
+} from './types';
 export { nativeSelectClasses } from './classes';
 export { NativeSelect };
 export default NativeSelect;

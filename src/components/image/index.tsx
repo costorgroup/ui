@@ -4,6 +4,7 @@ import { ImageIcon } from '../../icons';
 import { imageClasses } from './classes';
 import { SImage, SImageMedia } from './styles';
 import { TImageProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Image = forwardRef<HTMLSpanElement, TImageProps>(
   (
@@ -17,6 +18,7 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
       onLoad,
       onError,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -70,30 +72,45 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
 
     return (
       <SImage
-        ref={ref}
-        width={width}
-        height={height}
-        radius={radius}
-        showFallback={isFallback}
-        data-slot="image"
-        className={mergeClasses(imageClasses.root, className)}
+        {...mergeSlotProps(
+          {
+            ref,
+            width,
+            height,
+            radius,
+            showFallback: isFallback,
+            'data-slot': 'image',
+            className: mergeClasses(imageClasses.root, className),
+          },
+          slotProps?.root,
+        )}
       >
         {isFallback ? (
           <SImageMedia
-            animation={animation}
-            visible={visible}
-            data-slot="fallback"
-            className={imageClasses.fallback}
+            {...mergeSlotProps(
+              {
+                animation,
+                visible,
+                'data-slot': 'fallback',
+                className: imageClasses.fallback,
+              },
+              slotProps?.fallback,
+            )}
           >
             <ImageIcon />
           </SImageMedia>
         ) : null}
         {hasSrc && !failed ? (
           <SImageMedia
-            animation={animation}
-            visible={showImage ? visible : false}
-            data-slot="media"
-            className={imageClasses.media}
+            {...mergeSlotProps(
+              {
+                animation,
+                visible: showImage ? visible : false,
+                'data-slot': 'media',
+                className: imageClasses.media,
+              },
+              slotProps?.media,
+            )}
           >
             <img
               {...props}
@@ -119,7 +136,12 @@ const Image = forwardRef<HTMLSpanElement, TImageProps>(
 
 Image.displayName = 'Image';
 
-export type { TImageProps, TImageRadius, TImageAnimation } from './types';
+export type {
+  TImageProps,
+  TImageSlotProps,
+  TImageRadius,
+  TImageAnimation,
+} from './types';
 export { imageClasses } from './classes';
 export { Image };
 export default Image;

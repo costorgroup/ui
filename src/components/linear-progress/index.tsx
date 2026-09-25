@@ -8,6 +8,7 @@ import {
   SLinearProgressRail,
 } from './styles';
 import { TLinearProgressProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const resolveSize = (value: number | string | undefined, fallback: number | string) => {
   if (value === undefined) {
@@ -30,6 +31,7 @@ const LinearProgress = forwardRef<HTMLDivElement, TLinearProgressProps>(
       role = 'progressbar',
       'aria-label': ariaLabel = 'Progress',
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -62,14 +64,49 @@ const LinearProgress = forwardRef<HTMLDivElement, TLinearProgressProps>(
         )}
       >
         {canAnimate ? (
-          <SLinearProgressRail>
-            <SLinearProgressFill size={fillSize} />
-            <SLinearProgressGap size={gapSize} />
-            <SLinearProgressFill size={fillSize} />
-            <SLinearProgressGap size={gapSize} />
+          <SLinearProgressRail {...slotProps?.rail}>
+            <SLinearProgressFill
+              {...mergeSlotProps(
+                {
+                  size: fillSize,
+                },
+                slotProps?.bar,
+              )}
+            />
+            <SLinearProgressGap
+              {...mergeSlotProps(
+                {
+                  size: gapSize,
+                },
+                slotProps?.gap,
+              )}
+            />
+            <SLinearProgressFill
+              {...mergeSlotProps(
+                {
+                  size: fillSize,
+                },
+                slotProps?.bar,
+              )}
+            />
+            <SLinearProgressGap
+              {...mergeSlotProps(
+                {
+                  size: gapSize,
+                },
+                slotProps?.gap,
+              )}
+            />
           </SLinearProgressRail>
         ) : (
-          <SLinearProgressFill size={fillSize} />
+          <SLinearProgressFill
+            {...mergeSlotProps(
+              {
+                size: fillSize,
+              },
+              slotProps?.bar,
+            )}
+          />
         )}
       </SLinearProgress>
     );
@@ -78,7 +115,11 @@ const LinearProgress = forwardRef<HTMLDivElement, TLinearProgressProps>(
 
 LinearProgress.displayName = 'LinearProgress';
 
-export type { TLinearProgressProps, TLinearProgressVariant } from './types';
+export type {
+  TLinearProgressProps,
+  TLinearProgressSlotProps,
+  TLinearProgressVariant,
+} from './types';
 export { linearProgressClasses } from './classes';
 export { LinearProgress };
 export default LinearProgress;

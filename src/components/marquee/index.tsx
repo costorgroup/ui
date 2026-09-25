@@ -19,6 +19,7 @@ import {
 } from './marquee-item';
 import { SMarquee, SMarqueeTrack } from './styles';
 import { TMarqueeDirection, TMarqueeProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const isHorizontal = (direction: TMarqueeDirection) =>
   direction === 'left' || direction === 'right';
@@ -80,6 +81,7 @@ const Marquee = forwardRef<HTMLDivElement, TMarqueeProps>(
       onPointerDown,
       onMouseEnter,
       onMouseLeave,
+      slotProps,
       ...props
     },
     ref,
@@ -342,11 +344,16 @@ const Marquee = forwardRef<HTMLDivElement, TMarqueeProps>(
         }}
       >
         <SMarqueeTrack
-          ref={trackRef}
-          direction={direction}
-          gap={gap}
-          align={align}
-          className={marqueeClasses.track}
+          {...mergeSlotProps(
+            {
+              ref: trackRef,
+              direction,
+              gap,
+              align,
+              className: marqueeClasses.track,
+            },
+            slotProps?.track,
+          )}
         >
           {Array.from({ length: COPIES }, (_, copy) =>
             items.map((item, index) =>
@@ -363,7 +370,12 @@ const Marquee = forwardRef<HTMLDivElement, TMarqueeProps>(
 
 Marquee.displayName = 'Marquee';
 
-export type { TMarqueeProps, TMarqueeDirection, TMarqueeGap } from './types';
+export type {
+  TMarqueeProps,
+  TMarqueeSlotProps,
+  TMarqueeDirection,
+  TMarqueeGap,
+} from './types';
 export type { TMarqueeItemProps } from './marquee-item';
 export { marqueeClasses } from './classes';
 export { MarqueeItem, marqueeItemClasses } from './marquee-item';

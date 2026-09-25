@@ -4,7 +4,7 @@ import { selectClasses } from './classes';
 import { FormControl } from '../form-control';
 import type { TFormControlChangeHandler } from '../form-control/types';
 import { InputSelect } from '../input/input-select';
-import { TSelectProps } from './types';
+import { TSelectProps, TSelectSlotProps } from './types';
 
 const SelectInner = <T,>(
   {
@@ -25,12 +25,14 @@ const SelectInner = <T,>(
     isValueEqual,
     disabled,
     id,
+    slotProps,
     ...props
   }: TSelectProps<T>,
   ref: Ref<HTMLDivElement>,
 ) => {
   return (
     <FormControl
+      {...slotProps?.root}
       label={label}
       description={description}
       helperText={helperText}
@@ -50,10 +52,12 @@ const SelectInner = <T,>(
         selectClasses.root,
         error && selectClasses.error,
         required && selectClasses.required,
+        slotProps?.root?.className,
         className,
       )}
+      slotProps={slotProps}
     >
-      <InputSelect ref={ref} {...props}>
+      <InputSelect slotProps={slotProps} ref={ref} {...props}>
         {children}
       </InputSelect>
     </FormControl>
@@ -66,7 +70,7 @@ const Select = forwardRef(SelectInner) as <T = unknown>(
 
 (Select as { displayName?: string }).displayName = 'Select';
 
-export type { TSelectProps };
+export type { TSelectProps, TSelectSlotProps };
 export { selectClasses } from './classes';
 export { Select };
 export default Select;

@@ -51,6 +51,7 @@ import {
   SInputColorFieldValue,
 } from './styles';
 import { TInputColorFieldProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const DEFAULT_COLOR: TColorRgba = { r: 0, g: 0, b: 0, a: 1 };
 
@@ -77,6 +78,7 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
       className,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -434,48 +436,83 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
           className,
         )}>
         {name != null ? (
-          <input type="hidden" name={name} value={formatted} disabled={disabled} />
+          <input
+            {...mergeSlotProps(
+              {
+                type: 'hidden',
+                name,
+                value: formatted,
+                disabled,
+              },
+              slotProps?.hiddenInput,
+            )}
+          />
         ) : null}
 
         <InputWrapper
-          open={open}
-          variant={variant}
-          size={size}
-          color={color}
-          disabled={disabled}
-          trigger
-          actionBar={actionBar}
+          {...mergeSlotProps(
+            {
+              open,
+              variant,
+              size,
+              color,
+              disabled,
+              trigger: true,
+              actionBar,
+            },
+            slotProps?.wrapper,
+          )}
         >
           <SInputColorFieldTrigger
-            ref={triggerRef}
-            type="button"
-            id={fieldId}
-            size={size}
-            disabled={disabled}
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            aria-controls={open ? listId : undefined}
-            aria-invalid={error || undefined}
-            aria-describedby={ariaDescribedBy ?? form.helperId}
-            onClick={() => setOpen(!open)}
-            onKeyDown={handleTriggerKeyDown}
-            style={
+            {...mergeSlotProps(
               {
-                ['--input-color-swatch' as string]: swatch,
-              } as React.CSSProperties
-            }
+                ref: triggerRef,
+                type: 'button',
+                id: fieldId,
+                size,
+                disabled,
+                'aria-haspopup': 'dialog',
+                'aria-expanded': open,
+                'aria-controls': open ? listId : undefined,
+                'aria-invalid': error || undefined,
+                'aria-describedby': ariaDescribedBy ?? form.helperId,
+                onClick: () => setOpen(!open),
+                onKeyDown: handleTriggerKeyDown,
+                style: {
+                  ['--input-color-swatch' as string]: swatch,
+                } as React.CSSProperties,
+              },
+              slotProps?.trigger,
+            )}
           >
-            <SInputColorFieldValue>
-              <SInputColorFieldSwatch aria-hidden />
+            <SInputColorFieldValue {...slotProps?.value}>
+              <SInputColorFieldSwatch
+                {...mergeSlotProps(
+                  {
+                    'aria-hidden': true,
+                  },
+                  slotProps?.swatch,
+                )}
+              />
               {hasValue ? (
-                <SInputColorFieldText>{formatted}</SInputColorFieldText>
+                <SInputColorFieldText {...slotProps?.text}>
+                  {formatted}
+                </SInputColorFieldText>
               ) : (
-                <SInputColorFieldPlaceholder>
+                <SInputColorFieldPlaceholder {...slotProps?.placeholder}>
                   {placeholder}
                 </SInputColorFieldPlaceholder>
               )}
             </SInputColorFieldValue>
-            <SInputColorFieldChevron open={open} aria-hidden>
+            <SInputColorFieldChevron
+              {...mergeSlotProps(
+                {
+                  open,
+                  'aria-hidden': true,
+                },
+                slotProps?.chevron,
+              )}
+            >
               <ArrowBottomIcon />
             </SInputColorFieldChevron>
           </SInputColorFieldTrigger>
@@ -484,88 +521,113 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
         {open ? (
           <Portal>
             <SInputColorFieldDropdown
-              ref={dropdownRef}
-              id={listId}
-              role="dialog"
-              aria-label="Color picker"
-              top={coords.top}
-              left={coords.left}
-              width={coords.width}
-              placement={coords.placement}
-              visible={visible}
-              style={
+              {...mergeSlotProps(
                 {
-                  ['--input-color-swatch' as string]: swatch,
-                  ['--input-color-opaque' as string]: opaque,
-                  ['--input-color-hue' as string]: hueColor,
-                } as React.CSSProperties
-              }
+                  ref: dropdownRef,
+                  id: listId,
+                  role: 'dialog',
+                  'aria-label': 'Color picker',
+                  top: coords.top,
+                  left: coords.left,
+                  width: coords.width,
+                  placement: coords.placement,
+                  visible,
+                  style: {
+                    ['--input-color-swatch' as string]: swatch,
+                    ['--input-color-opaque' as string]: opaque,
+                    ['--input-color-hue' as string]: hueColor,
+                  } as React.CSSProperties,
+                },
+                slotProps?.dropdown,
+              )}
             >
-              <SInputColorFieldPicker>
+              <SInputColorFieldPicker {...slotProps?.picker}>
                 <SInputColorFieldSpectrum
-                  ref={spectrumRef}
-                  role="slider"
-                  aria-label="Saturation and brightness"
-                  aria-valuetext={`Saturation ${Math.round(hsv.s * 100)}%, brightness ${Math.round(hsv.v * 100)}%`}
-                  onPointerDown={(event) =>
-                    bindDrag(event, updateSpectrumFromPointer)
-                  }
+                  {...mergeSlotProps(
+                    {
+                      ref: spectrumRef,
+                      role: 'slider',
+                      'aria-label': 'Saturation and brightness',
+                      'aria-valuetext': `Saturation ${Math.round(hsv.s * 100)}%, brightness ${Math.round(hsv.v * 100)}%`,
+                      onPointerDown: (event) =>
+                      bindDrag(event, updateSpectrumFromPointer),
+                    },
+                    slotProps?.spectrum,
+                  )}
                 >
                   <SInputColorFieldSpectrumMarker
                     style={{ left: spectrumLeft, top: spectrumTop }}
                   />
                 </SInputColorFieldSpectrum>
 
-                <SInputColorFieldControls>
+                <SInputColorFieldControls {...slotProps?.controls}>
                   <IconButton
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    color="default"
-                    disabled={disabled || !supportsEyeDropper}
-                    aria-label="Pick color from screen"
-                    title={
-                      supportsEyeDropper
+                    {...mergeSlotProps(
+                      {
+                        type: 'button',
+                        variant: 'ghost',
+                        size: 'sm',
+                        color: 'default',
+                        disabled: disabled || !supportsEyeDropper,
+                        'aria-label': 'Pick color from screen',
+                        title: supportsEyeDropper
                         ? 'Eyedropper'
-                        : 'Eyedropper is not supported in this browser'
-                    }
-                    onClick={handleEyeDropper}
+                        : 'Eyedropper is not supported in this browser',
+                        onClick: handleEyeDropper,
+                      },
+                      slotProps?.eyeDropperButton,
+                    )}
                   >
                     <EyeDropperIcon />
                   </IconButton>
 
-                  <SInputColorFieldPreview aria-hidden />
+                  <SInputColorFieldPreview
+                    {...mergeSlotProps(
+                      {
+                        'aria-hidden': true,
+                      },
+                      slotProps?.preview,
+                    )}
+                  />
 
-                  <SInputColorFieldSliders>
+                  <SInputColorFieldSliders {...slotProps?.sliders}>
                     <SInputColorFieldHue
-                      ref={hueRef}
-                      role="slider"
-                      aria-label="Hue"
-                      aria-valuemin={0}
-                      aria-valuemax={360}
-                      aria-valuenow={Math.round(hsv.h)}
-                      onPointerDown={(event) =>
-                        bindDrag(event, (clientX) =>
-                          updateHueFromPointer(clientX),
-                        )
-                      }
+                      {...mergeSlotProps(
+                        {
+                          ref: hueRef,
+                          role: 'slider',
+                          'aria-label': 'Hue',
+                          'aria-valuemin': 0,
+                          'aria-valuemax': 360,
+                          'aria-valuenow': Math.round(hsv.h),
+                          onPointerDown: (event) =>
+                          bindDrag(event, (clientX) =>
+                            updateHueFromPointer(clientX),
+                          ),
+                        },
+                        slotProps?.hue,
+                      )}
                     >
                       <SInputColorFieldSliderMarker style={{ left: hueLeft }} />
                     </SInputColorFieldHue>
 
                     {showAlpha ? (
                       <SInputColorFieldAlpha
-                        ref={alphaRef}
-                        role="slider"
-                        aria-label="Alpha"
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                        aria-valuenow={Math.round(colorValue.a * 100)}
-                        onPointerDown={(event) =>
-                          bindDrag(event, (clientX) =>
-                            updateAlphaFromPointer(clientX),
-                          )
-                        }
+                        {...mergeSlotProps(
+                          {
+                            ref: alphaRef,
+                            role: 'slider',
+                            'aria-label': 'Alpha',
+                            'aria-valuemin': 0,
+                            'aria-valuemax': 100,
+                            'aria-valuenow': Math.round(colorValue.a * 100),
+                            onPointerDown: (event) =>
+                            bindDrag(event, (clientX) =>
+                              updateAlphaFromPointer(clientX),
+                            ),
+                          },
+                          slotProps?.alpha,
+                        )}
                       >
                         <SInputColorFieldSliderMarker
                           style={{ left: alphaLeft, background: opaque }}
@@ -585,7 +647,11 @@ const InputColorField = forwardRef<HTMLDivElement, TInputColorFieldProps>(
 
 InputColorField.displayName = 'InputColorField';
 
-export type { TInputColorFieldProps, TColorFormat } from './types';
+export type {
+  TInputColorFieldProps,
+  TInputColorFieldSlotProps,
+  TColorFormat,
+} from './types';
 export type { TColorRgba, TColorHsv } from '../../../helpers/color';
 export { inputColorFieldClasses } from './classes';
 export { InputColorField };

@@ -10,6 +10,7 @@ import { StarBorderIcon, StarIcon } from '../../icons';
 import { ratingClasses } from './classes';
 import { SRating } from './styles';
 import { TRatingProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const defaultGetLabelText = (value: number) =>
   `${value} Star${value !== 1 ? 's' : ''}`;
@@ -67,6 +68,7 @@ const Rating = forwardRef<HTMLSpanElement, TRatingProps>(
       onFocus,
       onBlur,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -147,14 +149,19 @@ const Rating = forwardRef<HTMLSpanElement, TRatingProps>(
         {!readOnly ? (
           <label className={ratingClasses.visuallyHidden}>
             <input
-              type="radio"
-              className={ratingClasses.visuallyHidden}
-              name={groupName}
-              value=""
-              checked={numericValue === 0}
-              disabled={disabled}
-              aria-label="0 Stars"
-              onChange={(event) => commit(event, null)}
+              {...mergeSlotProps(
+                {
+                  type: 'radio',
+                  className: ratingClasses.visuallyHidden,
+                  name: groupName,
+                  value: '',
+                  checked: numericValue === 0,
+                  disabled,
+                  'aria-label': '0 Stars',
+                  onChange: (event) => commit(event, null),
+                },
+                slotProps?.input,
+              )}
             />
           </label>
         ) : null}
@@ -162,15 +169,33 @@ const Rating = forwardRef<HTMLSpanElement, TRatingProps>(
           const fill = getItemFill(index, displayValue, highlightSelectedOnly);
 
           return (
-            <span key={index} className={ratingClasses.item}>
+            <span
+              key={index}
+              {...mergeSlotProps(
+                {
+                  className: ratingClasses.item,
+                },
+                slotProps?.item,
+              )}
+            >
               <span
-                className={mergeClasses(ratingClasses.icon, ratingClasses.iconEmpty)}
+                {...mergeSlotProps(
+                  {
+                    className: mergeClasses(ratingClasses.icon, ratingClasses.iconEmpty),
+                  },
+                  slotProps?.emptyIcon,
+                )}
               >
                 {vacantIcon}
               </span>
               <span
-                className={mergeClasses(ratingClasses.icon, ratingClasses.iconFilled)}
-                style={{ ['--cui-rating-fill' as string]: `${fill}%` }}
+                {...mergeSlotProps(
+                  {
+                    className: mergeClasses(ratingClasses.icon, ratingClasses.iconFilled),
+                    style: { ['--cui-rating-fill' as string]: `${fill}%` },
+                  },
+                  slotProps?.filledIcon,
+                )}
               >
                 {filledIcon}
               </span>
@@ -188,32 +213,42 @@ const Rating = forwardRef<HTMLSpanElement, TRatingProps>(
                     return (
                       <label
                         key={itemValue}
-                        className={ratingClasses.label}
-                        style={{
-                          width: `${(step / 1) * 100}%`,
-                          insetInlineStart: `${fractionIndex * step * 100}%`,
-                        }}
-                        onMouseMove={(event) => {
-                          if (hover !== itemValue) {
-                            setHover(itemValue);
-                            onChangeActive?.(event, itemValue);
-                          }
-                        }}
+                        {...mergeSlotProps(
+                          {
+                            className: ratingClasses.label,
+                            style: {
+                              width: `${(step / 1) * 100}%`,
+                              insetInlineStart: `${fractionIndex * step * 100}%`,
+                            },
+                            onMouseMove: (event) => {
+                              if (hover !== itemValue) {
+                                setHover(itemValue);
+                                onChangeActive?.(event, itemValue);
+                              }
+                            },
+                          },
+                          slotProps?.label,
+                        )}
                       >
                         <input
-                          type="radio"
-                          className={ratingClasses.visuallyHidden}
-                          name={groupName}
-                          value={itemValue}
-                          checked={numericValue === itemValue}
-                          disabled={disabled}
-                          aria-label={getLabelText(itemValue)}
-                          onClick={(event) => {
-                            if (numericValue === itemValue) {
-                              commit(event, null);
-                            }
-                          }}
-                          onChange={(event) => commit(event, itemValue)}
+                          {...mergeSlotProps(
+                            {
+                              type: 'radio',
+                              className: ratingClasses.visuallyHidden,
+                              name: groupName,
+                              value: itemValue,
+                              checked: numericValue === itemValue,
+                              disabled,
+                              'aria-label': getLabelText(itemValue),
+                              onClick: (event) => {
+                                if (numericValue === itemValue) {
+                                  commit(event, null);
+                                }
+                              },
+                              onChange: (event) => commit(event, itemValue),
+                            },
+                            slotProps?.input,
+                          )}
                         />
                       </label>
                     );
@@ -229,7 +264,12 @@ const Rating = forwardRef<HTMLSpanElement, TRatingProps>(
 
 Rating.displayName = 'Rating';
 
-export type { TRatingProps, TRatingSize, TRatingVariant } from './types';
+export type {
+  TRatingProps,
+  TRatingSlotProps,
+  TRatingSize,
+  TRatingVariant,
+} from './types';
 export { ratingClasses } from './classes';
 export { Rating };
 export default Rating;

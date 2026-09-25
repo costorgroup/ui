@@ -1,5 +1,6 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../theme/types';
+import type { TSlotProps } from '../../helpers/slot-props';
 
 export type TBadgeVariant = 'solid' | 'subtle' | 'surface';
 
@@ -11,6 +12,10 @@ export type TBadgeAnchorOrigin = {
   vertical?: 'top' | 'bottom';
   horizontal?: 'left' | 'right';
 };
+
+export type TBadgeSlotProps = TSlotProps<{
+  badge: HTMLAttributes<HTMLSpanElement>;
+}>;
 
 export type TBadgeProps = Omit<
   HTMLAttributes<HTMLSpanElement>,
@@ -26,6 +31,7 @@ export type TBadgeProps = Omit<
   invisible?: boolean;
   overlap?: TBadgeOverlap;
   anchorOrigin?: TBadgeAnchorOrigin;
+  slotProps?: TBadgeSlotProps;
 };
 
 export type TSBadgeProps = {

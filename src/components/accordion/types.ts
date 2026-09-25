@@ -6,8 +6,16 @@ import type {
   TAccordionColorScope,
   TAccordionVariant,
 } from './variant-styles';
+import type { TSlotProps } from '../../helpers/slot-props';
+import type { TAccordionSummaryProps } from './accordion-summary/types';
+import type { TAccordionDetailsProps } from './accordion-details/types';
 
 export type TAccordionRadius = keyof TThemeRadius;
+
+export type TAccordionSlotProps = TSlotProps<{
+  summary: TAccordionSummaryProps;
+  details: TAccordionDetailsProps;
+}>;
 
 export type TAccordionProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -29,6 +37,7 @@ export type TAccordionProps = Omit<
   colorScope?: TAccordionColorScope;
   /** Pins text/icon to `palette.contrastText`, same as Button. */
   forceContrastText?: boolean;
+  slotProps?: TAccordionSlotProps;
 };
 
 export type { TAccordionSize } from './accordion-base/context';

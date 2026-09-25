@@ -11,6 +11,7 @@ import { PaginationEllipsis } from './pagination-ellipsis';
 import { PaginationItem } from './pagination-item';
 import { PaginationList } from './pagination-list';
 import { TPaginationItemType, TPaginationProps, PAGINATION_DEFAULT_VARIANTS } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const FlipIcon = () => (
   <span
@@ -67,6 +68,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
       boundaryCount = 1,
       getItemAriaLabel = defaultGetItemAriaLabel,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -111,7 +113,7 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
           className,
         )}
       >
-        <PaginationList>
+        <PaginationList {...slotProps?.list}>
           {items.map((item, index) => {
             const key = `${item.type}-${item.page ?? index}`;
 
@@ -121,7 +123,14 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
             ) {
               return (
                 <li key={key}>
-                  <PaginationEllipsis size={size} />
+                  <PaginationEllipsis
+                    {...mergeSlotProps(
+                      {
+                        size,
+                      },
+                      slotProps?.ellipsis,
+                    )}
+                  />
                 </li>
               );
             }
@@ -129,19 +138,24 @@ const Pagination = forwardRef<HTMLElement, TPaginationProps>(
             return (
               <li key={key}>
                 <PaginationItem
-                  type={item.type}
-                  page={item.page}
-                  selected={item.selected}
-                  disabled={item.disabled}
-                  variant={variant}
-                  size={size}
-                  color={color}
-                  aria-label={getItemAriaLabel(
-                    item.type,
-                    item.page ?? 0,
-                    item.selected,
+                  {...mergeSlotProps(
+                    {
+                      type: item.type,
+                      page: item.page,
+                      selected: item.selected,
+                      disabled: item.disabled,
+                      variant,
+                      size,
+                      color,
+                      'aria-label': getItemAriaLabel(
+                        item.type,
+                        item.page ?? 0,
+                        item.selected,
+                      ),
+                      onClick: handleClick(item.page),
+                    },
+                    slotProps?.item,
                   )}
-                  onClick={handleClick(item.page)}
                 >
                   {renderItemContent(item.type, item.page)}
                 </PaginationItem>
@@ -158,6 +172,7 @@ Pagination.displayName = 'Pagination';
 
 export type {
   TPaginationProps,
+  TPaginationSlotProps,
   TPaginationVariant,
   TPaginationVariantProp,
   TPaginationSize,

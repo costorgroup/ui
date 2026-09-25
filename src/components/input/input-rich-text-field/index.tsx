@@ -23,6 +23,7 @@ import {
 } from './styles';
 import { RichTextToolbar } from './toolbar';
 import { TInputRichTextFieldProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const resolveMinHeight = (
   minHeight: number | string | undefined,
@@ -63,6 +64,7 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
       'aria-label': ariaLabel,
       className,
       actionBar,
+      slotProps,
     },
     forwardedRef,
   ) => {
@@ -190,24 +192,46 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
 
     return (
       <div
-        ref={forwardedRef}
-        className={mergeClasses(inputRichTextFieldClasses.root, className)}
-        onMouseDown={handleMouseDown}
+        {...mergeSlotProps(
+          {
+            ref: forwardedRef,
+            className: mergeClasses(inputRichTextFieldClasses.root, className),
+            onMouseDown: handleMouseDown,
+          },
+          slotProps?.container,
+        )}
       >
         <InputWrapper
-          variant={variant}
-          size={size}
-          color={color}
-          disabled={disabled}
-          stacked
-          actionBar={actionBar}
+          {...mergeSlotProps(
+            {
+              variant,
+              size,
+              color,
+              disabled,
+              stacked: true,
+              actionBar,
+            },
+            slotProps?.wrapper,
+          )}
         >
-          <SInputRichTextField size={size}>
+          <SInputRichTextField
+            {...mergeSlotProps(
+              {
+                size,
+              },
+              slotProps?.field,
+            )}
+          >
             {name != null ? (
               <input
-                type="hidden"
-                name={name}
-                value={editor?.getHTML() ?? ''}
+                {...mergeSlotProps(
+                  {
+                    type: 'hidden',
+                    name,
+                    value: editor?.getHTML() ?? '',
+                  },
+                  slotProps?.hiddenInput,
+                )}
               />
             ) : null}
 
@@ -223,7 +247,14 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
                 ) : null))
               : null}
 
-            <SInputRichTextContent minHeight={contentMinHeight}>
+            <SInputRichTextContent
+              {...mergeSlotProps(
+                {
+                  minHeight: contentMinHeight,
+                },
+                slotProps?.content,
+              )}
+            >
               <EditorContent editor={editor} />
             </SInputRichTextContent>
           </SInputRichTextField>
@@ -235,7 +266,10 @@ const InputRichTextField = forwardRef<HTMLDivElement, TInputRichTextFieldProps>(
 
 InputRichTextField.displayName = 'InputRichTextField';
 
-export type { TInputRichTextFieldProps } from './types';
+export type {
+  TInputRichTextFieldProps,
+  TInputRichTextFieldSlotProps,
+} from './types';
 export { inputRichTextFieldClasses } from './classes';
 export { InputRichTextField };
 export default InputRichTextField;

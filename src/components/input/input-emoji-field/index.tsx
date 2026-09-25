@@ -49,6 +49,7 @@ import {
   SInputEmojiFieldValue,
 } from './styles';
 import { TInputEmojiFieldProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const GRID_COLUMNS = 8;
 
@@ -75,6 +76,7 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
       className,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -396,54 +398,96 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
         )}
       >
         {name != null ? (
-          <input type="hidden" name={name} value={selected} disabled={disabled} />
+          <input
+            {...mergeSlotProps(
+              {
+                type: 'hidden',
+                name,
+                value: selected,
+                disabled,
+              },
+              slotProps?.hiddenInput,
+            )}
+          />
         ) : null}
 
         {trigger != null ? (
-          <SInputEmojiFieldCustomTrigger ref={triggerRef}>
+          <SInputEmojiFieldCustomTrigger
+            {...mergeSlotProps(
+              {
+                ref: triggerRef,
+              },
+              slotProps?.customTrigger,
+            )}
+          >
             {customTrigger}
           </SInputEmojiFieldCustomTrigger>
         ) : (
         <InputWrapper
-          open={open}
-          variant={variant}
-          size={size}
-          color={color}
-          disabled={disabled}
-          trigger
-          actionBar={actionBar}
+          {...mergeSlotProps(
+            {
+              open,
+              variant,
+              size,
+              color,
+              disabled,
+              trigger: true,
+              actionBar,
+            },
+            slotProps?.wrapper,
+          )}
         >
           <SInputEmojiFieldTrigger
-            ref={triggerRef as React.Ref<HTMLButtonElement>}
-            type="button"
-            id={fieldId}
-            size={size}
-            disabled={disabled}
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            aria-controls={open ? listId : undefined}
-            aria-invalid={error || undefined}
-            aria-describedby={ariaDescribedBy ?? form.helperId}
-            onClick={() => setOpen(!open)}
-            onKeyDown={handleTriggerKeyDown}
+            {...mergeSlotProps(
+              {
+                ref: triggerRef as React.Ref<HTMLButtonElement>,
+                type: 'button',
+                id: fieldId,
+                size,
+                disabled,
+                'aria-haspopup': 'dialog',
+                'aria-expanded': open,
+                'aria-controls': open ? listId : undefined,
+                'aria-invalid': error || undefined,
+                'aria-describedby': ariaDescribedBy ?? form.helperId,
+                onClick: () => setOpen(!open),
+                onKeyDown: handleTriggerKeyDown,
+              },
+              slotProps?.trigger,
+            )}
           >
-            <SInputEmojiFieldValue>
+            <SInputEmojiFieldValue {...slotProps?.value}>
               {selected ? (
                 <>
-                  <SInputEmojiFieldGlyph aria-hidden>
+                  <SInputEmojiFieldGlyph
+                    {...mergeSlotProps(
+                      {
+                        'aria-hidden': true,
+                      },
+                      slotProps?.glyph,
+                    )}
+                  >
                     {selected}
                   </SInputEmojiFieldGlyph>
-                  <SInputEmojiFieldText>
+                  <SInputEmojiFieldText {...slotProps?.text}>
                     {selectedItem?.name ?? selected}
                   </SInputEmojiFieldText>
                 </>
               ) : (
-                <SInputEmojiFieldPlaceholder>
+                <SInputEmojiFieldPlaceholder {...slotProps?.placeholder}>
                   {placeholder}
                 </SInputEmojiFieldPlaceholder>
               )}
             </SInputEmojiFieldValue>
-            <SInputEmojiFieldChevron open={open} aria-hidden>
+            <SInputEmojiFieldChevron
+              {...mergeSlotProps(
+                {
+                  open,
+                  'aria-hidden': true,
+                },
+                slotProps?.chevron,
+              )}
+            >
               <ArrowBottomIcon />
             </SInputEmojiFieldChevron>
           </SInputEmojiFieldTrigger>
@@ -453,55 +497,66 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
         {open ? (
           <Portal>
             <SInputEmojiFieldDropdown
-              ref={dropdownRef}
-              id={listId}
-              role="dialog"
-              aria-label="Emoji picker"
-              top={coords.top}
-              left={coords.left}
-              width={coords.width}
-              placement={coords.placement}
-              visible={visible}
+              {...mergeSlotProps(
+                {
+                  ref: dropdownRef,
+                  id: listId,
+                  role: 'dialog',
+                  'aria-label': 'Emoji picker',
+                  top: coords.top,
+                  left: coords.left,
+                  width: coords.width,
+                  placement: coords.placement,
+                  visible,
+                },
+                slotProps?.dropdown,
+              )}
             >
               <TextField
-                id={searchId}
-                size="xs"
-                variant="subtle"
-                color="default"
-                autoFocus
-                autoComplete="off"
-                placeholder="Search Emojis"
-                aria-label="Search Emojis"
-                aria-controls={listId}
-                aria-activedescendant={
-                  highlighted >= 0 ? `${listId}-emoji-${highlighted}` : undefined
-                }
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                onKeyDown={handlePickerKeyDown}
-                startIcon={<SearchIcon />}
-                endIcon={
-                  query.length > 0 ? (
-                    <IconButton
-                      type="button"
-                      size="xs"
-                      variant="plain"
-                      aria-label="Clear search"
-                      style={{ pointerEvents: 'auto' }}
-                      onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => {
-                        setQuery('');
-                        focusSearch();
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  ) : null
-                }
+                {...mergeSlotProps(
+                  {
+                    id: searchId,
+                    size: 'xs',
+                    variant: 'subtle',
+                    color: 'default',
+                    autoFocus: true,
+                    autoComplete: 'off',
+                    placeholder: 'Search Emojis',
+                    'aria-label': 'Search Emojis',
+                    'aria-controls': listId,
+                    'aria-activedescendant': highlighted >= 0 ? `${listId}-emoji-${highlighted}` : undefined,
+                    value: query,
+                    onChange: (event) => setQuery(event.target.value),
+                    onKeyDown: handlePickerKeyDown,
+                    startIcon: <SearchIcon />,
+                    endIcon: query.length > 0 ? (
+                      <IconButton
+                        {...mergeSlotProps(
+                          {
+                            type: 'button',
+                            size: 'xs',
+                            variant: 'plain',
+                            'aria-label': 'Clear search',
+                            style: { pointerEvents: 'auto' },
+                            onMouseDown: (event) => event.preventDefault(),
+                            onClick: () => {
+                              setQuery('');
+                              focusSearch();
+                            },
+                          },
+                          slotProps?.clearButton,
+                        )}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    ) : null,
+                  },
+                  slotProps?.search,
+                )}
               />
 
               {!searching ? (
-                <SInputEmojiFieldCategories>
+                <SInputEmojiFieldCategories {...slotProps?.categories}>
                   <Tabs
                     variant="plain"
                     color="info"
@@ -526,31 +581,43 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
 
               {visibleEmojis.length > 0 ? (
                 <SInputEmojiFieldGrid
-                  ref={gridRef}
-                  role="listbox"
-                  aria-label="Emojis"
+                  {...mergeSlotProps(
+                    {
+                      ref: gridRef,
+                      role: 'listbox',
+                      'aria-label': 'Emojis',
+                    },
+                    slotProps?.grid,
+                  )}
                 >
                   {visibleEmojis.map((item, index) => (
                     <SInputEmojiFieldOption
                       key={`${item.category}-${item.emoji}-${item.name}`}
-                      id={`${listId}-emoji-${index}`}
-                      type="button"
-                      role="option"
-                      data-emoji-index={index}
-                      data-highlighted={highlighted === index || undefined}
-                      aria-selected={item.emoji === selected}
-                      aria-label={item.name}
-                      title={item.name}
-                      tabIndex={-1}
-                      onMouseEnter={() => setHighlighted(index)}
-                      onClick={() => commit(item.emoji)}
+                      {...mergeSlotProps(
+                        {
+                          id: `${listId}-emoji-${index}`,
+                          type: 'button',
+                          role: 'option',
+                          'data-emoji-index': index,
+                          'data-highlighted': highlighted === index || undefined,
+                          'aria-selected': item.emoji === selected,
+                          'aria-label': item.name,
+                          title: item.name,
+                          tabIndex: -1,
+                          onMouseEnter: () => setHighlighted(index),
+                          onClick: () => commit(item.emoji),
+                        },
+                        slotProps?.option,
+                      )}
                     >
                       {item.emoji}
                     </SInputEmojiFieldOption>
                   ))}
                 </SInputEmojiFieldGrid>
               ) : (
-                <SInputEmojiFieldEmpty>No emoji found</SInputEmojiFieldEmpty>
+                <SInputEmojiFieldEmpty {...slotProps?.empty}>
+                  No emoji found
+                </SInputEmojiFieldEmpty>
               )}
             </SInputEmojiFieldDropdown>
           </Portal>
@@ -562,7 +629,7 @@ const InputEmojiField = forwardRef<HTMLDivElement, TInputEmojiFieldProps>(
 
 InputEmojiField.displayName = 'InputEmojiField';
 
-export type { TInputEmojiFieldProps } from './types';
+export type { TInputEmojiFieldProps, TInputEmojiFieldSlotProps } from './types';
 export type { TEmojiCategory, TEmojiCategoryId, TEmojiItem } from './data';
 export { EMOJI_CATEGORIES, EMOJIS, filterEmojis } from './data';
 export { inputEmojiFieldClasses } from './classes';

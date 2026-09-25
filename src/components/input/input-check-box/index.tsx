@@ -12,6 +12,7 @@ import {
   SInputCheckBoxInput,
 } from './styles';
 import { TInputCheckBoxProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
   (
@@ -29,6 +30,7 @@ const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
       onFocus,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     ref,
@@ -59,12 +61,17 @@ const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
 
     return (
       <SInputCheckBox
-        className={mergeClasses(
-          inputCheckBoxClasses.root,
-          form.disabled && inputCheckBoxClasses.disabled,
-          (checked ?? defaultChecked) && inputCheckBoxClasses.checked,
-          error && inputCheckBoxClasses.error,
-          className,
+        {...mergeSlotProps(
+          {
+            className: mergeClasses(
+              inputCheckBoxClasses.root,
+              form.disabled && inputCheckBoxClasses.disabled,
+              (checked ?? defaultChecked) && inputCheckBoxClasses.checked,
+              error && inputCheckBoxClasses.error,
+              className,
+            ),
+          },
+          slotProps?.container,
         )}
       >
         <SInputCheckBoxInput
@@ -84,10 +91,15 @@ const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
           className={inputCheckBoxClasses.input}
         />
         <SInputCheckBoxControl
-          className={inputCheckBoxClasses.control}
-          variant={form.variant}
-          size={form.size}
-          color={form.color}
+          {...mergeSlotProps(
+            {
+              className: inputCheckBoxClasses.control,
+              variant: form.variant,
+              size: form.size,
+              color: form.color,
+            },
+            slotProps?.control,
+          )}
         >
           <CheckIcon aria-hidden />
         </SInputCheckBoxControl>
@@ -98,6 +110,7 @@ const InputCheckBox = forwardRef<HTMLInputElement, TInputCheckBoxProps>(
 
 InputCheckBox.displayName = 'InputCheckBox';
 
+export type { TInputCheckBoxSlotProps } from './types';
 export { inputCheckBoxClasses } from './classes';
 export { InputCheckBox };
 export default InputCheckBox;

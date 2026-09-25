@@ -1,4 +1,5 @@
 import { HTMLAttributes, ReactNode } from 'react';
+import type { TSlotProps } from '../../helpers/slot-props';
 
 export type TScrollAreaScrollbarVisibility =
   | 'hover'
@@ -16,6 +17,13 @@ export type TScrollAreaScrollbarDirection = 'vertical' | 'horizontal';
 export type TScrollAreaScrollbarY = 'left' | 'right';
 export type TScrollAreaScrollbarX = 'top' | 'bottom';
 
+export type TScrollAreaSlotProps = TSlotProps<{
+  fade: HTMLAttributes<HTMLDivElement>;
+  viewport: HTMLAttributes<HTMLDivElement>;
+  scrollbar: HTMLAttributes<HTMLDivElement>;
+  thumb: HTMLAttributes<HTMLDivElement>;
+}>;
+
 export type TScrollAreaProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
   fade?: boolean;
@@ -24,6 +32,7 @@ export type TScrollAreaProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   scrollbarVisibility?: TScrollAreaScrollbarVisibility;
   scrollbarPosition?: TScrollAreaScrollbarPosition;
   scrollbarDirection?: TScrollAreaScrollbarDirection;
+  slotProps?: TScrollAreaSlotProps;
 };
 
 export type TSScrollAreaFadeProps = {

@@ -4,6 +4,7 @@ import { checkBoxClasses } from './classes';
 import { FormControl } from '../form-control';
 import { InputCheckBox } from '../input/input-check-box';
 import { TCheckBoxProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
   (
@@ -20,12 +21,14 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         label={label}
         description={description}
         helperText={helperText}
@@ -40,10 +43,15 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
         className={mergeClasses(
           checkBoxClasses.root,
           error && checkBoxClasses.error,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputCheckBox ref={ref} {...props} />
+        <InputCheckBox
+          {...mergeSlotProps({ ref, ...props }, slotProps?.input)}
+          slotProps={slotProps}
+        />
       </FormControl>
     );
   },
@@ -51,7 +59,11 @@ const CheckBox = forwardRef<HTMLInputElement, TCheckBoxProps>(
 
 CheckBox.displayName = 'CheckBox';
 
-export type { TCheckBoxProps, TCheckBoxDirection } from './types';
+export type {
+  TCheckBoxProps,
+  TCheckBoxSlotProps,
+  TCheckBoxDirection,
+} from './types';
 export { checkBoxClasses } from './classes';
 export { CheckBox };
 export default CheckBox;

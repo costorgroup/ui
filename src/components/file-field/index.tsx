@@ -22,12 +22,14 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
       disabled,
       value,
       defaultValue,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         ref={ref}
         label={label}
         description={description}
@@ -47,10 +49,13 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
           disabled && fileFieldClasses.disabled,
           error && fileFieldClasses.error,
           required && fileFieldClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
         <InputFileField
+          slotProps={slotProps}
           disabled={disabled}
           value={value}
           defaultValue={defaultValue}
@@ -63,7 +68,7 @@ const FileField = forwardRef<HTMLDivElement, TFileFieldProps>(
 
 FileField.displayName = 'FileField';
 
-export type { TFileFieldProps } from './types';
+export type { TFileFieldProps, TFileFieldSlotProps } from './types';
 export { fileFieldClasses } from './classes';
 export { FileField };
 export default FileField;

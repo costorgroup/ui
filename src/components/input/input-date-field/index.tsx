@@ -48,6 +48,7 @@ import {
 } from './styles';
 import { TimeWheel } from './time-wheel';
 import { TInputDateFieldProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 type TPickerStep = 'date' | 'time';
 
@@ -95,6 +96,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
       className,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -580,46 +582,71 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
         )}>
         {name != null ? (
           <input
-            type="hidden"
-            name={name}
-            value={hiddenValue}
-            disabled={disabled}
+            {...mergeSlotProps(
+              {
+                type: 'hidden',
+                name,
+                value: hiddenValue,
+                disabled,
+              },
+              slotProps?.hiddenInput,
+            )}
           />
         ) : null}
 
         <InputWrapper
-          open={open}
-          variant={variant}
-          size={size}
-          color={color}
-          disabled={disabled}
-          trigger
-          actionBar={actionBar}
+          {...mergeSlotProps(
+            {
+              open,
+              variant,
+              size,
+              color,
+              disabled,
+              trigger: true,
+              actionBar,
+            },
+            slotProps?.wrapper,
+          )}
         >
           <SInputDateFieldTrigger
-            ref={triggerRef}
-            type="button"
-            id={fieldId}
-            size={size}
-            disabled={disabled}
-            aria-haspopup="dialog"
-            aria-expanded={open}
-            aria-controls={open ? listId : undefined}
-            aria-invalid={error || undefined}
-            aria-describedby={ariaDescribedBy ?? form.helperId}
-            onClick={() => setOpen(!open)}
-            onKeyDown={handleTriggerKeyDown}
+            {...mergeSlotProps(
+              {
+                ref: triggerRef,
+                type: 'button',
+                id: fieldId,
+                size,
+                disabled,
+                'aria-haspopup': 'dialog',
+                'aria-expanded': open,
+                'aria-controls': open ? listId : undefined,
+                'aria-invalid': error || undefined,
+                'aria-describedby': ariaDescribedBy ?? form.helperId,
+                onClick: () => setOpen(!open),
+                onKeyDown: handleTriggerKeyDown,
+              },
+              slotProps?.trigger,
+            )}
           >
-            <SInputDateFieldValue>
+            <SInputDateFieldValue {...slotProps?.value}>
               {displayValue != null ? (
-                <SInputDateFieldText>{displayValue}</SInputDateFieldText>
+                <SInputDateFieldText {...slotProps?.text}>
+                  {displayValue}
+                </SInputDateFieldText>
               ) : (
-                <SInputDateFieldPlaceholder>
+                <SInputDateFieldPlaceholder {...slotProps?.placeholder}>
                   {resolvedPlaceholder}
                 </SInputDateFieldPlaceholder>
               )}
             </SInputDateFieldValue>
-            <SInputDateFieldChevron open={open} aria-hidden>
+            <SInputDateFieldChevron
+              {...mergeSlotProps(
+                {
+                  open,
+                  'aria-hidden': true,
+                },
+                slotProps?.chevron,
+              )}
+            >
               <ArrowBottomIcon />
             </SInputDateFieldChevron>
           </SInputDateFieldTrigger>
@@ -628,37 +655,44 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
         {open ? (
           <Portal>
             <SInputDateFieldDropdown
-              ref={dropdownRef}
-              id={listId}
-              role="dialog"
-              aria-label={
-                mode === 'time'
+              {...mergeSlotProps(
+                {
+                  ref: dropdownRef,
+                  id: listId,
+                  role: 'dialog',
+                  'aria-label': mode === 'time'
                   ? 'Time picker'
                   : mode === 'datetime'
                     ? 'Date and time picker'
-                    : 'Date picker'
-              }
-              top={coords.top}
-              left={coords.left}
-              width={coords.width}
-              placement={coords.placement}
-              visible={visible}
-              color={color}
+                    : 'Date picker',
+                  top: coords.top,
+                  left: coords.left,
+                  width: coords.width,
+                  placement: coords.placement,
+                  visible,
+                  color,
+                },
+                slotProps?.dropdown,
+              )}
             >
-              <SInputDateFieldPicker>
+              <SInputDateFieldPicker {...slotProps?.picker}>
                 {showCalendar ? (
-                  <SInputDateFieldCalendar>
-                    <SInputDateFieldHeader>
+                  <SInputDateFieldCalendar {...slotProps?.calendar}>
+                    <SInputDateFieldHeader {...slotProps?.header}>
                       <IconButton
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        color="default"
-                        aria-label="Previous month"
-                        disabled={!canGoPrev}
-                        onClick={() =>
-                          setViewMonth(adapter.addMonths(viewMonth, -1))
-                        }
+                        {...mergeSlotProps(
+                          {
+                            type: 'button',
+                            variant: 'ghost',
+                            size: 'sm',
+                            color: 'default',
+                            'aria-label': 'Previous month',
+                            disabled: !canGoPrev,
+                            onClick: () =>
+                            setViewMonth(adapter.addMonths(viewMonth, -1)),
+                          },
+                          slotProps?.prevButton,
+                        )}
                       >
                         <span
                           aria-hidden
@@ -667,33 +701,40 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                           <ArrowRightIcon />
                         </span>
                       </IconButton>
-                      <SInputDateFieldMonthLabel>
+                      <SInputDateFieldMonthLabel {...slotProps?.monthLabel}>
                         {adapter.format(viewMonth, 'month')}
                       </SInputDateFieldMonthLabel>
                       <IconButton
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        color="default"
-                        aria-label="Next month"
-                        disabled={!canGoNext}
-                        onClick={() =>
-                          setViewMonth(adapter.addMonths(viewMonth, 1))
-                        }
+                        {...mergeSlotProps(
+                          {
+                            type: 'button',
+                            variant: 'ghost',
+                            size: 'sm',
+                            color: 'default',
+                            'aria-label': 'Next month',
+                            disabled: !canGoNext,
+                            onClick: () =>
+                            setViewMonth(adapter.addMonths(viewMonth, 1)),
+                          },
+                          slotProps?.nextButton,
+                        )}
                       >
                         <ArrowRightIcon />
                       </IconButton>
                     </SInputDateFieldHeader>
 
-                    <SInputDateFieldWeekdays>
+                    <SInputDateFieldWeekdays {...slotProps?.weekdays}>
                       {weekdays.map((label, index) => (
-                        <SInputDateFieldWeekday key={`${label}-${index}`}>
+                        <SInputDateFieldWeekday
+                          key={`${label}-${index}`}
+                          {...slotProps?.weekday}
+                        >
                           {label}
                         </SInputDateFieldWeekday>
                       ))}
                     </SInputDateFieldWeekdays>
 
-                    <SInputDateFieldDays>
+                    <SInputDateFieldDays {...slotProps?.days}>
                       {weeks.flat().map((day) => {
                         const outside = !adapter.isSameMonth(day, viewMonth);
                         const selected =
@@ -711,15 +752,20 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                         return (
                           <SInputDateFieldDay
                             key={day.toISOString()}
-                            type="button"
-                            selected={selected}
-                            today={isToday}
-                            outside={outside}
-                            disabled={dayDisabled}
-                            color={color}
-                            aria-label={adapter.format(day, 'fullDate')}
-                            aria-pressed={selected}
-                            onClick={() => handleDaySelect(day)}
+                            {...mergeSlotProps(
+                              {
+                                type: 'button',
+                                selected,
+                                today: isToday,
+                                outside,
+                                disabled: dayDisabled,
+                                color,
+                                'aria-label': adapter.format(day, 'fullDate'),
+                                'aria-pressed': selected,
+                                onClick: () => handleDaySelect(day),
+                              },
+                              slotProps?.day,
+                            )}
                           >
                             {adapter.format(day, 'dayOfMonth')}
                           </SInputDateFieldDay>
@@ -731,7 +777,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
 
                 {showDateWheels ? (
                   <>
-                    <SInputDateFieldTime>
+                    <SInputDateFieldTime {...slotProps?.time}>
                       <TimeWheel
                         aria-label="Month"
                         items={monthItems}
@@ -760,7 +806,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                     </SInputDateFieldTime>
 
                     {showDateActions ? (
-                      <SInputDateFieldActions>
+                      <SInputDateFieldActions {...slotProps?.actions}>
                         <Button
                           type="button"
                           variant="ghost"
@@ -777,7 +823,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
 
                 {showTimePanel ? (
                   <>
-                    <SInputDateFieldTime>
+                    <SInputDateFieldTime {...slotProps?.time}>
                       <TimeWheel
                         aria-label="Hours"
                         items={ampm ? HOURS_12 : HOURS_24}
@@ -810,7 +856,7 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
                     </SInputDateFieldTime>
 
                     {showTimeActions ? (
-                      <SInputDateFieldActions>
+                      <SInputDateFieldActions {...slotProps?.actions}>
                         {mode === 'datetime' ? (
                           <Button
                             type="button"
@@ -846,7 +892,11 @@ const InputDateField = forwardRef<HTMLDivElement, TInputDateFieldProps>(
 
 InputDateField.displayName = 'InputDateField';
 
-export type { TInputDateFieldProps, TDatePickerMode } from './types';
+export type {
+  TInputDateFieldProps,
+  TInputDateFieldSlotProps,
+  TDatePickerMode,
+} from './types';
 export type {
   TDatePickerDisplayType,
   TTimePickerDisplayType,

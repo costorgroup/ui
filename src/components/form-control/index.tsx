@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { mergeSlotProps } from '../../helpers/slot-props';
 import { InputFieldLayout } from '../input/input-base';
 import { InputHelperText } from '../input/input-helper-text';
 import { InputLabel } from '../input/input-label';
@@ -42,6 +43,7 @@ const FormControlInner = <T,>(
     variant = 'surface',
     id: idProp,
     className,
+    slotProps,
     ...props
   }: TFormControlProps<T>,
   ref: Ref<HTMLDivElement>,
@@ -126,14 +128,18 @@ const FormControlInner = <T,>(
         label={
           label != null ? (
             <InputLabel
-              id={labelId}
-              htmlFor={id}
-              required={required}
-              disabled={disabled}
-              size={size}
-              style={
-                direction !== 'vertical' ? { lineHeight: 1 } : undefined
-              }
+              {...mergeSlotProps(
+                {
+                  id: labelId,
+                  htmlFor: id,
+                  required,
+                  disabled,
+                  size,
+                  style:
+                    direction !== 'vertical' ? { lineHeight: 1 } : undefined,
+                },
+                slotProps?.label,
+              )}
             >
               {label}
             </InputLabel>
@@ -141,12 +147,24 @@ const FormControlInner = <T,>(
         }
         description={
           description != null ? (
-            <Text size={inputDescriptionTextSize[size]}>{description}</Text>
+            <Text
+              {...mergeSlotProps(
+                { size: inputDescriptionTextSize[size] },
+                slotProps?.description,
+              )}
+            >
+              {description}
+            </Text>
           ) : null
         }
         helperText={
           helperText != null ? (
-            <InputHelperText id={helperId} size={size} error={error}>
+            <InputHelperText
+              {...mergeSlotProps(
+                { id: helperId, size, error },
+                slotProps?.helperText,
+              )}
+            >
               {helperText}
             </InputHelperText>
           ) : null
@@ -175,7 +193,12 @@ const FormControl = forwardRef(FormControlInner) as <T = unknown>(
 
 (FormControl as { displayName?: string }).displayName = 'FormControl';
 
-export type { TFormControlProps, TFormControlChangeHandler } from './types';
+export type {
+  TFormControlProps,
+  TFormControlChangeHandler,
+  TFormControlSlotProps,
+  TFieldSlotProps,
+} from './types';
 export type { TFormControlContextValue } from './context';
 export { formControlClasses } from './classes';
 export { FormControlContext, useFormControl, useFormControlState } from './context';

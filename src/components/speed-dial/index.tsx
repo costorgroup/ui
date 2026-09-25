@@ -17,6 +17,7 @@ import {
   SSpeedDialTriggerWrap,
 } from './styles';
 import { TSpeedDialProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const SpeedDialPlusIcon = () => (
   <svg
@@ -58,6 +59,7 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
       onMouseLeave,
       'aria-label': ariaLabel = 'Speed dial',
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -148,40 +150,57 @@ const SpeedDial = forwardRef<HTMLDivElement, TSpeedDialProps>(
       >
         <SSpeedDialTriggerWrap>
           <IconButton
-            type="button"
-            color={color}
-            size={size}
-            variant={variant}
-            appearance={appearance}
-            radius={radius}
-            disabled={disabled}
-            aria-label={ariaLabel}
-            aria-expanded={open}
-            aria-haspopup="menu"
-            {...triggerProps}
-            className={mergeClasses(
-              speedDialClasses.trigger,
-              triggerProps?.className,
+            {...mergeSlotProps(
+              {
+                type: 'button',
+                color,
+                size,
+                variant,
+                appearance,
+                radius,
+                disabled,
+                'aria-label': ariaLabel,
+                'aria-expanded': open,
+                'aria-haspopup': 'menu',
+                ...triggerProps,
+                className: mergeClasses(
+                  speedDialClasses.trigger,
+                  triggerProps?.className,
+                ),
+                onClick: (event: MouseEvent<HTMLButtonElement>) => {
+                  setOpen(!open);
+                  triggerProps?.onClick?.(event);
+                },
+              },
+              slotProps?.trigger,
             )}
-            onClick={(event: MouseEvent<HTMLButtonElement>) => {
-              setOpen(!open);
-              triggerProps?.onClick?.(event);
-            }}
           >
-            <SSpeedDialTriggerIcon data-open={open ? 'true' : 'false'}>
+            <SSpeedDialTriggerIcon
+              {...mergeSlotProps(
+                {
+                  'data-open': open ? 'true' : 'false',
+                },
+                slotProps?.triggerIcon,
+              )}
+            >
               {icon ?? <SpeedDialPlusIcon />}
             </SSpeedDialTriggerIcon>
           </IconButton>
         </SSpeedDialTriggerWrap>
         <SSpeedDialItems
-          itemsDirection={layout.itemsDirection}
-          itemsGap={itemsGap}
-          itemOffset={layout.itemOffset}
-          data-open={open ? 'true' : 'false'}
-          data-items-direction={layout.itemsDirection}
-          role="menu"
-          className={speedDialClasses.items}
-          onClick={() => setOpen(false)}
+          {...mergeSlotProps(
+            {
+              itemsDirection: layout.itemsDirection,
+              itemsGap,
+              itemOffset: layout.itemOffset,
+              'data-open': open ? 'true' : 'false',
+              'data-items-direction': layout.itemsDirection,
+              role: 'menu',
+              className: speedDialClasses.items,
+              onClick: () => setOpen(false),
+            },
+            slotProps?.items,
+          )}
         >
           {children}
         </SSpeedDialItems>
@@ -194,6 +213,7 @@ SpeedDial.displayName = 'SpeedDial';
 
 export type {
   TSpeedDialProps,
+  TSpeedDialSlotProps,
   TSpeedDialItemsDirection,
   TSpeedDialInset,
 } from './types';

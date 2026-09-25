@@ -20,12 +20,14 @@ const EmojiPickerField = forwardRef<HTMLDivElement, TEmojiPickerFieldProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         ref={ref}
         label={label}
         description={description}
@@ -43,10 +45,16 @@ const EmojiPickerField = forwardRef<HTMLDivElement, TEmojiPickerFieldProps>(
           disabled && emojiPickerFieldClasses.disabled,
           error && emojiPickerFieldClasses.error,
           required && emojiPickerFieldClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputEmojiField disabled={disabled} {...props} />
+        <InputEmojiField
+          slotProps={slotProps}
+          disabled={disabled}
+          {...props}
+        />
       </FormControl>
     );
   },
@@ -54,7 +62,10 @@ const EmojiPickerField = forwardRef<HTMLDivElement, TEmojiPickerFieldProps>(
 
 EmojiPickerField.displayName = 'EmojiPickerField';
 
-export type { TEmojiPickerFieldProps } from './types';
+export type {
+  TEmojiPickerFieldProps,
+  TEmojiPickerFieldSlotProps,
+} from './types';
 export { emojiPickerFieldClasses } from './classes';
 export { EmojiPickerField };
 export default EmojiPickerField;

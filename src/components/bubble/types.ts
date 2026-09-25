@@ -2,10 +2,15 @@ import { ElementType, HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import type { TPolymorphicProps } from '../../helpers/polymorphic';
 import { TPaletteColor } from '../../theme/types';
 import type { TInteractiveVariant } from '../../helpers/variant-styles/types';
+import type { TSlotProps } from '../../helpers/slot-props';
 
 export type TBubbleVariant = TInteractiveVariant;
 export type TBubbleAlign = 'start' | 'end';
 export type TBubbleReactionSide = 'top' | 'bottom';
+
+export type TBubbleSlotProps = TSlotProps<{
+  row: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TBubbleProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
@@ -13,6 +18,7 @@ export type TBubbleProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   variant?: TBubbleVariant;
   align?: TBubbleAlign;
   onReactionsClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  slotProps?: TBubbleSlotProps;
 };
 
 export type TSBubbleProps = {

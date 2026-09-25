@@ -25,6 +25,7 @@ import {
   SDropzonePreview,
 } from './styles';
 import { TDropzoneProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const EMPTY_FILES: File[] = [];
 
@@ -101,6 +102,7 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
       onDragLeave,
       onDrop,
       className,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -275,23 +277,35 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
         )}
       >
         <SDropzoneInput
-          {...inputProps}
-          ref={inputRef}
-          id={inputId}
-          type="file"
-          name={name}
-          accept={acceptList.length > 0 ? acceptList.join(',') : undefined}
-          multiple={multiple}
-          disabled={disabled}
-          tabIndex={-1}
-          aria-hidden
-          onChange={handleInputChange}
-          onClick={(event) => event.stopPropagation()}
+          {...mergeSlotProps(
+            {
+              ...inputProps,
+              ref: inputRef,
+              id: inputId,
+              type: 'file',
+              name,
+              accept: acceptList.length > 0 ? acceptList.join(',') : undefined,
+              multiple,
+              disabled,
+              tabIndex: -1,
+              'aria-hidden': true,
+              onChange: handleInputChange,
+              onClick: (event) => event.stopPropagation(),
+            },
+            slotProps?.input,
+          )}
         />
 
         {hasPreview ? (
           <>
-            <SDropzonePreview className={dropzoneClasses.preview}>
+            <SDropzonePreview
+              {...mergeSlotProps(
+                {
+                  className: dropzoneClasses.preview,
+                },
+                slotProps?.preview,
+              )}
+            >
               {renderPreview({
                 files,
                 urls,
@@ -300,31 +314,48 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
               })}
             </SDropzonePreview>
 
-            <SDropzoneOverlay className={dropzoneClasses.overlay}>
+            <SDropzoneOverlay
+              {...mergeSlotProps(
+                {
+                  className: dropzoneClasses.overlay,
+                },
+                slotProps?.overlay,
+              )}
+            >
               {active ? (
                 dropLabel
               ) : (
-                <SDropzoneActions>
+                <SDropzoneActions {...slotProps?.actions}>
                   <Button
-                    size="sm"
-                    color="light"
-                    disabled={disabled}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      openFileDialog();
-                    }}
+                    {...mergeSlotProps(
+                      {
+                        size: 'sm',
+                        color: 'light',
+                        disabled,
+                        onClick: (event) => {
+                          event.stopPropagation();
+                          openFileDialog();
+                        },
+                      },
+                      slotProps?.reuploadButton,
+                    )}
                   >
                     {reuploadLabel}
                   </Button>
                   <Button
-                    size="sm"
-                    color="light"
-                    variant="outline"
-                    disabled={disabled}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      removeFiles();
-                    }}
+                    {...mergeSlotProps(
+                      {
+                        size: 'sm',
+                        color: 'light',
+                        variant: 'outline',
+                        disabled,
+                        onClick: (event) => {
+                          event.stopPropagation();
+                          removeFiles();
+                        },
+                      },
+                      slotProps?.removeButton,
+                    )}
                   >
                     {removeLabel}
                   </Button>
@@ -334,12 +365,23 @@ const Dropzone = forwardRef<HTMLDivElement, TDropzoneProps>(
           </>
         ) : (
           <>
-            <SDropzoneIcon aria-hidden>{icon ?? <UploadIcon />}</SDropzoneIcon>
+            <SDropzoneIcon
+              {...mergeSlotProps(
+                {
+                  'aria-hidden': true,
+                },
+                slotProps?.icon,
+              )}
+            >{icon ?? <UploadIcon />}</SDropzoneIcon>
 
-            {title != null ? <SDropzoneTitle>{title}</SDropzoneTitle> : null}
+            {title != null ? (
+              <SDropzoneTitle {...slotProps?.title}>{title}</SDropzoneTitle>
+            ) : null}
 
             {description != null ? (
-              <SDropzoneDescription>{description}</SDropzoneDescription>
+              <SDropzoneDescription {...slotProps?.description}>
+                {description}
+              </SDropzoneDescription>
             ) : null}
           </>
         )}
@@ -352,6 +394,7 @@ Dropzone.displayName = 'Dropzone';
 
 export type {
   TDropzoneProps,
+  TDropzoneSlotProps,
   TDropzoneSize,
   TDropzoneSpacing,
   TDropzonePreviewContext,

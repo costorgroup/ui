@@ -13,6 +13,7 @@ import { tooltipClasses } from './classes';
 import { getTooltipCoords } from './get-coords';
 import { STooltipContent, STooltipPanel, STooltipTrigger } from './styles';
 import { TTooltipProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const assignRef = <T,>(ref: React.Ref<T> | undefined, value: T | null) => {
   if (!ref) {
@@ -36,6 +37,7 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
       placement = 'top',
       offset = 8,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -170,33 +172,43 @@ const Tooltip = forwardRef<HTMLSpanElement, TTooltipProps>(
       mounted && tooltipBody != null && typeof document !== 'undefined'
         ? createPortal(
             <STooltipContent
-              ref={contentRef}
-              top={coords.top}
-              left={coords.left}
-              placement={placement}
-              visible={visible}
-              role="tooltip"
-              onMouseEnter={openTooltip}
-              onMouseLeave={scheduleClose}
-              onTransitionEnd={(event) => {
-                if (event.target !== event.currentTarget) {
-                  return;
-                }
+              {...mergeSlotProps(
+                {
+                  ref: contentRef,
+                  top: coords.top,
+                  left: coords.left,
+                  placement,
+                  visible,
+                  role: 'tooltip',
+                  onMouseEnter: openTooltip,
+                  onMouseLeave: scheduleClose,
+                  onTransitionEnd: (event) => {
+                    if (event.target !== event.currentTarget) {
+                      return;
+                    }
 
-                if (event.propertyName !== 'opacity') {
-                  return;
-                }
+                    if (event.propertyName !== 'opacity') {
+                      return;
+                    }
 
-                if (!visible) {
-                  setMounted(false);
-                }
-              }}
+                    if (!visible) {
+                      setMounted(false);
+                    }
+                  },
+                },
+                slotProps?.popper,
+              )}
             >
               <STooltipPanel
-                elevation={2}
-                variant="surface"
-                radius="md"
-                className={tooltipClasses.panel}
+                {...mergeSlotProps(
+                  {
+                    elevation: 2,
+                    variant: 'surface',
+                    radius: 'md',
+                    className: tooltipClasses.panel,
+                  },
+                  slotProps?.panel,
+                )}
               >
                 {tooltipBody}
               </STooltipPanel>
@@ -228,6 +240,7 @@ Tooltip.displayName = 'Tooltip';
 
 export type {
   TTooltipProps,
+  TTooltipSlotProps,
   TTooltipPlacement,
   TTooltipRender,
   TTooltipRenderProps,

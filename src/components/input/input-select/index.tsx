@@ -47,6 +47,7 @@ import {
   defaultGetOptionLabel,
   labelsForValue,
 } from '../list-options';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 type TOptionElement<T> = ReactElement<TInputSelectOptionProps<T>>;
 
@@ -77,6 +78,7 @@ const InputSelectInner = <T,>(
     actionBar,
     id,
     className,
+    slotProps,
     ...props
   }: TInputSelectProps<T>,
   forwardedRef: Ref<HTMLDivElement>,
@@ -459,17 +461,22 @@ const InputSelectInner = <T,>(
         return (
           <InputSelectOption
             key={getOptionKey(option, index)}
-            id={`${listId}-option-${index}`}
-            ref={(node: HTMLButtonElement | null) => {
-              optionRefs.current[index] = node;
-            }}
-            value={option}
-            aria-selected={selected}
-            data-highlighted={highlighted ? 'true' : undefined}
-            {...highlightHandlers(index)}
-            onClick={(event: ReactMouseEvent<HTMLButtonElement>) => {
-              commitValue(event, option);
-            }}
+            {...mergeSlotProps(
+              {
+                id: `${listId}-option-${index}`,
+                ref: (node: HTMLButtonElement | null) => {
+                  optionRefs.current[index] = node;
+                },
+                value: option,
+                'aria-selected': selected,
+                'data-highlighted': highlighted ? 'true' : undefined,
+                ...highlightHandlers(index),
+                onClick: (event: ReactMouseEvent<HTMLButtonElement>) => {
+                  commitValue(event, option);
+                },
+              },
+              slotProps?.option,
+            )}
           >
             {renderOption?.(option, { selected, highlighted }) ??
               getOptionLabel(option)}
@@ -508,43 +515,63 @@ const InputSelectInner = <T,>(
       )}
     >
       <InputWrapper
-        open={open}
-        variant={form.variant}
-        size={form.size}
-        color={form.color}
-        disabled={form.disabled}
-        error={form.error}
-        trigger
-        actionBar={actionBar}
+        {...mergeSlotProps(
+          {
+            open,
+            variant: form.variant,
+            size: form.size,
+            color: form.color,
+            disabled: form.disabled,
+            error: form.error,
+            trigger: true,
+            actionBar,
+          },
+          slotProps?.wrapper,
+        )}
       >
         <SInputSelectTrigger
-          ref={triggerRef}
-          type="button"
-          id={id ?? form.id}
-          size={form.size}
-          disabled={form.disabled}
-          data-multiselect={multiSelect ? 'true' : 'false'}
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-invalid={form.error || undefined}
-          aria-describedby={form.helperId}
-          aria-controls={open ? listId : undefined}
-          aria-activedescendant={activeDescendant}
-          onKeyDown={handleListKeyDown}
-          onClick={() => {
-            if (form.disabled) {
-              return;
-            }
+          {...mergeSlotProps(
+            {
+              ref: triggerRef,
+              type: 'button',
+              id: id ?? form.id,
+              size: form.size,
+              disabled: form.disabled,
+              'data-multiselect': multiSelect ? 'true' : 'false',
+              'aria-haspopup': 'listbox',
+              'aria-expanded': open,
+              'aria-invalid': form.error || undefined,
+              'aria-describedby': form.helperId,
+              'aria-controls': open ? listId : undefined,
+              'aria-activedescendant': activeDescendant,
+              onKeyDown: handleListKeyDown,
+              onClick: () => {
+                if (form.disabled) {
+                  return;
+                }
 
-            setOpen(!open);
-          }}
+                setOpen(!open);
+              },
+            },
+            slotProps?.trigger,
+          )}
         >
-          <SInputSelectValue>
+          <SInputSelectValue {...slotProps?.value}>
             {valueContent ?? (
-              <SInputSelectPlaceholder>{placeholder}</SInputSelectPlaceholder>
+              <SInputSelectPlaceholder {...slotProps?.placeholder}>
+                {placeholder}
+              </SInputSelectPlaceholder>
             )}
           </SInputSelectValue>
-          <SInputSelectChevron open={open} aria-hidden>
+          <SInputSelectChevron
+            {...mergeSlotProps(
+              {
+                open,
+                'aria-hidden': true,
+              },
+              slotProps?.chevron,
+            )}
+          >
             <ArrowBottomIcon width="1em" height="1em" />
           </SInputSelectChevron>
         </SInputSelectTrigger>
@@ -553,23 +580,30 @@ const InputSelectInner = <T,>(
       {open && typeof document !== 'undefined'
         ? createPortal(
             <SInputSelectDropdown
-              ref={dropdownRef}
-              id={listId}
-              top={coords.top}
-              left={coords.left}
-              width={coords.width}
-              placement={coords.placement}
-              visible={visible}
-              color={form.color}
-              variant={form.variant}
-              role="listbox"
-              aria-multiselectable={multiSelect || undefined}
+              {...mergeSlotProps(
+                {
+                  ref: dropdownRef,
+                  id: listId,
+                  top: coords.top,
+                  left: coords.left,
+                  width: coords.width,
+                  placement: coords.placement,
+                  visible,
+                  color: form.color,
+                  variant: form.variant,
+                  role: 'listbox',
+                  'aria-multiselectable': multiSelect || undefined,
+                },
+                slotProps?.dropdown,
+              )}
             >
-              <SInputSelectOptions>
+              <SInputSelectOptions {...slotProps?.listbox}>
                 {optionCount > 0 ? (
                   options
                 ) : (
-                  <SInputSelectEmpty>{noOptionsText}</SInputSelectEmpty>
+                  <SInputSelectEmpty {...slotProps?.empty}>
+                    {noOptionsText}
+                  </SInputSelectEmpty>
                 )}
               </SInputSelectOptions>
             </SInputSelectDropdown>,
@@ -586,6 +620,7 @@ const InputSelect = forwardRef(InputSelectInner) as <T = unknown>(
 
 (InputSelect as { displayName?: string }).displayName = 'InputSelect';
 
+export type { TInputSelectSlotProps } from './types';
 export { inputSelectClasses } from './classes';
 export { InputSelect };
 export default InputSelect;

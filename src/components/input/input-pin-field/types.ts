@@ -1,8 +1,16 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 import type { TInputSize, TInputVariant } from '../input-wrapper/types';
 import type { TPaletteColor } from '../../../theme/types';
+import type { TSlotProps } from '../../../helpers/slot-props';
 
 export type TInputPinFieldType = 'numeric' | 'alphanumeric' | 'alphabetic';
+
+export type TInputPinFieldSlotProps = TSlotProps<{
+  group: HTMLAttributes<HTMLDivElement>;
+  hiddenInput: InputHTMLAttributes<HTMLInputElement>;
+  cell: HTMLAttributes<HTMLDivElement>;
+  input: InputHTMLAttributes<HTMLInputElement>;
+}>;
 
 export type TInputPinFieldProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -29,6 +37,7 @@ export type TInputPinFieldProps = Omit<
   size?: TInputSize;
   color?: TPaletteColor;
   actionBar?: ReactNode;
+  slotProps?: TInputPinFieldSlotProps;
 };
 
 export type TSInputPinFieldProps = {

@@ -7,12 +7,18 @@ import type {
   TTimePickerDisplayType,
 } from '../input/input-date-field/types';
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
+import type { TFieldSlotProps } from '../form-control/types';
+import type { TInputDateFieldSlotProps } from '../input/input-date-field/types';
 
 export type {
   TDatePickerMode,
   TDatePickerDisplayType,
   TTimePickerDisplayType,
 };
+
+export type TDatePickerFieldSlotProps = TFieldSlotProps<
+  Required<TInputDateFieldSlotProps>
+>;
 
 export type TDatePickerFieldProps = {
   label?: ReactNode;
@@ -40,5 +46,6 @@ export type TDatePickerFieldProps = {
   id?: string;
   className?: string;
   actionBar?: ReactNode;
+  slotProps?: TDatePickerFieldSlotProps;
 };
 

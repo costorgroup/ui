@@ -47,6 +47,7 @@ import {
   SInputAutoCompleteValue,
 } from './styles';
 import { TInputAutoCompleteProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const InputAutoCompleteInner = <T,>(
   {
@@ -80,6 +81,7 @@ const InputAutoCompleteInner = <T,>(
     actionBar,
     id,
     className,
+    slotProps,
     ...props
   }: TInputAutoCompleteProps<T>,
   forwardedRef: Ref<HTMLDivElement>,
@@ -118,6 +120,7 @@ const InputAutoCompleteInner = <T,>(
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const skipOpenOnFocusRef = useRef(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const optionSelectHandlersRef = useRef<Array<(() => void) | null>>([]);
@@ -341,6 +344,18 @@ const InputAutoCompleteInner = <T,>(
     }
   };
 
+  // Return focus to the input after a pick without letting its focus
+  // handler reopen the dropdown that closeOnSelect just closed.
+  const refocusInput = () => {
+    if (closeOnSelect) {
+      setOpen(false);
+      skipOpenOnFocusRef.current = true;
+    }
+
+    inputRef.current?.focus();
+    skipOpenOnFocusRef.current = false;
+  };
+
   const commitValue = (
     event: ReactMouseEvent<HTMLButtonElement> | unknown,
     option: T,
@@ -365,19 +380,11 @@ const InputAutoCompleteInner = <T,>(
       setInputValue(getOptionLabel(option));
     }
 
-    if (closeOnSelect) {
-      setOpen(false);
-    }
-
-    inputRef.current?.focus();
+    refocusInput();
   };
 
   const finishChildSelect = () => {
-    if (closeOnSelect) {
-      setOpen(false);
-    }
-
-    inputRef.current?.focus();
+    refocusInput();
   };
 
   const handleRemoveLast = () => {
@@ -532,17 +539,22 @@ const InputAutoCompleteInner = <T,>(
         return (
           <InputSelectOption
             key={getOptionKey(option, index)}
-            id={`${listId}-option-${index}`}
-            ref={(node: HTMLButtonElement | null) => {
-              optionRefs.current[index] = node;
-            }}
-            value={option}
-            aria-selected={selected}
-            data-highlighted={highlighted ? 'true' : undefined}
-            {...highlightHandlers(index)}
-            onClick={(event: ReactMouseEvent<HTMLButtonElement>) => {
-              commitValue(event, option);
-            }}
+            {...mergeSlotProps(
+              {
+                id: `${listId}-option-${index}`,
+                ref: (node: HTMLButtonElement | null) => {
+                  optionRefs.current[index] = node;
+                },
+                value: option,
+                'aria-selected': selected,
+                'data-highlighted': highlighted ? 'true' : undefined,
+                ...highlightHandlers(index),
+                onClick: (event: ReactMouseEvent<HTMLButtonElement>) => {
+                  commitValue(event, option);
+                },
+              },
+              slotProps?.option,
+            )}
           >
             {renderOption?.(option, { selected, highlighted }) ??
               getOptionLabel(option)}
@@ -595,55 +607,82 @@ const InputAutoCompleteInner = <T,>(
       )}
     >
       <InputWrapper
-        open={open}
-        variant={form.variant}
-        size={form.size}
-        color={form.color}
-        disabled={form.disabled}
-        error={form.error}
-        actionBar={actionBar}
+        {...mergeSlotProps(
+          {
+            open,
+            variant: form.variant,
+            size: form.size,
+            color: form.color,
+            disabled: form.disabled,
+            error: form.error,
+            actionBar,
+          },
+          slotProps?.wrapper,
+        )}
       >
         <SInputAutoCompleteTrigger
-          ref={triggerRef}
-          size={form.size}
-          data-multiselect={multiSelect ? 'true' : 'false'}
-          onClick={() => {
-            if (form.disabled) {
-              return;
-            }
+          {...mergeSlotProps(
+            {
+              ref: triggerRef,
+              size: form.size,
+              'data-multiselect': multiSelect ? 'true' : 'false',
+              onClick: () => {
+                if (form.disabled) {
+                  return;
+                }
 
-            inputRef.current?.focus();
-          }}
+                inputRef.current?.focus();
+              },
+            },
+            slotProps?.trigger,
+          )}
         >
-          <SInputAutoCompleteValue>
+          <SInputAutoCompleteValue {...slotProps?.value}>
             {renderValue?.(currentValue)}
             <SInputAutoCompleteField
-              ref={inputRef}
-              type="text"
-              id={id ?? form.id}
-              value={inputValue}
-              placeholder={placeholder}
-              disabled={form.disabled}
-              role="combobox"
-              aria-expanded={open}
-              aria-haspopup="listbox"
-              aria-autocomplete="list"
-              aria-invalid={form.error || undefined}
-              aria-describedby={form.helperId}
-              aria-controls={open ? listId : undefined}
-              aria-activedescendant={activeDescendant}
-              onChange={handleInputChange}
-              onKeyDown={handleInputKeyDown}
-              onFocus={() => {
-                if (!form.disabled) {
-                  form.setFocused?.(true);
-                  setOpen(true);
-                }
-              }}
-              onBlur={() => form.setFocused?.(false)}
+              {...mergeSlotProps(
+                {
+                  ref: inputRef,
+                  type: 'text',
+                  autoComplete: 'off',
+                  id: id ?? form.id,
+                  value: inputValue,
+                  placeholder,
+                  disabled: form.disabled,
+                  role: 'combobox',
+                  'aria-expanded': open,
+                  'aria-haspopup': 'listbox',
+                  'aria-autocomplete': 'list',
+                  'aria-invalid': form.error || undefined,
+                  'aria-describedby': form.helperId,
+                  'aria-controls': open ? listId : undefined,
+                  'aria-activedescendant': activeDescendant,
+                  onChange: handleInputChange,
+                  onKeyDown: handleInputKeyDown,
+                  onFocus: () => {
+                    if (!form.disabled) {
+                      form.setFocused?.(true);
+
+                      if (!skipOpenOnFocusRef.current) {
+                        setOpen(true);
+                      }
+                    }
+                  },
+                  onBlur: () => form.setFocused?.(false),
+                },
+                slotProps?.input,
+              )}
             />
           </SInputAutoCompleteValue>
-          <SInputAutoCompleteChevron open={open} aria-hidden>
+          <SInputAutoCompleteChevron
+            {...mergeSlotProps(
+              {
+                open,
+                'aria-hidden': true,
+              },
+              slotProps?.chevron,
+            )}
+          >
             <ArrowBottomIcon width="1em" height="1em" />
           </SInputAutoCompleteChevron>
         </SInputAutoCompleteTrigger>
@@ -652,23 +691,28 @@ const InputAutoCompleteInner = <T,>(
       {open && typeof document !== 'undefined'
         ? createPortal(
             <SInputAutoCompleteDropdown
-              ref={dropdownRef}
-              id={listId}
-              top={coords.top}
-              left={coords.left}
-              width={coords.width}
-              placement={coords.placement}
-              visible={visible}
-              color={form.color}
-              variant={form.variant}
-              role="listbox"
-              aria-multiselectable={multiSelect || undefined}
+              {...mergeSlotProps(
+                {
+                  ref: dropdownRef,
+                  id: listId,
+                  top: coords.top,
+                  left: coords.left,
+                  width: coords.width,
+                  placement: coords.placement,
+                  visible,
+                  color: form.color,
+                  variant: form.variant,
+                  role: 'listbox',
+                  'aria-multiselectable': multiSelect || undefined,
+                },
+                slotProps?.dropdown,
+              )}
             >
-              <SInputAutoCompleteOptions>
+              <SInputAutoCompleteOptions {...slotProps?.listbox}>
                 {optionCount > 0 ? (
                   options
                 ) : (
-                  <SInputAutoCompleteEmpty>
+                  <SInputAutoCompleteEmpty {...slotProps?.empty}>
                     {noOptionsText}
                   </SInputAutoCompleteEmpty>
                 )}
@@ -687,6 +731,7 @@ const InputAutoComplete = forwardRef(InputAutoCompleteInner) as <T = unknown>(
 
 (InputAutoComplete as { displayName?: string }).displayName = 'InputAutoComplete';
 
+export type { TInputAutoCompleteSlotProps } from './types';
 export { inputAutoCompleteClasses } from './classes';
 export { InputAutoComplete };
 export default InputAutoComplete;

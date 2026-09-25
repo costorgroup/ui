@@ -1,7 +1,16 @@
-import { ChangeEvent, HTMLAttributes, ReactNode, SelectHTMLAttributes } from 'react';
+import {
+  HTMLAttributes,
+  OptionHTMLAttributes,
+  ReactNode,
+  SelectHTMLAttributes,
+} from 'react';
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 import type { TPaletteColor } from '../../theme/types';
-import type { TFormControlChangeHandler } from '../form-control/types';
+import type {
+  TFieldSlotProps,
+  TFormControlChangeHandler,
+} from '../form-control/types';
+import type { TInputWrapperProps } from '../input/input-wrapper/types';
 
 export type TNativeSelectOption = {
   value: string;
@@ -10,6 +19,15 @@ export type TNativeSelectOption = {
 };
 
 export type TNativeSelectChangeHandler = TFormControlChangeHandler<string>;
+
+export type TNativeSelectSlotProps = TFieldSlotProps<{
+  wrapper: TInputWrapperProps;
+  container: HTMLAttributes<HTMLDivElement>;
+  select: SelectHTMLAttributes<HTMLSelectElement>;
+  chevron: HTMLAttributes<HTMLSpanElement>;
+  /** Applied to every option rendered from `options`. */
+  option: OptionHTMLAttributes<HTMLOptionElement>;
+}>;
 
 export type TNativeSelectProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -33,4 +51,5 @@ export type TNativeSelectProps = Omit<
   variant?: TInputVariant;
   color?: TPaletteColor;
   actionBar?: ReactNode;
+  slotProps?: TNativeSelectSlotProps;
 };

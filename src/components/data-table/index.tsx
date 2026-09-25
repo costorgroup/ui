@@ -24,6 +24,7 @@ import {
   TDataTableRenderCellParams,
   TDataTableRow,
 } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const CARD_SIZE_BY_TABLE_SIZE: Record<TTableSize, TCardSize> = {
   xs: 'sm',
@@ -86,6 +87,7 @@ const DataTableInner = <T extends TDataTableRow>(
     onPageChange,
     getRowId,
     className,
+    slotProps,
     ...props
   }: TDataTableProps<T>,
   ref: React.Ref<HTMLDivElement>,
@@ -161,39 +163,58 @@ const DataTableInner = <T extends TDataTableRow>(
       {...props}
       className={mergeClasses(dataTableClasses.root, className)}
     >
-      <CardHeader>
-        {title != null ? <CardTitle>{title}</CardTitle> : null}
-        {description != null ? (
-          <CardDescription>{description}</CardDescription>
+      <CardHeader {...slotProps?.header}>
+        {title != null ? (
+          <CardTitle {...slotProps?.title}>{title}</CardTitle>
         ) : null}
-        <CardAction>
+        {description != null ? (
+          <CardDescription {...slotProps?.description}>
+            {description}
+          </CardDescription>
+        ) : null}
+        <CardAction {...slotProps?.action}>
           <TextField
-            fullWidth
-            size="sm"
-            color={color}
-            variant="surface"
-            startIcon={<SearchIcon />}
-            placeholder={searchPlaceholder}
-            value={search}
-            onChange={handleSearchChange}
-            aria-label={searchPlaceholder}
-            className={dataTableClasses.search}
+            {...mergeSlotProps(
+              {
+                fullWidth: true,
+                size: 'sm',
+                color,
+                variant: 'surface',
+                startIcon: <SearchIcon />,
+                placeholder: searchPlaceholder,
+                value: search,
+                onChange: handleSearchChange,
+                'aria-label': searchPlaceholder,
+                className: dataTableClasses.search,
+              },
+              slotProps?.search,
+            )}
           />
         </CardAction>
       </CardHeader>
 
-      <CardContent>
+      <CardContent {...slotProps?.content}>
         <SDataTableBox>
           <SDataTableScroll>
-            <Table size={size} color={color}>
-              <TableHead>
-                <TableRow>
+            <Table
+              {...mergeSlotProps(
+                {
+                  size,
+                  color,
+                },
+                slotProps?.table,
+              )}
+            >
+              <TableHead {...slotProps?.tableHead}>
+                <TableRow {...slotProps?.headRow}>
                   {columns.map((column) => (
-                    <TableCell key={column.id}>{column.name}</TableCell>
+                    <TableCell key={column.id} {...slotProps?.headCell}>
+                      {column.name}
+                    </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody {...slotProps?.tableBody}>
                 {pageRows.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={Math.max(columns.length, 1)}>
@@ -207,7 +228,7 @@ const DataTableInner = <T extends TDataTableRow>(
                       getRowId?.(row, absoluteIndex) ?? row.id ?? absoluteIndex;
 
                     return (
-                      <TableRow key={rowKey}>
+                      <TableRow key={rowKey} {...slotProps?.row}>
                         {columns.map((column, columnIndex) => {
                           const value = getCellValue(row, column.key);
                           const params: TDataTableRenderCellParams<T> = {
@@ -220,7 +241,7 @@ const DataTableInner = <T extends TDataTableRow>(
                           };
 
                           return (
-                            <TableCell key={column.id}>
+                            <TableCell key={column.id} {...slotProps?.cell}>
                               {(column.renderCell ?? defaultRenderCell)(params)}
                             </TableCell>
                           );
@@ -235,18 +256,30 @@ const DataTableInner = <T extends TDataTableRow>(
         </SDataTableBox>
       </CardContent>
 
-      <SDataTableFooter variant="muted">
+      <SDataTableFooter
+        {...mergeSlotProps(
+          {
+            variant: 'muted',
+          },
+          slotProps?.footer,
+        )}
+      >
         <Text size="sm" color="default">
           {filteredData.length === 0
             ? '0 entries'
             : `Showing ${from} to ${to} of ${filteredData.length} entries`}
         </Text>
         <Pagination
-          count={pageCount}
-          page={currentPage}
-          onChange={handlePageChange}
-          color="default"
-          size="sm"
+          {...mergeSlotProps(
+            {
+              count: pageCount,
+              page: currentPage,
+              onChange: handlePageChange,
+              color: 'default',
+              size: 'sm',
+            },
+            slotProps?.pagination,
+          )}
         />
       </SDataTableFooter>
     </Card>
@@ -259,6 +292,7 @@ const DataTable = forwardRef(DataTableInner) as TDataTableComponent;
 
 export type {
   TDataTableProps,
+  TDataTableSlotProps,
   TDataTableColumn,
   TDataTableRow,
   TDataTableVariant,

@@ -21,6 +21,7 @@ import {
   isAriaInvalid,
   mergeClasses,
 } from '../../../helpers/generate-utility-classes';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 import { useFormControlState } from '../../form-control/context';
 import { inputNumberFieldClasses } from './classes';
 import {
@@ -106,6 +107,7 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
       className,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -281,10 +283,15 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 
     const incrementButton = (
       <InputButton
-        tabIndex={-1}
-        disabled={!canIncrement}
-        aria-label="Increase value"
-        onClick={() => applyStep(1)}
+        {...mergeSlotProps(
+          {
+            tabIndex: -1,
+            disabled: !canIncrement,
+            'aria-label': 'Increase value',
+            onClick: () => applyStep(1),
+          },
+          slotProps?.incrementButton,
+        )}
       >
         {spinner ? (
           <ArrowRightIcon width="1em" height="1em" />
@@ -296,10 +303,15 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 
     const decrementButton = (
       <InputButton
-        tabIndex={-1}
-        disabled={!canDecrement}
-        aria-label="Decrease value"
-        onClick={() => applyStep(-1)}
+        {...mergeSlotProps(
+          {
+            tabIndex: -1,
+            disabled: !canDecrement,
+            'aria-label': 'Decrease value',
+            onClick: () => applyStep(-1),
+          },
+          slotProps?.decrementButton,
+        )}
       >
         {spinner ? (
           <SInputNumberFieldFlipIcon aria-hidden>
@@ -313,17 +325,21 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 
     return (
       <InputWrapper
-        size={size}
-        variant={variant}
-        color={color}
-        disabled={disabled}
-        readOnly={readOnly}
-        error={error}
-        actionBar={actionBar}
+        {...mergeSlotProps(
+          { size, variant, color, disabled, readOnly, error, actionBar },
+          slotProps?.wrapper,
+        )}
       >
-        {spinner ? decrementButton : startIcon != null ? <InputIcon>{startIcon}</InputIcon> : null}
+        {spinner ? (
+          decrementButton
+        ) : startIcon != null ? (
+          <InputIcon {...slotProps?.startIcon}>{startIcon}</InputIcon>
+        ) : null}
         <SInputNumberFieldInput
           ref={setRefs}
+          inputMode="decimal"
+          autoComplete="off"
+          spellCheck={false}
           {...props}
           className={mergeClasses(
             inputNumberFieldClasses.root,
@@ -334,9 +350,6 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
           aria-describedby={ariaDescribedBy ?? form.helperId}
           name={name}
           type="number"
-          inputMode="decimal"
-          autoComplete="off"
-          spellCheck={false}
           step={stepAmount}
           min={minAmount}
           max={maxAmount}
@@ -355,8 +368,15 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
           incrementButton
         ) : (
           <>
-            {endIcon != null ? <InputIcon>{endIcon}</InputIcon> : null}
-            <InputActions orientation="vertical">
+            {endIcon != null ? (
+              <InputIcon {...slotProps?.endIcon}>{endIcon}</InputIcon>
+            ) : null}
+            <InputActions
+              {...mergeSlotProps(
+                { orientation: 'vertical' as const },
+                slotProps?.actions,
+              )}
+            >
               {incrementButton}
               {decrementButton}
             </InputActions>
@@ -369,7 +389,10 @@ const InputNumberField = forwardRef<HTMLInputElement, TInputNumberFieldProps>(
 
 InputNumberField.displayName = 'InputNumberField';
 
-export type { TInputNumberFieldProps } from './types';
+export type {
+  TInputNumberFieldProps,
+  TInputNumberFieldSlotProps,
+} from './types';
 export { inputNumberFieldClasses } from './classes';
 export { InputNumberField };
 export default InputNumberField;

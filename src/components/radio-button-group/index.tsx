@@ -6,9 +6,11 @@ import React, {
   useId,
 } from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
+import { mergeSlotProps } from '../../helpers/slot-props';
 import { radioButtonGroupClasses } from './classes';
 import { FormControl, useFormControl } from '../form-control';
 import { InputBase } from '../input/input-base';
+import type { TInputBaseProps } from '../input/input-base/types';
 import { RadioButtonGroupContext } from './context';
 import { TRadioButtonGroupProps } from './types';
 import { defaultIsValueEqual } from '../form-control/value';
@@ -18,11 +20,13 @@ const RadioButtonGroupBody = ({
   direction,
   fullWidth,
   children,
+  groupProps,
 }: {
   name?: string;
   direction: 'vertical' | 'horizontal';
   fullWidth: boolean;
   children?: ReactNode;
+  groupProps?: Partial<TInputBaseProps>;
 }) => {
   const form = useFormControl();
   const generatedName = useId();
@@ -43,10 +47,15 @@ const RadioButtonGroupBody = ({
       }}
     >
       <InputBase
-        direction={direction}
-        fullWidth={fullWidth}
-        role="radiogroup"
-        aria-invalid={form?.error || undefined}
+        {...mergeSlotProps(
+          {
+            direction,
+            fullWidth,
+            role: 'radiogroup',
+            'aria-invalid': form?.error || undefined,
+          },
+          groupProps,
+        )}
       >
         {children}
       </InputBase>
@@ -73,12 +82,14 @@ const RadioButtonGroupInner = <T,>(
     color = 'primary',
     disabled,
     className,
+    slotProps,
     ...props
   }: TRadioButtonGroupProps<T>,
   ref: Ref<HTMLDivElement>,
 ) => {
   return (
     <FormControl
+      {...slotProps?.root}
       ref={ref}
       label={label}
       description={description}
@@ -98,13 +109,16 @@ const RadioButtonGroupInner = <T,>(
         radioButtonGroupClasses.root,
         disabled && radioButtonGroupClasses.disabled,
         error && radioButtonGroupClasses.error,
+        slotProps?.root?.className,
         className,
       )}
+      slotProps={slotProps}
     >
       <RadioButtonGroupBody
         name={name}
         direction={direction}
         fullWidth={fullWidth}
+        groupProps={slotProps?.group}
       >
         {children}
       </RadioButtonGroupBody>
@@ -118,7 +132,10 @@ const RadioButtonGroup = forwardRef(RadioButtonGroupInner) as <T = unknown>(
 
 (RadioButtonGroup as { displayName?: string }).displayName = 'RadioButtonGroup';
 
-export type { TRadioButtonGroupProps } from './types';
+export type {
+  TRadioButtonGroupProps,
+  TRadioButtonGroupSlotProps,
+} from './types';
 export { radioButtonGroupClasses } from './classes';
 export { RadioButtonGroup };
 export default RadioButtonGroup;

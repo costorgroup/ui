@@ -23,6 +23,7 @@ import {
   SInputPinFieldStack,
 } from './styles';
 import { TInputPinFieldProps, TInputPinFieldType } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const CHAR_PATTERN: Record<TInputPinFieldType, RegExp> = {
   numeric: /^[0-9]$/,
@@ -108,6 +109,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       onFocus,
       onBlur,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -372,10 +374,15 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
       <>
         {name ? (
           <input
-            type="hidden"
-            name={name}
-            value={cells.join('')}
-            disabled={disabled}
+            {...mergeSlotProps(
+              {
+                type: 'hidden',
+                name,
+                value: cells.join(''),
+                disabled,
+              },
+              slotProps?.hiddenInput,
+            )}
           />
         ) : null}
         {cells.map((cell, index) => {
@@ -385,38 +392,46 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
           return (
             <SInputPinFieldCell
               key={inputId}
-              variant={variant}
-              size={size}
-              color={color}
-              attached={attached}
-              data-disabled={disabled ? 'true' : 'false'}
+              {...mergeSlotProps(
+                {
+                  variant,
+                  size,
+                  color,
+                  attached,
+                  'data-disabled': disabled ? 'true' : 'false',
+                },
+                slotProps?.cell,
+              )}
             >
               <SInputPinFieldInput
-                ref={(node) => {
-                  inputRefs.current[index] = node;
-                }}
-                id={inputId}
-                value={cell}
-                placeholder={placeholder}
-                disabled={disabled}
-                readOnly={readOnly}
-                tabIndex={disabled || locked ? -1 : 0}
-                inputMode={INPUT_MODE[type]}
-                autoComplete={otp ? 'one-time-code' : 'off'}
-                autoCapitalize="off"
-                autoCorrect="off"
-                spellCheck={false}
-                aria-label={`Pin character ${index + 1} of ${length}`}
-                aria-invalid={error || undefined}
-                aria-describedby={
-                  index === 0 ? (ariaDescribedBy ?? form.helperId) : undefined
-                }
-                data-mask={mask ? 'true' : undefined}
-                type="text"
-                onChange={(event) => handleChange(index, event)}
-                onKeyDown={(event) => handleKeyDown(index, event)}
-                onPaste={(event) => handlePaste(index, event)}
-                onFocus={(event) => handleFocus(index, event)}
+                {...mergeSlotProps(
+                  {
+                    ref: (node) => {
+                      inputRefs.current[index] = node;
+                    },
+                    id: inputId,
+                    value: cell,
+                    placeholder,
+                    disabled,
+                    readOnly,
+                    tabIndex: disabled || locked ? -1 : 0,
+                    inputMode: INPUT_MODE[type],
+                    autoComplete: otp ? 'one-time-code' : 'off',
+                    autoCapitalize: 'off',
+                    autoCorrect: 'off',
+                    spellCheck: false,
+                    'aria-label': `Pin character ${index + 1} of ${length}`,
+                    'aria-invalid': error || undefined,
+                    'aria-describedby': index === 0 ? (ariaDescribedBy ?? form.helperId) : undefined,
+                    'data-mask': mask ? 'true' : undefined,
+                    type: 'text',
+                    onChange: (event) => handleChange(index, event),
+                    onKeyDown: (event) => handleKeyDown(index, event),
+                    onPaste: (event) => handlePaste(index, event),
+                    onFocus: (event) => handleFocus(index, event),
+                  },
+                  slotProps?.input,
+                )}
               />
             </SInputPinFieldCell>
           );
@@ -452,7 +467,15 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
         onFocus={handleGroupFocus}
         onBlur={handleGroupBlur}
       >
-        <SInputPinField attached={attached} size={size}>
+        <SInputPinField
+          {...mergeSlotProps(
+            {
+              attached,
+              size,
+            },
+            slotProps?.group,
+          )}
+        >
           {pinChildren}
         </SInputPinField>
         {actionBar}
@@ -463,6 +486,7 @@ const InputPinField = forwardRef<HTMLDivElement, TInputPinFieldProps>(
 
 InputPinField.displayName = 'InputPinField';
 
+export type { TInputPinFieldSlotProps } from './types';
 export { inputPinFieldClasses } from './classes';
 export { InputPinField };
 export default InputPinField;

@@ -1,6 +1,8 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 import type { TGap, TPaletteColor } from '../../theme/types';
 import type { TInputVariant } from '../input/input-wrapper/types';
+import type { TSlotProps } from '../../helpers/slot-props';
+import type { TButtonProps } from '../button/types';
 
 export type TDropzoneSize = 'sm' | 'md' | 'lg';
 
@@ -14,6 +16,18 @@ export type TDropzonePreviewContext = {
   reupload: () => void;
   remove: () => void;
 };
+
+export type TDropzoneSlotProps = TSlotProps<{
+  input: InputHTMLAttributes<HTMLInputElement>;
+  preview: HTMLAttributes<HTMLDivElement>;
+  overlay: HTMLAttributes<HTMLDivElement>;
+  actions: HTMLAttributes<HTMLDivElement>;
+  reuploadButton: TButtonProps;
+  removeButton: TButtonProps;
+  icon: HTMLAttributes<HTMLSpanElement>;
+  title: HTMLAttributes<HTMLDivElement>;
+  description: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TDropzoneProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -54,4 +68,5 @@ export type TDropzoneProps = Omit<
     HTMLAttributes<HTMLInputElement>,
     'type' | 'accept' | 'multiple' | 'disabled' | 'onChange'
   >;
+  slotProps?: TDropzoneSlotProps;
 };

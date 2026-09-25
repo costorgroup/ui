@@ -3,6 +3,7 @@ import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { badgeClasses } from './classes';
 import { SBadge, SBadgeContent } from './styles';
 import { TBadgeProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const getDisplayContent = (
   badgeContent: TBadgeProps['badgeContent'],
@@ -29,6 +30,7 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
       overlap = 'rectangular',
       anchorOrigin,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -56,19 +58,24 @@ const Badge = forwardRef<HTMLSpanElement, TBadgeProps>(
       >
         {children}
         <SBadgeContent
-          color={color}
-          variant={variant}
-          size={size}
-          isDot={isDot}
-          invisible={invisible}
-          overlap={overlap}
-          vertical={vertical}
-          horizontal={horizontal}
-          aria-hidden={invisible || undefined}
-          className={mergeClasses(
-            badgeClasses.content,
-            isDot && badgeClasses.dot,
-            invisible && badgeClasses.invisible,
+          {...mergeSlotProps(
+            {
+              color,
+              variant,
+              size,
+              isDot,
+              invisible,
+              overlap,
+              vertical,
+              horizontal,
+              'aria-hidden': invisible || undefined,
+              className: mergeClasses(
+                badgeClasses.content,
+                isDot && badgeClasses.dot,
+                invisible && badgeClasses.invisible,
+              ),
+            },
+            slotProps?.badge,
           )}
         >
           {displayContent}
@@ -82,6 +89,7 @@ Badge.displayName = 'Badge';
 
 export type {
   TBadgeProps,
+  TBadgeSlotProps,
   TBadgeVariant,
   TBadgeSize,
   TBadgeOverlap,

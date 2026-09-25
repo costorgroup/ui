@@ -1,4 +1,6 @@
 import { HTMLAttributes, ReactElement, ReactNode } from 'react';
+import type { TSlotProps } from '../../helpers/slot-props';
+import type { TPanelProps } from '../panel/types';
 
 export type TTooltipPlacement =
   | 'top-start'
@@ -27,7 +29,13 @@ type TTooltipPropsBase = Omit<
   children: ReactElement;
   placement?: TTooltipPlacement;
   offset?: number;
+  slotProps?: TTooltipSlotProps;
 };
+
+export type TTooltipSlotProps = TSlotProps<{
+  popper: HTMLAttributes<HTMLDivElement>;
+  panel: TPanelProps;
+}>;
 
 export type TTooltipProps =
   | (TTooltipPropsBase & { title: ReactNode; render?: never })

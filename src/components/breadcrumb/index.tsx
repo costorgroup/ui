@@ -5,7 +5,17 @@ import { breadcrumbClasses } from './classes';
 import { TBreadcrumbProps } from './types';
 
 const Breadcrumb = forwardRef<HTMLElement, TBreadcrumbProps>(
-  ({ children, size = 'md', color = 'default', className, ...props }, ref) => {
+  (
+    {
+      children,
+      size = 'md',
+      color = 'default',
+      className,
+      slotProps,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <BreadcrumbBase
         ref={ref}
@@ -14,7 +24,7 @@ const Breadcrumb = forwardRef<HTMLElement, TBreadcrumbProps>(
         {...props}
         className={mergeClasses(breadcrumbClasses.root, className)}
       >
-        <BreadcrumbList>{children}</BreadcrumbList>
+        <BreadcrumbList {...slotProps?.list}>{children}</BreadcrumbList>
       </BreadcrumbBase>
     );
   },
@@ -22,7 +32,11 @@ const Breadcrumb = forwardRef<HTMLElement, TBreadcrumbProps>(
 
 Breadcrumb.displayName = 'Breadcrumb';
 
-export type { TBreadcrumbProps, TBreadcrumbSize } from './types';
+export type {
+  TBreadcrumbProps,
+  TBreadcrumbSlotProps,
+  TBreadcrumbSize,
+} from './types';
 export { breadcrumbClasses } from './classes';
 export { BreadcrumbBase, BreadcrumbList } from './breadcrumb-base';
 export type { TBreadcrumbBaseProps } from './breadcrumb-base';

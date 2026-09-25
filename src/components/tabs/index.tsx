@@ -14,6 +14,7 @@ import { TTabsProps } from './types';
 import { useTabIndicator } from './use-tab-indicator';
 import { useTabListPan } from './use-tab-list-pan';
 import { useTabOverflow } from './use-tab-overflow';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
   (
@@ -29,6 +30,7 @@ const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
       draggable = true,
       color,
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -156,47 +158,67 @@ const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
           )}
         >
           <STabsList
-            ref={listRef}
-            orientation={orientation}
-            panning={panning}
-            className={tabsClasses.list}
-            onPointerDown={onPointerDown}
+            {...mergeSlotProps(
+              {
+                ref: listRef,
+                orientation,
+                panning,
+                className: tabsClasses.list,
+                onPointerDown,
+              },
+              slotProps?.list,
+            )}
           >
             <STabIndicator
-              className={mergeClasses(
-                tabsClasses.indicator,
-                dragging && tabsClasses.indicatorDragging,
+              {...mergeSlotProps(
+                {
+                  className: mergeClasses(
+                    tabsClasses.indicator,
+                    dragging && tabsClasses.indicatorDragging,
+                  ),
+                  appearance,
+                  variant,
+                  color,
+                  width: indicator.width,
+                  height: indicator.height,
+                  x: indicator.x,
+                  y: indicator.y,
+                  ready,
+                  dragging,
+                  'aria-hidden': true,
+                },
+                slotProps?.indicator,
               )}
-              appearance={appearance}
-              variant={variant}
-              color={color}
-              width={indicator.width}
-              height={indicator.height}
-              x={indicator.x}
-              y={indicator.y}
-              ready={ready}
-              dragging={dragging}
-              aria-hidden
             />
             {children}
           </STabsList>
           <STabFade
-            className={mergeClasses(tabsClasses.fade, tabsClasses.fadeStart)}
-            side="start"
-            orientation={orientation}
-            appearance={appearance}
-            variant={variant}
-            visible={fadeStart}
-            aria-hidden
+            {...mergeSlotProps(
+              {
+                className: mergeClasses(tabsClasses.fade, tabsClasses.fadeStart),
+                side: 'start',
+                orientation,
+                appearance,
+                variant,
+                visible: fadeStart,
+                'aria-hidden': true,
+              },
+              slotProps?.fade,
+            )}
           />
           <STabFade
-            className={mergeClasses(tabsClasses.fade, tabsClasses.fadeEnd)}
-            side="end"
-            orientation={orientation}
-            appearance={appearance}
-            variant={variant}
-            visible={fadeEnd}
-            aria-hidden
+            {...mergeSlotProps(
+              {
+                className: mergeClasses(tabsClasses.fade, tabsClasses.fadeEnd),
+                side: 'end',
+                orientation,
+                appearance,
+                variant,
+                visible: fadeEnd,
+                'aria-hidden': true,
+              },
+              slotProps?.fade,
+            )}
           />
         </STabs>
       </TabsContext.Provider>
@@ -206,7 +228,13 @@ const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
 
 Tabs.displayName = 'Tabs';
 
-export type { TTabsProps, STTabsProps, STTabIndicatorProps, STTabsFadeProps } from './types';
+export type {
+  TTabsProps,
+  TTabsSlotProps,
+  STTabsProps,
+  STTabIndicatorProps,
+  STTabsFadeProps,
+} from './types';
 export type { TTabsAppearance, TTabsOrientation, TTabsVariant } from './context';
 export { tabsClasses } from './classes';
 export { TabsContext, useTabsContext } from './context';

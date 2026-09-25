@@ -20,12 +20,14 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         ref={ref}
         label={label}
         description={description}
@@ -43,10 +45,16 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
           disabled && colorPickerFieldClasses.disabled,
           error && colorPickerFieldClasses.error,
           required && colorPickerFieldClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputColorField disabled={disabled} {...props} />
+        <InputColorField
+          slotProps={slotProps}
+          disabled={disabled}
+          {...props}
+        />
       </FormControl>
     );
   },
@@ -54,7 +62,11 @@ const ColorPickerField = forwardRef<HTMLDivElement, TColorPickerFieldProps>(
 
 ColorPickerField.displayName = 'ColorPickerField';
 
-export type { TColorPickerFieldProps, TColorFormat } from './types';
+export type {
+  TColorPickerFieldProps,
+  TColorPickerFieldSlotProps,
+  TColorFormat,
+} from './types';
 export { colorPickerFieldClasses } from './classes';
 export { ColorPickerField };
 export default ColorPickerField;

@@ -1,4 +1,9 @@
-import React, { forwardRef, isValidElement, ReactNode } from 'react';
+import React, {
+  forwardRef,
+  HTMLAttributes,
+  isValidElement,
+  ReactNode,
+} from 'react';
 import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { Portal } from '../portal';
 import { Backdrop } from '../backdrop';
@@ -12,24 +17,26 @@ import { DrawerHeader } from './drawer-header';
 import { DrawerHeaderActions } from './drawer-header-actions';
 import { DrawerTitle } from './drawer-title';
 import { TDrawerAnchor, TDrawerProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const wrapSlot = (
   value: ReactNode,
   Slot: typeof DrawerTitle | typeof DrawerDescription,
+  slotProps?: Omit<HTMLAttributes<HTMLElement>, 'color'>,
 ) => {
   if (value == null) {
     return null;
   }
 
   if (typeof value === 'string' || typeof value === 'number') {
-    return <Slot>{value}</Slot>;
+    return <Slot {...slotProps}>{value}</Slot>;
   }
 
   if (isValidElement(value)) {
     return value;
   }
 
-  return <Slot>{value}</Slot>;
+  return <Slot {...slotProps}>{value}</Slot>;
 };
 
 const backdropAlign = (
@@ -62,19 +69,25 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
       open = true,
       onClose,
       className,
+      slotProps,
       ...props
     },
     ref,
   ) => (
     <Portal>
       <Backdrop
-        scrollable={scrollable}
-        align={backdropAlign(anchor, scrollable)}
-        justify={backdropJustify(anchor)}
-        layer="drawer"
-        lockScroll
-        open={open}
-        onClose={onClose}
+        {...mergeSlotProps(
+          {
+            scrollable,
+            align: backdropAlign(anchor, scrollable),
+            justify: backdropJustify(anchor),
+            layer: 'drawer',
+            lockScroll: true,
+            open,
+            onClose,
+          },
+          slotProps?.backdrop,
+        )}
       >
         <DrawerBase
           ref={ref}
@@ -86,18 +99,29 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
           className={mergeClasses(drawerClasses.root, className)}
         >
           {title != null || description != null || headerActions != null ? (
-            <DrawerHeader>
-              {wrapSlot(title, DrawerTitle)}
-              {wrapSlot(description, DrawerDescription)}
+            <DrawerHeader {...slotProps?.header}>
+              {wrapSlot(title, DrawerTitle, slotProps?.title)}
+              {wrapSlot(description, DrawerDescription, slotProps?.description)}
               {headerActions != null ? (
-                <DrawerHeaderActions>{headerActions}</DrawerHeaderActions>
+                <DrawerHeaderActions {...slotProps?.headerActions}>
+                  {headerActions}
+                </DrawerHeaderActions>
               ) : null}
             </DrawerHeader>
           ) : null}
           {children != null ? (
-            <DrawerBody scrollable={scrollable}>{children}</DrawerBody>
+            <DrawerBody
+              {...mergeSlotProps(
+                {
+                  scrollable,
+                },
+                slotProps?.body,
+              )}
+            >{children}</DrawerBody>
           ) : null}
-          {actions != null ? <DrawerActions>{actions}</DrawerActions> : null}
+          {actions != null ? (
+            <DrawerActions {...slotProps?.actions}>{actions}</DrawerActions>
+          ) : null}
         </DrawerBase>
       </Backdrop>
     </Portal>
@@ -106,7 +130,13 @@ const Drawer = forwardRef<HTMLDivElement, TDrawerProps>(
 
 Drawer.displayName = 'Drawer';
 
-export type { TDrawerProps, TDrawerSize, TDrawerAnchor, TDrawerVariant } from './types';
+export type {
+  TDrawerProps,
+  TDrawerSlotProps,
+  TDrawerSize,
+  TDrawerAnchor,
+  TDrawerVariant,
+} from './types';
 export { drawerClasses } from './classes';
 export { DrawerBase, drawerBaseClasses } from './drawer-base';
 export type { TDrawerBaseProps } from './drawer-base';

@@ -1,12 +1,32 @@
-import { HTMLAttributes, MouseEvent, ReactNode } from 'react';
+import {
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  MouseEvent,
+  ReactNode,
+} from 'react';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
 import { TPaletteColor } from '../../../theme/types';
 import type { TOptionRenderState } from '../list-options';
+import type { TSlotProps } from '../../../helpers/slot-props';
+import type { TInputWrapperProps } from '../input-wrapper/types';
 
 export type TInputSelectChangeHandler<T> = (
   event: MouseEvent<HTMLButtonElement>,
   value: T | T[],
 ) => void;
+
+export type TInputSelectSlotProps = TSlotProps<{
+  wrapper: TInputWrapperProps;
+  trigger: ButtonHTMLAttributes<HTMLButtonElement>;
+  value: HTMLAttributes<HTMLSpanElement>;
+  placeholder: HTMLAttributes<HTMLSpanElement>;
+  chevron: HTMLAttributes<HTMLSpanElement>;
+  dropdown: HTMLAttributes<HTMLDivElement>;
+  listbox: HTMLAttributes<HTMLDivElement>;
+  empty: HTMLAttributes<HTMLDivElement>;
+  /** Applied to every option rendered from `options`. */
+  option: ButtonHTMLAttributes<HTMLButtonElement>;
+}>;
 
 export type TInputSelectProps<T = unknown> = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -35,6 +55,7 @@ export type TInputSelectProps<T = unknown> = Omit<
   color?: TPaletteColor;
   disabled?: boolean;
   actionBar?: ReactNode;
+  slotProps?: TInputSelectSlotProps;
 };
 
 export type TSInputSelectTriggerProps = {

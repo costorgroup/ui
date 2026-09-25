@@ -25,6 +25,7 @@ import {
   TScrollAreaScrollbarX,
   TScrollAreaScrollbarY,
 } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const MIN_THUMB = 24;
 const SCROLL_HIDE_MS = 800;
@@ -91,6 +92,7 @@ const ScrollArea = forwardRef<HTMLDivElement, TScrollAreaProps>(
       onMouseEnter,
       onMouseLeave,
       onScroll,
+      slotProps,
       ...props
     },
     ref,
@@ -416,62 +418,92 @@ const ScrollArea = forwardRef<HTMLDivElement, TScrollAreaProps>(
         }}
       >
         <SScrollAreaFade
-          ref={fadeRef}
-          fade={fade}
-          data-slot="fade"
-          className={scrollAreaClasses.fade}
+          {...mergeSlotProps(
+            {
+              ref: fadeRef,
+              fade,
+              'data-slot': 'fade',
+              className: scrollAreaClasses.fade,
+            },
+            slotProps?.fade,
+          )}
         >
           <SScrollAreaViewport
-            ref={setViewportRef}
-            axis={scrollbarDirection}
-            data-slot="viewport"
-            className={scrollAreaClasses.viewport}
-            onScroll={handleScroll}
+            {...mergeSlotProps(
+              {
+                ref: setViewportRef,
+                axis: scrollbarDirection,
+                'data-slot': 'viewport',
+                className: scrollAreaClasses.viewport,
+                onScroll: handleScroll,
+              },
+              slotProps?.viewport,
+            )}
           >
             {children}
           </SScrollAreaViewport>
         </SScrollAreaFade>
         {showY ? (
           <SScrollAreaScrollbar
-            axis="y"
-            origin={origin as TScrollAreaScrollbarY}
-            data-slot="scrollbar"
-            className={mergeClasses(
-              scrollAreaClasses.scrollbar,
-              scrollAreaClasses.scrollbarY,
+            {...mergeSlotProps(
+              {
+                axis: 'y',
+                origin: origin as TScrollAreaScrollbarY,
+                'data-slot': 'scrollbar',
+                className: mergeClasses(
+                  scrollAreaClasses.scrollbar,
+                  scrollAreaClasses.scrollbarY,
+                ),
+                onPointerDown: handleTrackDown('y'),
+              },
+              slotProps?.scrollbar,
             )}
-            onPointerDown={handleTrackDown('y')}
           >
             <SScrollAreaThumb
-              axis="y"
-              data-slot="thumb"
-              className={mergeClasses(
-                scrollAreaClasses.thumb,
-                scrollAreaClasses.thumbY,
+              {...mergeSlotProps(
+                {
+                  axis: 'y',
+                  'data-slot': 'thumb',
+                  className: mergeClasses(
+                    scrollAreaClasses.thumb,
+                    scrollAreaClasses.thumbY,
+                  ),
+                  onPointerDown: handleThumbDown('y'),
+                },
+                slotProps?.thumb,
               )}
-              onPointerDown={handleThumbDown('y')}
             />
           </SScrollAreaScrollbar>
         ) : null}
         {showX ? (
           <SScrollAreaScrollbar
-            axis="x"
-            origin={origin as TScrollAreaScrollbarX}
-            data-slot="scrollbar"
-            className={mergeClasses(
-              scrollAreaClasses.scrollbar,
-              scrollAreaClasses.scrollbarX,
+            {...mergeSlotProps(
+              {
+                axis: 'x',
+                origin: origin as TScrollAreaScrollbarX,
+                'data-slot': 'scrollbar',
+                className: mergeClasses(
+                  scrollAreaClasses.scrollbar,
+                  scrollAreaClasses.scrollbarX,
+                ),
+                onPointerDown: handleTrackDown('x'),
+              },
+              slotProps?.scrollbar,
             )}
-            onPointerDown={handleTrackDown('x')}
           >
             <SScrollAreaThumb
-              axis="x"
-              data-slot="thumb"
-              className={mergeClasses(
-                scrollAreaClasses.thumb,
-                scrollAreaClasses.thumbX,
+              {...mergeSlotProps(
+                {
+                  axis: 'x',
+                  'data-slot': 'thumb',
+                  className: mergeClasses(
+                    scrollAreaClasses.thumb,
+                    scrollAreaClasses.thumbX,
+                  ),
+                  onPointerDown: handleThumbDown('x'),
+                },
+                slotProps?.thumb,
               )}
-              onPointerDown={handleThumbDown('x')}
             />
           </SScrollAreaScrollbar>
         ) : null}
@@ -484,6 +516,7 @@ ScrollArea.displayName = 'ScrollArea';
 
 export type {
   TScrollAreaProps,
+  TScrollAreaSlotProps,
   TScrollAreaScrollbarVisibility,
   TScrollAreaScrollbarPosition,
   TScrollAreaScrollbarDirection,

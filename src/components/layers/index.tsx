@@ -12,6 +12,7 @@ import { LayersContext } from './context';
 import { Layer, type TLayerProps } from './layer';
 import { SLayers, SLayersScene } from './styles';
 import { TLayersProps, TLayersSpread } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const SPREAD_CLASS: Record<TLayersSpread, keyof typeof layersClasses> = {
   top: 'spreadTop',
@@ -49,6 +50,7 @@ const Layers = forwardRef<HTMLDivElement, TLayersProps>(
       aspectRatio = '3 / 4',
       spread = 'bottom',
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -70,7 +72,14 @@ const Layers = forwardRef<HTMLDivElement, TLayersProps>(
             className,
           )}
         >
-          <SLayersScene className={layersClasses.scene}>
+          <SLayersScene
+            {...mergeSlotProps(
+              {
+                className: layersClasses.scene,
+              },
+              slotProps?.scene,
+            )}
+          >
             {items.map((item, index) =>
               cloneElement(item, {
                 key: item.key ?? index,
@@ -86,7 +95,12 @@ const Layers = forwardRef<HTMLDivElement, TLayersProps>(
 
 Layers.displayName = 'Layers';
 
-export type { TLayersProps, TLayersRadius, TLayersSpread } from './types';
+export type {
+  TLayersProps,
+  TLayersSlotProps,
+  TLayersRadius,
+  TLayersSpread,
+} from './types';
 export type { TLayerProps } from './layer';
 export { layersClasses } from './classes';
 export { Layer, layerClasses } from './layer';

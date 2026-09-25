@@ -4,6 +4,7 @@ import { switchClasses } from "./classes";
 import { FormControl } from "../form-control";
 import { InputSwitch } from "../input/input-switch";
 import { TSwitchProps } from "./types";
+import { mergeSlotProps } from "../../helpers/slot-props";
 
 const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
   (
@@ -20,12 +21,14 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         label={label}
         description={description}
         helperText={helperText}
@@ -40,10 +43,15 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
         className={mergeClasses(
           switchClasses.root,
           error && switchClasses.error,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputSwitch ref={ref} {...props} />
+        <InputSwitch
+          {...mergeSlotProps({ ref, ...props }, slotProps?.input)}
+          slotProps={slotProps}
+        />
       </FormControl>
     );
   },
@@ -51,7 +59,11 @@ const Switch = forwardRef<HTMLInputElement, TSwitchProps>(
 
 Switch.displayName = "Switch";
 
-export type { TSwitchProps, TSwitchDirection } from "./types";
+export type {
+  TSwitchProps,
+  TSwitchSlotProps,
+  TSwitchDirection,
+} from "./types";
 export { switchClasses } from "./classes";
 export { Switch };
 export default Switch;

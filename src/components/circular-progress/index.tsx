@@ -3,6 +3,7 @@ import { mergeClasses } from '../../helpers/generate-utility-classes';
 import { circularProgressClasses } from './classes';
 import { SCircularProgress } from './styles';
 import { TCircularProgressProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const VIEWBOX_SIZE = 50;
 const VIEWBOX_CENTER = VIEWBOX_SIZE / 2;
@@ -61,6 +62,7 @@ const CircularProgress = forwardRef<SVGSVGElement, TCircularProgressProps>(
       role = 'status',
       'aria-label': ariaLabel = 'Loading',
       className,
+      slotProps,
       ...props
     },
     ref,
@@ -114,17 +116,27 @@ const CircularProgress = forwardRef<SVGSVGElement, TCircularProgressProps>(
         </defs>
         <g clipPath={`url(#${clipId})`}>
           <path
-            data-part="track"
-            className={circularProgressClasses.track}
-            d={trackPath}
-            fillRule="evenodd"
+            {...mergeSlotProps(
+              {
+                'data-part': 'track',
+                className: circularProgressClasses.track,
+                d: trackPath,
+                fillRule: 'evenodd',
+              },
+              slotProps?.track,
+            )}
           />
           <circle
-            className={circularProgressClasses.path}
-            cx={VIEWBOX_CENTER}
-            cy={VIEWBOX_CENTER}
-            r={radius}
-            pathLength={100}
+            {...mergeSlotProps(
+              {
+                className: circularProgressClasses.path,
+                cx: VIEWBOX_CENTER,
+                cy: VIEWBOX_CENTER,
+                r: radius,
+                pathLength: 100,
+              },
+              slotProps?.indicator,
+            )}
           />
         </g>
       </SCircularProgress>
@@ -134,7 +146,11 @@ const CircularProgress = forwardRef<SVGSVGElement, TCircularProgressProps>(
 
 CircularProgress.displayName = 'CircularProgress';
 
-export type { TCircularProgressProps, TCircularProgressVariant } from './types';
+export type {
+  TCircularProgressProps,
+  TCircularProgressSlotProps,
+  TCircularProgressVariant,
+} from './types';
 export { circularProgressClasses } from './classes';
 export { CircularProgress };
 export default CircularProgress;

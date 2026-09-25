@@ -72,3 +72,5 @@ export {
   isPointInsideElement,
 } from './track-pointer-outside';
 export type { TTrackPointerOutsideOptions } from './track-pointer-outside';
+export { mergeSlotProps, mergeRefs, setRef } from './slot-props';
+export type { TSlotProps } from './slot-props';

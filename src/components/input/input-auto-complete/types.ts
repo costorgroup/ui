@@ -1,10 +1,33 @@
-import { ChangeEvent, HTMLAttributes, MouseEvent, ReactNode } from 'react';
+import {
+  ButtonHTMLAttributes,
+  ChangeEvent,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  MouseEvent,
+  ReactNode,
+  RefAttributes,
+} from 'react';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
 import { TPaletteColor } from '../../../theme/types';
 import type { TFilterOptions, TOptionRenderState } from '../list-options';
 import type { TInputSelectChangeHandler } from '../input-select/types';
+import type { TSlotProps } from '../../../helpers/slot-props';
+import type { TInputWrapperProps } from '../input-wrapper/types';
 
 export type TInputAutoCompleteChangeHandler<T> = TInputSelectChangeHandler<T>;
+
+export type TInputAutoCompleteSlotProps = TSlotProps<{
+  wrapper: TInputWrapperProps;
+  trigger: HTMLAttributes<HTMLDivElement>;
+  value: HTMLAttributes<HTMLDivElement>;
+  input: InputHTMLAttributes<HTMLInputElement> &
+    RefAttributes<HTMLInputElement>;
+  chevron: HTMLAttributes<HTMLSpanElement>;
+  dropdown: HTMLAttributes<HTMLDivElement>;
+  listbox: HTMLAttributes<HTMLDivElement>;
+  empty: HTMLAttributes<HTMLDivElement>;
+  option: ButtonHTMLAttributes<HTMLButtonElement>;
+}>;
 
 export type TInputAutoCompleteProps<T = unknown> = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -41,6 +64,7 @@ export type TInputAutoCompleteProps<T = unknown> = Omit<
   color?: TPaletteColor;
   disabled?: boolean;
   actionBar?: ReactNode;
+  slotProps?: TInputAutoCompleteSlotProps;
 };
 
 export type TSInputAutoCompleteDropdownProps = {

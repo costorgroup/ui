@@ -2,6 +2,12 @@ import { ReactNode } from 'react';
 import type { TInputSize, TInputVariant } from '../input/input-wrapper/types';
 import type { TPaletteColor } from '../../theme/types';
 import type { TEmojiCategory, TEmojiItem } from '../input/input-emoji-field/data';
+import type { TFieldSlotProps } from '../form-control/types';
+import type { TInputEmojiFieldSlotProps } from '../input/input-emoji-field/types';
+
+export type TEmojiPickerFieldSlotProps = TFieldSlotProps<
+  Required<TInputEmojiFieldSlotProps>
+>;
 
 export type TEmojiPickerFieldProps = {
   label?: ReactNode;
@@ -24,4 +30,5 @@ export type TEmojiPickerFieldProps = {
   emojis?: TEmojiItem[];
   categories?: TEmojiCategory[];
   actionBar?: ReactNode;
+  slotProps?: TEmojiPickerFieldSlotProps;
 };

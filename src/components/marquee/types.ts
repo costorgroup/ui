@@ -1,8 +1,13 @@
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { TGap } from '../../theme/types';
+import type { TSlotProps } from '../../helpers/slot-props';
 
 export type TMarqueeDirection = 'left' | 'right' | 'top' | 'bottom';
 export type TMarqueeGap = TGap | number | (string & {});
+
+export type TMarqueeSlotProps = TSlotProps<{
+  track: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TMarqueeProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
@@ -17,6 +22,7 @@ export type TMarqueeProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   pauseOnHover?: boolean;
   paused?: boolean;
   align?: CSSProperties['alignItems'];
+  slotProps?: TMarqueeSlotProps;
 };
 
 export type TSMarqueeProps = {

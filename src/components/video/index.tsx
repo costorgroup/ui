@@ -21,6 +21,7 @@ import { Text } from '../text';
 import { videoClasses } from './classes';
 import { SVideo } from './styles';
 import { TVideoProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const HIDE_MS = 3000;
 const SEEK_STEP = 5;
@@ -96,6 +97,7 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
       onTimeUpdate,
       onVolumeChange,
       onLoadedMetadata,
+      slotProps,
       ...props
     },
     ref,
@@ -304,35 +306,40 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
 
     return (
       <SVideo
-        ref={rootRef}
-        width={width}
-        height={height}
-        radius={radius}
-        color={color}
-        tabIndex={0}
-        data-slot="video"
-        data-paused={paused ? 'true' : undefined}
-        data-idle={controlsHidden ? 'true' : undefined}
-        className={mergeClasses(videoClasses.root, className)}
-        onMouseMove={showControls}
-        onMouseLeave={() => {
-          setControlsHover(false);
-          if (autoHide && !videoRef.current?.paused) {
-            setIdle(true);
-            window.clearTimeout(hideTimer.current);
-          }
-        }}
-        onKeyDown={handleKeyDown}
-        onClick={(event) => {
-          if (event.target === videoRef.current || event.currentTarget === event.target) {
-            togglePlay();
-          }
-        }}
-        onDoubleClick={(event) => {
-          if (event.target === videoRef.current) {
-            toggleFullscreen();
-          }
-        }}
+        {...mergeSlotProps(
+          {
+            ref: rootRef,
+            width,
+            height,
+            radius,
+            color,
+            tabIndex: 0,
+            'data-slot': 'video',
+            'data-paused': paused ? 'true' : undefined,
+            'data-idle': controlsHidden ? 'true' : undefined,
+            className: mergeClasses(videoClasses.root, className),
+            onMouseMove: showControls,
+            onMouseLeave: () => {
+              setControlsHover(false);
+              if (autoHide && !videoRef.current?.paused) {
+                setIdle(true);
+                window.clearTimeout(hideTimer.current);
+              }
+            },
+            onKeyDown: handleKeyDown,
+            onClick: (event) => {
+              if (event.target === videoRef.current || event.currentTarget === event.target) {
+                togglePlay();
+              }
+            },
+            onDoubleClick: (event) => {
+              if (event.target === videoRef.current) {
+                toggleFullscreen();
+              }
+            },
+          },
+          slotProps?.root,
+        )}
       >
         <video
           {...props}
@@ -381,72 +388,110 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
         />
         {controls ? (
           <>
-            <div className={videoClasses.overlay} aria-hidden={!paused}>
+            <div
+              {...mergeSlotProps(
+                {
+                  className: videoClasses.overlay,
+                  'aria-hidden': !paused,
+                },
+                slotProps?.overlay,
+              )}
+            >
               <Dock size="lg" variant="surface" appearance="opaque">
                 <DockItem
-                  {...TOOL_ITEM}
-                  type="button"
-                  tabIndex={-1}
-                  aria-label={paused ? 'Play' : 'Pause'}
-                  style={{ pointerEvents: paused ? 'auto' : 'none' }}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    togglePlay();
-                  }}
+                  {...mergeSlotProps(
+                    {
+                      ...TOOL_ITEM,
+                      type: 'button',
+                      tabIndex: -1,
+                      'aria-label': paused ? 'Play' : 'Pause',
+                      style: { pointerEvents: paused ? 'auto' : 'none' },
+                      onClick: (event) => {
+                        event.stopPropagation();
+                        togglePlay();
+                      },
+                    },
+                    slotProps?.bigPlayButton,
+                  )}
                 >
                   <PlayIcon />
                 </DockItem>
               </Dock>
             </div>
             <div
-              className={videoClasses.controls}
-              onMouseEnter={() => setControlsHover(true)}
-              onMouseLeave={() => setControlsHover(false)}
-              onClick={(event) => event.stopPropagation()}
-              onDoubleClick={(event) => event.stopPropagation()}
+              {...mergeSlotProps(
+                {
+                  className: videoClasses.controls,
+                  onMouseEnter: () => setControlsHover(true),
+                  onMouseLeave: () => setControlsHover(false),
+                  onClick: (event) => event.stopPropagation(),
+                  onDoubleClick: (event) => event.stopPropagation(),
+                },
+                slotProps?.controls,
+              )}
             >
               <Dock
-                size="xs"
-                variant="surface"
-                appearance="opaque"
-                className={videoClasses.dock}
+                {...mergeSlotProps(
+                  {
+                    size: 'xs',
+                    variant: 'surface',
+                    appearance: 'opaque',
+                    className: videoClasses.dock,
+                  },
+                  slotProps?.dock,
+                )}
               >
                 <DockItem
-                  {...TOOL_ITEM}
-                  type="button"
-                  aria-label={paused ? 'Play' : 'Pause'}
-                  onClick={togglePlay}
+                  {...mergeSlotProps(
+                    {
+                      ...TOOL_ITEM,
+                      type: 'button',
+                      'aria-label': paused ? 'Play' : 'Pause',
+                      onClick: togglePlay,
+                    },
+                    slotProps?.playButton,
+                  )}
                 >
                   {paused ? <PlayIcon /> : <PauseIcon />}
                 </DockItem>
                 <Text
-                  as="span"
-                  size="sm"
-                  color="default"
-                  className={videoClasses.time}
+                  {...mergeSlotProps(
+                    {
+                      as: 'span',
+                      size: 'sm',
+                      color: 'default',
+                      className: videoClasses.time,
+                    },
+                    slotProps?.time,
+                  )}
                 >
                   {formatTime(currentTime)} / {formatTime(duration)}
                 </Text>
                 <div
-                  className={videoClasses.progress}
-                  role="slider"
-                  tabIndex={0}
-                  aria-label="Seek"
-                  aria-valuemin={0}
-                  aria-valuemax={duration || 0}
-                  aria-valuenow={currentTime}
-                  aria-valuetext={formatTime(currentTime)}
-                  onPointerDown={(event) => {
-                    event.currentTarget.setPointerCapture(event.pointerId);
-                    seekFromPointer(event);
-                  }}
-                  onPointerMove={(event) => {
-                    if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
-                      return;
-                    }
+                  {...mergeSlotProps(
+                    {
+                      className: videoClasses.progress,
+                      role: 'slider',
+                      tabIndex: 0,
+                      'aria-label': 'Seek',
+                      'aria-valuemin': 0,
+                      'aria-valuemax': duration || 0,
+                      'aria-valuenow': currentTime,
+                      'aria-valuetext': formatTime(currentTime),
+                      onPointerDown: (event) => {
+                        event.currentTarget.setPointerCapture(event.pointerId);
+                        seekFromPointer(event);
+                      },
+                      onPointerMove: (event) => {
+                        if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+                          return;
+                        }
 
-                    seekFromPointer(event);
-                  }}
+                        seekFromPointer(event);
+                      },
+                    },
+                    slotProps?.progress,
+                  )}
                 >
                   <span
                     className={videoClasses.played}
@@ -454,34 +499,51 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
                   />
                 </div>
                 <DockSeparator />
-                <div className={videoClasses.volume}>
+                <div
+                  {...mergeSlotProps(
+                    {
+                      className: videoClasses.volume,
+                    },
+                    slotProps?.volume,
+                  )}
+                >
                   <DockItem
-                    {...TOOL_ITEM}
-                    type="button"
-                    aria-label={muted || volume === 0 ? 'Unmute' : 'Mute'}
-                    onClick={toggleMute}
+                    {...mergeSlotProps(
+                      {
+                        ...TOOL_ITEM,
+                        type: 'button',
+                        'aria-label': muted || volume === 0 ? 'Unmute' : 'Mute',
+                        onClick: toggleMute,
+                      },
+                      slotProps?.muteButton,
+                    )}
                   >
                     {muted || volume === 0 ? <VolumeOffIcon /> : <VolumeIcon />}
                   </DockItem>
                   <div
-                    className={videoClasses.volumeTrack}
-                    role="slider"
-                    tabIndex={0}
-                    aria-label="Volume"
-                    aria-valuemin={0}
-                    aria-valuemax={1}
-                    aria-valuenow={volumeRatio}
-                    onPointerDown={(event) => {
-                      event.currentTarget.setPointerCapture(event.pointerId);
-                      volumeFromPointer(event);
-                    }}
-                    onPointerMove={(event) => {
-                      if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
-                        return;
-                      }
+                    {...mergeSlotProps(
+                      {
+                        className: videoClasses.volumeTrack,
+                        role: 'slider',
+                        tabIndex: 0,
+                        'aria-label': 'Volume',
+                        'aria-valuemin': 0,
+                        'aria-valuemax': 1,
+                        'aria-valuenow': volumeRatio,
+                        onPointerDown: (event) => {
+                          event.currentTarget.setPointerCapture(event.pointerId);
+                          volumeFromPointer(event);
+                        },
+                        onPointerMove: (event) => {
+                          if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+                            return;
+                          }
 
-                      volumeFromPointer(event);
-                    }}
+                          volumeFromPointer(event);
+                        },
+                      },
+                      slotProps?.volumeTrack,
+                    )}
                   >
                     <span
                       className={videoClasses.volumeFill}
@@ -490,10 +552,15 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
                   </div>
                 </div>
                 <DockItem
-                  {...TOOL_ITEM}
-                  type="button"
-                  aria-label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-                  onClick={toggleFullscreen}
+                  {...mergeSlotProps(
+                    {
+                      ...TOOL_ITEM,
+                      type: 'button',
+                      'aria-label': fullscreen ? 'Exit fullscreen' : 'Enter fullscreen',
+                      onClick: toggleFullscreen,
+                    },
+                    slotProps?.fullscreenButton,
+                  )}
                 >
                   {fullscreen ? <FullscreenExitIcon /> : <FullscreenIcon />}
                 </DockItem>
@@ -508,7 +575,7 @@ const Video = forwardRef<HTMLVideoElement, TVideoProps>(
 
 Video.displayName = 'Video';
 
-export type { TVideoProps, TVideoRadius } from './types';
+export type { TVideoProps, TVideoSlotProps, TVideoRadius } from './types';
 export { videoClasses } from './classes';
 export { Video };
 export default Video;

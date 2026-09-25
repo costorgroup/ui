@@ -20,12 +20,14 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         ref={ref}
         label={label}
         description={description}
@@ -43,10 +45,16 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
           disabled && datePickerFieldClasses.disabled,
           error && datePickerFieldClasses.error,
           required && datePickerFieldClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputDateField disabled={disabled} {...props} />
+        <InputDateField
+          slotProps={slotProps}
+          disabled={disabled}
+          {...props}
+        />
       </FormControl>
     );
   },
@@ -54,7 +62,11 @@ const DatePickerField = forwardRef<HTMLDivElement, TDatePickerFieldProps>(
 
 DatePickerField.displayName = 'DatePickerField';
 
-export type { TDatePickerFieldProps, TDatePickerMode } from './types';
+export type {
+  TDatePickerFieldProps,
+  TDatePickerFieldSlotProps,
+  TDatePickerMode,
+} from './types';
 export type {
   TDatePickerDisplayType,
   TTimePickerDisplayType,

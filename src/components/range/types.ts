@@ -11,10 +11,16 @@ import type {
   TRangeValuePosition,
 } from '../input/input-range-field/types';
 import type { TPaletteColor } from '../../theme/types';
+import type { TFieldSlotProps } from '../form-control/types';
+import type { TInputRangeFieldSlotProps } from '../input/input-range-field/types';
+
+export type TRangeSlotProps = TFieldSlotProps<
+  Required<TInputRangeFieldSlotProps>
+>;
 
 export type TRangeProps = Omit<
   TInputRangeFieldProps,
-  'variant' | 'size' | 'color'
+  'variant' | 'size' | 'color' | 'slotProps'
 > & {
   label?: ReactNode;
   description?: ReactNode;
@@ -25,6 +31,7 @@ export type TRangeProps = Omit<
   size?: TInputSize;
   variant?: TInputVariant;
   color?: TPaletteColor;
+  slotProps?: TRangeSlotProps;
 };
 
 export type {

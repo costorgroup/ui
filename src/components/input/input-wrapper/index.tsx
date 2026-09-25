@@ -13,6 +13,7 @@ import { useFormControlState } from '../../form-control/context';
 import { inputWrapperClasses } from './classes';
 import { SInputWrapper, SInputWrapperActionBar, SInputWrapperBody } from './styles';
 import { INPUT_VARIANTS, TInputWrapperProps, TInputVariant } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const isInteractiveTarget = (target: EventTarget | null) => {
   if (!(target instanceof Element)) {
@@ -47,6 +48,7 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
       onFocus,
       onBlur,
       className,
+      slotProps,
       ...props
     },
     forwardedRef,
@@ -149,7 +151,14 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
         onBlur={handleBlur}
       >
         {hasActionBar ? (
-          <SInputWrapperBody className={inputWrapperClasses.body}>
+          <SInputWrapperBody
+            {...mergeSlotProps(
+              {
+                className: inputWrapperClasses.body,
+              },
+              slotProps?.body,
+            )}
+          >
             {children}
           </SInputWrapperBody>
         ) : (
@@ -157,8 +166,13 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
         )}
         {hasActionBar ? (
           <SInputWrapperActionBar
-            size={size}
-            className={inputWrapperClasses.actionBar}
+            {...mergeSlotProps(
+              {
+                size,
+                className: inputWrapperClasses.actionBar,
+              },
+              slotProps?.actionBar,
+            )}
           >
             {actionBar}
           </SInputWrapperActionBar>
@@ -170,6 +184,7 @@ const InputWrapper = forwardRef<HTMLDivElement, TInputWrapperProps>(
 
 InputWrapper.displayName = 'InputWrapper';
 
+export type { TInputWrapperSlotProps } from './types';
 export { inputWrapperClasses } from './classes';
 export { InputWrapper };
 export default InputWrapper;

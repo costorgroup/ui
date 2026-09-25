@@ -1,10 +1,16 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import { TPaletteColor } from '../../../theme/types';
+import type { TSlotProps } from '../../../helpers/slot-props';
 
 export const INPUT_VARIANTS = ['subtle', 'surface', 'outline'] as const;
 
 export type TInputVariant = (typeof INPUT_VARIANTS)[number];
 export type TInputSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+export type TInputWrapperSlotProps = TSlotProps<{
+  body: HTMLAttributes<HTMLDivElement>;
+  actionBar: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TInputWrapperProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> & {
   children?: ReactNode;
@@ -22,4 +28,5 @@ export type TInputWrapperProps = Omit<HTMLAttributes<HTMLDivElement>, 'color'> &
   stacked?: boolean;
   /** Actions rendered under the field, inside the chrome. */
   actionBar?: ReactNode;
+  slotProps?: TInputWrapperSlotProps;
 };

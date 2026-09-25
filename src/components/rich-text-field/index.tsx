@@ -20,12 +20,14 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
       id,
       className,
       disabled,
+      slotProps,
       ...props
     },
     ref,
   ) => {
     return (
       <FormControl
+        {...slotProps?.root}
         ref={ref}
         label={label}
         description={description}
@@ -43,10 +45,16 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
           disabled && richTextFieldClasses.disabled,
           error && richTextFieldClasses.error,
           required && richTextFieldClasses.required,
+          slotProps?.root?.className,
           className,
         )}
+        slotProps={slotProps}
       >
-        <InputRichTextField disabled={disabled} {...props} />
+        <InputRichTextField
+          slotProps={slotProps}
+          disabled={disabled}
+          {...props}
+        />
       </FormControl>
     );
   },
@@ -54,7 +62,7 @@ const RichTextField = forwardRef<HTMLDivElement, TRichTextFieldProps>(
 
 RichTextField.displayName = 'RichTextField';
 
-export type { TRichTextFieldProps } from './types';
+export type { TRichTextFieldProps, TRichTextFieldSlotProps } from './types';
 export { richTextFieldClasses } from './classes';
 export { RichTextField };
 export default RichTextField;

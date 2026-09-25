@@ -1,6 +1,12 @@
-import { ChangeEvent, InputHTMLAttributes, ReactNode } from 'react';
+import {
+  ChangeEvent,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+} from 'react';
 import { TPaletteColor } from '../../../theme/types';
 import { TInputSize, TInputVariant } from '../input-wrapper/types';
+import type { TSlotProps } from '../../../helpers/slot-props';
 
 export type TRangeValue = number | [number, number];
 export type TRangeDirection = 'horizontal' | 'vertical';
@@ -15,6 +21,15 @@ export type TRangeRenderValueProps = {
 };
 
 export type TRangeRenderValue = (props: TRangeRenderValueProps) => ReactNode;
+
+export type TInputRangeFieldSlotProps = TSlotProps<{
+  container: HTMLAttributes<HTMLDivElement>;
+  rail: HTMLAttributes<HTMLDivElement>;
+  track: HTMLAttributes<HTMLDivElement>;
+  thumb: HTMLAttributes<HTMLDivElement>;
+  tooltip: HTMLAttributes<HTMLDivElement>;
+  valueLabel: HTMLAttributes<HTMLSpanElement>;
+}>;
 
 export type TInputRangeFieldProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -34,4 +49,5 @@ export type TInputRangeFieldProps = Omit<
   value?: TRangeValue;
   defaultValue?: TRangeValue;
   onChange?: (event: ChangeEvent<HTMLInputElement>, value: TRangeValue) => void;
+  slotProps?: TInputRangeFieldSlotProps;
 };

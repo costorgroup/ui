@@ -15,6 +15,7 @@ import {
 } from '../radio-button-group/context';
 import { isValueSelected } from '../form-control/value';
 import { TRadioButtonProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const RadioButtonInner = <T,>(
   {
@@ -34,6 +35,7 @@ const RadioButtonInner = <T,>(
     onChange,
     className,
     value,
+    slotProps,
     ...props
   }: TRadioButtonProps<T>,
   ref: Ref<HTMLInputElement>,
@@ -62,6 +64,7 @@ const RadioButtonInner = <T,>(
 
   return (
     <FormControl
+      {...slotProps?.root}
       label={label}
       description={description}
       helperText={helperText}
@@ -78,12 +81,14 @@ const RadioButtonInner = <T,>(
         selected && radioButtonClasses.checked,
         resolvedDisabled && radioButtonClasses.disabled,
         resolvedError && radioButtonClasses.error,
+        slotProps?.root?.className,
         className,
       )}
+      slotProps={slotProps}
     >
       <InputRadioButton
-        ref={ref}
-        {...props}
+        {...mergeSlotProps({ ref, ...props }, slotProps?.input)}
+        slotProps={slotProps}
         name={name ?? group?.name}
         value={value}
         checked={group != null ? selected : checked}
@@ -99,7 +104,11 @@ const RadioButton = forwardRef(RadioButtonInner) as <T = unknown>(
 
 (RadioButton as { displayName?: string }).displayName = 'RadioButton';
 
-export type { TRadioButtonProps, TRadioButtonDirection } from './types';
+export type {
+  TRadioButtonProps,
+  TRadioButtonSlotProps,
+  TRadioButtonDirection,
+} from './types';
 export { radioButtonClasses } from './classes';
 export { RadioButton };
 export default RadioButton;

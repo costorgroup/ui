@@ -1,7 +1,17 @@
-import { ReactNode } from 'react';
+import { HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 import type { AnyExtension, Editor } from '@tiptap/react';
 import type { TPaletteColor } from '../../../theme/types';
 import type { TInputSize, TInputVariant } from '../input-wrapper/types';
+import type { TSlotProps } from '../../../helpers/slot-props';
+import type { TInputWrapperProps } from '../input-wrapper/types';
+
+export type TInputRichTextFieldSlotProps = TSlotProps<{
+  container: HTMLAttributes<HTMLDivElement>;
+  wrapper: TInputWrapperProps;
+  field: HTMLAttributes<HTMLDivElement>;
+  hiddenInput: InputHTMLAttributes<HTMLInputElement>;
+  content: HTMLAttributes<HTMLDivElement>;
+}>;
 
 export type TInputRichTextFieldProps = {
   value?: string;
@@ -25,4 +35,5 @@ export type TInputRichTextFieldProps = {
   'aria-label'?: string;
   className?: string;
   actionBar?: ReactNode;
+  slotProps?: TInputRichTextFieldSlotProps;
 };

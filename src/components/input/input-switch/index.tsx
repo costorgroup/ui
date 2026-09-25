@@ -9,6 +9,7 @@ import {
   SInputSwitchThumb,
 } from './styles';
 import { TInputSwitchProps } from './types';
+import { mergeSlotProps } from '../../../helpers/slot-props';
 
 const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
   (
@@ -26,6 +27,7 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
       onFocus,
       'aria-invalid': ariaInvalid,
       'aria-describedby': ariaDescribedBy,
+      slotProps,
       ...props
     },
     ref,
@@ -55,11 +57,16 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
 
     return (
       <SInputSwitch
-        className={mergeClasses(
-          inputSwitchClasses.root,
-          form.disabled && inputSwitchClasses.disabled,
-          (checked ?? defaultChecked) && inputSwitchClasses.checked,
-          className,
+        {...mergeSlotProps(
+          {
+            className: mergeClasses(
+              inputSwitchClasses.root,
+              form.disabled && inputSwitchClasses.disabled,
+              (checked ?? defaultChecked) && inputSwitchClasses.checked,
+              className,
+            ),
+          },
+          slotProps?.container,
         )}
       >
         <SInputSwitchInput
@@ -80,12 +87,24 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
           className={inputSwitchClasses.input}
         />
         <SInputSwitchControl
-          className={inputSwitchClasses.control}
-          variant={form.variant}
-          size={form.size}
-          color={form.color}
+          {...mergeSlotProps(
+            {
+              className: inputSwitchClasses.control,
+              variant: form.variant,
+              size: form.size,
+              color: form.color,
+            },
+            slotProps?.control,
+          )}
         >
-          <SInputSwitchThumb className={inputSwitchClasses.thumb} />
+          <SInputSwitchThumb
+            {...mergeSlotProps(
+              {
+                className: inputSwitchClasses.thumb,
+              },
+              slotProps?.thumb,
+            )}
+          />
         </SInputSwitchControl>
       </SInputSwitch>
     );
@@ -94,6 +113,7 @@ const InputSwitch = forwardRef<HTMLInputElement, TInputSwitchProps>(
 
 InputSwitch.displayName = 'InputSwitch';
 
+export type { TInputSwitchSlotProps } from './types';
 export { inputSwitchClasses } from './classes';
 export { InputSwitch };
 export default InputSwitch;

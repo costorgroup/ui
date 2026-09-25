@@ -11,6 +11,7 @@ import { bubbleClasses } from './classes';
 import { BubbleContext } from './context';
 import { SBubble, SBubbleRow } from './styles';
 import { TBubbleProps } from './types';
+import { mergeSlotProps } from '../../helpers/slot-props';
 
 const Bubble = forwardRef<HTMLDivElement, TBubbleProps>(
   (
@@ -22,6 +23,7 @@ const Bubble = forwardRef<HTMLDivElement, TBubbleProps>(
       className,
       onClick,
       onReactionsClick,
+      slotProps,
       ...props
     },
     ref,
@@ -93,7 +95,16 @@ const Bubble = forwardRef<HTMLDivElement, TBubbleProps>(
             className,
           )}
         >
-          <SBubbleRow align={align} className={bubbleClasses.row} data-bubble-row="">
+          <SBubbleRow
+            {...mergeSlotProps(
+              {
+                align,
+                className: bubbleClasses.row,
+                'data-bubble-row': '',
+              },
+              slotProps?.row,
+            )}
+          >
             {children}
           </SBubbleRow>
         </SBubble>
@@ -106,6 +117,7 @@ Bubble.displayName = 'Bubble';
 
 export type {
   TBubbleProps,
+  TBubbleSlotProps,
   TBubbleVariant,
   TBubbleAlign,
   TBubbleReactionSide,
