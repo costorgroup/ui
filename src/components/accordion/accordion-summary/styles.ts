@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
-import {
-  accordionSummaryDivider,
-  accordionSummaryVariantStyles,
-} from '../variant-styles';
+import { accordionSummaryVariantStyles } from '../variant-styles';
 import { accordionSummaryClasses } from './classes';
 import {
   TSAccordionExpandIconProps,
+  TSAccordionSummaryButtonProps,
   TSAccordionSummaryProps,
 } from './types';
 
@@ -13,61 +11,99 @@ const summaryCustomProps = new Set([
   'paletteColor',
   'variant',
   'expanded',
-  'disabled',
-  'expandIconPosition',
   'size',
-  'hasDetails',
   'forceContrastText',
+  'appearance',
   'colorScope',
-  'radius',
+  'hasTrailing',
+  'actionsVisibility',
 ]);
 
-export const SAccordionSummary = styled('button', {
+const buttonCustomProps = new Set(['paletteColor', 'size']);
+
+const hoverRevealedActions = `
+  .${accordionSummaryClasses.actions} {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  &:hover .${accordionSummaryClasses.actions},
+  &:focus-within .${accordionSummaryClasses.actions} {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .${accordionSummaryClasses.actions} {
+      opacity: 1;
+    }
+  }
+`;
+
+/** Toggle, then the actions and the grip on the right. */
+export const SAccordionSummary = styled('div', {
   shouldForwardProp: (prop) => !summaryCustomProps.has(prop),
 })<TSAccordionSummaryProps>`
   display: flex;
   align-items: center;
+  gap: ${({ theme }) => theme.spacing(1)};
+  box-sizing: border-box;
+  min-height: ${({ theme, size }) => `calc(48px * ${theme.sizeScale[size]})`};
+  padding-right: ${({ theme, size, hasTrailing }) =>
+    hasTrailing ? `calc(${theme.sizes[size].padX} * 0.75)` : 0};
+  background-color: transparent;
+  color: inherit;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    outline-color 0.2s ease;
+
+  ${({
+    theme,
+    paletteColor,
+    variant,
+    expanded,
+    colorScope,
+    forceContrastText,
+    appearance,
+  }) =>
+    accordionSummaryVariantStyles(variant, theme.palette[paletteColor], theme, {
+      expanded,
+      colorScope,
+      forceContrastText,
+      appearance,
+    })}
+
+  ${({ actionsVisibility }) =>
+    actionsVisibility === 'hover' ? hoverRevealedActions : ''}
+`;
+
+/** The clickable summary; opens or closes the accordion. */
+export const SAccordionSummaryButton = styled('button', {
+  shouldForwardProp: (prop) => !buttonCustomProps.has(prop),
+})<TSAccordionSummaryButtonProps>`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  align-self: stretch;
   gap: ${({ theme, size }) =>
     `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`};
-  width: 100%;
+  min-width: 0;
   margin: 0;
-  padding: ${({ theme, size, variant }) => {
-    if (variant === 'plain') {
-      return 0;
-    }
-
-    const scale = theme.sizeScale[size];
-    return `calc(${theme.spacing(theme.gap.sm)} * ${scale}) calc(${theme.spacing(theme.gap.md)} * ${scale})`;
+  padding: ${({ theme, size }) => {
+    const { padX } = theme.sizes[size];
+    const padY = `calc(${theme.spacing(2)} * ${theme.sizeScale[size]})`;
+    return `${padY} calc(${padX} * 0.75) ${padY} ${padX}`;
   }};
-  margin-bottom: ${({ theme, variant, colorScope, expanded, hasDetails, size }) =>
-    (variant === 'plain' || colorScope === 'summary') && expanded && hasDetails
-      ? `calc(${theme.spacing(theme.gap.sm)} * ${theme.sizeScale[size]})`
-      : 0};
   border: none;
-  border-bottom: ${({ theme, variant, expanded, hasDetails }) =>
-    variant === 'plain'
-      ? 'none'
-      : expanded && hasDetails
-        ? accordionSummaryDivider(variant, theme)
-        : '1px solid transparent'};
-  background: transparent;
+  background: none;
+  color: inherit;
   font: inherit;
   text-align: left;
-  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
-  transition:
-    background-color 0.12s ease,
-    border-color 0.12s ease,
-    color 0.12s ease;
-  flex-direction: ${({ expandIconPosition }) =>
-    expandIconPosition === 'left' ? 'row-reverse' : 'row'};
-  justify-content: space-between;
+  cursor: pointer;
 
-  ${({ theme, paletteColor, variant, colorScope, radius, forceContrastText }) =>
-    accordionSummaryVariantStyles(variant, theme.palette[paletteColor], theme, {
-      colorScope,
-      radius,
-      forceContrastText,
-    })}
+  &:disabled {
+    cursor: not-allowed;
+  }
 
   &:focus-visible {
     outline: 2px solid
@@ -80,6 +116,7 @@ export const SAccordionSummaryContent = styled.span`
   flex: 1;
   min-width: 0;
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  overflow-wrap: anywhere;
 `;
 
 export const SAccordionExpandIcon = styled.span<TSAccordionExpandIconProps>`
@@ -87,6 +124,38 @@ export const SAccordionExpandIcon = styled.span<TSAccordionExpandIconProps>`
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s ease, color 0.12s ease;
+  transition: transform 0.2s ease;
   transform: ${({ expanded }) => (expanded ? 'rotate(180deg)' : 'rotate(0deg)')};
+`;
+
+export const SAccordionSummaryActions = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`;
+
+/** Six-dot grip drawn with a repeating dot gradient. */
+export const SAccordionDragHandle = styled.span`
+  flex-shrink: 0;
+  width: 10px;
+  height: 16px;
+  margin-left: 6px;
+  opacity: 0.6;
+  cursor: grab;
+  touch-action: none;
+  background-image: radial-gradient(
+    circle,
+    currentColor 1.3px,
+    transparent 1.6px
+  );
+  background-size: 5px 5.33px;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
 `;

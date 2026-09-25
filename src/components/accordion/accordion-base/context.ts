@@ -2,6 +2,7 @@ import { createContext, SyntheticEvent, useContext } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
 import type { TAccordionRadius } from '../types';
 import type {
+  TAccordionAppearance,
   TAccordionColorScope,
   TAccordionVariant,
 } from '../variant-styles';
@@ -20,6 +21,9 @@ export type TAccordionContextValue = {
   hasDetails: boolean;
   colorScope: TAccordionColorScope;
   forceContrastText: boolean;
+  appearance: TAccordionAppearance;
+  /** Inside a group with `onReorder`: the summary shows a drag grip. */
+  sortable: boolean;
 };
 
 export const AccordionContext = createContext<TAccordionContextValue | null>(

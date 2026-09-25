@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
 import type { TPaletteColor } from '../../theme/types';
-import { ArrowTopIcon } from '../../icons';
+import { ArrowBottomIcon, ArrowTopIcon } from '../../icons';
 import { Text, Flex } from '../..';
 import { AccordionBase } from './accordion-base';
 import { AccordionDetails } from './accordion-details';
@@ -139,7 +139,7 @@ export const ExpandIconPosition: Story = {
   render: () => (
     <Flex direction="column" gap="md" style={{ width: 420 }}>
       <AccordionBase defaultExpanded>
-        <AccordionSummary expandIconPosition="right">
+        <AccordionSummary expandIcon={<ArrowBottomIcon />} expandIconPosition="right">
           Icon on the right
         </AccordionSummary>
         <AccordionDetails>
@@ -147,7 +147,7 @@ export const ExpandIconPosition: Story = {
         </AccordionDetails>
       </AccordionBase>
       <AccordionBase>
-        <AccordionSummary expandIconPosition="left">
+        <AccordionSummary expandIcon={<ArrowBottomIcon />} expandIconPosition="left">
           Icon on the left
         </AccordionSummary>
         <AccordionDetails>

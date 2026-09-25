@@ -13,20 +13,23 @@ export type TColorScheme = keyof typeof canvas;
 const createPalette = () => {
   return {
     primary: createColorScale("#4226df", "#ffffff"),
-    secondary: createColorScale("#334566", "#ffffff"),
     success: createColorScale("#34c759", "#ffffff"),
     error: createColorScale("#ff3b30", "#ffffff"),
     warning: createColorScale("#ff9500", "#ffffff"),
     info: createColorScale("#007aff", "#ffffff"),
     dark: createColorScale("#1a1a1a", "#ffffff"),
     light: createColorScale("#f5f5f5", "#1a1a1a"),
-  } satisfies Omit<TThemePaletteColors, "base" | "default" | "inverted">;
+  } satisfies Omit<
+    TThemePaletteColors,
+    "base" | "default" | "inverted" | "secondary"
+  >;
 };
 
 /**
  * `base` — theme canvas scale. `base.contrastText` darkens or lightens chrome.
  * `default` — opposite of the canvas: dark fill on light, light fill on dark.
  * `inverted` — opposite of `default` (matches the canvas fill).
+ * `secondary` — muted gray: darker on light, lighter on dark.
  */
 const darkFill = createColorScale("#000000", "#ffffff");
 const lightFill = createColorScale("#ffffff", "#000000");
@@ -37,11 +40,13 @@ export const createModeColors = (mode: TColorScheme) =>
         base: createColorScale(canvas.light, "#000000"),
         default: darkFill,
         inverted: lightFill,
+        secondary: createColorScale("#616161", "#ffffff"),
       }
     : {
         base: createColorScale(canvas.dark, "#ffffff"),
         default: lightFill,
         inverted: darkFill,
+        secondary: createColorScale("#9e9e9e", "#111111"),
       };
 
 export const colorSchemes = {

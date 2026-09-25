@@ -1,8 +1,12 @@
 import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
 import { TPaletteColor, TThemeRadius } from '../../theme/types';
-import type { TAccordionExpandIconPosition } from './accordion-summary/types';
+import type {
+  TAccordionActionsVisibility,
+  TAccordionExpandIconPosition,
+} from './accordion-summary/types';
 import type { TAccordionSize } from './accordion-base/context';
 import type {
+  TAccordionAppearance,
   TAccordionColorScope,
   TAccordionVariant,
 } from './variant-styles';
@@ -23,22 +27,34 @@ export type TAccordionProps = Omit<
 > & {
   summary: ReactNode;
   children?: ReactNode;
+  /** Expand icon; rotates 180° on expand. No icon is shown when omitted. */
   icon?: ReactNode;
   expandIconPosition?: TAccordionExpandIconPosition;
+  /** Controls beside the summary (e.g. duplicate / remove icon buttons). */
+  actions?: ReactNode;
+  actionsVisibility?: TAccordionActionsVisibility;
   expanded?: boolean;
   defaultExpanded?: boolean;
   onChange?: (event: SyntheticEvent, expanded: boolean) => void;
+  /** Identifies the item in an `exclusive` AccordionGroup. */
+  value?: string;
   disabled?: boolean;
   color?: TPaletteColor;
   variant?: TAccordionVariant;
   size?: TAccordionSize;
   radius?: TAccordionRadius;
-  /** `all` colors the whole accordion, `summary` only the summary row. */
+  /** What takes the color on expand: the whole item (`all`), only the
+   * summary row (`summary`, default) or nothing (`none`). */
   colorScope?: TAccordionColorScope;
   /** Pins text/icon to `palette.contrastText`, same as Button. */
   forceContrastText?: boolean;
+  /** Tints mix onto the theme canvas (`opaque`, default) or onto transparent. */
+  appearance?: TAccordionAppearance;
   slotProps?: TAccordionSlotProps;
 };
 
 export type { TAccordionSize } from './accordion-base/context';
-export type { TAccordionExpandIconPosition } from './accordion-summary/types';
+export type {
+  TAccordionExpandIconPosition,
+  TAccordionActionsVisibility,
+} from './accordion-summary/types';

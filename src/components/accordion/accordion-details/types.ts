@@ -1,5 +1,4 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import { TAccordionColorScope, TAccordionVariant } from '../variant-styles';
 import { TAccordionSize } from '../accordion-base/context';
 
 export type TAccordionDetailsProps = HTMLAttributes<HTMLDivElement> & {
@@ -12,6 +11,4 @@ export type TSAccordionDetailsProps = {
 
 export type TSAccordionDetailsInnerProps = {
   size: TAccordionSize;
-  variant: TAccordionVariant;
-  colorScope: TAccordionColorScope;
 };

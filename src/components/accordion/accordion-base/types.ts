@@ -2,6 +2,7 @@ import { HTMLAttributes, ReactNode, SyntheticEvent } from 'react';
 import type { TPaletteColor } from '../../../theme/types';
 import type { TAccordionRadius } from '../types';
 import type {
+  TAccordionAppearance,
   TAccordionColorScope,
   TAccordionVariant,
 } from '../variant-styles';
@@ -15,16 +16,20 @@ export type TAccordionBaseProps = Omit<
   expanded?: boolean;
   defaultExpanded?: boolean;
   onChange?: (event: SyntheticEvent, expanded: boolean) => void;
+  /** Identifies the item in an `exclusive` AccordionGroup. */
+  value?: string;
   disabled?: boolean;
   color?: TPaletteColor;
   variant?: TAccordionVariant;
   size?: TAccordionSize;
   radius?: TAccordionRadius;
   hasDetails?: boolean;
-  /** `all` colors the whole accordion, `summary` only the summary row. */
+  /** What takes the color on expand: `all`, `summary` or `none`. */
   colorScope?: TAccordionColorScope;
   /** Pins text/icon to `palette.contrastText`, same as Button. */
   forceContrastText?: boolean;
+  /** Tints mix onto the theme canvas (`opaque`, default) or onto transparent. */
+  appearance?: TAccordionAppearance;
 };
 
 export type TSAccordionBaseProps = {
@@ -37,4 +42,5 @@ export type TSAccordionBaseProps = {
   grouped: boolean;
   colorScope: TAccordionColorScope;
   forceContrastText: boolean;
+  appearance: TAccordionAppearance;
 };

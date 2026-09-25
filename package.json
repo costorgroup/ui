@@ -1,6 +1,6 @@
 {
   "name": "@costor/ui",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Costor UI component library",
   "keywords": [
     "react",
@@ -1319,3 +1319,4 @@
   "module": "./dist/index.js",
   "sideEffects": false
 }
+

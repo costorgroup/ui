@@ -1,150 +1,159 @@
-import type { TTheme, TThemeRadius } from '../../theme/types';
+import type { TTheme } from '../../theme/types';
 import type { TThemeColorScale } from '../../theme/theming/color/types';
-import { CUI_CANVAS_VAR } from '../../helpers/color/create-color-scale';
-import { colorMixBase } from '../../helpers/variant-styles/surface';
-import {
-  BUTTON_TINT,
-  forceContrastTextStyles,
-  variantStyles,
-} from '../button/variant-styles';
+import { colorMix, colorMixBase } from '../../helpers/variant-styles/surface';
+import type { TAppearance } from '../../helpers/variant-styles/types';
 import { TButtonVariant } from '../button/types';
 
 export type TAccordionVariant = TButtonVariant;
 
-/** `all` paints the whole accordion with the palette; `summary` keeps the
- * shell neutral and only colors the summary row. */
-export type TAccordionColorScope = 'all' | 'summary';
+/** Mix base for tints, same as Button: `opaque` mixes onto the theme canvas
+ * (`base.main`), `transparent` onto air so whatever sits behind shows. */
+export type TAccordionAppearance = TAppearance;
 
-type TAccordionShellState = {
-  grouped?: boolean;
-  colorScope?: TAccordionColorScope;
-  forceContrastText?: boolean;
-};
+/** What takes the color when the accordion expands: the whole item
+ * (`all`), only its summary row (`summary`) or nothing (`none`). Collapsed
+ * items are always neutral. */
+export type TAccordionColorScope = 'all' | 'summary' | 'none';
 
-/** Button styles set `border-color`, which would repaint the summary's
- * divider edge — drop it so the summary keeps its own border. */
-const withoutBorderColor = (css: string) =>
-  css.replace(/^\s*border-color:[^;]*;\s*$/gm, '');
+type TTone = 'main' | 'dark' | 'darker';
 
-export const accordionGroupItemDivider = (theme: TTheme) =>
-  `1px solid ${theme.surfaces.divider}`;
+/** Tint strength per tone. */
+const TINT: Record<TTone, number> = { main: 10, dark: 14, darker: 18 };
 
-const groupedEdges = (
-  variant: TAccordionVariant,
+/** Faint wash on a collapsed (or uncolored) row while hovered. */
+const NEUTRAL_HOVER = 5;
+
+/** Tints `color` onto the canvas (`opaque`) or onto air (`transparent`). */
+export const accordionTint = (
+  color: string,
+  alpha: number,
   theme: TTheme,
-  grouped: boolean,
-) => {
-  if (!grouped) {
-    return '';
-  }
+  appearance: TAccordionAppearance,
+) =>
+  appearance === 'transparent'
+    ? colorMix(color, alpha)
+    : colorMixBase(color, alpha, theme.palette.base.main);
 
-  if (variant === 'surface' || variant === 'outline') {
-    return `
-      &:not(:first-of-type) {
-        border-top: none;
-      }
-    `;
-  }
-
-  return `
-    &:not(:last-of-type) {
-      border-bottom: ${accordionGroupItemDivider(theme)};
-    }
-  `;
+type TPaint = {
+  background: string;
+  color: string;
+  edge?: string;
 };
 
-const canvasColor = (
+/** Fill, text and edge of one variant at one tone — the Button variants,
+ * toned down to a tint so a whole row or panel can wear them. */
+const paint = (
   variant: TAccordionVariant,
   palette: TThemeColorScale,
+  tone: TTone,
   theme: TTheme,
-) => {
+  appearance: TAccordionAppearance,
+): TPaint => {
+  const swatch = palette[tone];
+  const tint = accordionTint(swatch, TINT[tone], theme, appearance);
+
   switch (variant) {
     case 'solid':
-      return palette.main;
+      return { background: swatch, color: palette.contrastText, edge: swatch };
     case 'subtle':
+      return { background: tint, color: swatch };
     case 'surface':
-      return colorMixBase(palette.main, BUTTON_TINT, theme.palette.base.main);
+      return { background: tint, color: swatch, edge: swatch };
+    case 'outline':
+      return {
+        background: tone === 'main' ? 'transparent' : tint,
+        color: swatch,
+        edge: swatch,
+      };
+    case 'ghost':
+      return {
+        background: tone === 'main' ? 'transparent' : tint,
+        color: swatch,
+      };
+    case 'plain':
     default:
-      return null;
+      return { background: 'transparent', color: swatch };
   }
 };
 
+/** The edge is an inset outline so it never shifts layout and draws over
+ * children's backgrounds (and over the shell's own 1px border). */
+const paintStyles = (
+  { background, color, edge }: TPaint,
+  palette: TThemeColorScale,
+  forceContrastText: boolean,
+) => `
+  background-color: ${background};
+  color: ${forceContrastText ? palette.contrastText : color};
+  outline: ${edge ? `1px solid ${edge}` : 'none'};
+  outline-offset: -1px;
+`;
+
+export const accordionDivider = (theme: TTheme) =>
+  `1px solid ${theme.surfaces.divider}`;
+
+export const accordionNeutralHover = (
+  theme: TTheme,
+  appearance: TAccordionAppearance,
+) => accordionTint(theme.palette.default.main, NEUTRAL_HOVER, theme, appearance);
+
+type TAccordionPaintState = {
+  expanded: boolean;
+  colorScope: TAccordionColorScope;
+  forceContrastText: boolean;
+  appearance: TAccordionAppearance;
+};
+
+/** Shell: painted only while expanded with `colorScope="all"`. */
 export const accordionShellVariantStyles = (
   variant: TAccordionVariant,
   palette: TThemeColorScale,
   theme: TTheme,
-  state: TAccordionShellState = {},
-) => {
-  const {
-    grouped = false,
-    colorScope = 'all',
-    forceContrastText = false,
-  } = state;
+  { expanded, colorScope, forceContrastText, appearance }: TAccordionPaintState,
+) =>
+  expanded && colorScope === 'all'
+    ? paintStyles(
+        paint(variant, palette, 'main', theme, appearance),
+        palette,
+        forceContrastText,
+      )
+    : '';
 
-  // Only the summary is styled; the shell and details stay bare.
-  if (colorScope === 'summary') {
-    return `
-      background-color: transparent;
-      border: none;
-      color: ${theme.surfaces.ink};
-    `;
-  }
-
-  const canvas = canvasColor(variant, palette, theme);
-
-  return `
-    border: 1px solid transparent;
-    ${canvas ? `${CUI_CANVAS_VAR}: ${canvas};` : ''}
-    ${variantStyles(variant, palette, theme, 'opaque', theme.palette.base.main, false)}
-    ${forceContrastText ? forceContrastTextStyles(palette) : ''}
-    ${groupedEdges(variant, theme, grouped)}
-  `;
-};
-
-/** Summary row uses the Button look (idle + hover/active) in both scopes.
- * With `colorScope="all"` its idle fill matches the shell, so only the
- * interaction states show and the shell owns the border. With
- * `colorScope="summary"` the summary is a standalone Button-like row with
- * its own border and radius. */
+/** Summary row: painted while expanded with `colorScope="summary"`; with
+ * `all` it sits on the painted shell and only adds the hover tone. */
 export const accordionSummaryVariantStyles = (
   variant: TAccordionVariant,
   palette: TThemeColorScale,
   theme: TTheme,
-  {
-    colorScope,
-    radius,
-    forceContrastText,
-  }: {
-    colorScope: TAccordionColorScope;
-    radius: keyof TThemeRadius;
-    forceContrastText: boolean;
-  },
+  { expanded, colorScope, forceContrastText, appearance }: TAccordionPaintState,
 ) => {
-  const button = variantStyles(variant, palette, theme);
+  const painted = expanded && colorScope !== 'none';
+
+  if (!painted) {
+    return `
+      &:hover {
+        background-color: ${accordionNeutralHover(theme, appearance)};
+      }
+    `;
+  }
+
+  const hover = paint(variant, palette, 'dark', theme, appearance);
+  const hoverColor = forceContrastText ? palette.contrastText : hover.color;
 
   return `
     ${
       colorScope === 'summary'
-        ? `
-          border: 1px solid transparent;
-          border-radius: ${theme.radius[radius]};
-          ${button}
-        `
-        : withoutBorderColor(button)
+        ? paintStyles(
+            paint(variant, palette, 'main', theme, appearance),
+            palette,
+            forceContrastText,
+          )
+        : ''
     }
-    ${forceContrastText ? forceContrastTextStyles(palette) : ''}
-  `;
-};
 
-export const accordionSummaryDivider = (
-  variant: TAccordionVariant,
-  theme: TTheme,
-) => {
-  switch (variant) {
-    case 'outline':
-    case 'surface':
-      return `1px solid ${theme.surfaces.divider}`;
-    default:
-      return '1px solid transparent';
-  }
+    &:hover {
+      background-color: ${hover.background};
+      color: ${hoverColor};
+    }
+  `;
 };

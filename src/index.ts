@@ -1229,11 +1229,14 @@ export {
   type TAccordionSummaryProps,
   type TAccordionDetailsProps,
   type TAccordionGroupProps,
+  type TAccordionGroupSlotProps,
   type TAccordionExpandIconPosition,
+  type TAccordionActionsVisibility,
   type TAccordionSize,
   type TAccordionRadius,
   type TAccordionVariant,
   type TAccordionColorScope,
+  type TAccordionAppearance,
 } from './components/accordion';
 export {
   Alert,

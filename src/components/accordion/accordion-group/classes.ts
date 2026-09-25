@@ -2,4 +2,7 @@ import { generateUtilityClasses } from '../../../helpers/generate-utility-classe
 
 export const accordionGroupClasses = generateUtilityClasses('AccordionGroup', [
   'root',
+  'list',
+  'empty',
+  'add',
 ]);

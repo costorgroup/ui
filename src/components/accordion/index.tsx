@@ -13,10 +13,13 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       summary,
       icon,
       expandIconPosition = 'right',
+      actions,
+      actionsVisibility,
       children,
       expanded,
       defaultExpanded,
       onChange,
+      value,
       disabled,
       color,
       variant,
@@ -24,6 +27,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
       radius,
       colorScope,
       forceContrastText,
+      appearance,
       className,
       slotProps,
       ...props
@@ -38,6 +42,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         expanded={expanded}
         defaultExpanded={defaultExpanded}
         onChange={onChange}
+        value={value}
         disabled={disabled}
         color={color}
         variant={variant}
@@ -45,6 +50,7 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
         radius={radius}
         colorScope={colorScope}
         forceContrastText={forceContrastText}
+        appearance={appearance}
         hasDetails={hasDetails}
         {...props}
         className={mergeClasses(
@@ -59,6 +65,8 @@ const Accordion = forwardRef<HTMLDivElement, TAccordionProps>(
             {
               expandIcon: icon,
               expandIconPosition,
+              actions,
+              actionsVisibility,
               className: accordionClasses.summary,
             },
             slotProps?.summary,
@@ -90,11 +98,13 @@ export type {
   TAccordionSlotProps,
   TAccordionRadius,
   TAccordionExpandIconPosition,
+  TAccordionActionsVisibility,
   TAccordionSize,
 } from './types';
 export type {
   TAccordionVariant,
   TAccordionColorScope,
+  TAccordionAppearance,
 } from './variant-styles';
 export { AccordionBase } from './accordion-base';
 export type { TAccordionBaseProps } from './accordion-base';
@@ -106,7 +116,10 @@ export { AccordionDetails } from './accordion-details';
 export type { TAccordionDetailsProps } from './accordion-details';
 export { accordionDetailsClasses } from './accordion-details';
 export { AccordionGroup, accordionGroupClasses } from './accordion-group';
-export type { TAccordionGroupProps } from './accordion-group';
+export type {
+  TAccordionGroupProps,
+  TAccordionGroupSlotProps,
+} from './accordion-group';
 export { accordionClasses } from './classes';
 export { Accordion };
 export default Accordion;

@@ -5,8 +5,10 @@ import {
 } from './types';
 
 const detailsCustomProps = new Set(['expanded']);
-const detailsInnerCustomProps = new Set(['size', 'variant', 'colorScope']);
+const detailsInnerCustomProps = new Set(['size']);
 
+/** Slides open and shut: the row grows from 0fr to 1fr while the clip
+ * hides the overflow. */
 export const SAccordionDetails = styled('div', {
   shouldForwardProp: (prop) => !detailsCustomProps.has(prop),
 })<TSAccordionDetailsProps>`
@@ -28,6 +30,8 @@ export const SAccordionDetailsClip = styled.div`
 export const SAccordionDetailsInner = styled('div', {
   shouldForwardProp: (prop) => !detailsInnerCustomProps.has(prop),
 })<TSAccordionDetailsInnerProps>`
-  padding: ${({ theme, size, variant, colorScope }) =>
-    variant === 'plain' || colorScope === 'summary' ? 0 : theme.sizes[size].padX};
+  padding: ${({ theme, size }) => {
+    const { padX } = theme.sizes[size];
+    return `calc(${padX} * 0.75) ${padX} ${padX}`;
+  }};
 `;
