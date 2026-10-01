@@ -610,6 +610,9 @@
       "@costor/ui/SidebarItemTrailing": [
         "./src/components/sidebar/sidebar-item-trailing/index.tsx"
       ],
+      "@costor/ui/SidebarSeparator": [
+        "./src/components/sidebar/sidebar-separator/index.tsx"
+      ],
       "@costor/ui/Skeleton": [
         "./src/components/skeleton/index.tsx"
       ],

@@ -1,6 +1,6 @@
 {
   "name": "@costor/ui",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "Costor UI component library",
   "keywords": [
     "react",
@@ -1036,6 +1036,11 @@
       "types": "./dist/components/sidebar/sidebar-item-trailing/index.d.ts",
       "import": "./dist/components/sidebar/sidebar-item-trailing/index.js",
       "require": "./dist/components/sidebar/sidebar-item-trailing/index.cjs"
+    },
+    "./SidebarSeparator": {
+      "types": "./dist/components/sidebar/sidebar-separator/index.d.ts",
+      "import": "./dist/components/sidebar/sidebar-separator/index.js",
+      "require": "./dist/components/sidebar/sidebar-separator/index.cjs"
     },
     "./Skeleton": {
       "types": "./dist/components/skeleton/index.d.ts",
