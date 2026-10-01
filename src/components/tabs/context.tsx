@@ -19,7 +19,7 @@ export type TTabsContextValue = {
   color?: TPaletteColor;
   value: string | undefined;
   onSelect: (value: string) => void;
-  registerTab: (value: string, node: HTMLButtonElement | null) => void;
+  registerTab: (value: string, node: HTMLElement | null) => void;
   startIndicatorDrag: (clientX: number, clientY: number) => void;
 };
 

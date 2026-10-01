@@ -7,6 +7,7 @@ import { AlertIcon } from './alert-icon';
 import { AlertTitle } from './alert-title';
 import { AlertContent } from './alert-content';
 import { AlertActions } from './alert-actions';
+import { AlertMessage } from './alert-message';
 import { SAlertClose } from './styles';
 import { TAlertProps } from './types';
 import { mergeSlotProps } from '../../helpers/slot-props';
@@ -18,6 +19,9 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
       title,
       actions,
       icon,
+      iconAlign,
+      actionsPlacement,
+      actionsAlign,
       color = 'primary',
       variant = 'subtle',
       size = 'md',
@@ -46,17 +50,25 @@ const Alert = forwardRef<HTMLDivElement, TAlertProps>(
         )}
       >
         {icon != null ? (
-          <AlertIcon {...slotProps?.icon}>{icon}</AlertIcon>
+          <AlertIcon align={iconAlign} {...slotProps?.icon}>
+            {icon}
+          </AlertIcon>
         ) : null}
-        <AlertBody {...slotProps?.body}>
-          {title != null ? (
-            <AlertTitle {...slotProps?.title}>{title}</AlertTitle>
-          ) : null}
-          {children != null ? (
-            <AlertContent {...slotProps?.content}>{children}</AlertContent>
+        <AlertBody actionsPlacement={actionsPlacement} {...slotProps?.body}>
+          {title != null || children != null ? (
+            <AlertMessage {...slotProps?.message}>
+              {title != null ? (
+                <AlertTitle {...slotProps?.title}>{title}</AlertTitle>
+              ) : null}
+              {children != null ? (
+                <AlertContent {...slotProps?.content}>{children}</AlertContent>
+              ) : null}
+            </AlertMessage>
           ) : null}
           {actions != null ? (
-            <AlertActions {...slotProps?.actions}>{actions}</AlertActions>
+            <AlertActions align={actionsAlign} {...slotProps?.actions}>
+              {actions}
+            </AlertActions>
           ) : null}
         </AlertBody>
         {closable ? (
@@ -88,10 +100,14 @@ export type {
   TAlertVariant,
   TAlertSize,
   TAlertRadius,
+  TAlertAlign,
+  TAlertActionsPlacement,
 } from './types';
 export { alertClasses } from './classes';
 export { AlertBase, AlertBody, alertBaseClasses } from './alert-base';
-export type { TAlertBaseProps } from './alert-base';
+export type { TAlertBaseProps, TAlertBodyProps } from './alert-base';
+export { AlertMessage, alertMessageClasses } from './alert-message';
+export type { TAlertMessageProps } from './alert-message';
 export { AlertIcon, alertIconClasses } from './alert-icon';
 export type { TAlertIconProps } from './alert-icon';
 export { AlertTitle, alertTitleClasses } from './alert-title';

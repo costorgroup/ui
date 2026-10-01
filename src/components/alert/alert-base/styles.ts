@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { CUI_CANVAS_VAR } from '../../../helpers/color/create-color-scale';
 import { idleVariantAppearance } from '../../../helpers/variant-styles';
 import { surfacePanelShadow } from '../../../helpers/variant-styles/surface';
-import { TSAlertBaseProps } from './types';
+import { alertActionsClasses } from '../alert-actions/classes';
+import { TSAlertBaseProps, TSAlertBodyProps } from './types';
 
 const customProps = new Set(['color', 'variant', 'size', 'radius', 'closable']);
 
@@ -46,10 +47,25 @@ export const SAlertBase = styled('div', {
   }}
 `;
 
-export const SAlertBody = styled.div`
+const bodyCustomProps = new Set(['actionsPlacement']);
+
+// Holds AlertMessage and AlertActions. Placement only flips the axis; each
+// part's `align` is its align-self on the other axis.
+export const SAlertBody = styled('div', {
+  shouldForwardProp: (prop) => !bodyCustomProps.has(prop),
+})<TSAlertBodyProps>`
   display: flex;
   flex: 1 1 auto;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
+  flex-direction: ${({ actionsPlacement }) =>
+    actionsPlacement === 'end' ? 'row' : 'column'};
+  gap: ${({ theme, actionsPlacement }) =>
+    actionsPlacement === 'end'
+      ? 'var(--alert-gap)'
+      : theme.spacing(theme.gap.sm)};
   min-width: 0;
+
+  & > .${alertActionsClasses.root}:not([data-align]) {
+    align-self: ${({ actionsPlacement }) =>
+      actionsPlacement === 'end' ? 'center' : 'flex-end'};
+  }
 `;

@@ -7,6 +7,7 @@ import { AlertIcon } from './alert-icon';
 import { AlertTitle } from './alert-title';
 import { AlertContent } from './alert-content';
 import { AlertActions } from './alert-actions';
+import { AlertMessage } from './alert-message';
 
 const meta: Meta<typeof AlertBase> = {
   title: 'Feedback/Alert/Parts',
@@ -27,13 +28,15 @@ export const Default: Story = {
   },
   render: (args) => (
     <AlertBase {...args}>
-      <AlertIcon>
+      <AlertIcon align="center">
         <CheckIcon />
       </AlertIcon>
-      <AlertBody>
-        <AlertTitle>Heads up</AlertTitle>
-        <AlertContent>Compose your own alert without the recipe.</AlertContent>
-        <AlertActions>
+      <AlertBody actionsPlacement="end">
+        <AlertMessage>
+          <AlertTitle>Heads up</AlertTitle>
+          <AlertContent>Compose your own alert without the recipe.</AlertContent>
+        </AlertMessage>
+        <AlertActions align="end">
           <Button size="sm" variant="ghost">
             Dismiss
           </Button>
@@ -56,8 +59,10 @@ export const Solid: Story = {
         <CheckIcon />
       </AlertIcon>
       <AlertBody>
-        <AlertTitle>Saved</AlertTitle>
-        <AlertContent>Content inherits text color from the alert.</AlertContent>
+        <AlertMessage>
+          <AlertTitle>Saved</AlertTitle>
+          <AlertContent>Content inherits text color from the alert.</AlertContent>
+        </AlertMessage>
       </AlertBody>
     </AlertBase>
   ),

@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { STabProps } from './types';
 
+// 'as' must be excluded too: a custom shouldForwardProp otherwise makes
+// emotion treat `as` as a regular DOM attribute instead of a tag override.
 const customProps = new Set([
+  'as',
   'active',
   'appearance',
   'variant',
@@ -65,7 +68,17 @@ export const STab = styled('button', {
     `;
   }}
 
-  &:disabled {
+  /* Rendered as a link: beat app/UA rules like "a:hover { text-decoration: underline }". */
+  &,
+  &:hover,
+  &:focus,
+  &:active,
+  &:visited {
+    text-decoration: none;
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
     opacity: 0.45;
     cursor: not-allowed;
   }

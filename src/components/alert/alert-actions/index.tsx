@@ -5,10 +5,12 @@ import { SAlertActions } from './styles';
 import { TAlertActionsProps } from './types';
 
 const AlertActions = forwardRef<HTMLDivElement, TAlertActionsProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, align, className, ...props }, ref) => {
     return (
       <SAlertActions
         ref={ref}
+        data-align={align}
+        align={align}
         {...props}
         className={mergeClasses(
           alertActionsClasses.root,

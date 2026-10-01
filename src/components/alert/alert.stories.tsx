@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { CheckIcon } from '../../icons';
 import type { TPaletteColor } from '../../theme/types';
 import { Button, Flex } from '../..';
-import type { TAlertRadius, TAlertSize, TAlertVariant } from './types';
+import type {
+  TAlertActionsPlacement,
+  TAlertAlign,
+  TAlertRadius,
+  TAlertSize,
+  TAlertVariant,
+} from './types';
 import { Alert } from './';
 
 const COLORS: TPaletteColor[] = [
@@ -23,6 +29,8 @@ const COLORS: TPaletteColor[] = [
 const VARIANTS: TAlertVariant[] = ['solid', 'subtle', 'surface'];
 const SIZES: TAlertSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
 const RADIUS: TAlertRadius[] = ['none', 'xs', 'sm', 'md', 'lg', 'xl', 'pill'];
+const ALIGN: TAlertAlign[] = ['start', 'center', 'end'];
+const PLACEMENT: TAlertActionsPlacement[] = ['bottom', 'end'];
 
 const meta: Meta<typeof Alert> = {
   title: 'Feedback/Alert',
@@ -42,6 +50,9 @@ const meta: Meta<typeof Alert> = {
     variant: { control: 'select', options: VARIANTS },
     size: { control: 'select', options: SIZES },
     radius: { control: 'select', options: RADIUS },
+    iconAlign: { control: 'inline-radio', options: ALIGN },
+    actionsPlacement: { control: 'inline-radio', options: PLACEMENT },
+    actionsAlign: { control: 'inline-radio', options: ALIGN },
   },
 };
 
@@ -153,4 +164,57 @@ export const WithActions: Story = {
       </>
     ),
   },
+};
+
+const LAYOUT_ACTIONS = (
+  <>
+    <Button size="sm" variant="ghost">
+      Dismiss
+    </Button>
+    <Button size="sm">Review</Button>
+  </>
+);
+
+/** Icon and action alignment combinations. With actions at the `end`,
+ * `actionsAlign` is vertical; at the `bottom`, it is horizontal. */
+export const Layouts: Story = {
+  render: (args) => (
+    <Flex direction="column" gap="md" style={{ maxWidth: 560 }}>
+      <Alert {...args} actions={LAYOUT_ACTIONS} />
+      <Alert
+        {...args}
+        actions={LAYOUT_ACTIONS}
+        actionsAlign="start"
+        title="Actions bottom-left"
+      />
+      <Alert
+        {...args}
+        iconAlign="center"
+        actionsPlacement="end"
+        actions={LAYOUT_ACTIONS}
+        title="Icon and actions centered"
+      />
+      <Alert
+        {...args}
+        actionsPlacement="end"
+        actionsAlign="end"
+        actions={LAYOUT_ACTIONS}
+        title="Actions bottom-right, beside the message"
+      >
+        A longer description that wraps onto a second line, so the
+        difference between top, center and bottom alignment is visible.
+      </Alert>
+      <Alert
+        {...args}
+        iconAlign="end"
+        actionsPlacement="end"
+        actionsAlign="start"
+        actions={LAYOUT_ACTIONS}
+        title="Icon bottom, actions top"
+      >
+        A longer description that wraps onto a second line, so the
+        difference between top, center and bottom alignment is visible.
+      </Alert>
+    </Flex>
+  ),
 };

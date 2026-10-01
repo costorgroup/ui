@@ -61,10 +61,7 @@ const Tabs = forwardRef<HTMLDivElement, TTabsProps>(
           orientation,
           fullWidth,
         },
-        {
-          draggable,
-          onSelect: handleSelect,
-        },
+        { draggable },
       );
 
     const { fadeStart, fadeEnd } = useTabOverflow(listRef, orientation, children);
@@ -238,6 +235,6 @@ export type {
 export type { TTabsAppearance, TTabsOrientation, TTabsVariant } from './context';
 export { tabsClasses } from './classes';
 export { TabsContext, useTabsContext } from './context';
-export { Tab, tabClasses, type TTabProps } from './tab';
+export { Tab, tabClasses, type TTabProps, type TTabOwnProps } from './tab';
 export { Tabs };
 export default Tabs;

@@ -1,8 +1,8 @@
-import React, { forwardRef, HTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef } from 'react';
 import { mergeClasses } from '../../../helpers/generate-utility-classes';
 import { alertBaseClasses } from './classes';
 import { SAlertBase, SAlertBody } from './styles';
-import { TAlertBaseProps } from './types';
+import { TAlertBaseProps, TAlertBodyProps } from './types';
 
 const AlertBase = forwardRef<HTMLDivElement, TAlertBaseProps>(
   (
@@ -41,28 +41,32 @@ const AlertBase = forwardRef<HTMLDivElement, TAlertBaseProps>(
 
 AlertBase.displayName = 'AlertBase';
 
-const AlertBody = forwardRef<
-  HTMLDivElement,
-  HTMLAttributes<HTMLDivElement> & { children?: ReactNode }
->(({ children, className, ...props }, ref) => {
-  return (
-    <SAlertBody
-      ref={ref}
-      {...props}
-      className={mergeClasses(alertBaseClasses.body, className)}
-    >
-      {children}
-    </SAlertBody>
-  );
-});
+const AlertBody = forwardRef<HTMLDivElement, TAlertBodyProps>(
+  ({ children, actionsPlacement = 'bottom', className, ...props }, ref) => {
+    return (
+      <SAlertBody
+        ref={ref}
+        actionsPlacement={actionsPlacement}
+        data-actions-placement={actionsPlacement}
+        {...props}
+        className={mergeClasses(alertBaseClasses.body, className)}
+      >
+        {children}
+      </SAlertBody>
+    );
+  },
+);
 
 AlertBody.displayName = 'AlertBody';
 
 export type {
   TAlertBaseProps,
+  TAlertBodyProps,
   TAlertVariant,
   TAlertSize,
   TAlertRadius,
+  TAlertAlign,
+  TAlertActionsPlacement,
 } from './types';
 export { AlertBase, AlertBody };
 export { alertBaseClasses } from './classes';

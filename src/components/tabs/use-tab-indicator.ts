@@ -36,11 +36,33 @@ type TUseTabIndicatorLayout = {
 
 type TUseTabIndicatorOptions = {
   draggable?: boolean;
-  onSelect?: (value: string) => void;
 };
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(Math.max(value, min), max);
+
+const isTabDisabled = (node: HTMLElement) =>
+  (node as HTMLButtonElement).disabled === true ||
+  node.getAttribute('aria-disabled') === 'true';
+
+// Swallows the native click the browser fires after a drag's pointerup, so
+// the tab under the pointer (often the one the drag started on) isn't
+// activated a second time.
+const suppressNextClick = () => {
+  const onClickCapture = (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    cleanup();
+  };
+  const cleanup = () => {
+    window.removeEventListener('click', onClickCapture, true);
+  };
+
+  window.addEventListener('click', onClickCapture, true);
+  // The click follows pointerup synchronously; if none comes (released
+  // outside the window), don't eat the next real one.
+  window.setTimeout(cleanup, 0);
+};
 
 export const useTabIndicator = (
   containerRef: RefObject<HTMLDivElement | null>,
@@ -49,7 +71,7 @@ export const useTabIndicator = (
   options: TUseTabIndicatorOptions = {},
 ) => {
   const { appearance, variant, orientation, fullWidth } = layout;
-  const { draggable = true, onSelect } = options;
+  const { draggable = true } = options;
   const [indicator, setIndicator] = useState<TTabIndicatorRect>(emptyRect);
   const [dragRect, setDragRect] = useState<TTabIndicatorRect | null>(null);
   const [dragHoverValue, setDragHoverValue] = useState<string | null>(null);
@@ -60,7 +82,7 @@ export const useTabIndicator = (
   const dragStartRectRef = useRef<TTabIndicatorRect>(emptyRect);
   const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
-  const tabNodesRef = useRef(new Map<string, HTMLButtonElement>());
+  const tabNodesRef = useRef(new Map<string, HTMLElement>());
   const clearDragListenersRef = useRef<(() => void) | null>(null);
   const rafRef = useRef<number | null>(null);
 
@@ -74,7 +96,7 @@ export const useTabIndicator = (
   const getTabRect = useCallback((value: string): TTabIndicatorRect | null => {
     const tab = tabNodesRef.current.get(value);
 
-    if (tab == null || tab.disabled) {
+    if (tab == null || isTabDisabled(tab)) {
       return null;
     }
 
@@ -101,7 +123,7 @@ export const useTabIndicator = (
       let nearest: { value: string; distance: number } | null = null;
 
       for (const [value, node] of tabNodesRef.current) {
-        if (node.disabled) {
+        if (isTabDisabled(node)) {
           continue;
         }
 
@@ -133,7 +155,7 @@ export const useTabIndicator = (
   const getDragCenterBounds = useCallback(
     (rect: TTabIndicatorRect) => {
       const tabs = Array.from(tabNodesRef.current.entries()).filter(
-        ([, node]) => !node.disabled,
+        ([, node]) => !isTabDisabled(node),
       );
 
       if (tabs.length === 0) {
@@ -299,7 +321,7 @@ export const useTabIndicator = (
   }, [activeValue, getTabRect]);
 
   const registerTab = useCallback(
-    (value: string, node: HTMLButtonElement | null) => {
+    (value: string, node: HTMLElement | null) => {
       if (node != null) {
         tabNodesRef.current.set(value, node);
       } else {
@@ -330,14 +352,19 @@ export const useTabIndicator = (
 
       if (targetRect != null) {
         setDragRect(targetRect);
-        onSelect?.(target!);
+        // Activate through the tab's own click handling rather than calling
+        // onSelect directly: a tab rendered `as` a router Link then navigates
+        // exactly as it would on a real click, with no router knowledge here.
+        tabNodesRef.current.get(target!)?.click();
         window.setTimeout(() => setDragRect(null), 280);
-        return;
+      } else {
+        setDragRect(null);
       }
 
-      setDragRect(null);
+      // After the synthetic click above, never before it.
+      suppressNextClick();
     },
-    [findNearestTab, getTabRect, onSelect],
+    [findNearestTab, getTabRect],
   );
 
   const startIndicatorDrag = useCallback(

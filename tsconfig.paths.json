@@ -52,6 +52,9 @@
       "@costor/ui/AlertIcon": [
         "./src/components/alert/alert-icon/index.tsx"
       ],
+      "@costor/ui/AlertMessage": [
+        "./src/components/alert/alert-message/index.tsx"
+      ],
       "@costor/ui/AlertTitle": [
         "./src/components/alert/alert-title/index.tsx"
       ],
@@ -588,6 +591,24 @@
       ],
       "@costor/ui/Shimmer": [
         "./src/components/shimmer/index.tsx"
+      ],
+      "@costor/ui/Sidebar": [
+        "./src/components/sidebar/index.tsx"
+      ],
+      "@costor/ui/SidebarItem": [
+        "./src/components/sidebar/sidebar-item/index.tsx"
+      ],
+      "@costor/ui/SidebarItemDescription": [
+        "./src/components/sidebar/sidebar-item-description/index.tsx"
+      ],
+      "@costor/ui/SidebarItemIcon": [
+        "./src/components/sidebar/sidebar-item-icon/index.tsx"
+      ],
+      "@costor/ui/SidebarItemTitle": [
+        "./src/components/sidebar/sidebar-item-title/index.tsx"
+      ],
+      "@costor/ui/SidebarItemTrailing": [
+        "./src/components/sidebar/sidebar-item-trailing/index.tsx"
       ],
       "@costor/ui/Skeleton": [
         "./src/components/skeleton/index.tsx"

@@ -200,3 +200,91 @@ export const Uncontrolled: Story = {
     </Tabs>
   ),
 };
+
+// Stand-in for next/link or react-router's Link: intercepts the click and
+// pushes a route, exactly like the real ones do. Tabs know nothing about it.
+const RouterContext = React.createContext<(href: string) => void>(() => {});
+
+const MockRouterLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
+>(function MockRouterLink({ href, onClick, ...props }, ref) {
+  const navigate = React.useContext(RouterContext);
+
+  return (
+    <a
+      ref={ref}
+      href={href}
+      {...props}
+      onClick={(event) => {
+        onClick?.(event);
+
+        if (
+          event.defaultPrevented ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+        navigate(href);
+      }}
+    />
+  );
+});
+
+const ROUTES = [
+  { href: '/settings/profile', label: 'Profile' },
+  { href: '/settings/account', label: 'Account' },
+  { href: '/settings/billing', label: 'Billing' },
+  { href: '/settings/team', label: 'Team' },
+];
+
+/**
+ * Tabs as navigation: render each Tab `as` your router's Link and drive
+ * `value` from the current pathname. Clicking and dragging the indicator
+ * both go through the Link, so the router navigates.
+ *
+ * ```tsx
+ * // Next.js (App Router) — in a 'use client' component
+ * const pathname = usePathname();
+ * <Tabs value={pathname}>
+ *   <Tab as={Link} href="/settings/profile" value="/settings/profile">Profile</Tab>
+ * </Tabs>
+ *
+ * // React Router
+ * const { pathname } = useLocation();
+ * <Tabs value={pathname}>
+ *   <Tab as={Link} to="/settings/profile" value="/settings/profile">Profile</Tab>
+ * </Tabs>
+ * ```
+ */
+export const Navigation: Story = {
+  render: function NavigationStory(args) {
+    const [pathname, setPathname] = useState('/settings/profile');
+
+    return (
+      <RouterContext.Provider value={setPathname}>
+        <Flex direction="column" gap="md" style={{ width: 400 }}>
+          <Tabs {...args} value={pathname}>
+            {ROUTES.map((route) => (
+              <Tab
+                key={route.href}
+                as={MockRouterLink}
+                href={route.href}
+                value={route.href}
+                disabled={route.href === '/settings/team'}
+              >
+                {route.label}
+              </Tab>
+            ))}
+          </Tabs>
+          <Text size="sm">Route: {pathname}</Text>
+        </Flex>
+      </RouterContext.Provider>
+    );
+  },
+};

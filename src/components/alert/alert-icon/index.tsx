@@ -5,11 +5,13 @@ import { SAlertIcon } from './styles';
 import { TAlertIconProps } from './types';
 
 const AlertIcon = forwardRef<HTMLSpanElement, TAlertIconProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, align = 'start', className, ...props }, ref) => {
     return (
       <SAlertIcon
         ref={ref}
         data-alert-icon=""
+        data-align={align}
+        align={align}
         {...props}
         className={mergeClasses(
           alertIconClasses.root,
