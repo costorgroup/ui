@@ -137,8 +137,13 @@ export const SScrollAreaViewport = styled('div', {
   height: 100%;
   overflow-x: ${({ axis }) => (axis === 'horizontal' ? 'auto' : 'hidden')};
   overflow-y: ${({ axis }) => (axis === 'vertical' ? 'auto' : 'hidden')};
-  overscroll-behavior: contain;
+  overscroll-behavior: auto;
   scrollbar-width: none;
+
+  ${({ axis }) =>
+    axis === 'vertical'
+      ? `&[data-overflow-y='true'] { overscroll-behavior-y: contain; }`
+      : `&[data-overflow-x='true'] { overscroll-behavior-x: contain; }`}
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
