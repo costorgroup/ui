@@ -1,6 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import React, { useState } from 'react';
-import { Button, DataTable, Flex } from '../..';
+import { DownloadIcon, FilterIcon } from '../../icons';
+import {
+  Badge,
+  Button,
+  CheckBox,
+  DataTable,
+  Flex,
+  IconButton,
+  Modal,
+} from '../..';
 import type { TPaletteColor } from '../../theme/types';
 import type {
   TDataTableColumn,
@@ -136,6 +145,114 @@ export const WithActions: Story = {
         variant="surface"
         pageSize={5}
       />
+    );
+  },
+};
+
+type TDessertFilters = {
+  lowCalorie: boolean;
+  lowFat: boolean;
+};
+
+const NO_FILTERS: TDessertFilters = { lowCalorie: false, lowFat: false };
+
+export const WithFilters: Story = {
+  render: function WithFiltersStory() {
+    const [filters, setFilters] = useState(NO_FILTERS);
+    const [draft, setDraft] = useState(NO_FILTERS);
+    const [open, setOpen] = useState(false);
+
+    const activeCount = Object.values(filters).filter(Boolean).length;
+    const rows = INITIAL_ROWS.filter(
+      (row) =>
+        (!filters.lowCalorie || row.calories < 300) &&
+        (!filters.lowFat || row.fat < 5),
+    );
+
+    const openFilters = () => {
+      setDraft(filters);
+      setOpen(true);
+    };
+
+    const applyFilters = () => {
+      setFilters(draft);
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <DataTable
+          title="Nutrition"
+          description="Filter rows from the header actions."
+          columns={BASE_COLUMNS}
+          data={rows}
+          color="primary"
+          variant="surface"
+          pageSize={5}
+          actions={
+            <>
+              <Badge
+                badgeContent={activeCount}
+                color="primary"
+                size="sm"
+                invisible={activeCount === 0}
+              >
+                <IconButton
+                  aria-label="Filters"
+                  size="sm"
+                  variant="outline"
+                  onClick={openFilters}
+                >
+                  <FilterIcon />
+                </IconButton>
+              </Badge>
+              <IconButton aria-label="Export" size="sm" variant="outline">
+                <DownloadIcon />
+              </IconButton>
+            </>
+          }
+        />
+        <Modal
+          open={open}
+          size="sm"
+          onClose={() => setOpen(false)}
+          title="Filters"
+          description="Narrow down the desserts shown in the table."
+          actions={
+            <>
+              <Button variant="outline" onClick={() => setDraft(NO_FILTERS)}>
+                Clear
+              </Button>
+              <Button onClick={applyFilters}>Apply</Button>
+            </>
+          }
+        >
+          <Flex direction="column" gap="sm">
+            <CheckBox
+              label="Low calorie"
+              description="Under 300 kcal"
+              checked={draft.lowCalorie}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  lowCalorie: event.target.checked,
+                }))
+              }
+            />
+            <CheckBox
+              label="Low fat"
+              description="Under 5 g of fat"
+              checked={draft.lowFat}
+              onChange={(event) =>
+                setDraft((current) => ({
+                  ...current,
+                  lowFat: event.target.checked,
+                }))
+              }
+            />
+          </Flex>
+        </Modal>
+      </>
     );
   },
 };

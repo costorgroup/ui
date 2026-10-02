@@ -66,6 +66,7 @@ export type TDataTableProps<T extends TDataTableRow = TDataTableRow> = Omit<
   data: T[];
   title?: ReactNode;
   description?: ReactNode;
+  actions?: ReactNode;
   color?: TPaletteColor;
   variant?: TDataTableVariant;
   elevation?: TPanelElevation;

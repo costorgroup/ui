@@ -22,6 +22,7 @@ import FullscreenExitIcon from './fullscreen-exit-icon';
 import FolderIcon from './folder-icon';
 import FileIcon from './file-icon';
 import SearchIcon from './search-icon';
+import FilterIcon from './filter-icon';
 import EmojiAddIcon from './emoji-add-icon';
 import QuoteIcon from './quote-icon';
 import ZoomInIcon from './zoom-in-icon';
@@ -65,6 +66,7 @@ import type { TFullscreenExitIconProps } from './fullscreen-exit-icon/types';
 import type { TFolderIconProps } from './folder-icon/types';
 import type { TFileIconProps } from './file-icon/types';
 import type { TSearchIconProps } from './search-icon/types';
+import type { TFilterIconProps } from './filter-icon/types';
 import type { TEmojiAddIconProps } from './emoji-add-icon/types';
 import type { TQuoteIconProps } from './quote-icon/types';
 import type { TZoomInIconProps } from './zoom-in-icon/types';
@@ -110,6 +112,7 @@ export type {
   TFolderIconProps,
   TFileIconProps,
   TSearchIconProps,
+  TFilterIconProps,
   TEmojiAddIconProps,
   TQuoteIconProps,
   TZoomInIconProps,
@@ -156,6 +159,7 @@ export {
   FolderIcon,
   FileIcon,
   SearchIcon,
+  FilterIcon,
   EmojiAddIcon,
   QuoteIcon,
   ZoomInIcon,

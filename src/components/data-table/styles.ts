@@ -14,6 +14,14 @@ export const SDataTableScroll = styled.div`
   overflow-x: auto;
 `;
 
+export const SDataTableActions = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(theme.gap.xs)};
+  margin-inline-start: ${({ theme }) => theme.spacing(theme.gap.xs)};
+`;
+
 export const SDataTableFooter = styled(CardFooter)`
   justify-content: space-between;
 `;

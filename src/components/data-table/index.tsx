@@ -18,7 +18,12 @@ import type { TTableSize } from '../table/table-root/context';
 import { Text } from '../text';
 import { TextField } from '../text-field';
 import { dataTableClasses } from './classes';
-import { SDataTableBox, SDataTableFooter, SDataTableScroll } from './styles';
+import {
+  SDataTableActions,
+  SDataTableBox,
+  SDataTableFooter,
+  SDataTableScroll,
+} from './styles';
 import {
   TDataTableProps,
   TDataTableRenderCellParams,
@@ -72,6 +77,7 @@ const DataTableInner = <T extends TDataTableRow>(
     data,
     title,
     description,
+    actions,
     color = 'default',
     variant = 'surface',
     elevation = 1,
@@ -190,6 +196,11 @@ const DataTableInner = <T extends TDataTableRow>(
               slotProps?.search,
             )}
           />
+          {actions != null ? (
+            <SDataTableActions className={dataTableClasses.actions}>
+              {actions}
+            </SDataTableActions>
+          ) : null}
         </CardAction>
       </CardHeader>
 
